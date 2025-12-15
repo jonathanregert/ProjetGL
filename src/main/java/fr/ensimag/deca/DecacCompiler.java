@@ -126,8 +126,7 @@ public class DecacCompiler {
     public final SymbolTable symbolTable = new SymbolTable();
 
     public Symbol createSymbol(String name) {
-        return null; // A FAIRE: remplacer par la ligne en commentaire ci-dessous
-        // return symbolTable.create(name);
+        return symbolTable.create(name);
     }
 
     /**
@@ -140,6 +139,7 @@ public class DecacCompiler {
         String destFile = null;
         // A FAIRE: calculer le nom du fichier .ass à partir du nom du
         // A FAIRE: fichier .deca.
+    
         PrintStream err = System.err;
         PrintStream out = System.out;
         LOG.debug("Compiling file " + sourceFile + " to assembly file " + destFile);
