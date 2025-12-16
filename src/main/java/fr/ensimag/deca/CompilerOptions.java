@@ -43,7 +43,39 @@ public class CompilerOptions {
 
     
     public void parseArgs(String[] args) throws CLIException {
-        // A FAIRE : parcourir args pour positionner les options correctement.
+
+        // Parseur des arguments :
+        for (String arg : args) {
+            switch (arg) {
+            case "-v":
+            case "--verbose":
+                debug = INFO;
+                break;
+            case "-vv":
+            case "--debug":
+                debug = DEBUG;
+                break;
+            case "-vvv":
+            case "--trace":
+                debug = TRACE;
+                break;
+            case "-b":
+            case "--banner":
+                printBanner = true;
+                break;
+            case "-p":
+            case "--parallel":
+                parallel = true;
+                break;
+            default:
+                if (arg.startsWith("-")) {
+                    throw new CLIException("Unknown option: " + arg);
+                } else {
+                    sourceFiles.add(new File(arg));
+                }
+            }
+        }
+
         Logger logger = Logger.getRootLogger();
         // map command-line debug option to log4j's level.
         switch (getDebug()) {

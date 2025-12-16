@@ -22,6 +22,7 @@ options {
 
 fragment DIGIT : '0' .. '9';
 SIGN : '+' | '-';
+NUM : DIGIT+ ;
 EXP : ('E' | 'e' ) SIGN NUM;
 DEC : NUM '.' NUM;
 FLOATDEC : (DEC | DEC EXP) ('F' | 'f');
@@ -33,7 +34,8 @@ fragment LETTER : 'a' .. 'z' | 'A' .. 'Z';
 IDENT : (LETTER | '$' | '_')(LETTER | DIGIT | '$' | '_')*;
 fragment POSITIVE_DIGIT : '1' .. '9';
 INT : '0' | POSITIVE_DIGIT DIGIT*;
-fragment STRING_CAR : ~[\"\\\r\n];
+
+fragment STRING_CAR : ~["\\r\n];
 EOL : '\n' | '\r\n' | '\r';
 STRING : '"' (STRING_CAR | '\\"' | '\\\\')* '"';
 MULTI_LINE_STRING : '"' (STRING_CAR | EOL | '\\"' | '\\\\')* '"';
