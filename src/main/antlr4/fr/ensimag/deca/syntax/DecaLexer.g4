@@ -9,6 +9,15 @@ options {
 }
 
 @members {
+   private java.util.Stack<IncludeSaveStruct> includes = new java.util.Stack<>();
+
+   @Override
+   public Token nextToken() {
+   try {
+      return super.nextToken();} catch (SkipANTLRPostAction e) {
+         // Après un #include, on continue immédiatement
+         return nextToken();}
+   }
 }
 
 fragment DIGIT : '0' .. '9';
@@ -30,7 +39,11 @@ STRING : '"' (STRING_CAR | '\\"' | '\\\\')* '"';
 MULTI_LINE_STRING : '"' (STRING_CAR | EOL | '\\"' | '\\\\')* '"';
 COMMENT : '/*' .*? '*/';
 FILENAME : (LETTER | DIGIT | '.' | '-' | '_')+;
-INCLUDE : '#include' (' ')* '"' FILENAME '"';
+
+//l'inclusion de fichiers
+INCLUDE : '#include' (' ')* '"' FILENAME '"'{
+   doInclude(getText());
+   };
 
 OBRACE   : '{' ;
 CBRACE   : '}' ;
