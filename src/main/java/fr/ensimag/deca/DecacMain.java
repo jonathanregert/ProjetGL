@@ -10,6 +10,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+// POUR getParallel()
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.ExecutionException;
+//
+
 /**
  * Main class for the command-line Deca compiler.
  *
@@ -33,45 +40,39 @@ public class DecacMain {
             System.exit(1);
         }
         if (options.getPrintBanner()) {
-            throw new UnsupportedOperationException("decac -b not yet implemented");
+            System.out.println("Deca compiler — GROUPE 7 / 42");
+            System.exit(0);
         }
         if (options.getSourceFiles().isEmpty()) {
             throw new UnsupportedOperationException("decac without argument not yet implemented");
         }
         if (options.getParallel()) {
-            //Fait au dessous: Instancier DecacCompiler pour chaque fichier à
-            // compiler, et lancer l'exécution des méthodes compile() de chaque
-            // instance en parallèle. Il est conseillé d'utiliser
-            // java.util.concurrent de la bibliothèque standard Java.
             int nbThreads = Runtime.getRuntime().availableProcessors();
-            ExecutorService executor = Executors.newFixedThreadPool(nbThreads);
-            List<Future<Boolean>> resultats = new ArrayList<>();
 
-            for (File source : options.getSourceFiles()) {
-                DecacCompiler compiler = new DecacCompiler(options, source);
+            ExecutorService executorService = Executors.newFixedThreadPool(nbThreads);
+            List<Future<Boolean>> futureList = new ArrayList<>();
 
-                Future<Boolean> res = executor.submit(() -> {
-                    return compiler.compile();
+            for (File sourceFile : options.getSourceFiles()) {
+                Future<Boolean> future = executorService.submit(() -> {
+                    DecacCompiler decaCompiler = new DecacCompiler(options, sourceFile);
+                    return decaCompiler.compile();
                 });
-
-                resultats.add(res);
+                futureList.add(future);
             }
 
-            for (Future<Boolean> res : resultats) {
+            for (Future<Boolean> future : futureList) {
                 try {
-                    if (res.get()) {
+                    if (future.get()) {
                         error = true;
                     }
-                } catch (InterruptedException e) {
-                    error = true;
-                } catch (ExecutionException e) {
+                } catch (InterruptedException | ExecutionException e) {
+                    System.err.println("Erreur pendant compilation parallèle");
                     error = true;
                 }
             }
 
-            executor.shutdown();
-
-            } else {
+            executorService.shutdown();
+        } else {
             for (File source : options.getSourceFiles()) {
                 DecacCompiler compiler = new DecacCompiler(options, source);
                 if (compiler.compile()) {

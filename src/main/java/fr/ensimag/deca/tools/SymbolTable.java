@@ -25,7 +25,12 @@ public class SymbolTable {
      * this Symbol. Otherwise, create a new Symbol and add it to the table.
      */
     public Symbol create(String name) {
-        throw new UnsupportedOperationException("Symbol creation");
+        Symbol sym = map.get(name);
+        if (sym == null) {
+            sym = new Symbol(name);
+            map.put(name, sym);
+        }
+        return sym;
     }
 
     public static class Symbol {

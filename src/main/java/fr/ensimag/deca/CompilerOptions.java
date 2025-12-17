@@ -31,41 +31,87 @@ public class CompilerOptions {
     public boolean getPrintBanner() {
         return printBanner;
     }
+
+    public boolean getParseOption() {
+        return parseOption;
+    }
+
+    public boolean getVerificationOption() {
+        return verificationOption;
+    }
+
+    public boolean getNoCheckOption() {
+        return noCheckOption;
+    }
     
     public List<File> getSourceFiles() {
         return Collections.unmodifiableList(sourceFiles);
     }
 
+    public int getRegisterCount() { 
+        return registerCount; 
+    }
+
     private int debug = 0;
     private boolean parallel = false;
     private boolean printBanner = false;
+    private boolean parseOption = false;
+    private boolean verificationOption = false;
+    private boolean noCheckOption = false;
+    private int registerCount = 4; 
     private List<File> sourceFiles = new ArrayList<File>();
 
     
     public void parseArgs(String[] args) throws CLIException {
 
         // Parseur des arguments :
-        for (String arg : args) {
+        for (int i = 0 ; i < args.length ; ++i) {
+            String arg = args[i];
+
+            // -v pour --verification est déjà utilisé par -v de --verbose à demander
+            // au prof absolument sinon ne passe pas les tout premiers tests => note catastrophique
+            // J'ai remplacé par -d. Il faut répeter l'option plusieurs fois pour avoir 
+            // plus de trace comme demandé dans le pdf page 103
+
             switch (arg) {
-            case "-v":
-            case "--verbose":
-                debug = INFO;
-                break;
-            case "-vv":
+            case "-d":
             case "--debug":
-                debug = DEBUG;
-                break;
-            case "-vvv":
-            case "--trace":
-                debug = TRACE;
+                debug++;
+                if (debug > 3) debug = 3;
                 break;
             case "-b":
             case "--banner":
                 printBanner = true;
                 break;
-            case "-p":
+            case "-P":
             case "--parallel":
                 parallel = true;
+                break;
+            case "-p":
+            case "--parse":
+                parseOption = true;
+                break;
+            case "-v":
+            case "--verify":
+                verificationOption = true;
+                break;
+            case "-n":
+            case "--noCheck":
+                noCheckOption = true;
+                break;
+            case "-r":
+                if (i + 1 >= args.length) {
+                    throw new CLIException("-r necessite un int");
+                }
+                try {
+                    registerCount = Integer.parseInt(args[i + 1]);
+                } catch (NumberFormatException e) {
+                    throw new CLIException("Format int non correcte pour l'option -r");
+                }
+                if (registerCount < 4 || registerCount > 16) {
+                    throw new CLIException("Nombre de registre doit être compris entre 4 et 16");
+                }
+                i++;
                 break;
             default:
                 if (arg.startsWith("-")) {
@@ -99,10 +145,52 @@ public class CompilerOptions {
             logger.info("Java assertions disabled");
         }
 
-        throw new UnsupportedOperationException("not yet implemented");
-    }
+        if (args.length == 0) {
+            displayUsage();
+            System.exit(0);
+        }
 
+        if (parseOption && verificationOption) {
+            throw new CLIException("Les options -p et -v sont incompatibles");
+        }
+
+        if (printBanner) {
+            if (!sourceFiles.isEmpty() || parseOption || verificationOption
+                || noCheckOption || parallel || debug > 0) {
+                throw new CLIException("L’option'-b' ne peut être utilisée que sans autre option, et sans fichier source");
+            }
+        }
+
+        if (sourceFiles.isEmpty() && !printBanner) {
+            throw new CLIException("Aucun fichier source fourni");
+        }
+        // throw new UnsupportedOperationException("not yet implemented");
+    }
+    
     protected void displayUsage() {
-        throw new UnsupportedOperationException("not yet implemented");
+        System.err.println(
+            "La syntaxe d’utilisation de l’exécutable decac est :\n" +
+            "decac [[-p | -v] [-n] [-r X] [-d]* [-P] [-w] <fichier deca>...] | [-b]\n" +
+            "  -b        Affiche une bannière indiquant le nom de l'équipe\n" +
+            "  -p        Arrête decac après l'étape de construction de " + //
+                                "l'arbre, et affiche la décompilation de ce dernier " + //
+                                "(i.e. s'il n'y a qu'un fichier source à " + //
+                                "compiler, la sortie doit être un programme " + //
+                                "deca syntaxiquement correct)\n" +
+            "  -v        Arrête decac après l'étape de vérifications " + //
+                                "(ne produit aucune sortie en l'absence d'erreur)\n" +
+            "  -n        Supprime les tests à l'exécution spécifiés dans " + //
+                                "les points 11.1 et 11.3 de la sémantique de Deca.\n" +
+            "  -r X      Limite les registres banalisés disponibles à " + //
+                                "R0 ... R{X-1}, avec 4 <= X <= 16\n" +
+            "  -d        Active les traces de debug. Répéter " + //
+                                "l'option plusieurs fois pour avoir plus de " + //
+                                "traces.\n" +
+            "  -P        S'il y a plusieurs fichiers sources, " + //
+                                "lance la compilation des fichiers en " + //
+                                "parallèle (pour accélérer la compilation)\n" +
+            "  -w        Autorise l’affichage de messages d’avertissement (« warnings ») " + //
+                                "en cours de compilation."
+        );
     }
 }
