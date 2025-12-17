@@ -25,10 +25,26 @@ options {
 // which packages should be imported?
 @header {
     import fr.ensimag.deca.tree.*;
+    import fr.ensimag.deca.DecacCompiler;
     import java.io.PrintStream;
 }
 
 @members {
+    
+    private DecacCompiler compiler;
+
+    public void setCompiler(DecacCompiler compiler) {
+        this.compiler = compiler;
+    }
+
+    public DecacCompiler getCompiler() {
+        return compiler;
+    }
+
+    public void setDecacCompiler(DecacCompiler compiler) {
+        setCompiler(compiler);
+    }
+
     @Override
     protected AbstractProgram parseProgram() {
         return prog().tree;
@@ -36,13 +52,15 @@ options {
 }
 
 prog returns[AbstractProgram tree]
-    : list_classes main EOF {
+    : lc=list_classes m=main EOF {
             assert($list_classes.tree != null);
             assert($main.tree != null);
             $tree = new Program($list_classes.tree, $main.tree);
             setLocation($tree, $list_classes.start);
+
         }
     ;
+
 
 main returns[AbstractMain tree]
     : /* epsilon */ {
@@ -69,7 +87,9 @@ list_decl returns[ListDeclVar tree]
 @init   {
             $tree = new ListDeclVar();
         }
-    : decl_var_set[$tree]*
+    : decl_var_set[$tree]* {
+        setLocation($tree, $start);
+        }
     ;
 
 decl_var_set[ListDeclVar l]
@@ -87,12 +107,18 @@ list_decl_var[ListDeclVar l, AbstractIdentifier t]
 decl_var[AbstractIdentifier t] returns[AbstractDeclVar tree]
 @init   {
         }
-    : i=ident {
-        }
-      (EQUALS e=expr {
-        }
-      )? {
-        }
+    : i=ident
+    (EQUALS e=expr {
+            // assert($e.tree != null);
+            // $tree = new DeclVar(t, i.tree, e.tree);
+    }
+    | {
+        // Si on lit pas d'expression, e = null
+        // $tree = new DeclVar(t, i.tree, null); 
+    })
+    {
+        // setLocation($tree, i.start);
+    }
     ;
 
 list_inst returns[ListInst tree]
@@ -100,23 +126,29 @@ list_inst returns[ListInst tree]
     $tree = new ListInst();
 }
     : (inst {
-            if ($inst.tree != null) {
-                $tree.add($inst.tree);
-            }
+        $tree.add($inst.tree);
         }
       )*
+      {setLocation($tree, $start);
+      }
     ;
 
 inst returns[AbstractInst tree]
     : e1=expr SEMI {
-            assert($e1.tree != null);
+        System.out.println("Expression instruction");
+        assert($e1.tree != null);
         }
     | SEMI {
+        System.out.println("Empty instruction");
+        assert(true);
         }
     | PRINT OPARENT list_expr CPARENT SEMI {
             assert($list_expr.tree != null);
+            $tree = new Print(false, $list_expr.tree);
+            setLocation($tree, $PRINT);
         }
     | PRINTLN OPARENT list_expr CPARENT SEMI {
+            assert($list_expr.tree != null);
             $tree = new Println(false, $list_expr.tree);
             setLocation($tree, $PRINTLN);
         }
@@ -128,10 +160,13 @@ inst returns[AbstractInst tree]
         }
     | if_then_else {
             assert($if_then_else.tree != null);
+            $tree = $if_then_else.tree;
         }
     | WHILE OPARENT condition=expr CPARENT OBRACE body=list_inst CBRACE {
             assert($condition.tree != null);
             assert($body.tree != null);
+            $tree = new While($condition.tree, $body.tree);
+            setLocation($tree, $WHILE);
         }
     | RETURN expr SEMI {
             assert($expr.tree != null);
@@ -151,6 +186,7 @@ if_then_else returns[IfThenElse tree]
       )?
     ;
 
+
 list_expr returns[ListExpr tree]
 @init   {
             $tree = new ListExpr();
@@ -162,6 +198,7 @@ list_expr returns[ListExpr tree]
             $tree.add($e2.tree);
         }
        )* )?
+        { setLocation($tree, $start); }
     ;
 
 expr returns[AbstractExpr tree]
@@ -179,102 +216,157 @@ assign_expr returns[AbstractExpr tree]
 
 or_expr returns[AbstractExpr tree]
     : e=and_expr {
+            assert($e.tree != null);
             $tree = $e.tree;
         }
     | e1=or_expr OR e2=and_expr {
-            $tree = $e1.tree;
+            assert($e1.tree != null);
+            assert($e2.tree != null);
+            $tree = new Or($e1.tree, $e2.tree);
+            setLocation($tree, $OR);
        }
     ;
 
 and_expr returns[AbstractExpr tree]
     : e=eq_neq_expr {
+            assert($e.tree != null);
             $tree = $e.tree;
         }
     |  e1=and_expr AND e2=eq_neq_expr {
-            $tree = $e1.tree;
+            assert($e1.tree != null);                         
+            assert($e2.tree != null);
+            $tree = new And($e1.tree, $e2.tree);
+            setLocation($tree, $AND);
         }
     ;
 
 eq_neq_expr returns[AbstractExpr tree]
     : e=inequality_expr {
+            assert($e.tree != null);
             $tree = $e.tree;
         }
     | e1=eq_neq_expr EQEQ e2=inequality_expr {
-            $tree = $e1.tree;
+            assert($e1.tree != null);
+            assert($e2.tree != null);
+            $tree = new Equals($e1.tree, $e2.tree);
+            setLocation($tree, $EQEQ);
         }
     | e1=eq_neq_expr NEQ e2=inequality_expr {
-            $tree = $e1.tree;
+            assert($e1.tree != null);
+            assert($e2.tree != null);
+            $tree = new NotEquals($e1.tree, $e2.tree);
+            setLocation($tree, $NEQ);
         }
     ;
 
 inequality_expr returns[AbstractExpr tree]
     : e=sum_expr {
+            assert($e.tree != null);
             $tree = $e.tree;
         }
     | e1=inequality_expr LEQ e2=sum_expr {
-            $tree = $e1.tree;
+            assert($e1.tree != null);
+            assert($e2.tree != null);
+            $tree = new LowerOrEqual($e1.tree, $e2.tree);
+            setLocation($tree, $LEQ);
         }
     | e1=inequality_expr GEQ e2=sum_expr {
-            $tree = $e1.tree;
+            assert($e1.tree != null);
+            assert($e2.tree != null);
+            $tree = new GreaterOrEqual($e1.tree, $e2.tree);
+            setLocation($tree, $GEQ);
         }
     | e1=inequality_expr GT e2=sum_expr {
-            $tree = $e1.tree;
+            assert($e1.tree != null);
+            assert($e2.tree != null);
+            $tree = new Greater($e1.tree, $e2.tree);
+            setLocation($tree, $GT);
         }
     | e1=inequality_expr LT e2=sum_expr {
-            $tree = $e1.tree;
+            assert($e1.tree != null);
+            assert($e2.tree != null);
+            $tree = new Lower($e1.tree, $e2.tree);
+            setLocation($tree, $LT);
         }
     | e1=inequality_expr INSTANCEOF type {
-            $tree = $e1.tree;
+            assert($e1.tree != null);
+            assert($type.tree != null);
+            // $tree = new InstanceOf($e1.tree, $type.tree);
+            // setLocation($tree, $INSTANCEOF);
         }
     ;
 
 
 sum_expr returns[AbstractExpr tree]
     : e=mult_expr {
+            assert($e.tree != null);
             $tree = $e.tree;
         }
     | e1=sum_expr PLUS e2=mult_expr {
-            $tree = $e1.tree;
+            assert($e1.tree != null);
+            assert($e2.tree != null);
+            $tree = new Plus($e1.tree, $e2.tree);
+            setLocation($tree, $PLUS);
         }
     | e1=sum_expr MINUS e2=mult_expr {
-            $tree = $e1.tree;
+            assert($e1.tree != null);
+            assert($e2.tree != null);
+            // $tree = new Minus($e1.tree, $e2.tree);
+            // setLocation($tree, $MINUS);
         }
     ;
 
 mult_expr returns[AbstractExpr tree]
     : e=unary_expr {
-          $tree = $e.tree;
+            assert($e.tree != null);
+            $tree = $e.tree;
         }
     | e1=mult_expr TIMES e2=unary_expr {
-          $tree = $e1.tree;
+            assert($e1.tree != null);                                         
+            assert($e2.tree != null);
+            $tree = new Multiply($e1.tree, $e2.tree);
+            setLocation($tree, $TIMES);
         }
     | e1=mult_expr SLASH e2=unary_expr {
-            $tree = $e1.tree;
+            assert($e1.tree != null);                                         
+            assert($e2.tree != null);
+            $tree = new Divide($e1.tree, $e2.tree);
+            setLocation($tree, $SLASH);
         }
     | e1=mult_expr PERCENT e2=unary_expr {
-            $tree = $e1.tree;
+            assert($e1.tree != null);                                                                          
+            assert($e2.tree != null);
+            $tree = new Modulo($e1.tree, $e2.tree);
+            setLocation($tree, $PERCENT);
         }
     ;
 
 unary_expr returns[AbstractExpr tree]
     : op=MINUS e=unary_expr {
-            $tree = $e.tree;
+            assert($e.tree != null);
+            // $tree = new UnaryMinus($e.tree);
+            // setLocation($tree, $MINUS);
         }
     | op=EXCLAM e=unary_expr {
-            $tree = $e.tree;
+            assert($e.tree != null);
+            // $tree = new Not($e.tree);
+            // setLocation($tree, $EXCLAM);
         }
     | select_expr {
+            assert($select_expr.tree != null);
             $tree = $select_expr.tree;
         }
     ;
 
 select_expr returns[AbstractExpr tree]
     : e=primary_expr {
+            assert($e.tree != null);
             $tree = $e.tree;
         }
     | e1=select_expr DOT i=ident {
             assert($e1.tree != null);
             assert($i.tree != null);
+///////////////////
         }
         (o=OPARENT args=list_expr CPARENT {
             // we matched "e1.i(args)"
@@ -288,11 +380,13 @@ select_expr returns[AbstractExpr tree]
 
 primary_expr returns[AbstractExpr tree]
     : ident {
+            assert($ident.tree != null);
             $tree = $ident.tree;
         }
     | m=ident OPARENT args=list_expr CPARENT {
             assert($args.tree != null);
             assert($m.tree != null);
+
         }
     | OPARENT expr CPARENT {
             assert($expr.tree != null);
@@ -317,6 +411,7 @@ primary_expr returns[AbstractExpr tree]
 type returns[AbstractIdentifier tree]
     : ident {
             assert($ident.tree != null);
+            $tree = $ident.tree;
         }
     ;
 
@@ -326,26 +421,38 @@ literal returns[AbstractExpr tree]
         setLocation($tree, $INT);
         }
     | fd=FLOAT {
+        $tree = new FloatLiteral(Float.parseFloat($fd.text));
+        setLocation($tree, $fd);
         }
     | STRING {
         $tree = new StringLiteral($STRING.text);
         setLocation($tree, $STRING);
         }
+    // | INVALID_STRING {
+    //     throw new RuntimeException(
+    //         "Error: unterminated string at line " + $INVALID_STRING.getLine());
+    // }
     | TRUE {
+        $tree = new BooleanLiteral(true);
+        setLocation($tree, $TRUE);
         }
     | FALSE {
+        $tree = new BooleanLiteral(false);
+        setLocation($tree, $FALSE);
         }
     | THIS {
+
         }
     | NULL {
+
         }
     ;
 
 ident returns[AbstractIdentifier tree]
-    : IDENT {
-        $tree = new Identifier($IDENT.text);
-        setLocation($tree, $IDENT);
-      }
+    : i=IDENT {
+        $tree = new Identifier(getCompiler().createSymbol($i.text));
+        setLocation($tree, $i);
+        }
     ;
 
 /****     Class related rules     ****/
@@ -356,13 +463,19 @@ list_classes returns[ListDeclClass tree]
     }
     :
       (c1=class_decl {
+        assert($c1.tree != null);
+        $tree.add($c1.tree);
         }
       )*
     ;
 
-class_decl
-    : CLASS name=ident superclass=class_extension OBRACE class_body CBRACE {
-        }
+
+
+class_decl returns [AbstractDeclClass tree]
+    : CLASS ident OBRACE class_body CBRACE {
+        // $tree = new DeclClass($ident.tree, new ListDeclClass(), new ListDeclMethod());
+        // setLocation($tree, $CLASS);
+    }
     ;
 
 class_extension returns[AbstractIdentifier tree]
@@ -372,6 +485,8 @@ class_extension returns[AbstractIdentifier tree]
         }
     ;
 
+
+
 class_body
     : (m=decl_method {
         }
@@ -379,10 +494,11 @@ class_body
       )*
     ;
 
+
 decl_field_set
-    : v=visibility t=type list_decl_field
-      SEMI
+    : visibility type list_decl_field SEMI
     ;
+
 
 visibility
     : /* epsilon */ {
@@ -391,11 +507,13 @@ visibility
         }
     ;
 
+
 list_decl_field
     : dv1=decl_field
         (COMMA dv2=decl_field
       )*
     ;
+
 
 decl_field
     : i=ident {
@@ -405,6 +523,7 @@ decl_field
       )? {
         }
     ;
+
 
 decl_method
 @init {
@@ -421,8 +540,10 @@ list_params
     : (p1=param {
         } (COMMA p2=param {
         }
-      )*)?
+      )*)
+    | /* epsilon */
     ;
+
     
 multi_line_string returns[String text, Location location]
     : s=STRING {
@@ -437,5 +558,7 @@ multi_line_string returns[String text, Location location]
 
 param
     : type ident {
+        }
+    |  /* epsilon */ {
         }
     ;
