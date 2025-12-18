@@ -1,0 +1,12 @@
+// Description :
+//    Sélection de champ sur une expression de type boolean.
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne <No_de_ligne> : <message d'erreur de votre compilateur>
+
+{
+    boolean b = true;
+    int y = b.z;
+}
+

@@ -1,0 +1,14 @@
+// Description :
+//    Classe héritant d'une classe inexistante.
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne <No_de_ligne> : <message d'erreur de votre compilateur>
+
+class A extends UnknownClass {
+    int x;
+}
+
+{
+}
+

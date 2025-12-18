@@ -1,0 +1,19 @@
+// Description :
+//    Cycle d'héritage indirect entre trois classes.
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne <No_de_ligne> : <message d'erreur de votre compilateur>
+
+class A extends B {
+}
+
+class B extends C {
+}
+
+class C extends A {
+}
+
+{
+}
+

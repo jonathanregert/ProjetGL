@@ -1,0 +1,17 @@
+// Description :
+//    Méthode retournant un booléen.
+//
+// Resultats :
+//    OK
+
+class A {
+    boolean f() {
+        return true;
+    }
+}
+
+{
+    A a = new A();
+    println(a.f());
+}
+

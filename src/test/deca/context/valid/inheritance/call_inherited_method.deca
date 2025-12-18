@@ -1,0 +1,21 @@
+// Description :
+//    Appel d'une méthode héritée depuis une sous-classe.
+//
+// Resultats :
+//    OK
+
+class A {
+    int f() {
+        return 10;
+    }
+}
+
+class B extends A {
+    int g() {
+        return f();
+    }
+}
+
+{
+}
+

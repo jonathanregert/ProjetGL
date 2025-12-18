@@ -1,0 +1,21 @@
+// Description :
+//    Retour présent dans toutes les branches if / else.
+//
+// Resultats :
+//    OK
+
+class A {
+    int f(boolean b) {
+        if (b) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+}
+
+{
+    A a = new A();
+    println(a.f(false));
+}
+

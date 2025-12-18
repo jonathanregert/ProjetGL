@@ -1,0 +1,14 @@
+// Description :
+//    Déclaration d'un champ de type void.
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne <No_de_ligne> : <message d'erreur de votre compilateur>
+
+class A {
+    void x;
+}
+
+{
+}
+

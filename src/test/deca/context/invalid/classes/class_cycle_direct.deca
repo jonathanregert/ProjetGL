@@ -1,0 +1,14 @@
+// Description :
+//    Classe héritant d'elle-même directement.
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne <No_de_ligne> : <message d'erreur de votre compilateur>
+
+class A extends A {
+    int x;
+}
+
+{
+}
+

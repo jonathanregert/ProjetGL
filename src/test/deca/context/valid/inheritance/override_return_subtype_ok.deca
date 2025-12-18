@@ -1,0 +1,21 @@
+// Description :
+//    Redéfinition avec type de retour sous-type.
+//
+// Resultats :
+//    OK
+
+class A {
+    A f() {
+        return this;
+    }
+}
+
+class B extends A {
+    B f() {
+        return this;
+    }
+}
+
+{
+}
+

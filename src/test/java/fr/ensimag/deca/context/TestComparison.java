@@ -44,6 +44,7 @@ public class TestComparison {
 
         assertTrue(typeExpr.isBoolean(), "Le type devait être un bool");
         assertTrue(cmp.getLeftOperand() instanceof ConvFloat, "L'enrichissement sur ConvFloat n'est pas correct");
+        assertFalse(cmp.getRightOperand() instanceof ConvFloat, "L'enrichissement sur ConvFloat n'est pas correct");
 
         // check that the mocks have been called properly.
         verify(leftOperand).verifyExpr(compiler, null, null);
@@ -63,6 +64,7 @@ public class TestComparison {
 
         assertTrue(typeExpr.isBoolean(), "Le type devait être un bool");
         assertTrue(cmp.getRightOperand() instanceof ConvFloat, "L'enrichissement ConvFloat devait être sur l'opérande gauche");
+        assertFalse(cmp.getLeftOperand() instanceof ConvFloat, "L'enrichissement ConvFloat devait être sur l'opérande gauche");
 
         // check that the mocks have been called properly.
         verify(leftOperand).verifyExpr(compiler, null, null);

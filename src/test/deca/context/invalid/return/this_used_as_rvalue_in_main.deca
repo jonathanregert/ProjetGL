@@ -1,0 +1,11 @@
+// Description :
+//    Utilisation de this comme rvalue dans le bloc principal.
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne <No_de_ligne> : <message d'erreur de votre compilateur>
+
+{
+    int x = this;
+}
+

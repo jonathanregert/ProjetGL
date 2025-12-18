@@ -1,0 +1,12 @@
+// Description :
+//    Appel de méthode sur une expression de type float.
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne <No_de_ligne> : <message d'erreur de votre compilateur>
+
+{
+    float x = 1.0;
+    x.f();
+}
+

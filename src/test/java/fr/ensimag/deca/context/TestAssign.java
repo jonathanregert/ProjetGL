@@ -47,7 +47,7 @@ public class TestAssign {
         Type typeExpr = a.verifyExpr(compiler, null, null);
 
         assertTrue(typeExpr.isFloat(), "Le type devait être un float");
-        assertTrue(a.getRightOperand() instanceof ConvFloat, "L'enrichissement sur ConvFloat n'est pas correct");
+        assertTrue(a.getRightOperand() instanceof ConvFloat, "L'enrichissement ConvFloat n'est pas correct");
 
         // check that the mocks have been called properly.
         verify(leftOperand).verifyExpr(compiler, null, null);

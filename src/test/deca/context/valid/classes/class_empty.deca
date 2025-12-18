@@ -1,0 +1,12 @@
+// Description :
+//    Déclaration d'une classe vide sans champs ni méthodes.
+//
+// Resultats :
+//    OK
+
+class Empty {
+}
+
+{
+}
+

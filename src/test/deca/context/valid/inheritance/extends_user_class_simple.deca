@@ -1,0 +1,17 @@
+// Description :
+//    Classe étendant explicitement une autre classe utilisateur.
+//
+// Resultats :
+//    OK
+
+class A {
+    int x;
+}
+
+class B extends A {
+    int y;
+}
+
+{
+}
+

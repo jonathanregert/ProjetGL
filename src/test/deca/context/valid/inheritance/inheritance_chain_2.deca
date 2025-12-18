@@ -1,0 +1,21 @@
+// Description :
+//    Chaîne d'héritage de profondeur 2.
+//
+// Resultats :
+//    OK
+
+class A {
+    int x;
+}
+
+class B extends A {
+    int y;
+}
+
+class C extends B {
+    int z;
+}
+
+{
+}
+

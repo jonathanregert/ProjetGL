@@ -1,0 +1,17 @@
+// Description :
+//    Méthode retournant une expression entière.
+//
+// Resultats :
+//    OK
+
+class A {
+    int f(int x) {
+        return x + 2;
+    }
+}
+
+{
+    A a = new A();
+    println(a.f(3));
+}
+

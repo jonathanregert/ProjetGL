@@ -1,0 +1,22 @@
+// Description :
+//    Redéfinition d'une méthode avec un type de retour non sous-type.
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne <No_de_ligne> : <message d'erreur de votre compilateur>
+
+class A {
+    int f() {
+        return 1;
+    }
+}
+
+class B extends A {
+    float f() {
+        return 1.0;
+    }
+}
+
+{
+}
+
