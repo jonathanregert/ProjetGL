@@ -1,6 +1,7 @@
 package fr.ensimag.deca;
 
 import fr.ensimag.deca.context.EnvironmentType;
+import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.syntax.DecaLexer;
 import fr.ensimag.deca.syntax.DecaParser;
 import fr.ensimag.deca.tools.DecacInternalError;
@@ -56,6 +57,8 @@ public class DecacCompiler {
     public File getSource() {
         return source;
     }
+
+
 
     /**
      * Compilation options (e.g. when to stop compilation, number of registers
@@ -128,6 +131,13 @@ public class DecacCompiler {
     public Symbol createSymbol(String name) {
         return symbolTable.create(name);
     }
+
+    // Avoir les EnvType :
+    public EnvironmentType getEnvTypes() {
+        return environmentType;
+    }
+
+
 
     /**
      * Run the compiler (parse source file, generate code)

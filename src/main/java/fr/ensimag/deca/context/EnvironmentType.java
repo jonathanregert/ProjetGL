@@ -52,4 +52,14 @@ public class EnvironmentType {
     public final FloatType   FLOAT;
     public final StringType  STRING;
     public final BooleanType BOOLEAN;
+
+    public boolean isDeclared(Symbol name) {
+        return envTypes.containsKey(name);
+    }
+
+    public TypeDefinition get(Symbol s) {
+        return envTypes.get(s);
+    }
+
 }
+

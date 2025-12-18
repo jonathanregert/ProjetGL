@@ -11,6 +11,7 @@ import fr.ensimag.deca.context.FieldDefinition;
 import fr.ensimag.deca.context.MethodDefinition;
 import fr.ensimag.deca.context.ExpDefinition;
 import fr.ensimag.deca.context.VariableDefinition;
+import fr.ensimag.deca.context.TypeDefinition;
 import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
@@ -167,7 +168,16 @@ public class Identifier extends AbstractIdentifier {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+                ExpDefinition def = localEnv.get(getName()); //Type de la variable
+                if (def == null) {
+                    throw new ContextualError("Variable " + getName() + " non déclarée", getLocation());
+                }
+                if (def.isMethod()) {
+                    throw new ContextualError(getName() + " n'est pas une variable", getLocation());
+                }
+                Type type = def.getType();
+                setType(type);
+                return type;
     }
 
     /**
@@ -176,7 +186,15 @@ public class Identifier extends AbstractIdentifier {
      */
     @Override
     public Type verifyType(DecacCompiler compiler) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        Symbol symb = compiler.createSymbol(getName().toString());
+        TypeDefinition def = compiler.getEnvTypes().get(symb);
+        if (def == null) {
+            throw new ContextualError("Type " + getName() + " non déclaré", getLocation());
+        }
+        setDefinition(def);
+    
+    // Retourner le type
+        return def.getType();
     }
     
     
