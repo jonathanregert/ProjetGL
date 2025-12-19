@@ -1,0 +1,29 @@
+// Description :
+//    Chaîne d'appels de méthodes sur trois niveaux.
+//
+// Resultats :
+//    OK
+
+class C {
+    int h() {
+        return 4;
+    }
+}
+
+class B {
+    C getC() {
+        return new C();
+    }
+}
+
+class A {
+    B getB() {
+        return new B();
+    }
+}
+
+{
+    A a = new A();
+    println(a.getB().getC().h());
+}
+

@@ -1,0 +1,22 @@
+// Description :
+//    Redéfinition d'une méthode avec un type de paramètre différent.
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne <No_de_ligne> : <message d'erreur de votre compilateur>
+
+class A {
+    int f(int x) {
+        return x;
+    }
+}
+
+class B extends A {
+    int f(float x) {
+        return 0;
+    }
+}
+
+{
+}
+

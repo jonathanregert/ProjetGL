@@ -1,0 +1,15 @@
+// Description :
+//    Deux champs avec le même nom dans une même classe.
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne <No_de_ligne> : <message d'erreur de votre compilateur>
+
+class A {
+    int x;
+    float x;
+}
+
+{
+}
+

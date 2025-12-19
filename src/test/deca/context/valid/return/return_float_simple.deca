@@ -1,0 +1,17 @@
+// Description :
+//    Méthode retournant une valeur flottante simple.
+//
+// Resultats :
+//    OK
+
+class A {
+    float f() {
+        return 1.5;
+    }
+}
+
+{
+    A a = new A();
+    println(a.f());
+}
+

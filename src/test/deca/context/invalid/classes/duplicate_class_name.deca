@@ -1,0 +1,18 @@
+// Description :
+//    Deux classes portent le même nom.
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne <No_de_ligne> : <message d'erreur de votre compilateur>
+
+class A {
+    int x;
+}
+
+class A {
+    int y;
+}
+
+{
+}
+

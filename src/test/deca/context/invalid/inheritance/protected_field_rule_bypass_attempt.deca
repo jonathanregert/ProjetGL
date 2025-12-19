@@ -1,0 +1,20 @@
+// Description :
+//    Tentative de contournement des règles de visibilité protected.
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne <No_de_ligne> : <message d'erreur de votre compilateur>
+
+class A {
+protected int x;
+}
+
+class B extends A {
+    int get(A a) {
+        return a.x;
+    }
+}
+
+{
+}
+

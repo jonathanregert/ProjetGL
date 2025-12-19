@@ -1,0 +1,14 @@
+// Description :
+//    Classe ayant le même nom qu'un type prédéfini.
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne <No_de_ligne> : <message d'erreur de votre compilateur>
+
+class int {
+    int x;
+}
+
+{
+}
+

@@ -1,0 +1,18 @@
+// Description :
+//    Classe syntaxiquement correcte mais sémantiquement invalide.
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne <No_de_ligne> : <message d'erreur de votre compilateur>
+
+class A {
+    int x;
+
+    int f() {
+        return;
+    }
+}
+
+{
+}
+

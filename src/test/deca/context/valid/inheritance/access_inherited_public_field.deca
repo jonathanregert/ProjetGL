@@ -1,0 +1,19 @@
+// Description :
+//    Accès à un champ public hérité.
+//
+// Resultats :
+//    OK
+
+class A {
+    public int x;
+}
+
+class B extends A {
+    int f() {
+        return x;
+    }
+}
+
+{
+}
+

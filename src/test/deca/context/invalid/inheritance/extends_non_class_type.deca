@@ -1,0 +1,14 @@
+// Description :
+//    Classe héritant d'un type non classe.
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne <No_de_ligne> : <message d'erreur de votre compilateur>
+
+class A extends int {
+    int x;
+}
+
+{
+}
+
