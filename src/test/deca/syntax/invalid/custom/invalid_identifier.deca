@@ -1,0 +1,5 @@
+// Resultats :
+// Erreur contextuelle
+// Ligne 1 : identifiant invalide commençant par un chiffre
+
+int 1abc = 5;

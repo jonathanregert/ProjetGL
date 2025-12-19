@@ -1,0 +1,5 @@
+// Resultats :
+// Erreur contextuelle
+// Ligne 2 : chaîne non terminée
+
+String s = "Hello world;

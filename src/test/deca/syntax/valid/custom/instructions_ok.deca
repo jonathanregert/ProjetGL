@@ -1,0 +1,18 @@
+// Description :
+// Instructions syntaxiquement valides
+//
+// Resultats :
+// ok
+
+{
+    ;
+    print(1, 2 + 3);
+    if (true) {
+        print(4);
+    } else {
+        print(5);
+    }
+    while (true) {
+        ;
+    }
+}

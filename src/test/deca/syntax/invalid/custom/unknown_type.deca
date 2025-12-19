@@ -1,0 +1,5 @@
+// Resultats :
+// Erreur contextuelle
+// Ligne 2 : type inconnu 'myType'
+
+myType x = new myType();

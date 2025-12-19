@@ -1,0 +1,6 @@
+// Resultats :
+// Erreur contextuelle
+// Ligne 3 : instruction if incomplète
+
+if (true) {
+    int a = 5;
