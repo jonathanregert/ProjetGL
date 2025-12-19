@@ -50,12 +50,16 @@ public class StringLiteral extends AbstractStringLiteral {
 
     @Override
     protected void codeGenPrint(DecacCompiler compiler) {
-        compiler.addInstruction(new WSTR(new ImmediateString(value)));
+        String rawValue = value;
+        if (rawValue.startsWith("\"") && rawValue.endsWith("\"")) {
+            rawValue = rawValue.substring(1, rawValue.length() - 1);
+        }
+        compiler.addInstruction(new WSTR(new ImmediateString(rawValue)));
     }
 
     @Override
     public void decompile(IndentPrintStream s) {
-        s.print(value);
+        s.print("\"" + value + "\"");
     }
 
     @Override
