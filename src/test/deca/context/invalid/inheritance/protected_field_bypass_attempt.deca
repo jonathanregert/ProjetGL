@@ -1,0 +1,17 @@
+// Description :
+// accès illégal à un champ protected depuis une autre classe
+//
+// Resultats :
+// Erreur contextuelle
+// Ligne 12 : violation de visibilité protected
+
+class Parent {
+    protected int x;
+}
+
+class I {
+    void test() {
+        Parent p = new Parent();
+        int y = p.x; // doit échouer
+    }
+}

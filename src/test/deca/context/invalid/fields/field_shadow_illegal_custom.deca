@@ -1,0 +1,14 @@
+// Description :
+// redéclaration d'un champ existant dans une sous-classe
+//
+// Resultats :
+// Erreur contextuelle
+// Ligne 10 : champ déjà défini dans la classe parent
+
+class ParentField2 {
+    int a;
+}
+
+class M extends ParentField2 {
+    float a; // doit échouer
+}

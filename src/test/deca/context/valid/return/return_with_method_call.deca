@@ -1,0 +1,10 @@
+// Description :
+// Return d’un appel de méthode
+//
+// Resultats :
+// ok
+
+class b {
+    int helper() { return 3; }
+    int f() { return helper() + 2; }
+}

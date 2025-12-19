@@ -1,0 +1,12 @@
+// Description :
+// test de déclaration de deux classes avec le même nom
+//
+// Resultats :
+// Erreur contextuelle
+// Ligne 10 : nom de classe déjà utilisé
+
+class A {
+}
+
+class A { // doit échouer
+}

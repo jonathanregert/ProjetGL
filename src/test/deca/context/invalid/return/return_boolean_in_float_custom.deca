@@ -1,0 +1,12 @@
+// Description :
+// return boolean dans méthode float
+//
+// Resultats :
+// Erreur contextuelle
+// Ligne 6 : type de retour incompatible
+
+class P {
+    float f() {
+        return true;
+    }
+}

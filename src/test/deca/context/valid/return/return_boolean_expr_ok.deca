@@ -1,0 +1,7 @@
+// Description :
+// Return d’une expression booléenne
+//
+// Resultats :
+// ok
+
+class A { boolean f() { return true && false || true; } }

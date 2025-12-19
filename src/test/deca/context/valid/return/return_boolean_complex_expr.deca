@@ -1,0 +1,11 @@
+// Description :
+// Return d’une expression booléenne complexe combinant &&, ||, !
+//
+// Resultats :
+// ok
+
+class A {
+    boolean f(boolean a, boolean b, boolean c) {
+        return (a && b) || (!c && a) || (b && !a);
+    }
+}

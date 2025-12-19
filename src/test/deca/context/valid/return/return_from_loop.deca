@@ -1,0 +1,13 @@
+// Description :
+// Return après une boucle while
+//
+// Resultats :
+// ok
+
+class A {
+    int f() {
+        int i = 0;
+        while(i < 5) { i = i + 1; }
+        return i;
+    }
+}

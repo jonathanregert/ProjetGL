@@ -1,0 +1,9 @@
+// Description :
+// cycle direct dans l'héritage
+//
+// Resultats :
+// Erreur contextuelle
+// Ligne 5 : cycle d'héritage détecté
+
+class D extends D { // doit échouer
+}

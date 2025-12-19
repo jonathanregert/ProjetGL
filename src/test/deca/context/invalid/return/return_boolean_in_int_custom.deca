@@ -1,0 +1,12 @@
+// Description :
+// return d'un boolean dans méthode int
+//
+// Resultats :
+// Erreur contextuelle
+// Ligne 6 : type de retour incompatible
+
+class D {
+    int f() {
+        return true;
+    }
+}

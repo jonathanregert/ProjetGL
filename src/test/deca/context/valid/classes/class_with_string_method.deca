@@ -1,0 +1,12 @@
+// Description :
+// Classe avec champ string et méthode retournant string
+//
+// Resultats :
+// ok
+
+class E {
+    String s = "hello";
+    String Hello() {
+        return s;
+    }
+}

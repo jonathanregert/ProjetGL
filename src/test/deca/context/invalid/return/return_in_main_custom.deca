@@ -1,0 +1,12 @@
+// Description :
+// return dans la méthode main
+//
+// Resultats :
+// Erreur contextuelle
+// Ligne 5 : return illégal
+
+class E {
+    public static void main() {
+        return 0; // invalide
+    }
+}

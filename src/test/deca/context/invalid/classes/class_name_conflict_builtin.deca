@@ -1,0 +1,9 @@
+// Description :
+// nom de classe en conflit avec un mot clé ou type de base
+//
+// Resultats :
+// Erreur contextuelle
+// Ligne 5 : nom de classe interdit
+
+class int { // doit échouer
+}

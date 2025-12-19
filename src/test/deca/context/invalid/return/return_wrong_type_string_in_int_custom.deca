@@ -1,0 +1,12 @@
+// Description :
+// return d'un string dans méthode qui doit retourner int
+//
+// Resultats :
+// Erreur contextuelle
+// Ligne 7 : type de retour incorrect
+
+class R {
+    int f() {
+        return "hello"; // doit échouer
+    }
+}

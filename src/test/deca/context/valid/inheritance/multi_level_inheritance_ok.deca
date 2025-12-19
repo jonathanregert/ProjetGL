@@ -1,0 +1,11 @@
+// Description :
+// Héritage sur 3 niveaux avec appel de méthode héritée
+//
+// Resultats :
+// ok
+
+class J { int f() { return 1; } }
+class K extends J { }
+class L extends K {
+    int g() { return f() + 1; }
+}

@@ -1,0 +1,7 @@
+// Description :
+// Retourne this dans méthode de la classe
+//
+// Resultats :
+// ok
+
+class AF { AF f() { return this; } }
