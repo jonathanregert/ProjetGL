@@ -131,8 +131,8 @@ list_inst returns[ListInst tree]
 
 inst returns[AbstractInst tree]
     : e1=expr SEMI {
-        System.out.println("Expression instruction");
         assert($e1.tree != null);
+        $tree = $e1.tree;
         }
     | SEMI {
         System.out.println("Empty instruction");
@@ -204,10 +204,17 @@ expr returns[AbstractExpr tree]
         }
     ;
 
-assign_expr returns[AbstractExpr tree]
-    : e=or_expr {
-            $tree = $e.tree;
+assign_expr returns [AbstractExpr tree]
+    : e=or_expr 
+      ( EQUALS r=assign_expr { 
+          $tree = new Assign((AbstractLValue)$e.tree, $r.tree); 
+          setLocation($tree, $e.start);
         }
+      | /* epsilon */
+      {
+          $tree = $e.tree;
+        }
+      )
     ;
 
 or_expr returns[AbstractExpr tree]

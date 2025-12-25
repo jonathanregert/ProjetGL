@@ -29,7 +29,22 @@ public class Assign extends AbstractBinaryExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        // Partie gauche doit être une lvalue (p 58)
+        if (!(getLeftOperand() instanceof AbstractLValue)) {
+        throw new ContextualError("La partie gauche d'une affectation doit être une lvalue.",
+                getLeftOperand().getLocation());
+        }
+
+        Type typeGauche = getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
+        Type typeDroit = getRightOperand().verifyExpr(compiler, localEnv, currentClass);
+        if (!typeDroit.sameType(typeGauche)) {
+            throw new ContextualError("Incompatible types: cannot assign " +
+                    typeDroit.getName().getName() + " to " +
+                    typeGauche.getName().getName(), getLocation());
+        }
+        // Deco
+        this.setType(typeGauche);
+        return typeGauche;
     }
 
 
