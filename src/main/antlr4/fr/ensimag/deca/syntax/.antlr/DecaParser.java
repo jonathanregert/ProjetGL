@@ -1715,8 +1715,8 @@ public class DecaParser extends AbstractDecaParser {
 
 						                      assert(((Sum_exprContext)_localctx).e1.tree != null);
 						                      assert(((Sum_exprContext)_localctx).e2.tree != null);
-						                      // ((Sum_exprContext)_localctx).tree =  new Minus(((Sum_exprContext)_localctx).e1.tree, ((Sum_exprContext)_localctx).e2.tree);
-						                      // setLocation(_localctx.tree, ((Sum_exprContext)_localctx).MINUS);
+						                      ((Sum_exprContext)_localctx).tree =  new Minus(((Sum_exprContext)_localctx).e1.tree, ((Sum_exprContext)_localctx).e2.tree);
+						                      setLocation(_localctx.tree, ((Sum_exprContext)_localctx).MINUS);
 						                  
 						}
 						break;

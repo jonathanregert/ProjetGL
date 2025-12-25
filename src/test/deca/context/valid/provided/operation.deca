@@ -1,0 +1,7 @@
+{
+    int i = 5;
+    float j;
+    j = i - 1.5;
+    i = i + 15;
+    println(j + i);
+}

@@ -21,6 +21,39 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
-    }
+        Type typeGauche = this.getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
+        Type typeDroite = this.getRightOperand().verifyExpr(compiler, localEnv, currentClass);
+        // int et int -> int
+        if (typeGauche.isInt() && typeDroite.isInt()) {
+            this.setType(compiler.environmentType.INT);
+            return typeGauche;
+        }
+        // float et float -> float
+        else if (typeGauche.isFloat() && typeDroite.isFloat()) {
+        this.setType(typeGauche);
+        return typeGauche;
+        }
+        // float et int -> float
+        else if (typeGauche.isFloat() && typeDroite.isInt()) {
+        ConvFloat conv = new ConvFloat(this.getRightOperand()); // on transforme l'opérande droite : int -> float
+        conv.verifyExpr(compiler, localEnv, currentClass);
+        this.setRightOperand(conv);
+        this.setType(typeGauche);
+        return typeGauche;
+        }
+        // int et float -> float
+        // symetrique du cas précédent 
+        else if (typeGauche.isInt() && typeDroite.isFloat()) {
+        ConvFloat conv = new ConvFloat(this.getLeftOperand());
+        conv.verifyExpr(compiler, localEnv, currentClass); // Décore le ConvFloat
+        this.setLeftOperand(conv);
+        this.setType(typeDroite);
+        return typeDroite;
+        } 
+        // Cas d'erreur
+        else {
+            throw new ContextualError("Opération arithmétique impossible entre " + typeGauche + " et " + typeDroite,
+                    this.getLocation());
+        }
+            }
 }
