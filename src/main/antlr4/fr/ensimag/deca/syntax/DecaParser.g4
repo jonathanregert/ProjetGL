@@ -359,17 +359,14 @@ mult_expr returns[AbstractExpr tree]
 
 unary_expr returns[AbstractExpr tree]
     : op=MINUS e=unary_expr {
-            assert($e.tree != null);
-            // $tree = new UnaryMinus($e.tree);
-            // setLocation($tree, $MINUS);
+            $tree = new UnaryMinus($e.tree);
+            setLocation($tree, $op);
         }
     | op=EXCLAM e=unary_expr {
-            assert($e.tree != null);
-            // $tree = new Not($e.tree);
-            // setLocation($tree, $EXCLAM);
+            $tree = new Not($e.tree);
+            setLocation($tree, $op);
         }
     | select_expr {
-            assert($select_expr.tree != null);
             $tree = $select_expr.tree;
         }
     ;
@@ -380,9 +377,8 @@ select_expr returns[AbstractExpr tree]
             $tree = $e.tree;
         }
     | e1=select_expr DOT i=ident {
-            assert($e1.tree != null);
-            assert($i.tree != null);
-///////////////////
+            // assert($e1.tree != null);
+            // assert($i.tree != null);
         }
         (o=OPARENT args=list_expr CPARENT {
             // we matched "e1.i(args)"
@@ -396,7 +392,6 @@ select_expr returns[AbstractExpr tree]
 
 primary_expr returns[AbstractExpr tree]
     : ident {
-            assert($ident.tree != null);
             $tree = $ident.tree;
         }
     | m=ident OPARENT args=list_expr CPARENT {
@@ -406,10 +401,15 @@ primary_expr returns[AbstractExpr tree]
         }
     | OPARENT expr CPARENT {
             assert($expr.tree != null);
+            $tree = $expr.tree;
         }
-    | READINT OPARENT CPARENT {
+    | r=READINT OPARENT CPARENT {
+        $tree = new ReadInt();
+        setLocation($tree, $r);
         }
-    | READFLOAT OPARENT CPARENT {
+    | r=READFLOAT OPARENT CPARENT {
+        $tree = new ReadFloat();
+        setLocation($tree, $r);
         }
     | NEW ident OPARENT CPARENT {
             assert($ident.tree != null);

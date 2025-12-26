@@ -1924,9 +1924,8 @@ public class DecaParser extends AbstractDecaParser {
 				setState(367);
 				((Unary_exprContext)_localctx).e = unary_expr();
 
-				            assert(((Unary_exprContext)_localctx).e.tree != null);
-				            // ((Unary_exprContext)_localctx).tree =  new UnaryMinus(((Unary_exprContext)_localctx).e.tree);
-				            // setLocation(_localctx.tree, ((Unary_exprContext)_localctx).MINUS);
+				            ((Unary_exprContext)_localctx).tree =  new UnaryMinus(((Unary_exprContext)_localctx).e.tree);
+				            setLocation(_localctx.tree, ((Unary_exprContext)_localctx).op);
 				        
 				}
 				break;
@@ -1938,9 +1937,8 @@ public class DecaParser extends AbstractDecaParser {
 				setState(371);
 				((Unary_exprContext)_localctx).e = unary_expr();
 
-				            assert(((Unary_exprContext)_localctx).e.tree != null);
-				            // ((Unary_exprContext)_localctx).tree =  new Not(((Unary_exprContext)_localctx).e.tree);
-				            // setLocation(_localctx.tree, ((Unary_exprContext)_localctx).EXCLAM);
+				            ((Unary_exprContext)_localctx).tree =  new Not(((Unary_exprContext)_localctx).e.tree);
+				            setLocation(_localctx.tree, ((Unary_exprContext)_localctx).op);
 				        
 				}
 				break;
@@ -1961,7 +1959,6 @@ public class DecaParser extends AbstractDecaParser {
 				setState(374);
 				((Unary_exprContext)_localctx).select_expr = select_expr(0);
 
-				            assert(((Unary_exprContext)_localctx).select_expr.tree != null);
 				            ((Unary_exprContext)_localctx).tree =  ((Unary_exprContext)_localctx).select_expr.tree;
 				        
 				}
@@ -2053,9 +2050,8 @@ public class DecaParser extends AbstractDecaParser {
 					setState(385);
 					((Select_exprContext)_localctx).i = ident();
 
-					                      assert(((Select_exprContext)_localctx).e1.tree != null);
-					                      assert(((Select_exprContext)_localctx).i.tree != null);
-					          ///////////////////
+					                      // assert(((Select_exprContext)_localctx).e1.tree != null);
+					                      // assert(((Select_exprContext)_localctx).i.tree != null);
 					                  
 					setState(393);
 					_errHandler.sync(this);
@@ -2109,6 +2105,7 @@ public class DecaParser extends AbstractDecaParser {
 		public IdentContext m;
 		public List_exprContext args;
 		public ExprContext expr;
+		public Token r;
 		public Token cast;
 		public TypeContext type;
 		public LiteralContext literal;
@@ -2157,7 +2154,6 @@ public class DecaParser extends AbstractDecaParser {
 				setState(400);
 				((Primary_exprContext)_localctx).ident = ident();
 
-				            assert(((Primary_exprContext)_localctx).ident.tree != null);
 				            ((Primary_exprContext)_localctx).tree =  ((Primary_exprContext)_localctx).ident.tree;
 				        
 				}
@@ -2191,6 +2187,7 @@ public class DecaParser extends AbstractDecaParser {
 				match(CPARENT);
 
 				            assert(((Primary_exprContext)_localctx).expr.tree != null);
+				            ((Primary_exprContext)_localctx).tree =  ((Primary_exprContext)_localctx).expr.tree;
 				        
 				}
 				break;
@@ -2198,12 +2195,14 @@ public class DecaParser extends AbstractDecaParser {
 				enterOuterAlt(_localctx, 4);
 				{
 				setState(414);
-				match(READINT);
+				((Primary_exprContext)_localctx).r = match(READINT);
 				setState(415);
 				match(OPARENT);
 				setState(416);
 				match(CPARENT);
 
+				        ((Primary_exprContext)_localctx).tree =  new ReadInt();
+				        setLocation(_localctx.tree, ((Primary_exprContext)_localctx).r);
 				        
 				}
 				break;
@@ -2211,12 +2210,14 @@ public class DecaParser extends AbstractDecaParser {
 				enterOuterAlt(_localctx, 5);
 				{
 				setState(418);
-				match(READFLOAT);
+				((Primary_exprContext)_localctx).r = match(READFLOAT);
 				setState(419);
 				match(OPARENT);
 				setState(420);
 				match(CPARENT);
 
+				        ((Primary_exprContext)_localctx).tree =  new ReadFloat();
+				        setLocation(_localctx.tree, ((Primary_exprContext)_localctx).r);
 				        
 				}
 				break;
