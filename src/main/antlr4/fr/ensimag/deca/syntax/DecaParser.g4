@@ -155,7 +155,6 @@ inst returns[AbstractInst tree]
             assert($list_expr.tree != null);
         }
     | if_then_else {
-            assert($if_then_else.tree != null);
             $tree = $if_then_else.tree;
         }
     | WHILE OPARENT condition=expr CPARENT OBRACE body=list_inst CBRACE {
@@ -171,13 +170,27 @@ inst returns[AbstractInst tree]
 
 if_then_else returns[IfThenElse tree]
 @init {
+    IfThenElse currentIf = null;
 }
     : if1=IF OPARENT condition=expr CPARENT OBRACE li_if=list_inst CBRACE {
+        // premier if
+            $tree = new IfThenElse($condition.tree, $li_if.tree, new ListInst());
+            setLocation($tree, $if1);
+            currentIf = $tree;
         }
       (ELSE elsif=IF OPARENT elsif_cond=expr CPARENT OBRACE elsif_li=list_inst CBRACE {
+        IfThenElse newIf = new IfThenElse($elsif_cond.tree, $elsif_li.tree, new ListInst());
+            setLocation(newIf, $elsif);
+
+            ListInst li = new ListInst();
+            li.add(newIf);
+            currentIf.setElseBranch(li);
+
+            currentIf = newIf;
         }
       )*
       (ELSE OBRACE li_else=list_inst CBRACE {
+            currentIf.setElseBranch($li_else.tree);
         }
       )?
     ;

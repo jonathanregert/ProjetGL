@@ -771,7 +771,6 @@ public class DecaParser extends AbstractDecaParser {
 				setState(166);
 				((InstContext)_localctx).if_then_else = if_then_else();
 
-				            assert(((InstContext)_localctx).if_then_else.tree != null);
 				            ((InstContext)_localctx).tree =  ((InstContext)_localctx).if_then_else.tree;
 				        
 				}
@@ -886,6 +885,7 @@ public class DecaParser extends AbstractDecaParser {
 		If_then_elseContext _localctx = new If_then_elseContext(_ctx, getState());
 		enterRule(_localctx, 18, RULE_if_then_else);
 
+		    IfThenElse currentIf = null;
 
 		int _la;
 		try {
@@ -907,6 +907,10 @@ public class DecaParser extends AbstractDecaParser {
 			setState(191);
 			match(CBRACE);
 
+			        // premier if
+			            ((If_then_elseContext)_localctx).tree =  new IfThenElse(((If_then_elseContext)_localctx).condition.tree, ((If_then_elseContext)_localctx).li_if.tree, new ListInst());
+			            setLocation(_localctx.tree, ((If_then_elseContext)_localctx).if1);
+			            currentIf = _localctx.tree;
 			        
 			setState(205);
 			_errHandler.sync(this);
@@ -932,6 +936,14 @@ public class DecaParser extends AbstractDecaParser {
 					setState(200);
 					match(CBRACE);
 
+					        IfThenElse newIf = new IfThenElse(((If_then_elseContext)_localctx).elsif_cond.tree, ((If_then_elseContext)_localctx).elsif_li.tree, new ListInst());
+					            setLocation(newIf, ((If_then_elseContext)_localctx).elsif);
+
+					            ListInst li = new ListInst();
+					            li.add(newIf);
+					            currentIf.setElseBranch(li);
+
+					            currentIf = newIf;
 					        
 					}
 					} 
@@ -954,6 +966,7 @@ public class DecaParser extends AbstractDecaParser {
 				setState(211);
 				match(CBRACE);
 
+				            currentIf.setElseBranch(((If_then_elseContext)_localctx).li_else.tree);
 				        
 				}
 			}

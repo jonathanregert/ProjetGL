@@ -43,6 +43,13 @@ public class While extends AbstractInst {
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass, Type returnType)
             throws ContextualError {
+        // Vérification de la condition
+        Type condType = condition.verifyExpr(compiler, localEnv, currentClass);
+        if (!condType.isBoolean()) {
+            throw new ContextualError("La condition d'une instruction while doit être de type boolean.", condition.getLocation());
+        }
+        // Vérification du corps
+        body.verifyListInst(compiler, localEnv, currentClass, returnType);
     }
 
     @Override

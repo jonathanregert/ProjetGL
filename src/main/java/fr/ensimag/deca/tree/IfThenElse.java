@@ -29,11 +29,25 @@ public class IfThenElse extends AbstractInst {
         this.thenBranch = thenBranch;
         this.elseBranch = elseBranch;
     }
+
+    public void setElseBranch(ListInst elseBranch) {
+        org.apache.commons.lang.Validate.notNull(elseBranch);
+        this.elseBranch = elseBranch;
+    }
     
     @Override
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass, Type returnType)
             throws ContextualError {
+        // Vérification de la condition
+        Type condType = condition.verifyExpr(compiler, localEnv, currentClass);
+        if (!condType.isBoolean()) {
+            throw new ContextualError("La condition d'une instruction if doit être de type boolean.", condition.getLocation());
+        }
+        // Vérification du "then"
+        thenBranch.verifyListInst(compiler, localEnv, currentClass, returnType);
+        // Vérification du "else"
+        elseBranch.verifyListInst(compiler, localEnv, currentClass, returnType);
     }
 
     @Override

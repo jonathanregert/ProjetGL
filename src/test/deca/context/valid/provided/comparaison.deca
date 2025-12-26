@@ -1,0 +1,11 @@
+{
+   int x = 0;
+   while (x < 5) {
+      if (x == 2) {
+         println("C'est deux");
+      } else {
+         println(x);
+      }
+      x = x + 1;
+   }
+}

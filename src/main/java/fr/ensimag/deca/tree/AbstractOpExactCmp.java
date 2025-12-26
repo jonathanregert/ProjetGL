@@ -1,5 +1,10 @@
 package fr.ensimag.deca.tree;
 
+import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.context.ClassDefinition;
+import fr.ensimag.deca.context.ContextualError;
+import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.deca.context.Type;
 
 /**
  *
@@ -12,5 +17,35 @@ public abstract class AbstractOpExactCmp extends AbstractOpCmp {
         super(leftOperand, rightOperand);
     }
 
+    @Override
+    public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
+            ClassDefinition currentClass) throws ContextualError {
+        
+        Type typeGauche = getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
+        Type typeDroite = getRightOperand().verifyExpr(compiler, localEnv, currentClass);
+
+        Type boolType = compiler.environmentType.BOOLEAN;
+
+        // booléens
+        if (typeGauche.isBoolean() && typeDroite.isBoolean()) {
+            this.setType(boolType);
+            return boolType;
+        }
+
+        // Nombres (int ou float)
+        if ((typeGauche.isInt() || typeGauche.isFloat()) && (typeDroite.isInt() || typeDroite.isFloat())) {
+            if (typeGauche.isFloat() && typeDroite.isInt()) {
+                setRightOperand(new ConvFloat(getRightOperand()));
+                getRightOperand().verifyExpr(compiler, localEnv, currentClass);
+            } else if (typeGauche.isInt() && typeDroite.isFloat()) {
+                setLeftOperand(new ConvFloat(getLeftOperand()));
+                getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
+            }
+            this.setType(boolType);
+            return boolType;
+        }
+
+        throw new ContextualError("Types incompatibles pour la comparaison : " + typeGauche + " et " + typeDroite, getLocation());
+}
 
 }
