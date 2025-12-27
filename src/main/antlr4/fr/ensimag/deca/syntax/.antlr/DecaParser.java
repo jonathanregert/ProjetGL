@@ -457,6 +457,7 @@ public class DecaParser extends AbstractDecaParser {
 				setState(106);
 				((List_decl_varContext)_localctx).dv2 = decl_var(_localctx.t);
 
+				            _localctx.l.add(((List_decl_varContext)_localctx).dv2.tree);
 				        
 				}
 				}
