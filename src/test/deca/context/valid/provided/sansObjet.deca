@@ -1,0 +1,14 @@
+{
+    int i = readInt();
+    float f = 1; // Test conversion implicite
+    boolean b = (i > 0) && (f < 10.5);
+    
+    if (b) {
+        while (i > 0) {
+            println("Valeur : ", i);
+            i = i - 1;
+        }
+    } else {
+        printlnx("Hexa f : ", f);
+    }
+}

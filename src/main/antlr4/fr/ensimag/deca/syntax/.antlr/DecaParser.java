@@ -612,6 +612,8 @@ public class DecaParser extends AbstractDecaParser {
 		public Token PRINT;
 		public List_exprContext list_expr;
 		public Token PRINTLN;
+		public Token PRINTX;
+		public Token PRINTLNX;
 		public If_then_elseContext if_then_else;
 		public Token WHILE;
 		public ExprContext condition;
@@ -734,7 +736,7 @@ public class DecaParser extends AbstractDecaParser {
 				enterOuterAlt(_localctx, 5);
 				{
 				setState(152);
-				match(PRINTX);
+				((InstContext)_localctx).PRINTX = match(PRINTX);
 				setState(153);
 				match(OPARENT);
 				setState(154);
@@ -745,6 +747,8 @@ public class DecaParser extends AbstractDecaParser {
 				match(SEMI);
 
 				            assert(((InstContext)_localctx).list_expr.tree != null);
+				            ((InstContext)_localctx).tree =  new Print(true, ((InstContext)_localctx).list_expr.tree);
+				            setLocation(_localctx.tree, ((InstContext)_localctx).PRINTX);
 				        
 				}
 				break;
@@ -752,7 +756,7 @@ public class DecaParser extends AbstractDecaParser {
 				enterOuterAlt(_localctx, 6);
 				{
 				setState(159);
-				match(PRINTLNX);
+				((InstContext)_localctx).PRINTLNX = match(PRINTLNX);
 				setState(160);
 				match(OPARENT);
 				setState(161);
@@ -763,6 +767,8 @@ public class DecaParser extends AbstractDecaParser {
 				match(SEMI);
 
 				            assert(((InstContext)_localctx).list_expr.tree != null);
+				            ((InstContext)_localctx).tree =  new Println(true, ((InstContext)_localctx).list_expr.tree);
+				            setLocation(_localctx.tree, ((InstContext)_localctx).PRINTLNX);
 				        
 				}
 				break;
