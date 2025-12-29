@@ -22,9 +22,11 @@ public abstract class AbstractOpBool extends AbstractBinaryExpr {
             ClassDefinition currentClass) throws ContextualError {
         Type typeGauche = getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
         Type typeDroite = getRightOperand().verifyExpr(compiler, localEnv, currentClass);
+
         if (!typeGauche.isBoolean() || !typeDroite.isBoolean()) {
             throw new ContextualError("L'opérateur logique ne s'applique qu'aux booléens.", getLocation());
         }
+        
         Type boolType = compiler.environmentType.BOOLEAN;
         this.setType(boolType);
         return boolType;
