@@ -44,6 +44,8 @@ public class DecacCompiler {
      * Portable newline character.
      */
     private static final String nl = System.getProperty("line.separator", "\n");
+    private int labelId = 0; // pour generation de code et pouvoir jump au bon label : label_labelId
+
 
     public DecacCompiler(CompilerOptions compilerOptions, File source) {
         super();
@@ -58,6 +60,11 @@ public class DecacCompiler {
         return source;
     }
 
+
+    public int getLabelId()
+    {
+        return labelId++;
+    }
 
 
     /**

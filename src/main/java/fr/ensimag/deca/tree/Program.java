@@ -8,6 +8,9 @@ import fr.ensimag.ima.pseudocode.instructions.*;
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
+import fr.ensimag.ima.pseudocode.ImmediateInteger;
+import fr.ensimag.ima.pseudocode.Label;
+
 
 /**
  * Deca complete program (class definition plus main block)
@@ -56,8 +59,17 @@ public class Program extends AbstractProgram {
     public void codeGenProgram(DecacCompiler compiler) {
         // A FAIRE: compléter ce squelette très rudimentaire de code
         compiler.addComment("Main program");
+        compiler.addInstruction(new TSTO(0));
+        compiler.addInstruction(new BOV(new Label("pile_pleine")));
         main.codeGenMain(compiler);
         compiler.addInstruction(new HALT());
+        compiler.addComment("Message d'erreurs");
+        compiler.addLabel(new Label("pile_pleine"));
+        compiler.addInstruction(new WSTR("Erreur : debordement de pile"));
+        compiler.addInstruction(new WNL());
+        compiler.addInstruction(new ERROR());
+        compiler.addComment("Autres message d'erreurs");
+
     }
 
     @Override

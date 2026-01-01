@@ -8,8 +8,14 @@ import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
-import fr.ensimag.deca.context.Type;
+import fr.ensimag.ima.pseudocode.ImmediateInteger;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.ADDSP;
 
+
+import fr.ensimag.deca.context.Type;
+import fr.ensimag.deca.context.VariableDefinition;
 /**
  * @author gl42
  * @date 01/01/2026
@@ -43,7 +49,22 @@ public class Main extends AbstractMain {
     @Override
     protected void codeGenMain(DecacCompiler compiler) {
         // A FAIRE: traiter les déclarations de variables.
+        
         compiler.addComment("Beginning of main instructions:");
+
+        int nb = 0;
+        for (AbstractDeclVar decl : declVariables.getList()) {
+            VariableDefinition def =
+                (VariableDefinition) decl.getVarName().getExpDefinition();
+
+            def.setOperand(new RegisterOffset(nb + 1, Register.LB)); // 1(GB), 2(GB), ...
+            nb++;
+        }
+        // Réserve espace dans pile pour variables non initialisées
+        compiler.addInstruction(new ADDSP(new ImmediateInteger(nb)));
+
+        declVariables.codeGenListDeclVar(compiler);
+
         insts.codeGenListInst(compiler);
     }
     

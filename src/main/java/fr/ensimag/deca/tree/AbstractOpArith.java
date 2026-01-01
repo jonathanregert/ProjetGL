@@ -1,6 +1,9 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.Type;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.POP;
+import fr.ensimag.ima.pseudocode.instructions.PUSH;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
@@ -56,4 +59,17 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
                     this.getLocation());
         }
             }
+
+    @Override
+    protected void codeGenInst(DecacCompiler compiler) {
+        getLeftOperand().codeGenInst(compiler);
+        compiler.addInstruction(new PUSH(Register.R1));
+        getRightOperand().codeGenInst(compiler);
+        compiler.addInstruction(new POP(Register.getR(2)));
+
+        codeGenOperator(compiler);
+    }
+
+    protected abstract void codeGenOperator(DecacCompiler compiler);
+
 }

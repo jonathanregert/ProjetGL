@@ -1,0 +1,8 @@
+; start main program
+; Main program
+; Beginning of main instructions:
+	ADDSP #0
+	WSTR "Hello, world!"
+	WNL
+	HALT
+; end main program

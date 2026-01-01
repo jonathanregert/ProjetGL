@@ -8,6 +8,8 @@ import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.instructions.WFLOAT;
+import fr.ensimag.ima.pseudocode.instructions.WINT;
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
 
@@ -119,7 +121,14 @@ public abstract class AbstractExpr extends AbstractInst {
      */
     void verifyCondition(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+            
+            Type t = verifyExpr(compiler, localEnv, currentClass);
+            if (!t.isBoolean()) {
+            throw new ContextualError(
+                "La condition n'est pas un booléen : " + t,
+                getLocation()
+            );
+        }
     }
 
     /**
@@ -128,7 +137,18 @@ public abstract class AbstractExpr extends AbstractInst {
      * @param compiler
      */
     protected void codeGenPrint(DecacCompiler compiler) {
-        throw new UnsupportedOperationException("not yet implemented");
+        this.codeGenInst(compiler); // résultat dans R1
+        Type t = getType();
+
+        if (t.isInt() || t.isBoolean()) {
+            compiler.addInstruction(new WINT());
+        } else if (t.isFloat()) {
+            compiler.addInstruction(new WFLOAT());
+        } else {
+            throw new UnsupportedOperationException(
+                "print non supporté pour le type " + t
+            );
+        }
     }
 
     @Override

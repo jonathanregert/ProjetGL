@@ -52,7 +52,10 @@ public class DeclVar extends AbstractDeclVar {
     
     @Override
     public void decompile(IndentPrintStream s) {
-        throw new UnsupportedOperationException("not yet implemented");
+        type.decompile(s);
+        s.print(" ");
+        varName.decompile(s);
+        initialization.decompile(s);
     }
 
     @Override
@@ -69,4 +72,23 @@ public class DeclVar extends AbstractDeclVar {
         varName.prettyPrint(s, prefix, false);
         initialization.prettyPrint(s, prefix, true);
     }
+
+    @Override
+    public void codeGenDeclVar(DecacCompiler compiler) {
+        // pas d'initialisation
+        if (initialization instanceof NoInitialization) {
+            return;
+        }
+
+        // initialisation
+        initialization.codeGenInitialization(compiler, varName.getExpDefinition().getOperand());
+    }
+
+    @Override
+    public AbstractIdentifier getVarName()
+    {
+        return varName;
+    }
+
+
 }

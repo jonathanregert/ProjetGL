@@ -4,14 +4,15 @@ import fr.ensimag.deca.context.ClassType;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.deca.context.EnvironmentExp.DoubleDefException;
 import fr.ensimag.deca.context.EnvironmentType;
 import fr.ensimag.deca.context.TypeDefinition;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
-
+import fr.ensimag.deca.context.ClassDefinition;
 import java.io.PrintStream;
-import java.lang.instrument.ClassDefinition;
+// import java.lang.instrument.ClassDefinition;
 
 import org.apache.commons.lang.Validate;
 
@@ -30,8 +31,8 @@ public class DeclClass extends AbstractDeclClass {
 
     public DeclClass(AbstractIdentifier className, AbstractIdentifier classExtension, ListDeclField classFields, ListDeclMethod classMethods) {
 
-        Validate.notNull(ClassName);
-        Validate.notNull(ClassExtention);
+        Validate.notNull(className);
+        Validate.notNull(classExtension);
         Validate.notNull(classFields);
         Validate.notNull(classMethods);
 
@@ -68,6 +69,25 @@ public class DeclClass extends AbstractDeclClass {
             );
         }
 
+        TypeDefinition superClassDef = compiler.environmentType.get(ClassExtention.getName());
+        if (superClassDef == null || !superClassDef.getType().isClass()) {
+            throw new ContextualError(
+                "La super-classe " + ClassExtention.getName() + " n'est pas une classe", 
+                getLocation()
+            );
+        }
+
+        ClassType newClassType = new ClassType(ClassName.getName(), ClassName.getLocation(), (fr.ensimag.deca.context.ClassDefinition) superClassDef);
+        ClassDefinition newClassDef = newClassType.getDefinition();
+
+        try {
+        // On l'ajoute à l'environnement global des types
+        compiler.environmentType.declare(getName(), newClassDef);
+        } catch (EnvironmentType.DoubleDefException e) {
+        throw new ContextualError("Double définition de la classe " + ClassName.getName(), ClassName.getLocation());
+        }
+
+        ClassName.setDefinition(newClassDef); // deco        
 
         }
 

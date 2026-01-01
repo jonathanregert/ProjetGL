@@ -53,11 +53,10 @@ options {
 
 prog returns[AbstractProgram tree]
     : lc=list_classes m=main EOF {
-            assert($list_classes.tree != null);
-            assert($main.tree != null);
-            $tree = new Program($list_classes.tree, $main.tree);
-            setLocation($tree, $list_classes.start);
-
+            assert($lc.tree != null);
+            assert($m.tree != null);
+            $tree = new Program($lc.tree, $m.tree);
+            setLocation($tree, $lc.start);
         }
     ;
 
@@ -108,8 +107,12 @@ list_decl_var[ListDeclVar l, AbstractIdentifier t]
 decl_var[AbstractIdentifier t] returns[AbstractDeclVar tree]
 : i=ident
     ( EQUALS e=expr {
-            $tree = new DeclVar(t, $i.tree, new Initialization($e.tree));
+            Initialization init = new Initialization($e.tree);
+            setLocation(init, $e.start);
+
+            $tree = new DeclVar(t, $i.tree, init);
             setLocation($tree, $i.start);
+            
       }
     | {
             $tree = new DeclVar(t, $i.tree, new NoInitialization());
@@ -493,30 +496,44 @@ list_classes returns[ListDeclClass tree]
 
 
 class_decl returns [AbstractDeclClass tree]
-    : CLASS ident OBRACE class_body CBRACE {
-        // $tree = new DeclClass($ident.tree, new ListDeclClass(), new ListDeclMethod());
-        // setLocation($tree, $CLASS);
+    : CLASS nom=ident ext=class_extension OBRACE body=class_body CBRACE {
+        $tree = new DeclClass($nom.tree, $ext.tree, $body.fields, $body.methods);
+        setLocation($tree, $CLASS);
     }
     ;
 
 class_extension returns[AbstractIdentifier tree]
-    : EXTENDS ident {
+    : EXTENDS parent=ident {
+        $tree = new Identifier(compiler.createSymbol($parent.text));
+        setLocation($tree, $parent.start);
         }
     | /* epsilon */ {
+        $tree = new Identifier(compiler.createSymbol("Object"));
+        // no token then no setLocation 
         }
     ;
 
 
 
-class_body
-    : (m=decl_method {
-        }
-      | decl_field_set
-      )*
+class_body returns[ListDeclField fields, ListDeclMethod methods]
+    @init {
+        $fields = new ListDeclField();
+        $methods = new ListDeclMethod();
+    }
+    // : (m=decl_method {
+    //     $methods.add($m.tree);
+    //     }
+    //   | decl_field_set {
+    //     for (AbstractDeclField f : $decl_field_set.tree) {
+    //          $fields.add(f); 
+    //          }
+    //     }
+    //   )*
+    : /* epsilon */
     ;
 
 
-decl_field_set
+decl_field_set returns[ListDeclField tree]
     : visibility type list_decl_field SEMI
     ;
 

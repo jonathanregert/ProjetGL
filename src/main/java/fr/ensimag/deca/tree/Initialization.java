@@ -8,6 +8,10 @@ import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
+import fr.ensimag.ima.pseudocode.DAddr;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.STORE;
+
 
 /**
  * @author gl42
@@ -43,7 +47,9 @@ public class Initialization extends AbstractInitialization {
 
     @Override
     public void decompile(IndentPrintStream s) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        s.print(" = ");
+        expression.decompile(s);
+
     }
 
     @Override
@@ -56,4 +62,14 @@ public class Initialization extends AbstractInitialization {
     protected void prettyPrintChildren(PrintStream s, String prefix) {
         expression.prettyPrint(s, prefix, true);
     }
+
+    @Override
+    public void codeGenInitialization(DecacCompiler compiler, DAddr target) {
+        expression.codeGenInst(compiler);
+        // résultat dans R1
+        compiler.addInstruction(
+            new STORE(Register.R1, target)
+        );
+    }
+
 }

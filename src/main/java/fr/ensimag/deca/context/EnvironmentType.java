@@ -38,6 +38,13 @@ public class EnvironmentType {
         Symbol stringSymb = compiler.createSymbol("string");
         STRING = new StringType(stringSymb);
         // not added to envTypes, it's not visible for the user.
+
+
+        // Objet pour les classes
+        Symbol objectSymb = compiler.createSymbol("Object");
+        this.OBJECT = new ClassType(objectSymb, Location.BUILTIN, null);
+        ClassDefinition objectDef = this.OBJECT.getDefinition();
+        envTypes.put(objectSymb, objectDef);
         
     }
 
@@ -52,6 +59,7 @@ public class EnvironmentType {
     public final FloatType   FLOAT;
     public final StringType  STRING;
     public final BooleanType BOOLEAN;
+    public final ClassType OBJECT;
 
     public boolean isDeclared(Symbol name) {
         return envTypes.containsKey(name);
@@ -61,5 +69,17 @@ public class EnvironmentType {
         return envTypes.get(s);
     }
 
+    public void declare(Symbol name, TypeDefinition typeDef) throws DoubleDefException {
+        if (isDeclared(name)) {
+            throw new DoubleDefException("Type " + name + " déjà déclaré");
+        }
+        envTypes.put(name, typeDef);
+    }
+
+    public static class DoubleDefException extends Exception {
+        public DoubleDefException(String message) {
+            super(message);
+        }
+    }
 }
 

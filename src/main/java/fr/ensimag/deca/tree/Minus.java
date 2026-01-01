@@ -1,4 +1,7 @@
 package fr.ensimag.deca.tree;
+import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.SUB;
 
 
 /**
@@ -15,5 +18,12 @@ public class Minus extends AbstractOpArith {
     protected String getOperatorName() {
         return "-";
     }
-    
+
+    @Override
+    protected void codeGenOperator(DecacCompiler compiler) {
+        compiler.addInstruction(
+            new SUB(Register.getR(2), Register.R1)
+        );
+    }
+
 }

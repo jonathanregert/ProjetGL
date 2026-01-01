@@ -1,0 +1,10 @@
+{
+    int a = 3;
+    if (a < 5) {
+        a = 12;
+        print(a);
+    }
+    else {
+        print("faux");
+    }
+}

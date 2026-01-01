@@ -18,6 +18,10 @@ import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
+import fr.ensimag.ima.pseudocode.DAddr;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
+
 
 /**
  * Deca Identifier
@@ -175,6 +179,7 @@ public class Identifier extends AbstractIdentifier {
                 if (def.isMethod()) {
                     throw new ContextualError(getName() + " n'est pas une variable", getLocation());
                 }
+                setDefinition(def);
                 Type type = def.getType();
                 setType(type);
                 return type;
@@ -230,6 +235,21 @@ public class Identifier extends AbstractIdentifier {
             s.print(d);
             s.println();
         }
+    }
+    
+    @Override
+    protected DAddr codeGenAddr(DecacCompiler compiler) {
+        return ((VariableDefinition) getDefinition()).getOperand();
+    }
+
+    @Override
+    protected void codeGenInst(DecacCompiler compiler) {
+        compiler.addInstruction(
+            new LOAD(
+                getExpDefinition().getOperand(),
+                Register.R1
+            )
+        );
     }
 
 }
