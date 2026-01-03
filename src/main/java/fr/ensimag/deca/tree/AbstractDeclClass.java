@@ -36,9 +36,6 @@ public abstract class AbstractDeclClass extends Tree {
             throws ContextualError;
 
 
-    public Symbol getName() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getName'");
-    }
+    public abstract AbstractIdentifier getName();
 
 }
