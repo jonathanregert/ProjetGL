@@ -60,6 +60,16 @@ public class DeclClass extends AbstractDeclClass {
                 getLocation()
             );
         }
+        if (ClassName.getName().getName().equals("int") ||
+            ClassName.getName().getName().equals("float") ||
+            ClassName.getName().getName().equals("void") ||
+            ClassName.getName().getName().equals("boolean") ||
+            ClassName.getName().getName().equals("string")) {
+            throw new ContextualError(
+                    "Le nom de la classe " + ClassName.getName() + " est interdit", 
+                    getLocation()
+                );
+            }
 
         // La classe elle meme n'existe pas déjà
         if (compiler.environmentType.isDeclared(ClassName.getName())) {
