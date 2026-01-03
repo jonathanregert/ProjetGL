@@ -60,6 +60,16 @@ public class DeclClass extends AbstractDeclClass {
                 getLocation()
             );
         }
+        if (ClassName.getName().getName().equals("int") ||
+            ClassName.getName().getName().equals("float") ||
+            ClassName.getName().getName().equals("void") ||
+            ClassName.getName().getName().equals("boolean") ||
+            ClassName.getName().getName().equals("string")) {
+            throw new ContextualError(
+                    "Le nom de la classe " + ClassName.getName() + " est interdit", 
+                    getLocation()
+                );
+            }
 
         // La classe elle meme n'existe pas déjà
         if (compiler.environmentType.isDeclared(ClassName.getName())) {
@@ -93,7 +103,7 @@ public class DeclClass extends AbstractDeclClass {
 
         try {
         // On l'ajoute à l'environnement global des types
-        compiler.environmentType.declare(getName(), newClassDef);
+        compiler.environmentType.declare(ClassName.getName(), newClassDef);
         } catch (EnvironmentType.DoubleDefException e) {
         throw new ContextualError("Double définition de la classe " + ClassName.getName(), ClassName.getLocation());
         }
@@ -115,25 +125,19 @@ public class DeclClass extends AbstractDeclClass {
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
-        //if (classFields != null && !classFields.getList().isEmpty()) {
-          // s.println(prefix + "fields:");
-           // for (Tree f : classFields.getList()) {
-             //   f.prettyPrint(s, prefix + "  ", true, true);
-           //}
-        //}
+        s.println(prefix + "name:");
+        ClassName.prettyPrint(s, prefix + "  ", false);
 
-        //if (classMethods != null && !classMethods.getList().isEmpty()) {
-          //  s.println(prefix + "methods:");
-           // for (Tree m : classMethods.getList()) {
-             //   m.prettyPrint(s, prefix + "  ", true, true);
-           // }
-        //}
+        s.println(prefix + "extends:");
+        ClassExtention.prettyPrint(s, prefix + "  ", true);
     }
+
 
     @Override
-    public Symbol getName() {
-        return ClassName.getName();
+    public AbstractIdentifier getName() {
+        return ClassName;
     }
+
 
     @Override
     protected void iterChildren(TreeFunction f) {
