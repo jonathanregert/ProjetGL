@@ -102,7 +102,6 @@ public class DeclClass extends AbstractDeclClass {
         throw new UnsupportedOperationException("not yet implemented");
     }
 
-
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
         //if (classFields != null && !classFields.getList().isEmpty()) {
@@ -119,7 +118,11 @@ public class DeclClass extends AbstractDeclClass {
            // }
         //}
     }
-    
+
+    @Override
+    public Symbol getName() {
+        return ClassName.getName();
+    }
 
     @Override
     protected void iterChildren(TreeFunction f) {
