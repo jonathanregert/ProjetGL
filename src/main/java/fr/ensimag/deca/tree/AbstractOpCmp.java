@@ -47,12 +47,7 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
         setLeftOperand(new ConvFloat(getLeftOperand()));
         getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
         }
-        else if (!typeGauche.sameType(typeDroite)) {
-            throw new ContextualError("Incompatible types for comparison: " 
-                    + typeGauche.getName().getName() + " and " 
-                    + typeDroite.getName().getName(), 
-                    this.getLocation());
-        }
+        
         Type bool = compiler.environmentType.BOOLEAN;
         this.setType(bool);
         return bool;
