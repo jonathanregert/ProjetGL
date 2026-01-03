@@ -2582,7 +2582,14 @@ public class DecaParser extends AbstractDecaParser {
 			((Class_declContext)_localctx).body = class_body();
 			setState(476);
 			match(CBRACE);
-
+			ListDeclField fields = ((Class_declContext)_localctx).body.fields;
+            ListDeclMethod methods = ((Class_declContext)_localctx).body.methods;
+            if (fields == null) {
+                fields = new ListDeclField();
+            }
+            if (methods == null) {
+                methods = new ListDeclMethod();
+            }
 			        ((Class_declContext)_localctx).tree =  new DeclClass(((Class_declContext)_localctx).nom.tree, ((Class_declContext)_localctx).ext.tree, ((Class_declContext)_localctx).body.fields, ((Class_declContext)_localctx).body.methods);
 			        setLocation(_localctx.tree, ((Class_declContext)_localctx).CLASS);
 			    

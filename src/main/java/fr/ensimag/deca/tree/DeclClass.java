@@ -105,8 +105,21 @@ public class DeclClass extends AbstractDeclClass {
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
-        throw new UnsupportedOperationException("Not yet supported");
+        //if (classFields != null && !classFields.getList().isEmpty()) {
+          // s.println(prefix + "fields:");
+           // for (Tree f : classFields.getList()) {
+             //   f.prettyPrint(s, prefix + "  ", true, true);
+           //}
+        //}
+
+        //if (classMethods != null && !classMethods.getList().isEmpty()) {
+          //  s.println(prefix + "methods:");
+           // for (Tree m : classMethods.getList()) {
+             //   m.prettyPrint(s, prefix + "  ", true, true);
+           // }
+        //}
     }
+    
 
     @Override
     protected void iterChildren(TreeFunction f) {
