@@ -525,16 +525,11 @@ class_body returns[ListDeclField fields, ListDeclMethod methods]
         $fields = new ListDeclField();
         $methods = new ListDeclMethod();
     }
-    // : (m=decl_method {
-    //     $methods.add($m.tree);
-    //     }
-    //   | decl_field_set {
-    //     for (AbstractDeclField f : $decl_field_set.tree) {
-    //          $fields.add(f); 
-    //          }
-    //     }
-    //   )*
-    : /* epsilon */
+    : (m=decl_method {
+        }
+      | decl_field_set {
+        }
+      )*
     ;
 
 
