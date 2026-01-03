@@ -3,7 +3,11 @@
 //
 // Resultats :
 //    Erreur contextuelle
-//    Ligne <No_de_ligne> : <message d'erreur de votre compilateur>
+//    Ligne 15 : Classe B déjà déclarée
+
+class B {}
+
+class C {}
 
 class A extends B {
 }
