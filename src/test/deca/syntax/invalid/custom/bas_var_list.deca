@@ -1,0 +1,5 @@
+// Resultats :
+// Erreur contextuelle
+// Ligne 2 : déclaration de variable mal formée
+
+int a, , b;

@@ -1,0 +1,14 @@
+// Description :
+// override non conforme dans chaîne d'héritage
+//
+// Resultats :
+// Erreur contextuelle
+// Ligne 15 : signature incompatible avec méthode parent
+
+class G {
+    int f() { return 0; }
+}
+
+class H extends G {
+    float f() { return 0.0; } // doit échouer
+}

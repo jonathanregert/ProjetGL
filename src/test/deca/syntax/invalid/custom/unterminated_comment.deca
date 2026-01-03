@@ -1,0 +1,6 @@
+// Resultats :
+// Erreur contextuelle
+// Ligne 2 : commentaire non terminé
+
+/* ceci est un commentaire non terminé
+int x = 5;

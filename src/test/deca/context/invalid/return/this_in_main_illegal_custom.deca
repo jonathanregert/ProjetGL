@@ -1,0 +1,12 @@
+// Description :
+// utilisation de this dans la méthode main
+//
+// Resultats :
+// Erreur contextuelle
+// Ligne 6 : this interdit dans main
+
+class T {
+    public static void main() {
+        int x = this.hashCode(); // doit échouer
+    }
+}

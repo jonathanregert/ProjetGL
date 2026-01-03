@@ -1,0 +1,14 @@
+// Description :
+// Sous-classe accède à un champ public de la super-classe
+//
+// Resultats :
+// ok
+
+class F {
+    public int a = 10;
+}
+class G extends F {
+    void test() {
+        a = a + 1;
+    }
+}

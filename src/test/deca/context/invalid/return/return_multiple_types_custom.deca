@@ -1,0 +1,13 @@
+// Description :
+// return avec type variant selon la branche
+//
+// Resultats :
+// Erreur contextuelle
+// Ligne 6 : type de retour incompatible
+
+class G {
+    int f(boolean b) {
+        if (b) return 1;
+        else return true; // invalide
+    }
+}

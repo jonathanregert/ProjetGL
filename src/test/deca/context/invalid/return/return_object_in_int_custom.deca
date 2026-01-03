@@ -1,0 +1,13 @@
+// Description :
+// return d’un objet dans méthode int
+//
+// Resultats :
+// Erreur contextuelle
+// Ligne 7 : type de retour incompatible
+
+class H {}
+class I {
+    int f() {
+        return new H(); // invalide
+    }
+}

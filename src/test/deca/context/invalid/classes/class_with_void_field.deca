@@ -1,0 +1,10 @@
+// Description :
+// tentative de déclarer un champ de type void
+//
+// Resultats :
+// Erreur contextuelle
+// Ligne 5 : type void interdit pour un champ
+
+class B {
+    void v; // doit échouer
+}

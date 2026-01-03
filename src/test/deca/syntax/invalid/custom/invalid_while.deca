@@ -1,0 +1,7 @@
+// Resultats :
+// Erreur contextuelle
+// Ligne 2 : expression de condition manquante
+
+while () {
+    int x = 0;
+}

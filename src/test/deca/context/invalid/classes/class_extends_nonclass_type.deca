@@ -1,0 +1,9 @@
+// Description :
+// tentative d'héritage depuis un type non-class
+//
+// Resultats :
+// Erreur contextuelle
+// Ligne 5 : type parent invalide
+
+class C extends int { // doit échouer
+}

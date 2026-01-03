@@ -1,0 +1,15 @@
+// Description :
+// Declaration de classe simple
+//
+// Resultats :
+// ok
+
+class A {
+    int x;
+    int f() {
+        return 1;
+    }
+}
+
+{
+}

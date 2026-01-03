@@ -26,10 +26,7 @@ public class ConvFloat extends AbstractUnaryExpr {
             this.setType(compiler.environmentType.FLOAT);
             return this.getType();
         }
-        // Cas d'erreur
-        else {
-            throw new UnsupportedOperationException("ConvFloat can only convert int to float");
-        }
+        throw new ContextualError("Cannot convert non-int type to float", this.getLocation());
     }
 
 

@@ -1,0 +1,5 @@
+// Resultats :
+// Erreur contextuelle
+// Ligne 2 : assignation invalide à une expression
+
+5 = x;

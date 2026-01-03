@@ -1,0 +1,11 @@
+// Description :
+// Return d’une expression utilisant des champs
+//
+// Resultats :
+// ok
+
+class A {
+    int x = 2;
+    int y = 3;
+    int f() { return x + y * 2; }
+}

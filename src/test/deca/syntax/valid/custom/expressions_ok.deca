@@ -1,0 +1,9 @@
+// Description :
+// Expressions complexes avec priorites
+//
+// Resultats :
+// ok
+
+{
+    print(1 + 2 * 3 < 10 && true || false);
+}

@@ -1,0 +1,11 @@
+// Description :
+// Appels imbriqués de méthodes
+//
+// Resultats :
+// ok
+
+class AA {
+    int f() { return 1; }
+    int g() { return f() + 2; }
+    int h() { return g() + f(); }
+}

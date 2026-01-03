@@ -1,0 +1,6 @@
+// Resultats :
+// Erreur contextuelle
+// Ligne 3 : parenthèse fermante manquante
+
+int a = 5;
+int b = (a + 2;  // parenthèse fermante manquante

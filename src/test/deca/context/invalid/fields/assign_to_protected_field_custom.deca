@@ -1,0 +1,17 @@
+// Description :
+// tentative d'affecter un champ protected depuis une autre classe
+//
+// Resultats :
+// Erreur contextuelle
+// Ligne 12 : violation de visibilité protected
+
+class ParentField {
+    protected int val;
+}
+
+class J {
+    void test() {
+        ParentField p = new ParentField();
+        p.val = 42; // doit échouer
+    }
+}
