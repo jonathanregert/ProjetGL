@@ -588,7 +588,7 @@ list_params returns [ListDeclVar tree]
         $tree.add($p2.tree);
         }
       )*)
-    | /* epsilon */ {}
+    | /* epsilon */ 
     ;
 
     
@@ -607,8 +607,5 @@ param returns [AbstractDeclVar tree]
     : t=type id=ident {
         $tree = new DeclVar($t.tree, $id.tree, new NoInitialization());
         setLocation($tree, $id.start);
-        }
-    |  /* epsilon */ {
-        $tree = null;
         }
     ;
