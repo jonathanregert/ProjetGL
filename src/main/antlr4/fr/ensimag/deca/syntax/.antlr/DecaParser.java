@@ -1626,8 +1626,8 @@ public class DecaParser extends AbstractDecaParser {
 
 						                      assert(((Inequality_exprContext)_localctx).e1.tree != null);
 						                      assert(((Inequality_exprContext)_localctx).type.tree != null);
-						                      // ((Inequality_exprContext)_localctx).tree =  new InstanceOf(((Inequality_exprContext)_localctx).e1.tree, ((Inequality_exprContext)_localctx).type.tree);
-						                      // setLocation(_localctx.tree, ((Inequality_exprContext)_localctx).INSTANCEOF);
+						                      //((Inequality_exprContext)_localctx).tree =  new InstanceOf(((Inequality_exprContext)_localctx).e1.tree, ((Inequality_exprContext)_localctx).type.tree);
+						                      //setLocation(_localctx.tree, ((Inequality_exprContext)_localctx).INSTANCEOF);
 						                  
 						}
 						break;
@@ -2587,14 +2587,7 @@ public class DecaParser extends AbstractDecaParser {
 			((Class_declContext)_localctx).body = class_body();
 			setState(476);
 			match(CBRACE);
-			ListDeclField fields = ((Class_declContext)_localctx).body.fields;
-            ListDeclMethod methods = ((Class_declContext)_localctx).body.methods;
-            if (fields == null) {
-                fields = new ListDeclField();
-            }
-            if (methods == null) {
-                methods = new ListDeclMethod();
-            }
+
 			        ((Class_declContext)_localctx).tree =  new DeclClass(((Class_declContext)_localctx).nom.tree, ((Class_declContext)_localctx).ext.tree, ((Class_declContext)_localctx).body.fields, ((Class_declContext)_localctx).body.methods);
 			        setLocation(_localctx.tree, ((Class_declContext)_localctx).CLASS);
 			    
@@ -2673,6 +2666,19 @@ public class DecaParser extends AbstractDecaParser {
 	public static class Class_bodyContext extends ParserRuleContext {
 		public ListDeclField fields;
 		public ListDeclMethod methods;
+		public Decl_methodContext m;
+		public List<Decl_field_setContext> decl_field_set() {
+			return getRuleContexts(Decl_field_setContext.class);
+		}
+		public Decl_field_setContext decl_field_set(int i) {
+			return getRuleContext(Decl_field_setContext.class,i);
+		}
+		public List<Decl_methodContext> decl_method() {
+			return getRuleContexts(Decl_methodContext.class);
+		}
+		public Decl_methodContext decl_method(int i) {
+			return getRuleContext(Decl_methodContext.class,i);
+		}
 		public Class_bodyContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -2686,9 +2692,40 @@ public class DecaParser extends AbstractDecaParser {
 		        ((Class_bodyContext)_localctx).fields =  new ListDeclField();
 		        ((Class_bodyContext)_localctx).methods =  new ListDeclMethod();
 		    
+		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
+			setState(494);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			while (_la==PROTECTED || _la==IDENT) {
+				{
+				setState(492);
+				_errHandler.sync(this);
+				switch ( getInterpreter().adaptivePredict(_input,28,_ctx) ) {
+				case 1:
+					{
+					setState(486);
+					((Class_bodyContext)_localctx).m = decl_method();
+
+					        
+					}
+					break;
+				case 2:
+					{
+					setState(489);
+					decl_field_set();
+
+					        
+					}
+					break;
+				}
+				}
+				setState(496);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+			}
 			}
 		}
 		catch (RecognitionException re) {
@@ -2727,13 +2764,13 @@ public class DecaParser extends AbstractDecaParser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(488);
+			setState(497);
 			visibility();
-			setState(489);
+			setState(498);
 			type();
-			setState(490);
+			setState(499);
 			list_decl_field();
-			setState(491);
+			setState(500);
 			match(SEMI);
 			}
 		}
@@ -2761,7 +2798,7 @@ public class DecaParser extends AbstractDecaParser {
 		VisibilityContext _localctx = new VisibilityContext(_ctx, getState());
 		enterRule(_localctx, 60, RULE_visibility);
 		try {
-			setState(496);
+			setState(505);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case IDENT:
@@ -2774,7 +2811,7 @@ public class DecaParser extends AbstractDecaParser {
 			case PROTECTED:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(494);
+				setState(503);
 				match(PROTECTED);
 
 				        
@@ -2822,21 +2859,21 @@ public class DecaParser extends AbstractDecaParser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(498);
+			setState(507);
 			((List_decl_fieldContext)_localctx).dv1 = decl_field();
-			setState(503);
+			setState(512);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==COMMA) {
 				{
 				{
-				setState(499);
+				setState(508);
 				match(COMMA);
-				setState(500);
+				setState(509);
 				((List_decl_fieldContext)_localctx).dv2 = decl_field();
 				}
 				}
-				setState(505);
+				setState(514);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -2877,18 +2914,18 @@ public class DecaParser extends AbstractDecaParser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(506);
+			setState(515);
 			((Decl_fieldContext)_localctx).i = ident();
 
 			        
-			setState(512);
+			setState(521);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==EQUALS) {
 				{
-				setState(508);
+				setState(517);
 				match(EQUALS);
-				setState(509);
+				setState(518);
 				((Decl_fieldContext)_localctx).e = expr();
 
 				        
@@ -2953,22 +2990,22 @@ public class DecaParser extends AbstractDecaParser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(516);
+			setState(525);
 			type();
-			setState(517);
+			setState(526);
 			ident();
-			setState(518);
+			setState(527);
 			match(OPARENT);
-			setState(519);
+			setState(528);
 			((Decl_methodContext)_localctx).params = list_params();
-			setState(520);
+			setState(529);
 			match(CPARENT);
-			setState(531);
+			setState(540);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case OBRACE:
 				{
-				setState(521);
+				setState(530);
 				block();
 
 				        
@@ -2976,15 +3013,15 @@ public class DecaParser extends AbstractDecaParser {
 				break;
 			case ASM:
 				{
-				setState(524);
+				setState(533);
 				match(ASM);
-				setState(525);
+				setState(534);
 				match(OPARENT);
-				setState(526);
+				setState(535);
 				((Decl_methodContext)_localctx).code = multi_line_string();
-				setState(527);
+				setState(536);
 				match(CPARENT);
-				setState(528);
+				setState(537);
 				match(SEMI);
 
 				        
@@ -3033,32 +3070,32 @@ public class DecaParser extends AbstractDecaParser {
 		enterRule(_localctx, 68, RULE_list_params);
 		int _la;
 		try {
-			setState(547);
+			setState(556);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,33,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,35,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
 				{
-				setState(535);
+				setState(544);
 				((List_paramsContext)_localctx).p1 = param();
 
 				        
-				setState(543);
+				setState(552);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				while (_la==COMMA) {
 					{
 					{
-					setState(537);
+					setState(546);
 					match(COMMA);
-					setState(538);
+					setState(547);
 					((List_paramsContext)_localctx).p2 = param();
 
 					        
 					}
 					}
-					setState(545);
+					setState(554);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				}
@@ -3100,13 +3137,13 @@ public class DecaParser extends AbstractDecaParser {
 		Multi_line_stringContext _localctx = new Multi_line_stringContext(_ctx, getState());
 		enterRule(_localctx, 70, RULE_multi_line_string);
 		try {
-			setState(553);
+			setState(562);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case STRING:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(549);
+				setState(558);
 				((Multi_line_stringContext)_localctx).s = match(STRING);
 
 				            ((Multi_line_stringContext)_localctx).text =  (((Multi_line_stringContext)_localctx).s!=null?((Multi_line_stringContext)_localctx).s.getText():null);
@@ -3117,7 +3154,7 @@ public class DecaParser extends AbstractDecaParser {
 			case MULTI_LINE_STRING:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(551);
+				setState(560);
 				((Multi_line_stringContext)_localctx).s = match(MULTI_LINE_STRING);
 
 				            ((Multi_line_stringContext)_localctx).text =  (((Multi_line_stringContext)_localctx).s!=null?((Multi_line_stringContext)_localctx).s.getText():null);
@@ -3158,15 +3195,15 @@ public class DecaParser extends AbstractDecaParser {
 		ParamContext _localctx = new ParamContext(_ctx, getState());
 		enterRule(_localctx, 72, RULE_param);
 		try {
-			setState(560);
+			setState(569);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case IDENT:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(555);
+				setState(564);
 				type();
-				setState(556);
+				setState(565);
 				ident();
 
 				        
@@ -3281,7 +3318,7 @@ public class DecaParser extends AbstractDecaParser {
 	}
 
 	public static final String _serializedATN =
-		"\u0004\u00015\u0233\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002"+
+		"\u0004\u00015\u023c\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002"+
 		"\u0002\u0007\u0002\u0002\u0003\u0007\u0003\u0002\u0004\u0007\u0004\u0002"+
 		"\u0005\u0007\u0005\u0002\u0006\u0007\u0006\u0002\u0007\u0007\u0007\u0002"+
 		"\b\u0007\b\u0002\t\u0007\t\u0002\n\u0007\n\u0002\u000b\u0007\u000b\u0002"+
@@ -3353,52 +3390,53 @@ public class DecaParser extends AbstractDecaParser {
 		"\u0019\u0005\u0019\u01d3\b\u0019\n\u0019\f\u0019\u01d6\t\u0019\u0001\u001a"+
 		"\u0001\u001a\u0001\u001a\u0001\u001a\u0001\u001a\u0001\u001a\u0001\u001a"+
 		"\u0001\u001a\u0001\u001b\u0001\u001b\u0001\u001b\u0001\u001b\u0001\u001b"+
-		"\u0003\u001b\u01e5\b\u001b\u0001\u001c\u0001\u001c\u0001\u001d\u0001\u001d"+
-		"\u0001\u001d\u0001\u001d\u0001\u001d\u0001\u001e\u0001\u001e\u0001\u001e"+
-		"\u0003\u001e\u01f1\b\u001e\u0001\u001f\u0001\u001f\u0001\u001f\u0005\u001f"+
-		"\u01f6\b\u001f\n\u001f\f\u001f\u01f9\t\u001f\u0001 \u0001 \u0001 \u0001"+
-		" \u0001 \u0001 \u0003 \u0201\b \u0001 \u0001 \u0001!\u0001!\u0001!\u0001"+
-		"!\u0001!\u0001!\u0001!\u0001!\u0001!\u0001!\u0001!\u0001!\u0001!\u0001"+
-		"!\u0001!\u0003!\u0214\b!\u0001!\u0001!\u0001\"\u0001\"\u0001\"\u0001\""+
-		"\u0001\"\u0001\"\u0005\"\u021e\b\"\n\"\f\"\u0221\t\"\u0001\"\u0003\"\u0224"+
-		"\b\"\u0001#\u0001#\u0001#\u0001#\u0003#\u022a\b#\u0001$\u0001$\u0001$"+
-		"\u0001$\u0001$\u0003$\u0231\b$\u0001$\u0000\u0007\u001a\u001c\u001e \""+
-		"$(%\u0000\u0002\u0004\u0006\b\n\f\u000e\u0010\u0012\u0014\u0016\u0018"+
-		"\u001a\u001c\u001e \"$&(*,.02468:<>@BDFH\u0000\u0000\u0248\u0000J\u0001"+
-		"\u0000\u0000\u0000\u0002S\u0001\u0000\u0000\u0000\u0004U\u0001\u0000\u0000"+
-		"\u0000\u0006^\u0001\u0000\u0000\u0000\bc\u0001\u0000\u0000\u0000\ng\u0001"+
-		"\u0000\u0000\u0000\fr\u0001\u0000\u0000\u0000\u000e\u007f\u0001\u0000"+
-		"\u0000\u0000\u0010\u00b7\u0001\u0000\u0000\u0000\u0012\u00b9\u0001\u0000"+
-		"\u0000\u0000\u0014\u00e3\u0001\u0000\u0000\u0000\u0016\u00e7\u0001\u0000"+
-		"\u0000\u0000\u0018\u00ea\u0001\u0000\u0000\u0000\u001a\u00f2\u0001\u0000"+
-		"\u0000\u0000\u001c\u0100\u0001\u0000\u0000\u0000\u001e\u010e\u0001\u0000"+
-		"\u0000\u0000 \u0121\u0001\u0000\u0000\u0000\"\u0143\u0001\u0000\u0000"+
-		"\u0000$\u0156\u0001\u0000\u0000\u0000&\u0179\u0001\u0000\u0000\u0000("+
-		"\u017b\u0001\u0000\u0000\u0000*\u01b7\u0001\u0000\u0000\u0000,\u01b9\u0001"+
-		"\u0000\u0000\u0000.\u01ca\u0001\u0000\u0000\u00000\u01cc\u0001\u0000\u0000"+
-		"\u00002\u01d4\u0001\u0000\u0000\u00004\u01d7\u0001\u0000\u0000\u00006"+
-		"\u01e4\u0001\u0000\u0000\u00008\u01e6\u0001\u0000\u0000\u0000:\u01e8\u0001"+
-		"\u0000\u0000\u0000<\u01f0\u0001\u0000\u0000\u0000>\u01f2\u0001\u0000\u0000"+
-		"\u0000@\u01fa\u0001\u0000\u0000\u0000B\u0204\u0001\u0000\u0000\u0000D"+
-		"\u0223\u0001\u0000\u0000\u0000F\u0229\u0001\u0000\u0000\u0000H\u0230\u0001"+
-		"\u0000\u0000\u0000JK\u00032\u0019\u0000KL\u0003\u0002\u0001\u0000LM\u0005"+
-		"\u0000\u0000\u0001MN\u0006\u0000\uffff\uffff\u0000N\u0001\u0001\u0000"+
-		"\u0000\u0000OT\u0006\u0001\uffff\uffff\u0000PQ\u0003\u0004\u0002\u0000"+
-		"QR\u0006\u0001\uffff\uffff\u0000RT\u0001\u0000\u0000\u0000SO\u0001\u0000"+
-		"\u0000\u0000SP\u0001\u0000\u0000\u0000T\u0003\u0001\u0000\u0000\u0000"+
-		"UV\u0005$\u0000\u0000VW\u0003\u0006\u0003\u0000WX\u0003\u000e\u0007\u0000"+
-		"XY\u0005%\u0000\u0000YZ\u0006\u0002\uffff\uffff\u0000Z\u0005\u0001\u0000"+
-		"\u0000\u0000[]\u0003\b\u0004\u0000\\[\u0001\u0000\u0000\u0000]`\u0001"+
-		"\u0000\u0000\u0000^\\\u0001\u0000\u0000\u0000^_\u0001\u0000\u0000\u0000"+
-		"_a\u0001\u0000\u0000\u0000`^\u0001\u0000\u0000\u0000ab\u0006\u0003\uffff"+
-		"\uffff\u0000b\u0007\u0001\u0000\u0000\u0000cd\u0003,\u0016\u0000de\u0003"+
-		"\n\u0005\u0000ef\u0005(\u0000\u0000f\t\u0001\u0000\u0000\u0000gh\u0003"+
-		"\f\u0006\u0000ho\u0006\u0005\uffff\uffff\u0000ij\u0005)\u0000\u0000jk"+
-		"\u0003\f\u0006\u0000kl\u0006\u0005\uffff\uffff\u0000ln\u0001\u0000\u0000"+
-		"\u0000mi\u0001\u0000\u0000\u0000nq\u0001\u0000\u0000\u0000om\u0001\u0000"+
-		"\u0000\u0000op\u0001\u0000\u0000\u0000p\u000b\u0001\u0000\u0000\u0000"+
-		"qo\u0001\u0000\u0000\u0000rx\u00030\u0018\u0000st\u0005#\u0000\u0000t"+
-		"u\u0003\u0016\u000b\u0000uv\u0006\u0006\uffff\uffff\u0000vy\u0001\u0000"+
+		"\u0003\u001b\u01e5\b\u001b\u0001\u001c\u0001\u001c\u0001\u001c\u0001\u001c"+
+		"\u0001\u001c\u0001\u001c\u0005\u001c\u01ed\b\u001c\n\u001c\f\u001c\u01f0"+
+		"\t\u001c\u0001\u001d\u0001\u001d\u0001\u001d\u0001\u001d\u0001\u001d\u0001"+
+		"\u001e\u0001\u001e\u0001\u001e\u0003\u001e\u01fa\b\u001e\u0001\u001f\u0001"+
+		"\u001f\u0001\u001f\u0005\u001f\u01ff\b\u001f\n\u001f\f\u001f\u0202\t\u001f"+
+		"\u0001 \u0001 \u0001 \u0001 \u0001 \u0001 \u0003 \u020a\b \u0001 \u0001"+
+		" \u0001!\u0001!\u0001!\u0001!\u0001!\u0001!\u0001!\u0001!\u0001!\u0001"+
+		"!\u0001!\u0001!\u0001!\u0001!\u0001!\u0003!\u021d\b!\u0001!\u0001!\u0001"+
+		"\"\u0001\"\u0001\"\u0001\"\u0001\"\u0001\"\u0005\"\u0227\b\"\n\"\f\"\u022a"+
+		"\t\"\u0001\"\u0003\"\u022d\b\"\u0001#\u0001#\u0001#\u0001#\u0003#\u0233"+
+		"\b#\u0001$\u0001$\u0001$\u0001$\u0001$\u0003$\u023a\b$\u0001$\u0000\u0007"+
+		"\u001a\u001c\u001e \"$(%\u0000\u0002\u0004\u0006\b\n\f\u000e\u0010\u0012"+
+		"\u0014\u0016\u0018\u001a\u001c\u001e \"$&(*,.02468:<>@BDFH\u0000\u0000"+
+		"\u0253\u0000J\u0001\u0000\u0000\u0000\u0002S\u0001\u0000\u0000\u0000\u0004"+
+		"U\u0001\u0000\u0000\u0000\u0006^\u0001\u0000\u0000\u0000\bc\u0001\u0000"+
+		"\u0000\u0000\ng\u0001\u0000\u0000\u0000\fr\u0001\u0000\u0000\u0000\u000e"+
+		"\u007f\u0001\u0000\u0000\u0000\u0010\u00b7\u0001\u0000\u0000\u0000\u0012"+
+		"\u00b9\u0001\u0000\u0000\u0000\u0014\u00e3\u0001\u0000\u0000\u0000\u0016"+
+		"\u00e7\u0001\u0000\u0000\u0000\u0018\u00ea\u0001\u0000\u0000\u0000\u001a"+
+		"\u00f2\u0001\u0000\u0000\u0000\u001c\u0100\u0001\u0000\u0000\u0000\u001e"+
+		"\u010e\u0001\u0000\u0000\u0000 \u0121\u0001\u0000\u0000\u0000\"\u0143"+
+		"\u0001\u0000\u0000\u0000$\u0156\u0001\u0000\u0000\u0000&\u0179\u0001\u0000"+
+		"\u0000\u0000(\u017b\u0001\u0000\u0000\u0000*\u01b7\u0001\u0000\u0000\u0000"+
+		",\u01b9\u0001\u0000\u0000\u0000.\u01ca\u0001\u0000\u0000\u00000\u01cc"+
+		"\u0001\u0000\u0000\u00002\u01d4\u0001\u0000\u0000\u00004\u01d7\u0001\u0000"+
+		"\u0000\u00006\u01e4\u0001\u0000\u0000\u00008\u01ee\u0001\u0000\u0000\u0000"+
+		":\u01f1\u0001\u0000\u0000\u0000<\u01f9\u0001\u0000\u0000\u0000>\u01fb"+
+		"\u0001\u0000\u0000\u0000@\u0203\u0001\u0000\u0000\u0000B\u020d\u0001\u0000"+
+		"\u0000\u0000D\u022c\u0001\u0000\u0000\u0000F\u0232\u0001\u0000\u0000\u0000"+
+		"H\u0239\u0001\u0000\u0000\u0000JK\u00032\u0019\u0000KL\u0003\u0002\u0001"+
+		"\u0000LM\u0005\u0000\u0000\u0001MN\u0006\u0000\uffff\uffff\u0000N\u0001"+
+		"\u0001\u0000\u0000\u0000OT\u0006\u0001\uffff\uffff\u0000PQ\u0003\u0004"+
+		"\u0002\u0000QR\u0006\u0001\uffff\uffff\u0000RT\u0001\u0000\u0000\u0000"+
+		"SO\u0001\u0000\u0000\u0000SP\u0001\u0000\u0000\u0000T\u0003\u0001\u0000"+
+		"\u0000\u0000UV\u0005$\u0000\u0000VW\u0003\u0006\u0003\u0000WX\u0003\u000e"+
+		"\u0007\u0000XY\u0005%\u0000\u0000YZ\u0006\u0002\uffff\uffff\u0000Z\u0005"+
+		"\u0001\u0000\u0000\u0000[]\u0003\b\u0004\u0000\\[\u0001\u0000\u0000\u0000"+
+		"]`\u0001\u0000\u0000\u0000^\\\u0001\u0000\u0000\u0000^_\u0001\u0000\u0000"+
+		"\u0000_a\u0001\u0000\u0000\u0000`^\u0001\u0000\u0000\u0000ab\u0006\u0003"+
+		"\uffff\uffff\u0000b\u0007\u0001\u0000\u0000\u0000cd\u0003,\u0016\u0000"+
+		"de\u0003\n\u0005\u0000ef\u0005(\u0000\u0000f\t\u0001\u0000\u0000\u0000"+
+		"gh\u0003\f\u0006\u0000ho\u0006\u0005\uffff\uffff\u0000ij\u0005)\u0000"+
+		"\u0000jk\u0003\f\u0006\u0000kl\u0006\u0005\uffff\uffff\u0000ln\u0001\u0000"+
+		"\u0000\u0000mi\u0001\u0000\u0000\u0000nq\u0001\u0000\u0000\u0000om\u0001"+
+		"\u0000\u0000\u0000op\u0001\u0000\u0000\u0000p\u000b\u0001\u0000\u0000"+
+		"\u0000qo\u0001\u0000\u0000\u0000rx\u00030\u0018\u0000st\u0005#\u0000\u0000"+
+		"tu\u0003\u0016\u000b\u0000uv\u0006\u0006\uffff\uffff\u0000vy\u0001\u0000"+
 		"\u0000\u0000wy\u0006\u0006\uffff\uffff\u0000xs\u0001\u0000\u0000\u0000"+
 		"xw\u0001\u0000\u0000\u0000y\r\u0001\u0000\u0000\u0000z{\u0003\u0010\b"+
 		"\u0000{|\u0006\u0007\uffff\uffff\u0000|~\u0001\u0000\u0000\u0000}z\u0001"+
@@ -3601,49 +3639,55 @@ public class DecaParser extends AbstractDecaParser {
 		"\u0000\u01e0\u01e1\u00030\u0018\u0000\u01e1\u01e2\u0006\u001b\uffff\uffff"+
 		"\u0000\u01e2\u01e5\u0001\u0000\u0000\u0000\u01e3\u01e5\u0006\u001b\uffff"+
 		"\uffff\u0000\u01e4\u01df\u0001\u0000\u0000\u0000\u01e4\u01e3\u0001\u0000"+
-		"\u0000\u0000\u01e57\u0001\u0000\u0000\u0000\u01e6\u01e7\u0001\u0000\u0000"+
-		"\u0000\u01e79\u0001\u0000\u0000\u0000\u01e8\u01e9\u0003<\u001e\u0000\u01e9"+
-		"\u01ea\u0003,\u0016\u0000\u01ea\u01eb\u0003>\u001f\u0000\u01eb\u01ec\u0005"+
-		"(\u0000\u0000\u01ec;\u0001\u0000\u0000\u0000\u01ed\u01f1\u0006\u001e\uffff"+
-		"\uffff\u0000\u01ee\u01ef\u0005\u0011\u0000\u0000\u01ef\u01f1\u0006\u001e"+
-		"\uffff\uffff\u0000\u01f0\u01ed\u0001\u0000\u0000\u0000\u01f0\u01ee\u0001"+
-		"\u0000\u0000\u0000\u01f1=\u0001\u0000\u0000\u0000\u01f2\u01f7\u0003@ "+
-		"\u0000\u01f3\u01f4\u0005)\u0000\u0000\u01f4\u01f6\u0003@ \u0000\u01f5"+
-		"\u01f3\u0001\u0000\u0000\u0000\u01f6\u01f9\u0001\u0000\u0000\u0000\u01f7"+
-		"\u01f5\u0001\u0000\u0000\u0000\u01f7\u01f8\u0001\u0000\u0000\u0000\u01f8"+
-		"?\u0001\u0000\u0000\u0000\u01f9\u01f7\u0001\u0000\u0000\u0000\u01fa\u01fb"+
-		"\u00030\u0018\u0000\u01fb\u0200\u0006 \uffff\uffff\u0000\u01fc\u01fd\u0005"+
-		"#\u0000\u0000\u01fd\u01fe\u0003\u0016\u000b\u0000\u01fe\u01ff\u0006 \uffff"+
-		"\uffff\u0000\u01ff\u0201\u0001\u0000\u0000\u0000\u0200\u01fc\u0001\u0000"+
-		"\u0000\u0000\u0200\u0201\u0001\u0000\u0000\u0000\u0201\u0202\u0001\u0000"+
-		"\u0000\u0000\u0202\u0203\u0006 \uffff\uffff\u0000\u0203A\u0001\u0000\u0000"+
-		"\u0000\u0204\u0205\u0003,\u0016\u0000\u0205\u0206\u00030\u0018\u0000\u0206"+
-		"\u0207\u0005&\u0000\u0000\u0207\u0208\u0003D\"\u0000\u0208\u0213\u0005"+
-		"\'\u0000\u0000\u0209\u020a\u0003\u0004\u0002\u0000\u020a\u020b\u0006!"+
-		"\uffff\uffff\u0000\u020b\u0214\u0001\u0000\u0000\u0000\u020c\u020d\u0005"+
-		"\u0014\u0000\u0000\u020d\u020e\u0005&\u0000\u0000\u020e\u020f\u0003F#"+
-		"\u0000\u020f\u0210\u0005\'\u0000\u0000\u0210\u0211\u0005(\u0000\u0000"+
-		"\u0211\u0212\u0006!\uffff\uffff\u0000\u0212\u0214\u0001\u0000\u0000\u0000"+
-		"\u0213\u0209\u0001\u0000\u0000\u0000\u0213\u020c\u0001\u0000\u0000\u0000"+
-		"\u0214\u0215\u0001\u0000\u0000\u0000\u0215\u0216\u0006!\uffff\uffff\u0000"+
-		"\u0216C\u0001\u0000\u0000\u0000\u0217\u0218\u0003H$\u0000\u0218\u021f"+
-		"\u0006\"\uffff\uffff\u0000\u0219\u021a\u0005)\u0000\u0000\u021a\u021b"+
-		"\u0003H$\u0000\u021b\u021c\u0006\"\uffff\uffff\u0000\u021c\u021e\u0001"+
-		"\u0000\u0000\u0000\u021d\u0219\u0001\u0000\u0000\u0000\u021e\u0221\u0001"+
-		"\u0000\u0000\u0000\u021f\u021d\u0001\u0000\u0000\u0000\u021f\u0220\u0001"+
-		"\u0000\u0000\u0000\u0220\u0224\u0001\u0000\u0000\u0000\u0221\u021f\u0001"+
-		"\u0000\u0000\u0000\u0222\u0224\u0001\u0000\u0000\u0000\u0223\u0217\u0001"+
-		"\u0000\u0000\u0000\u0223\u0222\u0001\u0000\u0000\u0000\u0224E\u0001\u0000"+
-		"\u0000\u0000\u0225\u0226\u0005.\u0000\u0000\u0226\u022a\u0006#\uffff\uffff"+
-		"\u0000\u0227\u0228\u0005/\u0000\u0000\u0228\u022a\u0006#\uffff\uffff\u0000"+
-		"\u0229\u0225\u0001\u0000\u0000\u0000\u0229\u0227\u0001\u0000\u0000\u0000"+
-		"\u022aG\u0001\u0000\u0000\u0000\u022b\u022c\u0003,\u0016\u0000\u022c\u022d"+
-		"\u00030\u0018\u0000\u022d\u022e\u0006$\uffff\uffff\u0000\u022e\u0231\u0001"+
-		"\u0000\u0000\u0000\u022f\u0231\u0006$\uffff\uffff\u0000\u0230\u022b\u0001"+
-		"\u0000\u0000\u0000\u0230\u022f\u0001\u0000\u0000\u0000\u0231I\u0001\u0000"+
-		"\u0000\u0000$S^ox\u007f\u00b7\u00cd\u00d6\u00e0\u00e3\u00f0\u00fd\u010b"+
-		"\u011c\u011e\u013e\u0140\u0151\u0153\u0169\u016b\u0179\u0189\u018d\u01b7"+
-		"\u01ca\u01d4\u01e4\u01f0\u01f7\u0200\u0213\u021f\u0223\u0229\u0230";
+		"\u0000\u0000\u01e57\u0001\u0000\u0000\u0000\u01e6\u01e7\u0003B!\u0000"+
+		"\u01e7\u01e8\u0006\u001c\uffff\uffff\u0000\u01e8\u01ed\u0001\u0000\u0000"+
+		"\u0000\u01e9\u01ea\u0003:\u001d\u0000\u01ea\u01eb\u0006\u001c\uffff\uffff"+
+		"\u0000\u01eb\u01ed\u0001\u0000\u0000\u0000\u01ec\u01e6\u0001\u0000\u0000"+
+		"\u0000\u01ec\u01e9\u0001\u0000\u0000\u0000\u01ed\u01f0\u0001\u0000\u0000"+
+		"\u0000\u01ee\u01ec\u0001\u0000\u0000\u0000\u01ee\u01ef\u0001\u0000\u0000"+
+		"\u0000\u01ef9\u0001\u0000\u0000\u0000\u01f0\u01ee\u0001\u0000\u0000\u0000"+
+		"\u01f1\u01f2\u0003<\u001e\u0000\u01f2\u01f3\u0003,\u0016\u0000\u01f3\u01f4"+
+		"\u0003>\u001f\u0000\u01f4\u01f5\u0005(\u0000\u0000\u01f5;\u0001\u0000"+
+		"\u0000\u0000\u01f6\u01fa\u0006\u001e\uffff\uffff\u0000\u01f7\u01f8\u0005"+
+		"\u0011\u0000\u0000\u01f8\u01fa\u0006\u001e\uffff\uffff\u0000\u01f9\u01f6"+
+		"\u0001\u0000\u0000\u0000\u01f9\u01f7\u0001\u0000\u0000\u0000\u01fa=\u0001"+
+		"\u0000\u0000\u0000\u01fb\u0200\u0003@ \u0000\u01fc\u01fd\u0005)\u0000"+
+		"\u0000\u01fd\u01ff\u0003@ \u0000\u01fe\u01fc\u0001\u0000\u0000\u0000\u01ff"+
+		"\u0202\u0001\u0000\u0000\u0000\u0200\u01fe\u0001\u0000\u0000\u0000\u0200"+
+		"\u0201\u0001\u0000\u0000\u0000\u0201?\u0001\u0000\u0000\u0000\u0202\u0200"+
+		"\u0001\u0000\u0000\u0000\u0203\u0204\u00030\u0018\u0000\u0204\u0209\u0006"+
+		" \uffff\uffff\u0000\u0205\u0206\u0005#\u0000\u0000\u0206\u0207\u0003\u0016"+
+		"\u000b\u0000\u0207\u0208\u0006 \uffff\uffff\u0000\u0208\u020a\u0001\u0000"+
+		"\u0000\u0000\u0209\u0205\u0001\u0000\u0000\u0000\u0209\u020a\u0001\u0000"+
+		"\u0000\u0000\u020a\u020b\u0001\u0000\u0000\u0000\u020b\u020c\u0006 \uffff"+
+		"\uffff\u0000\u020cA\u0001\u0000\u0000\u0000\u020d\u020e\u0003,\u0016\u0000"+
+		"\u020e\u020f\u00030\u0018\u0000\u020f\u0210\u0005&\u0000\u0000\u0210\u0211"+
+		"\u0003D\"\u0000\u0211\u021c\u0005\'\u0000\u0000\u0212\u0213\u0003\u0004"+
+		"\u0002\u0000\u0213\u0214\u0006!\uffff\uffff\u0000\u0214\u021d\u0001\u0000"+
+		"\u0000\u0000\u0215\u0216\u0005\u0014\u0000\u0000\u0216\u0217\u0005&\u0000"+
+		"\u0000\u0217\u0218\u0003F#\u0000\u0218\u0219\u0005\'\u0000\u0000\u0219"+
+		"\u021a\u0005(\u0000\u0000\u021a\u021b\u0006!\uffff\uffff\u0000\u021b\u021d"+
+		"\u0001\u0000\u0000\u0000\u021c\u0212\u0001\u0000\u0000\u0000\u021c\u0215"+
+		"\u0001\u0000\u0000\u0000\u021d\u021e\u0001\u0000\u0000\u0000\u021e\u021f"+
+		"\u0006!\uffff\uffff\u0000\u021fC\u0001\u0000\u0000\u0000\u0220\u0221\u0003"+
+		"H$\u0000\u0221\u0228\u0006\"\uffff\uffff\u0000\u0222\u0223\u0005)\u0000"+
+		"\u0000\u0223\u0224\u0003H$\u0000\u0224\u0225\u0006\"\uffff\uffff\u0000"+
+		"\u0225\u0227\u0001\u0000\u0000\u0000\u0226\u0222\u0001\u0000\u0000\u0000"+
+		"\u0227\u022a\u0001\u0000\u0000\u0000\u0228\u0226\u0001\u0000\u0000\u0000"+
+		"\u0228\u0229\u0001\u0000\u0000\u0000\u0229\u022d\u0001\u0000\u0000\u0000"+
+		"\u022a\u0228\u0001\u0000\u0000\u0000\u022b\u022d\u0001\u0000\u0000\u0000"+
+		"\u022c\u0220\u0001\u0000\u0000\u0000\u022c\u022b\u0001\u0000\u0000\u0000"+
+		"\u022dE\u0001\u0000\u0000\u0000\u022e\u022f\u0005.\u0000\u0000\u022f\u0233"+
+		"\u0006#\uffff\uffff\u0000\u0230\u0231\u0005/\u0000\u0000\u0231\u0233\u0006"+
+		"#\uffff\uffff\u0000\u0232\u022e\u0001\u0000\u0000\u0000\u0232\u0230\u0001"+
+		"\u0000\u0000\u0000\u0233G\u0001\u0000\u0000\u0000\u0234\u0235\u0003,\u0016"+
+		"\u0000\u0235\u0236\u00030\u0018\u0000\u0236\u0237\u0006$\uffff\uffff\u0000"+
+		"\u0237\u023a\u0001\u0000\u0000\u0000\u0238\u023a\u0006$\uffff\uffff\u0000"+
+		"\u0239\u0234\u0001\u0000\u0000\u0000\u0239\u0238\u0001\u0000\u0000\u0000"+
+		"\u023aI\u0001\u0000\u0000\u0000&S^ox\u007f\u00b7\u00cd\u00d6\u00e0\u00e3"+
+		"\u00f0\u00fd\u010b\u011c\u011e\u013e\u0140\u0151\u0153\u0169\u016b\u0179"+
+		"\u0189\u018d\u01b7\u01ca\u01d4\u01e4\u01ec\u01ee\u01f9\u0200\u0209\u021c"+
+		"\u0228\u022c\u0232\u0239";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
