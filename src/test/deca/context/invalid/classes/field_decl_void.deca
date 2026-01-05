@@ -3,7 +3,7 @@
 //
 // Resultats :
 //    Erreur contextuelle
-//    Ligne <No_de_ligne> : <message d'erreur de votre compilateur>
+//    Ligne 9 : Un champ ne peut pas être de type void
 
 class A {
     void x;

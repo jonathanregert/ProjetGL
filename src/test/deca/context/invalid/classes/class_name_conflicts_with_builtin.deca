@@ -3,7 +3,7 @@
 //
 // Resultats :
 //    Erreur contextuelle
-//    Ligne <No_de_ligne> : <message d'erreur de votre compilateur>
+//    Ligne 8 : Le nom de la classe int est interdit
 
 class int {
     int x;

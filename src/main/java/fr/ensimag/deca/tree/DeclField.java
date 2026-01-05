@@ -52,6 +52,12 @@ public class DeclField extends AbstractDeclField {
     int index = currentClass.getNumberOfFields() + 1;
     currentClass.setNumberOfFields(index);
 
+    // si ca existe déjà dans la classe courante ou héritée
+    if (currentClass.getMembers().get(name) != null) {
+        throw new ContextualError("Le champ " + name + " est déjà défini dans cette classe ou hérité", 
+                fieldName.getLocation());
+    }
+
     // fieldDef : type, nom, visibilité, classe courante, index
     FieldDefinition fieldDef = new FieldDefinition(t, fieldName.getLocation(), 
                                                    visibility, currentClass, index);
@@ -67,6 +73,7 @@ public class DeclField extends AbstractDeclField {
     try {
         currentClass.getMembers().declare(name, fieldDef);
     } catch (EnvironmentExp.DoubleDefException e) {
+        // jamais arrivé ici, mais pour sécuriser
         throw new ContextualError("Double définition du champ " + name, fieldName.getLocation());
     }
 
