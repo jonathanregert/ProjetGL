@@ -139,8 +139,8 @@ inst returns[AbstractInst tree]
         $tree = $e1.tree;
         }
     | SEMI {
-        System.out.println("Empty instruction");
-        assert(true);
+        $tree = new NoOperation();
+        setLocation($tree, $SEMI);
         }
     | PRINT OPARENT list_expr CPARENT SEMI {
             assert($list_expr.tree != null);
@@ -173,6 +173,8 @@ inst returns[AbstractInst tree]
         }
     | RETURN expr SEMI {
             assert($expr.tree != null);
+            //$tree = new Return($expr.tree);
+            //setLocation($tree, $RETURN);
         }
     ;
 
