@@ -5,6 +5,8 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
 
+import org.apache.commons.lang.Validate;
+
 /**
  * Empty main Deca program
  *
@@ -12,9 +14,21 @@ import java.io.PrintStream;
  * @date 01/01/2026
  */
 public class EmptyMain extends AbstractMain {
+    private final ListInst listInst;
+
+    public EmptyMain(ListInst listInst) {
+        Validate.notNull(listInst);
+        this.listInst = listInst;
+    }
+
+    public EmptyMain() {
+    this.listInst = new ListInst(); // une liste vide
+}
+
+
     @Override
     protected void verifyMain(DecacCompiler compiler) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+       getListInst().verifyListInst(compiler, null, null, null);
     }
 
     @Override
@@ -22,6 +36,9 @@ public class EmptyMain extends AbstractMain {
         throw new UnsupportedOperationException("not yet implemented");
     }
 
+    public ListInst getListInst() {
+        return listInst;
+    }
     /**
      * Contains no real information => nothing to check.
      */
@@ -32,16 +49,20 @@ public class EmptyMain extends AbstractMain {
     
     @Override
     public void decompile(IndentPrintStream s) {
-        // no main program => nothing
+        s.print("{\n");
+        s.indent();
+        listInst.decompile(s);
+        s.unindent();
+        s.print("}");
     }
 
     @Override
     protected void iterChildren(TreeFunction f) {
-        // leaf node => nothing to do
+         listInst.iter(f);
     }
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
-        // leaf node => nothing to do
+       listInst.prettyPrint(s, prefix, true);
     }
 }

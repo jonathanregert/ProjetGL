@@ -74,6 +74,10 @@ main returns[AbstractMain tree]
     ;
 
 block returns[ListDeclVar decls, ListInst insts]
+@init {
+    $decls = new ListDeclVar();
+    $insts = new ListInst();
+    }
     : OBRACE list_decl list_inst CBRACE {
             assert($list_decl.tree != null);
             assert($list_inst.tree != null);
@@ -173,8 +177,8 @@ inst returns[AbstractInst tree]
         }
     | RETURN expr SEMI {
             assert($expr.tree != null);
-            //$tree = new Return($expr.tree);
-            //setLocation($tree, $RETURN);
+            $tree = new Return($expr.tree);
+            setLocation($tree, $RETURN);
         }
     ;
 
