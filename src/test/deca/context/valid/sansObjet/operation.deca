@@ -1,3 +1,9 @@
+// Description :
+//    Opérations arithmétiques mixtes entre int et float.
+//
+// Resultats :
+// ok
+
 {
     int i = 5;
     float j;

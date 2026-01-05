@@ -1,3 +1,9 @@
+// Description :
+//    Test de l'opérateur unaire '-' appliqué à un float.
+//
+// Resultats :
+// ok
+
 {
     int i = 10;
     float f = 3.14;

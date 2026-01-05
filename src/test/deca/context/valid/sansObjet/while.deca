@@ -1,4 +1,8 @@
-// test while 
+// Description :
+//    Boucle while simple jusqu'à une condition donnée.
+//
+// Resultats :
+// ok
 
 {
     int i = 0;
