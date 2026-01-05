@@ -231,7 +231,10 @@
                     <execution>
                         <id>basic-context</id>
                         <configuration>
-                            <executable>./src/test/script/basic-context.sh</executable>
+                        
+                            <executable>${exec.executable}</executable>
+                            <!-- <executable>./src/test/script/basic-context.sh</executable> -->
+
                         </configuration>
                         <phase>test</phase>
                         <goals>
