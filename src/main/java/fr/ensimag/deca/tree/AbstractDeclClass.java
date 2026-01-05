@@ -37,5 +37,6 @@ public abstract class AbstractDeclClass extends Tree {
 
 
     public abstract AbstractIdentifier getName();
+    
 
 }

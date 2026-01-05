@@ -29,6 +29,8 @@ public class DeclClass extends AbstractDeclClass {
     private ListDeclField classFields;
     private ListDeclMethod classMethods;
 
+    private ClassDefinition classDefinition;
+
     public DeclClass(AbstractIdentifier className, AbstractIdentifier classExtension, ListDeclField classFields, ListDeclMethod classMethods) {
 
         Validate.notNull(className);
@@ -90,37 +92,46 @@ public class DeclClass extends AbstractDeclClass {
             );
         }
 
-        TypeDefinition superClassDef = compiler.environmentType.get(ClassExtention.getName());
-        if (superClassDef == null || !superClassDef.getType().isClass()) {
-            throw new ContextualError(
-                "La super-classe " + ClassExtention.getName() + " n'est pas une classe", 
-                getLocation()
-            );
-        }
+    TypeDefinition superClassDef = (ClassDefinition) compiler.environmentType.get(ClassExtention.getName());
+    if (superClassDef == null || !superClassDef.getType().isClass()) {
+        throw new ContextualError(
+            "La super-classe " + ClassExtention.getName() + " n'est pas une classe", 
+            getLocation()
+        );
+    }
 
-        ClassType newClassType = new ClassType(ClassName.getName(), ClassName.getLocation(), (fr.ensimag.deca.context.ClassDefinition) superClassDef);
-        ClassDefinition newClassDef = newClassType.getDefinition();
+    ClassType newClassType = new ClassType(ClassName.getName(), ClassName.getLocation(), (fr.ensimag.deca.context.ClassDefinition) superClassDef);
+    ClassDefinition superClassDefinition = (ClassDefinition) superClassDef;
 
-        try {
+    this.classDefinition = new ClassDefinition(newClassType, getLocation(), superClassDefinition);
+
+
+        
+    
+    try {
         // On l'ajoute à l'environnement global des types
-        compiler.environmentType.declare(ClassName.getName(), newClassDef);
+        compiler.environmentType.declare(ClassName.getName(), this.classDefinition);
         } catch (EnvironmentType.DoubleDefException e) {
         throw new ContextualError("Double définition de la classe " + ClassName.getName(), ClassName.getLocation());
         }
 
-        ClassName.setDefinition(newClassDef); // deco        
+        ClassName.setDefinition(this.classDefinition); // deco        
 
         }
 
     @Override
     protected void verifyClassMembers(DecacCompiler compiler)
             throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        // for (AbstractDeclField f : classFields.getList()) {
+        //     f.verifyDeclField(compiler, this.classDefinition);
+        // }
+        this.classFields.verifyListDeclField(compiler, this.classDefinition);
     }
+
     
     @Override
     protected void verifyClassBody(DecacCompiler compiler) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        this.classFields.verifyListDeclFieldInitialization(compiler, this.classDefinition);
     }
 
     @Override
@@ -130,6 +141,7 @@ public class DeclClass extends AbstractDeclClass {
 
         s.println(prefix + "extends:");
         ClassExtention.prettyPrint(s, prefix + "  ", true);
+        classFields.prettyPrint(s, prefix, true);
     }
 
 

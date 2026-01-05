@@ -528,38 +528,69 @@ class_body returns[ListDeclField fields, ListDeclMethod methods]
     : (m=decl_method {
         }
       | decl_field_set {
+        // pour chaque champ dans le decl_field_set, on l'ajoute à la liste des champs
+        for (AbstractDeclField df : $decl_field_set.tree.getList()) {
+            $fields.add(df);
+        }
         }
       )*
     ;
 
 
 decl_field_set returns[ListDeclField tree]
-    : visibility type list_decl_field SEMI
+    : v=visibility t=type {$tree = new ListDeclField();} list_decl_field[$v.vis, $t.tree, $tree] SEMI
     ;
 
 
-visibility
+visibility returns[Visibility vis]
     : /* epsilon */ {
+        $vis = Visibility.PUBLIC;
         }
     | PROTECTED {
+        $vis = Visibility.PROTECTED;
         }
     ;
 
 
-list_decl_field
-    : dv1=decl_field
-        (COMMA dv2=decl_field
+list_decl_field[Visibility v, AbstractIdentifier t, ListDeclField list]
+    : dv1=decl_field[v, t, list]
+        (COMMA dv2=decl_field[v, t, list]
       )*
     ;
 
 
-decl_field
-    : i=ident {
+// decl_field[Visibility v, AbstractIdentifier t, ListDeclField list]
+//     : i=ident {
+//         }
+//       (EQUALS e=expr {
+//         Initialization init = new Initialization($e.tree);
+//         setLocation(init, $e.start);
+//         AbstractDeclField f = new DeclField(v, t, $i.tree, init);
+//         setLocation(f, $i.start);
+//         list.add(f);
+//         }
+//       )? {
+//         AbstractDeclField f = new DeclField(v, t, $i.tree, new NoInitialization());
+//         setLocation(f, $i.start);
+//         list.add(f);
+//         }
+//     ;
+
+decl_field[Visibility v, AbstractIdentifier t, ListDeclField list]
+    : i=ident
+      ( EQUALS e=expr {
+            Initialization init = new Initialization($e.tree);
+            setLocation(init, $e.start);
+            AbstractDeclField f = new DeclField(v, t, $i.tree, init);
+            setLocation(f, $i.start);
+            list.add(f);
         }
-      (EQUALS e=expr {
+      | /* epsilon */ {
+            AbstractDeclField f = new DeclField(v, t, $i.tree, new NoInitialization());
+            setLocation(f, $i.start);
+            list.add(f);
         }
-      )? {
-        }
+      )
     ;
 
 
