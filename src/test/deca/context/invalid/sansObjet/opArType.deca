@@ -1,3 +1,10 @@
+// Description :
+//    Opération arithmétique invalide : utilisation de '*' entre une chaîne et un entier.
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne 9 : Opération arithmétique impossible entre string et int
+
 {
     print("chaine" * 2);
 }

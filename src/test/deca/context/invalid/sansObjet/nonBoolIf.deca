@@ -1,3 +1,10 @@
+// Description :
+//    Condition non-boolean dans un 'if'.
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne 9 : La condition d'une instruction if doit être de type boolean.
+
 {
     if (1) {
         print("Erreur non detectée");

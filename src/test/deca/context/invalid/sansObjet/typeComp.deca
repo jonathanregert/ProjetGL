@@ -1,5 +1,12 @@
+// Description :
+//    Comparaison invalide entre types numériques différents.
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne 9 : Les comparaisons d'inégalité ne sont possibles qu'entre nombres.
+
 {
-    if (5 > 5.8){
+    if (5 > "hello"){
         print("erreur non detectée");
     }
 }

@@ -1,3 +1,10 @@
+// Description :
+//    Opération booléenne invalide : opérande non-boolean pour '&&'.
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne 9 : L'opérateur logique ne s'applique qu'aux booléens.
+
 {
     print(1 && true);
 }

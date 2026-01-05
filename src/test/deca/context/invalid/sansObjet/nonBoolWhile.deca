@@ -1,3 +1,10 @@
+// Description :
+//    Condition non-boolean dans un 'while'.
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne 9 : La condition d'une instruction while doit être de type boolean.
+
 {
     while (1.5) {
         print("Erreur non detectée");

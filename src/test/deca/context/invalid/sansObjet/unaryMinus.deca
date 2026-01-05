@@ -1,3 +1,10 @@
+// Description :
+//    Opérateur unaire négatif appliqué à un boolean.
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne 10 : L'opérateur unaire '-' ne s'applique qu'aux entiers et flottants.
+
 {
     int a;
     a = - true;
