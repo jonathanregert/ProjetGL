@@ -32,7 +32,7 @@ Tests VALIDES
 
 echo "Tests VALIDES"
 
-find "$CONTEXT_DIR/valid/provided" -name "*.deca" | sort | while read testfile; do
+find "$CONTEXT_DIR/valid/sansObjet" -name "*.deca" | sort | while read testfile; do
     echo "Test valide attendu : $testfile"
 
     if test_context "$testfile" 2>&1 | grep -q "$testfile:[0-9]"; then
