@@ -526,6 +526,7 @@ class_body returns[ListDeclField fields, ListDeclMethod methods]
         $methods = new ListDeclMethod();
     }
     : (m=decl_method {
+        $methods.add($m.tree);
         }
       | decl_field_set {
         // pour chaque champ dans le decl_field_set, on l'ajoute à la liste des champs
@@ -594,23 +595,31 @@ decl_field[Visibility v, AbstractIdentifier t, ListDeclField list]
     ;
 
 
-decl_method
+decl_method returns [AbstractDeclMethod tree]
 @init {
 }
-    : type ident OPARENT params=list_params CPARENT (block {
+    : t=type id=ident OPARENT params=list_params CPARENT (b=block {
+        $tree = new DeclMethod( $t.tree, $id.tree, $params.tree, $b.insts);
+        setLocation($tree, $id.start);
         }
       | ASM OPARENT code=multi_line_string CPARENT SEMI {
+        $tree = new DeclMethodAsm( $t.tree, $id.tree, $params.tree, $code.text);
+        setLocation($tree, $id.start);
         }
       ) {
         }
     ;
 
-list_params
-    : (p1=param {
+list_params returns [ListDeclVar tree]
+@init {
+    $tree = new ListDeclVar(); }   
+     : (p1=param {
+            $tree.add($p1.tree);
         } (COMMA p2=param {
+        $tree.add($p2.tree);
         }
       )*)
-    | /* epsilon */
+    | /* epsilon */ 
     ;
 
     
@@ -625,9 +634,9 @@ multi_line_string returns[String text, Location location]
         }
     ;
 
-param
-    : type ident {
-        }
-    |  /* epsilon */ {
+param returns [AbstractDeclVar tree]
+    : t=type id=ident {
+        $tree = new DeclVar($t.tree, $id.tree, new NoInitialization());
+        setLocation($tree, $id.start);
         }
     ;

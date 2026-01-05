@@ -142,6 +142,7 @@ public class DeclClass extends AbstractDeclClass {
         s.println(prefix + "extends:");
         ClassExtention.prettyPrint(s, prefix + "  ", true);
         classFields.prettyPrint(s, prefix, true);
+        classMethods.prettyPrint(s, prefix, true);
     }
 
 
@@ -153,7 +154,8 @@ public class DeclClass extends AbstractDeclClass {
 
     @Override
     protected void iterChildren(TreeFunction f) {
-        throw new UnsupportedOperationException("Not yet supported");
-    }
+        ClassName.iter(f);
+        ClassExtention.iter(f);
+        classMethods.iter(f);}
 
 }
