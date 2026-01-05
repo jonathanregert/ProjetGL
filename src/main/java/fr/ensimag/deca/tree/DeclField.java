@@ -48,31 +48,29 @@ public class DeclField extends AbstractDeclField {
 
     Symbol name = fieldName.getName();
 
-    // 3. Gestion de l'index (Position dans l'objet en mémoire)
-    // L'index commence après les champs de la super-classe
+    // index du champ incrémenté
     int index = currentClass.getNumberOfFields() + 1;
     currentClass.setNumberOfFields(index);
 
-    // 4. Création de la définition (FieldDefinition)
-    // On précise : type, location, visibilité, la classe parente, et l'index
+    // fieldDef : type, nom, visibilité, classe courante, index
     FieldDefinition fieldDef = new FieldDefinition(t, fieldName.getLocation(), 
                                                    visibility, currentClass, index);
 
 
     // Debug
-    System.out.println("Test champ: " + name + " dans " + currentClass.getType());
-    System.out.println("Existe déjà localement ? " + (currentClass.getMembers().get(name) != null));
-    System.out.println("DEBUG PASSE 2: Déclaration de " + name);
-    System.out.println("DEBUG PASSE 3: Init de " + name);
+    // System.out.println("Test champ: " + name + " dans " + currentClass.getType());
+    // System.out.println("Existe déjà localement ? " + (currentClass.getMembers().get(name) != null));
+    // System.out.println("DEBUG PASSE 2: Déclaration de " + name);
+    // System.out.println("DEBUG PASSE 3: Init de " + name);
     
-    // 5. Ajout à l'environnement des membres de la classe (env_expr)
+    // + environnement des membres de la classe
     try {
         currentClass.getMembers().declare(name, fieldDef);
     } catch (EnvironmentExp.DoubleDefException e) {
         throw new ContextualError("Double définition du champ " + name, fieldName.getLocation());
     }
 
-    // 6. Décoration de l'identificateur
+    // deco de l'identifier
     this.fieldName.setDefinition(fieldDef);
 
 }
