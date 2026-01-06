@@ -1,6 +1,7 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.ima.pseudocode.Instruction;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.BEQ;
@@ -24,32 +25,7 @@ public class And extends AbstractOpBool {
         return "&&";
     }
 
-    @Override
-    protected void codeGenInst(DecacCompiler compiler) {
-        int id = compiler.getLabelId();
-        Label falseLabel = new Label("and_false_" + id);
-        Label endLabel = new Label("and_end_" + id);
-
-        // gauche
-        getLeftOperand().codeGenInst(compiler);
-        compiler.addInstruction(new CMP(0, Register.R1));
-        compiler.addInstruction(new BEQ(falseLabel));
-
-        // droite
-        getRightOperand().codeGenInst(compiler);
-        compiler.addInstruction(new CMP(0, Register.R1));
-        compiler.addInstruction(new BEQ(falseLabel));
-
-        // true
-        compiler.addInstruction(new LOAD(1, Register.R1));
-        compiler.addInstruction(new BRA(endLabel));
-
-        // false
-        compiler.addLabel(falseLabel);
-        compiler.addInstruction(new LOAD(0, Register.R1));
-
-        compiler.addLabel(endLabel);
-    }
+    protected Instruction getChildLabel(Label label) { return new BEQ(label); }
 
 
 }
