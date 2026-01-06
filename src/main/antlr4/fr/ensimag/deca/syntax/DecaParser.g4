@@ -618,16 +618,15 @@ decl_method returns [AbstractDeclMethod tree]
         }
     ;
 
-list_params returns [ListDeclVar tree]
+list_params returns [ListDeclParam tree]
 @init {
-    $tree = new ListDeclVar(); }   
+    $tree = new ListDeclParam(); }   
      : (p1=param {
             $tree.add($p1.tree);
         } (COMMA p2=param {
         $tree.add($p2.tree);
         }
-      )*)
-    | /* epsilon */ 
+      )*)?
     ;
 
     
@@ -642,9 +641,9 @@ multi_line_string returns[String text, Location location]
         }
     ;
 
-param returns [AbstractDeclVar tree]
+param returns [AbstractDeclParam tree]
     : t=type id=ident {
-        $tree = new DeclVar($t.tree, $id.tree, new NoInitialization());
+        $tree = new DeclParam($t.tree, $id.tree);
         setLocation($tree, $id.start);
         }
     ;

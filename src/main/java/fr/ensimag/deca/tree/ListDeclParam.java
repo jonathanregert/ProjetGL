@@ -7,6 +7,9 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.deca.context.Signature;
+import fr.ensimag.deca.context.Type;
+
 
 /**
  * List of declarations (e.g. int x; float y,z).
@@ -14,12 +17,12 @@ import fr.ensimag.deca.tools.IndentPrintStream;
  * @author gl42
  * @date 01/01/2026
  */
-public class ListDeclMethod extends TreeList<AbstractDeclMethod> {
-    private static final Logger LOG = Logger.getLogger(ListDeclMethod.class);
+public class ListDeclParam extends TreeList<AbstractDeclParam> {
+    private static final Logger LOG = Logger.getLogger(ListDeclParam.class);
 
     @Override
     public void decompile(IndentPrintStream s) {
-        for (AbstractDeclMethod decl : getList()) {
+        for (AbstractDeclParam decl : getList()) {
             decl.decompile(s);
             s.println();
         }
@@ -36,17 +39,31 @@ public class ListDeclMethod extends TreeList<AbstractDeclMethod> {
      *      the "env_exp_r" attribute
      * @param currentClass 
      *          corresponds to "class" attribute (null in the main bloc).
-     */    
-    void verifyListDeclMethode(DecacCompiler compiler,
-            ClassDefinition currentClass) throws ContextualError {
-            for (AbstractDeclMethod declMethod : this.getList()) {
-                declMethod.verifyDeclMethod(compiler, currentClass);
+     */ 
+
+    public Signature verifyListDeclParam(DecacCompiler compiler) throws ContextualError {
+    Signature sig = new Signature();
+    for (AbstractDeclParam p : getList()) {
+        // On vérifie le type du paramètre et on l'ajoute à la signature
+        Type t = p.verifyDeclParamType(compiler);
+        sig.add(t);
+    }
+    return sig;
+    }
+    
+
+    
+    public void verifyListDeclParam(DecacCompiler compiler, EnvironmentExp localEnv)
+     throws ContextualError {
+            for (AbstractDeclParam declParam : this.getList()) {
+                declParam.verifyDeclParam(compiler, localEnv); // chaque param on le verifie
             }
         }
 
-    protected void codeGenListDeclVar(DecacCompiler compiler) {
-        for (AbstractDeclMethod decl : getList()) {
-            decl.codeGenDeclMethod(compiler);
+
+    protected void codeGenListDeclParam(DecacCompiler compiler) {
+        for (AbstractDeclParam decl : getList()) {
+            decl.codeGenDeclParam(compiler);
         }
     }
 
