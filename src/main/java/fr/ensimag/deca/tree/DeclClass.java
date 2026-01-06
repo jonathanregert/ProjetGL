@@ -92,13 +92,18 @@ public class DeclClass extends AbstractDeclClass {
             );
         }
 
-    TypeDefinition superClassDef = (ClassDefinition) compiler.environmentType.get(ClassExtention.getName());
-    if (superClassDef == null || !superClassDef.getType().isClass()) {
+    TypeDefinition def = compiler.environmentType.get(ClassExtention.getName());
+
+    // TypeDefinition superClassDef = (ClassDefinition) compiler.environmentType.get(ClassExtention.getName());
+    if (def == null || !def.getType().isClass()) {
         throw new ContextualError(
             "La super-classe " + ClassExtention.getName() + " n'est pas une classe", 
             getLocation()
         );
     }
+
+    // on cast apres le check
+    ClassDefinition superClassDef = (ClassDefinition) def;
 
     ClassExtention.setDefinition(superClassDef);
 
