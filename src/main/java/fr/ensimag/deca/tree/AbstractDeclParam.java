@@ -6,14 +6,13 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 
-
 /**
  * Variable declaration
  *
  * @author gl42
  * @date 01/01/2026
  */
-public abstract class AbstractDeclMethod extends Tree {
+public abstract class AbstractDeclParam extends Tree {
     
     /**
      * Implements non-terminal "decl_var" of [SyntaxeContextuelle] in pass 3
@@ -27,17 +26,12 @@ public abstract class AbstractDeclMethod extends Tree {
      * @param currentClass 
      *          corresponds to the "class" attribute (null in the main bloc).
      */    
-    protected abstract void verifyDeclMethod(DecacCompiler compiler, ClassDefinition currentClass)
+    protected abstract void verifyDeclParam(DecacCompiler compiler,
+            EnvironmentExp localEnv)
             throws ContextualError;
 
-    protected abstract void codeGenDeclMethod(DecacCompiler compiler);
-
-    protected abstract AbstractIdentifier getMethodName();
-
-    protected abstract void verifyMethodBody(DecacCompiler compiler, 
-        EnvironmentExp envExp, // L'environnement global
-        ClassDefinition currentClass, 
-        Type returnType)
-            throws ContextualError;
+    protected abstract Type verifyDeclParamType(DecacCompiler compiler) throws ContextualError;
+    
+    protected abstract void codeGenDeclParam(DecacCompiler compiler);
 }
 

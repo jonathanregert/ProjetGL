@@ -21,10 +21,10 @@ public class DeclMethodAsm extends AbstractDeclMethod {
     
     private final AbstractIdentifier type;
     private final AbstractIdentifier methodName;
-    private final ListDeclVar params;
+    private final ListDeclParam params;
     private final String code;
 
-    public DeclMethodAsm(AbstractIdentifier type, AbstractIdentifier methodName, ListDeclVar params, String code) {
+    public DeclMethodAsm(AbstractIdentifier type, AbstractIdentifier methodName, ListDeclParam params, String code) {
         Validate.notNull(type);
         Validate.notNull(methodName);
         Validate.notNull(params);
@@ -36,12 +36,11 @@ public class DeclMethodAsm extends AbstractDeclMethod {
     }
 
     @Override
-    protected void verifyDeclMethod(DecacCompiler compiler,
-            EnvironmentExp localEnv, ClassDefinition currentClass)
+    protected void verifyDeclMethod(DecacCompiler compiler, ClassDefinition currentClass)
             throws ContextualError {
         
-        Type t = type.verifyType(compiler);
-        params.verifyListDeclVariable(compiler, localEnv, currentClass);
+        // Type t = type.verifyType(compiler);
+        // params.verifyListDeclVariable(compiler, localEnv, currentClass);
    //manque verify de code (minimal)
         
     }
@@ -85,5 +84,10 @@ public class DeclMethodAsm extends AbstractDeclMethod {
         return methodName;
     }
 
-
+    @Override
+    protected  void verifyMethodBody(DecacCompiler compiler, 
+        EnvironmentExp envExp, // L'environnement global
+        ClassDefinition currentClass, 
+        Type returnType)
+            throws ContextualError{};
 }

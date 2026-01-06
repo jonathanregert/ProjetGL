@@ -5,8 +5,8 @@
 // ok
 
 class E {
-    String s = "hello";
-    String Hello() {
-        return s;
-    }
+   // String s = "hello";
+    //String Hello() {
+     //   return s;
+    //}
 }

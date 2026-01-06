@@ -5,7 +5,7 @@
 //    OK
 
 class A {
-    string s;
+    int s;
 }
 
 {
