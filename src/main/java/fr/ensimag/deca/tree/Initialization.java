@@ -67,8 +67,9 @@ public class Initialization extends AbstractInitialization {
     public void codeGenInitialization(DecacCompiler compiler, DAddr target) {
         expression.codeGenInst(compiler);
         // résultat dans R1
+        int nextRegister = compiler.getNextRegister();
         compiler.addInstruction(
-            new STORE(Register.R1, target)
+            new STORE(Register.getR(nextRegister), target)
         );
     }
 

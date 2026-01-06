@@ -1,0 +1,114 @@
+; start main program
+; Main program
+	TSTO #0
+	BOV pile_pleine
+; Beginning of main instructions:
+	ADDSP #4
+	LOAD #10, R1
+	STORE R1, 1(LB)
+	LOAD #0x1.91eb86p1, R1
+	STORE R1, 2(LB)
+	LOAD #1, R1
+	STORE R1, 3(LB)
+	LOAD 2(LB), R1
+	OPP R1, R1
+	PUSH R1
+	LOAD 1(LB), R1
+	PUSH R1
+	LOAD #2, R1
+	POP R2
+	ADD R2, R1
+	FLOAT R1, R1
+	POP R2
+	MUL R2, R1
+	STORE R1, 2(LB)
+	LOAD 1(LB), R1
+	PUSH R1
+	LOAD #0, R1
+	POP R2
+	CMP R1, R2
+	SLT R1
+	CMP #0, R1
+	SEQ R1
+	CMP #0, R1
+	BEQ and_false_1
+	LOAD 3(LB), R1
+	CMP #0, R1
+	BEQ and_false_2
+	LOAD 2(LB), R1
+	PUSH R1
+	LOAD #0x0.0p0, R1
+	POP R2
+	CMP R1, R2
+	SEQ R1
+	CMP #0, R1
+	BEQ and_false_2
+	LOAD #1, R1
+	BRA and_end_2
+and_false_2:
+	LOAD #0, R1
+and_end_2:
+	CMP #0, R1
+	BEQ and_false_1
+	LOAD #1, R1
+	BRA and_end_1
+and_false_1:
+	LOAD #0, R1
+and_end_1:
+	CMP #0, R1
+	BEQ else_0
+	WSTR "La logique est correcte."
+	WNL
+	BRA endif_0
+else_0:
+	WSTR "Condition fausse."
+	WNL
+endif_0:
+while_test_3:
+	LOAD 1(LB), R1
+	PUSH R1
+	LOAD #0, R1
+	POP R2
+	CMP R1, R2
+	SGT R1
+	CMP #0, R1
+	BEQ and_false_5
+	LOAD 3(LB), R1
+	CMP #0, R1
+	BEQ and_false_5
+	LOAD #1, R1
+	BRA and_end_5
+and_false_5:
+	LOAD #0, R1
+and_end_5:
+	CMP #0, R1
+	BEQ while_end_4
+	LOAD 1(LB), R1
+	PUSH R1
+	LOAD #1, R1
+	POP R2
+	SUB R2, R1
+	STORE R1, 1(LB)
+	LOAD 1(LB), R1
+	PUSH R1
+	LOAD #5, R1
+	POP R2
+	CMP R1, R2
+	SEQ R1
+	CMP #0, R1
+	BEQ else_6
+	LOAD #0, R1
+	STORE R1, 3(LB)
+	BRA endif_6
+else_6:
+endif_6:
+	BRA while_test_3
+while_end_4:
+	HALT
+; Message d'erreurs
+pile_pleine:
+	WSTR "Erreur : debordement de pile"
+	WNL
+	ERROR
+; Autres message d'erreurs
+; end main program

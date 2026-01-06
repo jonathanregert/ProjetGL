@@ -10,6 +10,7 @@ import java.io.PrintStream;
 import fr.ensimag.ima.pseudocode.ImmediateInteger;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.PUSH;
 
 
 /**
@@ -60,10 +61,12 @@ public class IntLiteral extends AbstractExpr {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
+        int nextRegister = compiler.getNextRegister();
+        System.out.println("nextRegister intLiteral : " + nextRegister);
         compiler.addInstruction(
             new LOAD(
                 new ImmediateInteger(value),
-                Register.R1
+                Register.getR(nextRegister)
             )
         );
     }

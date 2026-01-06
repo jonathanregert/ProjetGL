@@ -2,6 +2,7 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.ADD;
 import fr.ensimag.ima.pseudocode.instructions.POP;
 import fr.ensimag.ima.pseudocode.instructions.PUSH;
 import fr.ensimag.deca.DecacCompiler;
@@ -62,14 +63,63 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
+        if (compiler.getAvailableRegisters() < 1)
+        {
+            throw new IllegalArgumentException("AbstractOp requires 2 registers");
+        }
+        System.out.println("nextRegister in op bin : " + compiler.getNextRegister());
         getLeftOperand().codeGenInst(compiler);
-        compiler.addInstruction(new PUSH(Register.R1));
-        getRightOperand().codeGenInst(compiler);
-        compiler.addInstruction(new POP(Register.getR(2)));
 
-        codeGenOperator(compiler);
+        int leftRegister = compiler.getNextRegister();
+        boolean leftIsInRegister = true;
+
+        if (getLeftOperand() instanceof Identifier)
+        {
+            if (compiler.getAvailableRegisters() == 2)
+            {
+                System.out.print("av == 2");
+                if (getRightOperand() instanceof AbstractBinaryExpr)
+                {
+                    System.out.println(" binary expr");
+                    int nextRegister = compiler.getNextRegister();
+                    compiler.addInstruction(new PUSH(Register.getR(nextRegister)));
+
+                    leftIsInRegister = false;
+                } else
+                {
+                    System.out.println(" pas binary expr");
+                    compiler.decreaseAvailableRegisters();
+                }
+            } else if (compiler.getAvailableRegisters() > 2)
+            {
+                System.out.println("av > 2");
+                compiler.decreaseAvailableRegisters();
+            } else if (compiler.getAvailableRegisters() == 1)
+            {
+                System.out.println("av == 1");
+                compiler.decreaseAvailableRegisters();
+            }
+        }
+
+        // System.out.println("nextRegister in op bin : " + compiler.getNextRegister());
+        getRightOperand().codeGenInst(compiler);
+
+        // logique pile ou registre
+        // int nextRegister = compiler.getNextRegister();
+        // System.out.println("codeGenOperator | leftRegister = "+leftRegister+" | nextRegister = " + nextRegister);
+        if (!leftIsInRegister)
+        {
+            compiler.addInstruction(
+                new POP(Register.getR(leftRegister + 1))
+            );
+        } 
+        codeGenOperator(compiler, leftRegister);
+
+        
+
+        compiler.increaseAvailableRegisters();
     }
 
-    protected abstract void codeGenOperator(DecacCompiler compiler);
+    protected abstract void codeGenOperator(DecacCompiler compiler, int leftRegister);
 
 }

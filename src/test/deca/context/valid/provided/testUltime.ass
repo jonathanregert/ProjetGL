@@ -1,0 +1,28 @@
+; start main program
+; Main program
+	TSTO #0
+	BOV pile_pleine
+; Beginning of main instructions:
+	ADDSP #4
+	LOAD #3, R1
+	STORE R1, 1(LB)
+	LOAD #2, R1
+	STORE R1, 2(LB)
+	LOAD #7, R1
+	STORE R1, 3(LB)
+	LOAD 1(LB), R1
+	PUSH R1
+	LOAD 2(LB), R1
+	LOAD 3(LB), R2
+	ADD R2, R1
+	POP R2
+	ADD R2, R1
+	STORE R1, 4(LB)
+	HALT
+; Message d'erreurs
+pile_pleine:
+	WSTR "Erreur : debordement de pile"
+	WNL
+	ERROR
+; Autres message d'erreurs
+; end main program

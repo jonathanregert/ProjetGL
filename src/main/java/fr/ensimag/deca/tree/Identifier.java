@@ -244,10 +244,11 @@ public class Identifier extends AbstractIdentifier {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
+        int nextRegister = compiler.getNextRegister();
         compiler.addInstruction(
             new LOAD(
                 getExpDefinition().getOperand(),
-                Register.R1
+                Register.getR(nextRegister)
             )
         );
     }
