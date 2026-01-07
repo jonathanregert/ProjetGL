@@ -6,6 +6,7 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.instructions.RINT;
 
 import java.io.PrintStream;
@@ -41,9 +42,11 @@ public class ReadInt extends AbstractReadExpr {
         // leaf node => nothing to do
     }
 
+
     @Override
-    protected void codeGenInst(DecacCompiler compiler) {
-        compiler.addInstruction(new RINT());
+    protected void codeGenExpr(DecacCompiler compiler, GPRegister target) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'codeGenExpr'");
     }
 
 }

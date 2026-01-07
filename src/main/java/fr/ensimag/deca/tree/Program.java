@@ -57,21 +57,36 @@ public class Program extends AbstractProgram {
 
     @Override
     public void codeGenProgram(DecacCompiler compiler) {
-        // A FAIRE: compléter ce squelette très rudimentaire de code
+
         compiler.addComment("Main program");
-        compiler.addInstruction(new TSTO(0));
-        compiler.addInstruction(new BOV(new Label("pile_pleine")));
+
+        // reset (recommandé)
+        compiler.getRegAllocator().reset();
+        compiler.getStackManager().resetTemp();
+        compiler.getStackManager().resetVars();
+
+        // 1) Générer le code du main (ça met à jour maxTemp et globalCount)
         main.codeGenMain(compiler);
+
+        // 2) Calculer d1/d2
+        int d1 = compiler.getStackManager().getTSTOForMain();
+        int d2 = compiler.getStackManager().getGlobalCount();
+
+        // 3) Patch prologue (ordre inverse car insertion en tête)
+        compiler.addFirst(new ADDSP(new ImmediateInteger(d2)));
+        compiler.addFirst(new BOV(new Label("pile_pleine")));
+        compiler.addFirst(new TSTO(new ImmediateInteger(d1)));
+
+        // 4) Fin normale
         compiler.addInstruction(new HALT());
+
+        // 5) Messages d'erreurs
         compiler.addComment("Message d'erreurs");
         compiler.addLabel(new Label("pile_pleine"));
         compiler.addInstruction(new WSTR("Erreur : debordement de pile"));
         compiler.addInstruction(new WNL());
         compiler.addInstruction(new ERROR());
-        compiler.addComment("Autres message d'erreurs");
-
     }
-
     @Override
     public void decompile(IndentPrintStream s) {
         getClasses().decompile(s);

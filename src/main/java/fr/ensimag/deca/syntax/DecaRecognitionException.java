@@ -50,5 +50,4 @@ class DecaRecognitionException extends RecognitionException {
     void display(PrintStream err) {
         new LocationException(getMessage(), getLocation()).display(err);
     }
-
 }

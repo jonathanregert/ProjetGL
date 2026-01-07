@@ -7,10 +7,15 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.WFLOAT;
 import fr.ensimag.ima.pseudocode.instructions.WINT;
 import java.io.PrintStream;
+import java.rmi.registry.Registry;
+
 import org.apache.commons.lang.Validate;
 
 /**
@@ -70,18 +75,18 @@ public abstract class AbstractExpr extends AbstractInst {
             throws ContextualError;
 
     /**
-     * Verify the expression in right hand-side of (implicit) assignments 
+     * Verify the expression in right hand-side of (implicit) assignments
      * 
      * implements non-terminal "rvalue" of [SyntaxeContextuelle] in pass 3
      *
      * @param compiler  contains the "env_types" attribute
      * @param localEnv corresponds to the "env_exp" attribute
      * @param currentClass corresponds to the "class" attribute
-     * @param expectedType corresponds to the "type1" attribute            
+     * @param expectedType corresponds to the "type1" attribute
      * @return this with an additional ConvFloat if needed...
      */
     public AbstractExpr verifyRValue(DecacCompiler compiler,
-            EnvironmentExp localEnv, ClassDefinition currentClass, 
+            EnvironmentExp localEnv, ClassDefinition currentClass,
             Type expectedType)
             throws ContextualError {
                 
@@ -94,7 +99,7 @@ public abstract class AbstractExpr extends AbstractInst {
         }
         
         if (!typeFound.sameType(expectedType)) {
-        throw new ContextualError("Type incompatible : attendu " + expectedType 
+        throw new ContextualError("Type incompatible : attendu " + expectedType
             + ", trouvé " + typeFound, getLocation());
         }
 
@@ -130,30 +135,43 @@ public abstract class AbstractExpr extends AbstractInst {
             );
         }
     }
-
     /**
      * Generate code to print the expression
      *
      * @param compiler
      */
     protected void codeGenPrint(DecacCompiler compiler) {
-        this.codeGenInst(compiler); // résultat dans R1
-        Type t = getType();
+        GPRegister r = codeGenExpr(compiler);
 
-        if (t.isInt() || t.isBoolean()) {
-            compiler.addInstruction(new WINT());
-        } else if (t.isFloat()) {
-            compiler.addInstruction(new WFLOAT());
+        // convention print : valeur en R1 avant WINT/WFLOAT
+        if (r != Register.R1){
+            compiler.addInstruction(new LOAD(r, Register.R1));
+            compiler.getRegAllocator().free(r);
         } else {
-            throw new UnsupportedOperationException(
-                "print non supporté pour le type " + t
-            );
+            // R1 utilisé : on le libèrera après le print
+            compiler.getRegAllocator().free(r);
         }
+        Type t = getType();
+        if (t.isInt() || t.isBoolean()) compiler.addInstruction(new WINT());
+        else if (t.isFloat()) compiler.addInstruction(new WFLOAT());
+        else throw new UnsupportedOperationException("print non supporté pour " + t);
     }
+    protected GPRegister codeGenExpr(DecacCompiler compiler){ //méthode helper
+        //Compile l'expression et retourne le registre résultat
+        GPRegister r = compiler.getRegAllocator().alloc();
+        if (r == null){
+            throw new UnsupportedOperationException("Plus de registres disponibles");
+        }
+        codeGenExpr(compiler, r);
+        return r;
+    }
+
+    protected abstract void codeGenExpr(DecacCompiler compiler, GPRegister target); // Une fois l'expression compilée, on la laisse dans target
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        throw new UnsupportedOperationException("not yet implemented");
+        GPRegister r = codeGenExpr(compiler);
+        compiler.getRegAllocator().free(r);
     }
     
 

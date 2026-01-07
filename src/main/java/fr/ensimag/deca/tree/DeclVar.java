@@ -36,7 +36,7 @@ public class DeclVar extends AbstractDeclVar {
             throws ContextualError {
         Type t = type.verifyType(compiler);
         if (t.isVoid()) {
-            throw new ContextualError("Variable ne peut pas etre de type void", type.getLocation());
+            throw new ContextualError("Variable ne peut pas être de type void", type.getLocation());
         }
         VariableDefinition varDef = new VariableDefinition(t, getLocation());
         varName.setDefinition(varDef); // deco
@@ -48,7 +48,6 @@ public class DeclVar extends AbstractDeclVar {
         //verifier l'initialisation
         initialization.verifyInitialization(compiler, t, localEnv, currentClass);
     }
-
     
     @Override
     public void decompile(IndentPrintStream s) {
@@ -75,12 +74,9 @@ public class DeclVar extends AbstractDeclVar {
 
     @Override
     public void codeGenDeclVar(DecacCompiler compiler) {
-        // pas d'initialisation
         if (initialization instanceof NoInitialization) {
             return;
         }
-
-        // initialisation
         initialization.codeGenInitialization(compiler, varName.getExpDefinition().getOperand());
     }
 

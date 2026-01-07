@@ -1,6 +1,7 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.Type;
+import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.FLOAT;
 import fr.ensimag.deca.DecacCompiler;
@@ -23,14 +24,12 @@ public class ConvFloat extends AbstractUnaryExpr {
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
         Type operandType = this.getOperand().verifyExpr(compiler, localEnv, currentClass);
-        // int -> float
         if (operandType.isInt()) {
             this.setType(compiler.environmentType.FLOAT);
             return this.getType();
         }
-        // Cas d'erreur
         else {
-            throw new UnsupportedOperationException("ConvFloat can only convert int to float");
+            throw new ContextualError("Conversion impilicite vers float impossible depuis " + operandType, getLocation());
         }
     }
 
@@ -41,10 +40,10 @@ public class ConvFloat extends AbstractUnaryExpr {
     }
 
     @Override
-    protected void codeGenInst(DecacCompiler compiler) {
+    protected void codeGenExpr(DecacCompiler compiler, GPRegister target) {
         getOperand().codeGenInst(compiler);
         compiler.addInstruction(
-            new FLOAT(Register.R1, Register.R1)
+            new FLOAT(target, target)
         );
     }
 

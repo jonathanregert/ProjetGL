@@ -1,6 +1,7 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.Type;
+import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.REM;
 import fr.ensimag.ima.pseudocode.instructions.SUB;
@@ -39,10 +40,8 @@ public class Modulo extends AbstractOpArith {
     }
 
     @Override
-    protected void codeGenOperator(DecacCompiler compiler, int leftRegister) {
-        compiler.addInstruction(
-            new REM(Register.getR(leftRegister + 1), Register.getR(leftRegister))
-        );
+    protected void codeGenOperator(DecacCompiler compiler, GPRegister rRight, GPRegister rLeft) {
+        compiler.addInstruction(new REM(rRight, rLeft));
     }
 
 }

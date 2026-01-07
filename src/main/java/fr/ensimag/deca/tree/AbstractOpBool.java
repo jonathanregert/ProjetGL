@@ -34,7 +34,6 @@ public abstract class AbstractOpBool extends AbstractBinaryExpr {
         if (!typeGauche.isBoolean() || !typeDroite.isBoolean()) {
             throw new ContextualError("L'opérateur logique ne s'applique qu'aux booléens.", getLocation());
         }
-        
         Type boolType = compiler.environmentType.BOOLEAN;
         this.setType(boolType);
         return boolType;

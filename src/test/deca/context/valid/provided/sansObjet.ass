@@ -1,0 +1,72 @@
+; start main program
+; Main program
+	TSTO #0
+	BOV pile_pleine
+; Beginning of main instructions:
+	ADDSP #3
+	RINT
+	STORE R1, 1(LB)
+	LOAD #1, R1
+	FLOAT R1, R1
+	STORE R1, 2(LB)
+	LOAD 1(LB), R1
+	PUSH R1
+	LOAD #0, R1
+	POP R2
+	CMP R1, R2
+	SGT R1
+	CMP #0, R1
+	BEQ and_false_0
+	LOAD 2(LB), R1
+	PUSH R1
+	LOAD #0x1.5p3, R1
+	POP R2
+	CMP R1, R2
+	SLT R1
+	CMP #0, R1
+	BEQ and_false_0
+	LOAD #1, R1
+	BRA and_end_0
+and_false_0:
+	LOAD #0, R1
+and_end_0:
+	STORE R1, 3(LB)
+	LOAD 3(LB), R1
+	CMP #0, R1
+	BEQ else_1
+while_test_2:
+	LOAD 1(LB), R1
+	PUSH R1
+	LOAD #0, R1
+	POP R2
+	CMP R1, R2
+	SGT R1
+	CMP #0, R1
+	BEQ while_end_3
+	WSTR "Valeur : "
+	LOAD 1(LB), R1
+	WINT
+	WNL
+	LOAD 1(LB), R1
+	PUSH R1
+	LOAD #1, R1
+	POP R2
+	SUB R2, R1
+	STORE R1, 1(LB)
+	BRA while_test_2
+while_end_3:
+	BRA endif_1
+else_1:
+	WSTR "Hexa f : "
+	LOAD 2(LB), R1
+	WFLOAT
+	WNL
+endif_1:
+	HALT
+; Message d'erreurs
+pile_pleine:
+	WSTR "Erreur : debordement de pile"
+	WNL
+	ERROR
+; Autres message d'erreurs
+; end main program
