@@ -36,6 +36,7 @@ public class DeclField extends AbstractDeclField {
         this.initialization = initialization;
     }
 
+    public Visibility getVisibility() { return visibility; }
 
     @Override
     protected void verifyDeclField(DecacCompiler compiler, ClassDefinition currentClass)
