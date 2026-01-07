@@ -24,7 +24,7 @@ public class StackManager {
         }
     }
 
-    public int getMawTemp(){
+    public int getMaxTemp(){
         return maxTemp;
     }
 
@@ -67,10 +67,10 @@ public class StackManager {
     }
 
     public int getTSTOForMain(){
-        return getGlobalCount() + getMawTemp();
+        return getGlobalCount() + getMaxTemp();
     }
 
     public int getTSTOForLoacals(){
-        return getLocalCount() + getMawTemp();
+        return getLocalCount() + getMaxTemp();
     }
 }

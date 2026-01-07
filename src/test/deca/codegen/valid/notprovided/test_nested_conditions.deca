@@ -1,0 +1,19 @@
+{
+int a;
+int b;
+int max;
+
+a = 7;
+b = 10;
+
+if (a > b) {
+    max = a;
+} else {
+    if (b > 0) {
+        max = b;
+    } else {
+        max = 0;
+    }
+}
+print(max); // 10
+}
