@@ -8,6 +8,9 @@ import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
+
+import fr.ensimag.ima.pseudocode.GPRegister;
+import fr.ensimag.ima.pseudocode.ImmediateInteger;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.BEQ;
@@ -57,29 +60,33 @@ public class IfThenElse extends AbstractInst {
     }
 
     @Override
-    protected void codeGenInst(DecacCompiler compiler) {
-                int id = compiler.getLabelId();
+    protected void codeGenInst(DecacCompiler compiler){
+        int id = compiler.getLabelId();
         Label labelElse = new Label("else_" + id);
-        Label labelEnd  = new Label("endif_" + id);
+        Label labelEnd = new Label("endif_" + id);
 
-        condition.codeGenInst(compiler); // résultat dans R1
+        GPRegister rCond = compiler.getRegAllocator().alloc();
+        if (rCond == null){
+            rCond = Register.R0;
+        }
+        condition.codeGenExpr(compiler, rCond);
 
-        // si faux (0) alors on saute au label else
-        compiler.addInstruction(new CMP(0, Register.R1));
+        compiler.addInstruction(new CMP(new ImmediateInteger(0), rCond));
         compiler.addInstruction(new BEQ(labelElse));
 
-        // then
+        if (!rCond.equals(Register.R0)){
+            compiler.getRegAllocator().free(rCond);
+        }
+
         thenBranch.codeGenListInst(compiler);
         compiler.addInstruction(new BRA(labelEnd));
 
-        // else
         compiler.addLabel(labelElse);
-        if (elseBranch != null) {
+        if (elseBranch ! null){
             elseBranch.codeGenListInst(compiler);
         }
 
         compiler.addLabel(labelEnd);
-
     }
 
     @Override

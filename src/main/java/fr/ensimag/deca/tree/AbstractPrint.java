@@ -41,7 +41,7 @@ public abstract class AbstractPrint extends AbstractInst {
             throws ContextualError {
         for (AbstractExpr a : getArguments().getList()) {
             Type t = a.verifyExpr(compiler, localEnv, currentClass);
-            if (!(t.isInt() || t.isFloat() || t.isString())) {
+            if (!(t.isInt() || t.isFloat() || t.isString() || t.isBoolean())) {
                 throw new ContextualError("Type " + t + " n'est pas imprimable",
                     a.getLocation());
             }

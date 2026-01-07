@@ -65,12 +65,23 @@ public class Initialization extends AbstractInitialization {
 
     @Override
     public void codeGenInitialization(DecacCompiler compiler, DAddr target) {
-        expression.codeGenInst(compiler);
-        // résultat dans R1
-        int nextRegister = compiler.getNextRegister();
-        compiler.addInstruction(
-            new STORE(Register.getR(nextRegister), target)
-        );
+        Validate.notNull(target, "Initialization target address is null");
+
+        // Évaluer l'expression dans un registre alloué
+        var r = compiler.getRegAllocator().alloc();
+        if (r == null) {
+            // si vraiment plus de registres (rare ici), on peut utiliser R0 scratch
+            r = Register.R0;
+        }
+        expression.codeGenExpr(compiler, r);
+
+        // Stocker en mémoire
+        compiler.addInstruction(new STORE(r, target));
+
+        // Libérer si c’était un registre alloué
+        if (!r.equals(Register.R0)) {
+            compiler.getRegAllocator().free(r);
+        }
     }
 
 }

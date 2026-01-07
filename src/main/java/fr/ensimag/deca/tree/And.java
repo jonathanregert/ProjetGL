@@ -25,7 +25,15 @@ public class And extends AbstractOpBool {
         return "&&";
     }
 
-    protected Instruction getChildLabel(Label label) { return new BEQ(label); }
+    @Override
+    protected Instruction getChildBranch(Label shortCircuitLabel) {
+        return new BEQ(shortCircuitLabel);
+    }
+
+    @Override
+    protected int getShortCircuitValue(){
+        return 0;
+    }
 
 
 }

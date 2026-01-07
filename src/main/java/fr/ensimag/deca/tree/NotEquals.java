@@ -1,5 +1,9 @@
 package fr.ensimag.deca.tree;
 
+import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.ima.pseudocode.GPRegister;
+import fr.ensimag.ima.pseudocode.instructions.SLT;
+import fr.ensimag.ima.pseudocode.instructions.SNE;
 
 /**
  *
@@ -16,6 +20,11 @@ public class NotEquals extends AbstractOpExactCmp {
     @Override
     protected String getOperatorName() {
         return "!=";
+    }
+
+    @Override
+    protected void codeGenSet(DecacCompiler compiler, GPRegister target){
+        compiler.addInstruction(new SNE(target));
     }
 
 }

@@ -1,12 +1,12 @@
 ; Main Program
-	TSTO #0
+	TSTO #1
 	BOV pile_pleine
-	ADDSP #0
+	ADDSP #1
 ; start main program
 ; Main program
 ; Beginning of main instructions:
-	WSTR "Hello, world!"
-	WNL
+	LOAD #5, R1
+	STORE R1, 1(GB)
 	HALT
 ; Message d'erreurs
 pile_pleine:

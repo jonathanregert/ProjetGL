@@ -10,8 +10,6 @@ import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.RFLOAT;
-import fr.ensimag.ima.pseudocode.instructions.RINT;
-
 import java.io.PrintStream;
 
 /**
@@ -53,7 +51,7 @@ public class ReadFloat extends AbstractReadExpr {
 
     @Override
     protected void codeGenExpr(DecacCompiler compiler, GPRegister target) {
-        compiler.addInstruction(new RINT());
+        compiler.addInstruction(new RFLOAT());
         if (!target.equals(Register.R1)){
             compiler.addInstruction(new LOAD(Register.R1, target));
         }

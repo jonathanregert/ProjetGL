@@ -2,7 +2,6 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.EnvironmentType;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.instructions.*;
 import java.io.PrintStream;
@@ -69,13 +68,14 @@ public class Program extends AbstractProgram {
         main.codeGenMain(compiler);
 
         // 2) Calculer d1/d2
-        int d1 = compiler.getStackManager().getTSTOForMain();
-        int d2 = compiler.getStackManager().getGlobalCount();
+        int d1 = compiler.getStackManager().getGlobalCount();
+        int d2 = compiler.getStackManager().getTSTOForMain();
 
         // 3) Patch prologue (ordre inverse car insertion en tête)
         compiler.addFirst(new ADDSP(new ImmediateInteger(d2)));
         compiler.addFirst(new BOV(new Label("pile_pleine")));
         compiler.addFirst(new TSTO(new ImmediateInteger(d1)));
+        compiler.addFirstComment("Main Program");
 
         // 4) Fin normale
         compiler.addInstruction(new HALT());

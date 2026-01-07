@@ -1,6 +1,8 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.Type;
+import fr.ensimag.ima.pseudocode.GPRegister;
+import fr.ensimag.ima.pseudocode.ImmediateInteger;
 import fr.ensimag.ima.pseudocode.Instruction;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Register;
@@ -40,29 +42,29 @@ public abstract class AbstractOpBool extends AbstractBinaryExpr {
     }
 
     @Override
-    public void codeGenInst(DecacCompiler compiler)
-    {
+    public void codeGenExpr(DecacCompiler compiler, GPRegister target){
         int id = compiler.getLabelId();
-        Label firstLabel = new Label("and_false_" + id);
-        Label secondLabel = new Label("and_end_" + id);
+        Label shortCircuitLabel = new Label("boll_sc_" + id);
+        Label endLabel = new Label("bool_end_" + id);
 
-        getLeftOperand().codeGenInst(compiler);
-        compiler.addInstruction(new CMP(0, Register.R1));
-        compiler.addInstruction(getChildLabel(firstLabel));
+        getLeftOperand().codeGenExpr(compiler, target);
 
-        getRightOperand().codeGenInst(compiler);
-        compiler.addInstruction(new CMP(0, Register.R1));
-        compiler.addInstruction(getChildLabel(firstLabel));
+        compiler.addInstruction(new CMP(new ImmediateInteger(0), target));
 
-        compiler.addInstruction(new LOAD(1, Register.R1));
-        compiler.addInstruction(new BRA(secondLabel));
+        compiler.addInstruction(getChildBranch(shortCircuitLabel));
 
-        compiler.addLabel(firstLabel);
-        compiler.addInstruction(new LOAD(0, Register.R1));
+        getRightOperand().codeGenExpr(compiler, target);
+        compiler.addInstruction(new BRA(endLabel));
 
-        compiler.addLabel(secondLabel);
+        compiler.addLabel(shortCircuitLabel);
+        compiler.addInstruction(new LOAD(new ImmediateInteger(getShortCircuitValue()), target));
+
+        compiler.addLabel(endLabel);
+
     }
 
-    protected abstract Instruction getChildLabel(Label label);
+    protected abstract Instruction getChildBranch(Label shortCircuitLabel);
+
+    protected abstract int getShortCircuitValue();
 
 }

@@ -2,6 +2,7 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.ima.pseudocode.DAddr;
+import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.STORE;
 import fr.ensimag.deca.DecacCompiler;
@@ -57,10 +58,9 @@ public class Assign extends AbstractBinaryExpr {
     }
 
     @Override
-    protected void codeGenInst(DecacCompiler compiler) {
-        getRightOperand().codeGenInst(compiler);       // valeur dans R1
+    protected void codeGenExpr(DecacCompiler compiler, GPRegister target) {
+        getRightOperand().codeGenExpr(compiler, target);
         DAddr addr = getLeftOperand().codeGenAddr(compiler);
-        compiler.addInstruction(new STORE(Register.R1, addr));
+        compiler.addInstruction(new STORE(target, addr));
     }
-
 }

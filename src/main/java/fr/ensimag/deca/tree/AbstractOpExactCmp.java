@@ -26,13 +26,11 @@ public abstract class AbstractOpExactCmp extends AbstractOpCmp {
 
         Type boolType = compiler.environmentType.BOOLEAN;
 
-        // booléens
         if (typeGauche.isBoolean() && typeDroite.isBoolean()) {
             this.setType(boolType);
             return boolType;
         }
 
-        // Nombres (int ou float)
         if ((typeGauche.isInt() || typeGauche.isFloat()) && (typeDroite.isInt() || typeDroite.isFloat())) {
             if (typeGauche.isFloat() && typeDroite.isInt()) {
                 setRightOperand(new ConvFloat(getRightOperand()));
