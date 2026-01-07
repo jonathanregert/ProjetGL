@@ -18,6 +18,6 @@ class A {
 
 {
     A a = new A();
-    println(a.getB().g());
+//    println(a.getB().g());
 }
 

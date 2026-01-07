@@ -1,7 +1,6 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.Type;
-import fr.ensimag.deca.context.VariableDefinition;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
@@ -23,16 +22,19 @@ public class DeclMethod extends AbstractDeclMethod {
     private final AbstractIdentifier returnType;
     private final AbstractIdentifier methodName;
     private final ListDeclParam params;
+    private final ListDeclVar localVars;    
     private final ListInst body;
 
-    public DeclMethod(AbstractIdentifier returnType, AbstractIdentifier methodName, ListDeclParam params, ListInst body) {
+    public DeclMethod(AbstractIdentifier returnType, AbstractIdentifier methodName, ListDeclParam params, ListDeclVar localVars, ListInst body) {
         Validate.notNull(returnType);
         Validate.notNull(methodName);
         Validate.notNull(params);
+        Validate.notNull(localVars);
         Validate.notNull(body);
         this.returnType = returnType;
         this.methodName = methodName;
         this.params = params;
+        this.localVars = localVars;
         this.body = body;
     }
 
@@ -83,8 +85,11 @@ public class DeclMethod extends AbstractDeclMethod {
     // 3.12
 
     EnvironmentExp envExpParams = new EnvironmentExp(envExp);
-    
+    // Debug
+    System.out.println("Env exp avant params méthode " + methodName.getName() + " :\n" + envExp.toString());
+
     this.params.verifyListDeclParam(compiler, envExpParams);
+    this.localVars.verifyListDeclVariable(compiler, envExpParams, currentClass);
     this.body.verifyListInst(compiler, envExpParams, currentClass, returnType);
 }
 
@@ -106,6 +111,7 @@ public class DeclMethod extends AbstractDeclMethod {
         returnType.iter(f);
         methodName.iter(f);
         params.iter(f);
+        localVars.iter(f);
         body.iter(f);
     }
     

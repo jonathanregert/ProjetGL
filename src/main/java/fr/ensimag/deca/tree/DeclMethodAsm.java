@@ -46,6 +46,8 @@ public class DeclMethodAsm extends AbstractDeclMethod {
     }
 
     
+
+    
     @Override
     public void decompile(IndentPrintStream s) {
         type.decompile(s);

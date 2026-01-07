@@ -6,6 +6,7 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
 
 /**
@@ -50,6 +51,15 @@ public class ListDeclMethod extends TreeList<AbstractDeclMethod> {
         }
     }
 
+    public void verifyListDeclMethodBody(DecacCompiler compiler, ClassDefinition currentClass) 
+            throws ContextualError {
+        for (AbstractDeclMethod m : getList()) {
+            // Type de retour stocké dans la définition (pass2)
+            Type returnType = m.getMethodName().getMethodDefinition().getType();
+            
+            m.verifyMethodBody(compiler, currentClass.getMembers(), currentClass, returnType);
+        }
+    }
 
 
 }
