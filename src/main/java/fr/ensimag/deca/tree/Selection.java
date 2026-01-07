@@ -1,4 +1,5 @@
 package fr.ensimag.deca.tree;
+import fr.ensimag.deca.tree.AbstractLValue;
 
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.context.ClassType;
@@ -20,6 +21,7 @@ import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 import fr.ensimag.ima.pseudocode.DAddr;
 import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 
 
@@ -29,7 +31,7 @@ import fr.ensimag.ima.pseudocode.instructions.LOAD;
  * @author gl42
  * @date 01/01/2026
  */
-public class Selection extends AbstractExpr{
+public class Selection extends AbstractLValue{
     private final AbstractExpr object;
     private final AbstractIdentifier field;
 
@@ -82,6 +84,13 @@ public class Selection extends AbstractExpr{
     protected void iterChildren(TreeFunction f) {
         object.iter(f);
         field.iter(f);
+    }
+
+    @Override
+    protected DAddr codeGenAddr(DecacCompiler compiler) {
+        object.codeGenInst(compiler);
+        FieldDefinition fieldDef = field.getFieldDefinition();
+        return new RegisterOffset(fieldDef.getIndex(), Register.R1);
     }
 
     @Override

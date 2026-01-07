@@ -114,7 +114,7 @@ decl_var[AbstractIdentifier t] returns[AbstractDeclVar tree]
             Initialization init = new Initialization($e.tree);
             setLocation(init, $e.start);
 
-            $tree = new DeclVar(t, $i.tree, init);
+            $tree = new DeclVar(t, new Identifier(getCompiler().createSymbol($i.text)), init);
             setLocation($tree, $i.start);
             
       }
@@ -232,7 +232,7 @@ expr returns[AbstractExpr tree]
     ;
 
 assign_expr returns [AbstractExpr tree]
-    : e=or_expr 
+    : e=lvalue 
       ( EQUALS r=assign_expr { 
 
         // verification que e est bien une lvalue
@@ -248,6 +248,18 @@ assign_expr returns [AbstractExpr tree]
         }
       )
     ;
+
+lvalue returns [AbstractLValue tree]
+    : i=ident {
+        $tree = $i.tree;
+        setLocation($tree, $i.start);
+    }
+    | obj=lvalue DOT field=ident {
+        $tree = new Selection($obj.tree, $field.tree);
+        setLocation($tree, $obj.start);
+    }
+;
+
 
 or_expr returns[AbstractExpr tree]
     : e=and_expr {
@@ -410,8 +422,10 @@ select_expr returns[AbstractExpr tree]
     ;
 
 primary_expr returns[AbstractExpr tree]
-    : ident {
-            $tree = $ident.tree;
+    : NEW ident OPARENT CPARENT {
+            assert($ident.tree != null);
+            $tree = new New($ident.tree);
+            setLocation($tree, $NEW);
         }
     | m=ident OPARENT args=list_expr CPARENT {
             assert($args.tree != null);
@@ -430,10 +444,8 @@ primary_expr returns[AbstractExpr tree]
         $tree = new ReadFloat();
         setLocation($tree, $r);
         }
-    | NEW ident OPARENT CPARENT {
-            assert($ident.tree != null);
-            $tree = new New($ident.tree);
-            setLocation($tree, $NEW);
+    | ident {
+            $tree = $ident.tree;
         }
     | cast=OPARENT type CPARENT OPARENT expr CPARENT {
             assert($type.tree != null);
@@ -606,7 +618,7 @@ decl_field[Visibility v, AbstractIdentifier t, ListDeclField list]
 decl_method returns [AbstractDeclMethod tree]
 @init {
 }
-    : t=type id=ident OPARENT params=list_params CPARENT (b=block {
+    : t=type id=ident LPAREN params=list_params CPAREN (b=block {
         $tree = new DeclMethod( $t.tree, $id.tree, $params.tree, $b.insts);
         setLocation($tree, $id.start);
         }
@@ -626,7 +638,8 @@ list_params returns [ListDeclParam tree]
         } (COMMA p2=param {
         $tree.add($p2.tree);
         }
-      )*)?
+      ))*
+    | /* epsilon */ 
     ;
 
     
@@ -641,7 +654,7 @@ multi_line_string returns[String text, Location location]
         }
     ;
 
-param returns [AbstractDeclParam tree]
+param returns [DeclParam tree]
     : t=type id=ident {
         $tree = new DeclParam($t.tree, $id.tree);
         setLocation($tree, $id.start);

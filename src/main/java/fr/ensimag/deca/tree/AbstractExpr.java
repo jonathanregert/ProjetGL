@@ -39,7 +39,7 @@ public abstract class AbstractExpr extends AbstractInst {
         Validate.notNull(type);
         this.type = type;
     }
-    private Type type;
+    protected Type type;
 
     @Override
     protected void checkDecoration() {
