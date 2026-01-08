@@ -59,7 +59,7 @@ public class Program extends AbstractProgram {
 
         compiler.addComment("Main program");
 
-        // reset (recommandé)
+        // reset
         compiler.getRegAllocator().reset();
         compiler.getStackManager().resetTemp();
         compiler.getStackManager().resetVars();
@@ -67,14 +67,13 @@ public class Program extends AbstractProgram {
         // 1) Générer le code du main (ça met à jour maxTemp et globalCount)
         main.codeGenMain(compiler);
 
-        // 2) Calculer d1/d2
-        int d1 = compiler.getStackManager().getGlobalCount();
+        // 2) Calculer d1/d2        
         int d2 = compiler.getStackManager().getTSTOForMain();
 
         // 3) Patch prologue (ordre inverse car insertion en tête)
         compiler.addFirst(new ADDSP(new ImmediateInteger(d2)));
         compiler.addFirst(new BOV(new Label("pile_pleine")));
-        compiler.addFirst(new TSTO(new ImmediateInteger(d1)));
+        compiler.addFirst(new TSTO(new ImmediateInteger(d2)));
         compiler.addFirstComment("Main Program");
 
         // 4) Fin normale
