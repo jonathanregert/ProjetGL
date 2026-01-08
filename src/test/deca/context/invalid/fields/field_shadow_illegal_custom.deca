@@ -2,8 +2,8 @@
 // redéclaration d'un champ existant dans une sous-classe
 //
 // Resultats :
-// Erreur contextuelle
-// Ligne 10 : champ déjà défini dans la classe parent
+//    Erreur contextuelle
+//    Ligne 13 : Le champ a est déjà défini dans cette classe ou hérité
 
 class ParentField2 {
     int a;

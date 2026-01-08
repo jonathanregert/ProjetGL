@@ -2,8 +2,8 @@
 // test de déclaration de deux classes avec le même nom
 //
 // Resultats :
-// Erreur contextuelle
-// Ligne 10 : nom de classe déjà utilisé
+//    Erreur contextuelle
+//    Ligne 11 : Classe A déjà déclarée
 
 class A {
 }

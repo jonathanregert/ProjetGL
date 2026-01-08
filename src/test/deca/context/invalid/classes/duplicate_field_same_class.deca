@@ -3,7 +3,7 @@
 //
 // Resultats :
 //    Erreur contextuelle
-//    Ligne <No_de_ligne> : <message d'erreur de votre compilateur>
+//    Ligne 10 : Le champ x est déjà défini dans cette classe ou hérité
 
 class A {
     int x;

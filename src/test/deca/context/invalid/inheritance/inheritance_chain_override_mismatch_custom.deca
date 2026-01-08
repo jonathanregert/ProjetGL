@@ -2,8 +2,9 @@
 // override non conforme dans chaîne d'héritage
 //
 // Resultats :
-// Erreur contextuelle
-// Ligne 15 : signature incompatible avec méthode parent
+//    Erreur contextuelle
+//    Ligne 14 : Signature pas convenable en override avec la super classe
+
 
 class G {
     int f() { return 0; }

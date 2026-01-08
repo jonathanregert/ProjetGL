@@ -1,3 +1,9 @@
+// Description :
+//    Calculs arithmétiques et boucle while avec affichages.
+//
+// Resultats :
+// ok
+
 {
     int a = 3;
     int b = 4;

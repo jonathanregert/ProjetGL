@@ -36,19 +36,25 @@ public class DeclVar extends AbstractDeclVar {
     protected void verifyDeclVar(DecacCompiler compiler,
             EnvironmentExp localEnv, ClassDefinition currentClass)
             throws ContextualError {
+        
         Type t = type.verifyType(compiler);
         if (t.isVoid()) {
-            throw new ContextualError("Variable ne peut pas être de type void", type.getLocation());
+            // Message d'erreur si le type est void + ligne : La variable "[name]" ne peut pas être de type "void"
+            throw new ContextualError("La variable \"" + varName.getName().getName() + "\" ne peut pas être de type \"void\"", varName.getLocation());
         }
+        
+        initialization.verifyInitialization(compiler, t, localEnv, currentClass);
+
         VariableDefinition varDef = new VariableDefinition(t, getLocation());
+        //verifier l'initialisation avant la definition de la variable
+        
         varName.setDefinition(varDef); // deco
         try {
             localEnv.declare(varName.getName(), varDef);
         } catch (EnvironmentExp.DoubleDefException e) {
             throw new ContextualError("Variable " + varName.getName().getName() + " deja definie", varName.getLocation());
         }
-        //verifier l'initialisation
-        initialization.verifyInitialization(compiler, t, localEnv, currentClass);
+        
     }
     
     @Override

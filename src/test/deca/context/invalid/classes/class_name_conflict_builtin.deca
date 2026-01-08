@@ -2,8 +2,8 @@
 // nom de classe en conflit avec un mot clé ou type de base
 //
 // Resultats :
-// Erreur contextuelle
-// Ligne 5 : nom de classe interdit
+//    Erreur contextuelle
+//    Ligne 8 : Le nom de la classe int est interdit
 
 class int { // doit échouer
 }

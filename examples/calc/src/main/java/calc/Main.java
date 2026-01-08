@@ -22,6 +22,7 @@ public class Main {
         CalcParser parser = new CalcParser(tokens);
         // Launch the parser
         AbstractExpr expression = parser.expr().tree;
+        //voir les erreurs 
         if (parser.getNumberOfSyntaxErrors() > 0) {
             System.out.println("Cannot compute expression because of syntax error (see above).");
         } else {

@@ -1,0 +1,18 @@
+// Description :
+//    Utilisation de instanceof avec sous-classe
+//
+// Resultats :
+//    OK
+
+class P { }
+
+class Q extends P { }
+
+class R {
+    boolean check(P p) {
+        return p instanceof Q;
+    }
+}
+
+{
+}

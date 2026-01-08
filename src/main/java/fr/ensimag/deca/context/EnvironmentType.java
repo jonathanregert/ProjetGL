@@ -4,6 +4,7 @@ import fr.ensimag.deca.DecacCompiler;
 import java.util.HashMap;
 import java.util.Map;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
+import fr.ensimag.deca.tree.ListDeclField;
 import fr.ensimag.deca.tree.Location;
 
 // A FAIRE: étendre cette classe pour traiter la partie "avec objet" de Déca
@@ -75,6 +76,13 @@ public class EnvironmentType {
         }
         envTypes.put(name, typeDef);
     }
+
+    //public void declareClass(ClassType classType) throws DoubleDefException {
+      //  if (isDeclared(classType.getName())) {
+           // throw new DoubleDefException("Type " + classType.getName() + " déjà déclaré");
+      //  }
+      //  declare(classType.getName(), classType.getDefinition());
+    //}
 
     public static class DoubleDefException extends Exception {
         public DoubleDefException(String message) {

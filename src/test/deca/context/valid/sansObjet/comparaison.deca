@@ -1,3 +1,9 @@
+// Description :
+//    Comparaisons d'entiers et structure conditionnelle (if/else) dans une boucle.
+//
+// Resultats :
+// ok
+
 {
    int x = 0;
    while (x < 5) {
