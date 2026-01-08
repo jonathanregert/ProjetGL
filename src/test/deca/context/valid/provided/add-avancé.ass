@@ -1,19 +1,19 @@
 ; Main Program
-	TSTO #3
+	TSTO #0
 	BOV pile_pleine
-	ADDSP #3
+	ADDSP #0
 ; start main program
 ; Main program
 ; Beginning of main instructions:
-	LOAD #5, R3
-	STORE R3, 1(GB)
-	LOAD #7, R3
-	STORE R3, 2(GB)
-	LOAD 1(GB), R1
-	LOAD 2(GB), R3
+	LOAD #1, R1
+	LOAD #2, R3
 	ADD R3, R1
-	STORE R1, 3(GB)
-	LOAD 3(GB), R1
+	LOAD #3, R3
+	ADD R3, R1
+	LOAD #4, R3
+	ADD R3, R1
+	LOAD #5, R3
+	ADD R3, R1
 	WINT
 	HALT
 ; Message d'erreurs
