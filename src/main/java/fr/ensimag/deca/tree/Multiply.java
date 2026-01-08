@@ -26,6 +26,7 @@ public class Multiply extends AbstractOpArith {
     @Override
     protected void codeGenOperator(DecacCompiler compiler, GPRegister rRight, GPRegister rLeft) {
         compiler.addInstruction(new MUL(rRight, rLeft));
+        compiler.getErrorManager().genCheckOverflow(compiler);
     }
 
 

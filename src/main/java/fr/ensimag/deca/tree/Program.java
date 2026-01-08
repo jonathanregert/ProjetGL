@@ -2,6 +2,7 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ContextualError;
+import fr.ensimag.deca.codegen.ErrorManager;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.instructions.*;
 import java.io.PrintStream;
@@ -39,16 +40,12 @@ public class Program extends AbstractProgram {
     public void verifyProgram(DecacCompiler compiler) throws ContextualError {
         LOG.debug("Start verifyProgram");
         
-        // Pass 1
         classes.verifyListClass(compiler);
 
-        // Pass 2
         classes.verifyListClassMembers(compiler);
 
-        // Pass 3
         classes.verifyListClassBody(compiler);
 
-        // Main
         main.verifyMain(compiler);
 
         LOG.debug("End verifyProgram");
@@ -59,32 +56,24 @@ public class Program extends AbstractProgram {
 
         compiler.addComment("Main program");
 
-        // reset
         compiler.getRegAllocator().reset();
         compiler.getStackManager().resetTemp();
         compiler.getStackManager().resetVars();
 
-        // 1) Générer le code du main (ça met à jour maxTemp et globalCount)
         main.codeGenMain(compiler);
 
-        // 2) Calculer d1/d2        
         int d2 = compiler.getStackManager().getTSTOForMain();
 
-        // 3) Patch prologue (ordre inverse car insertion en tête)
+        Label pilePleine = compiler.getErrorManager().label(ErrorManager.RuntimeError.STACK_OVERFLOW);
+
         compiler.addFirst(new ADDSP(new ImmediateInteger(d2)));
-        compiler.addFirst(new BOV(new Label("pile_pleine")));
+        compiler.addFirst(new BOV(pilePleine));
         compiler.addFirst(new TSTO(new ImmediateInteger(d2)));
         compiler.addFirstComment("Main Program");
 
-        // 4) Fin normale
         compiler.addInstruction(new HALT());
 
-        // 5) Messages d'erreurs
-        compiler.addComment("Message d'erreurs");
-        compiler.addLabel(new Label("pile_pleine"));
-        compiler.addInstruction(new WSTR("Erreur : debordement de pile"));
-        compiler.addInstruction(new WNL());
-        compiler.addInstruction(new ERROR());
+        compiler.getErrorManager().emitHandlers(compiler);
     }
     @Override
     public void decompile(IndentPrintStream s) {

@@ -37,7 +37,7 @@ public class NoOperation extends AbstractInst {
     protected void iterChildren(TreeFunction f) {
         // leaf node => nothing to do
     }
-
+    
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
         // leaf node => nothing to do

@@ -1,24 +1,33 @@
+; Main Program
+	TSTO #2
+	BOV pile_pleine
+	ADDSP #2
 ; start main program
 ; Main program
-	TSTO #0
-	BOV pile_pleine
 ; Beginning of main instructions:
-	ADDSP #2
-	LOAD #1, R1
-	STORE R1, 1(LB)
-	LOAD #0, R1
-	STORE R1, 2(LB)
-	LOAD 1(LB), R1
-	PUSH R1
-	LOAD 2(LB), R1
-	POP R2
-	DIV R2, R1
+	LOAD #1, R3
+	STORE R3, 1(GB)
+	LOAD #0, R3
+	STORE R3, 2(GB)
+	LOAD 1(GB), R1
+	LOAD 2(GB), R3
+	CMP #0, R3
+	BEQ division_par_zero
+	QUO R3, R1
+	BOV overflow_arith
 	WINT
 	HALT
 ; Message d'erreurs
 pile_pleine:
-	WSTR "Erreur : debordement de pile"
+	WSTR "Erreur : débordement de pile"
 	WNL
 	ERROR
-; Autres message d'erreurs
+division_par_zero:
+	WSTR "Erreur ; division par zero"
+	WNL
+	ERROR
+overflow_arith:
+	WSTR "Erreur : overflow_arith"
+	WNL
+	ERROR
 ; end main program

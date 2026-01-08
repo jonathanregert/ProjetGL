@@ -1,4 +1,6 @@
 package fr.ensimag.deca.tree;
+
+import fr.ensimag.deca.codegen.ErrorManager;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.Register;
@@ -25,11 +27,13 @@ public class Divide extends AbstractOpArith {
 
     @Override
     protected void codeGenOperator(DecacCompiler compiler, GPRegister rRight, GPRegister rLeft) {
+        compiler.getErrorManager().genCheckDivByZero(compiler, rRight);
         if (getType().isInt()){
             compiler.addInstruction(new QUO(rRight, rLeft));
         } else {
             compiler.addInstruction(new DIV(rRight, rLeft));
         }
+        compiler.getErrorManager().genCheckOverflow(compiler);
     }
 
 }
