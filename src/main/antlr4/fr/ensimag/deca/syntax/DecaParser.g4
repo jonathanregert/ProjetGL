@@ -114,7 +114,7 @@ decl_var[AbstractIdentifier t] returns[AbstractDeclVar tree]
             Initialization init = new Initialization($e.tree);
             setLocation(init, $e.start);
 
-            $tree = new DeclVar(t, new Identifier(getCompiler().createSymbol($i.text)), init);
+            $tree = new DeclVar(t, $i.tree, init);
             setLocation($tree, $i.start);
             
       }
@@ -232,15 +232,10 @@ expr returns[AbstractExpr tree]
     ;
 
 assign_expr returns [AbstractExpr tree]
-    : e=lvalue 
+    : e=or_expr 
       ( EQUALS r=assign_expr { 
-
-        // verification que e est bien une lvalue
-        if (!($e.tree instanceof AbstractLValue)) {
-              throw new InvalidLValue(this, $e.ctx);
-          }
-        $tree = new Assign((AbstractLValue)$e.tree, $r.tree); 
-        setLocation($tree, $e.start);
+          $tree = new Assign((AbstractLValue)$e.tree, $r.tree); 
+          setLocation($tree, $e.start);
         }
       | /* epsilon */
       {
@@ -248,6 +243,7 @@ assign_expr returns [AbstractExpr tree]
         }
       )
     ;
+
 
 lvalue returns [AbstractLValue tree]
     : i=ident {
@@ -618,7 +614,7 @@ decl_field[Visibility v, AbstractIdentifier t, ListDeclField list]
 decl_method returns [AbstractDeclMethod tree]
 @init {
 }
-    : t=type id=ident LPAREN params=list_params CPAREN (b=block {
+    : t=type id=ident OPARENT params=list_params CPARENT (b=block {
         $tree = new DeclMethod( $t.tree, $id.tree, $params.tree, $b.insts);
         setLocation($tree, $id.start);
         }

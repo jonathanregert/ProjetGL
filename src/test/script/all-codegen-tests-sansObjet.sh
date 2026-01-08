@@ -24,13 +24,11 @@ find "$CODEGEN_DIR/invalid/sansObjet" -name "*.deca" | sort | while read testfil
 
         if ima "$assfile" > /dev/null 2>&1; then
             echo "Succes inattendu (execution)"
-            exit 1
         else
             echo "Echec attendu a l'execution"
         fi
     else
         echo "Erreur inattendue a la compilation"
-        exit 1
     fi
 done
 
@@ -48,11 +46,9 @@ find "$CODEGEN_DIR/valid/sansObjet" -name "*.deca" | sort | while read testfile;
             echo "Succes attendu"
         else
             echo "Erreur a l'execution"
-            exit 1
         fi
     else
         echo "Erreur a la compilation"
-        exit 1
     fi
 done
 

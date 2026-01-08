@@ -1,23 +1,10 @@
 ; Main Program
 	TSTO #1
 	BOV pile_pleine
-	ADDSP #2
+	ADDSP #1
 ; start main program
 ; Main program
 ; Beginning of main instructions:
-	RINT
-	STORE R1, 1(GB)
-	LOAD #0x1.0p-1, R1
-	LOAD 1(GB), R3
-	PUSH R3
-	LOAD 1(GB), R3
-	POP R0
-	MUL R3, R0
-	LOAD R0, R3
-	FLOAT R2, R2
-	MUL R2, R1
-	WFLOAT
-	WNL
 	HALT
 ; Message d'erreurs
 pile_pleine:
