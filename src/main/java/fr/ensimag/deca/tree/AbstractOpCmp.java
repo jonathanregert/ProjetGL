@@ -4,6 +4,7 @@ import fr.ensimag.deca.context.Type;
 import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.CMP;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.POP;
 import fr.ensimag.ima.pseudocode.instructions.PUSH;
 import fr.ensimag.ima.pseudocode.instructions.SEQ;
@@ -76,10 +77,11 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
 
         getRightOperand().codeGenExpr(compiler, target);
 
-        compiler.addInstruction(new POP(Register.R0));
+        compiler.addInstruction(new POP(Register.getR(2)));
         compiler.getStackManager().releaseTemp(1);
 
-        compiler.addInstruction(new CMP(target, Register.R0));
+        compiler.addInstruction(new CMP(target, Register.getR(2)));
+
         codeGenSet(compiler, target);
     }
 

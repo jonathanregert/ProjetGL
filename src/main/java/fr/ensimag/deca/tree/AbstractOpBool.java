@@ -44,7 +44,7 @@ public abstract class AbstractOpBool extends AbstractBinaryExpr {
     @Override
     public void codeGenExpr(DecacCompiler compiler, GPRegister target){
         int id = compiler.getLabelId();
-        Label shortCircuitLabel = new Label("boll_sc_" + id);
+        Label shortCircuitLabel = new Label("bool_sc_" + id);
         Label endLabel = new Label("bool_end_" + id);
 
         getLeftOperand().codeGenExpr(compiler, target);

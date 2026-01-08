@@ -3,12 +3,9 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.instructions.ADD;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.POP;
 import fr.ensimag.ima.pseudocode.instructions.PUSH;
-
-import java.rmi.registry.Registry;
 
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
@@ -85,14 +82,12 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
         }
         // droite dans target
         getRightOperand().codeGenExpr(compiler, target);
-        // on récupère la gauche dans R0
-        compiler.addInstruction(new POP(Register.R0));
+        compiler.addInstruction(new POP(Register.getR(2)));
         if (compiler.getStackManager() != null){
             compiler.getStackManager().releaseTemp(1);
         }
-        //R0 = left op right
-        codeGenOperator(compiler, target, Register.R0);
-        compiler.addInstruction(new LOAD(Register.R0, target));
+        codeGenOperator(compiler, target, Register.getR(2));
+        compiler.addInstruction(new LOAD(Register.getR(2), target));
         
     }
     protected abstract void codeGenOperator(DecacCompiler compiler, GPRegister rRight, GPRegister rLeft);
