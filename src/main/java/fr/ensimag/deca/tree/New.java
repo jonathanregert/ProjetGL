@@ -6,6 +6,7 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.GPRegister;
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
 
@@ -39,6 +40,11 @@ public class New extends AbstractExpr {
         Type t = className.verifyType(compiler);
         this.setType(t);
         return t;
+    }
+
+    @Override
+    public void codeGenExpr(DecacCompiler compiler, GPRegister register) {
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
 }

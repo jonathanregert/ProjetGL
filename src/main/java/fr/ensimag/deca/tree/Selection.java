@@ -23,6 +23,8 @@ import fr.ensimag.ima.pseudocode.DAddr;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.GPRegister;
+
 
 
 /**
@@ -94,6 +96,11 @@ public class Selection extends AbstractLValue{
     }
 
     @Override
+    protected void codeGenExpr(DecacCompiler compiler, GPRegister register) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
         object.prettyPrint(s, prefix, false);
         field.prettyPrint(s, prefix, true);
@@ -107,17 +114,11 @@ public class Selection extends AbstractLValue{
     }
 
   
-    
-    
 
-    @Override
-    protected void codeGenInst(DecacCompiler compiler) {
-        //compiler.addInstruction(
-            //new LOAD(
-          //      getExpDefinition().getOperand(),
-             //   Register.R1
-         //   )
-    //   );
-    }
-
+    // @Override
+    // protected DAddr codeGenAddr(DecacCompiler compiler) {
+    //     object.codeGenInst(compiler);
+    //     FieldDefinition fieldDef = field.getFieldDefinition();
+    //     return new RegisterOffset(fieldDef.getIndex(), Register.R1);
+    // }
 }
