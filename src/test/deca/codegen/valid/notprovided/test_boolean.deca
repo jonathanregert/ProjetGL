@@ -1,0 +1,23 @@
+{boolean a; boolean b; boolean c;
+
+a = true;
+b = false;
+
+print(a && b);      // false
+print(a || b);      // true
+print(!a);          // false
+print(!b);          // true
+
+// Comparaisons avec booléens
+c = a && b;
+print(c);           // false
+c = a || b;
+print(c);           // true
+c = !a || b;
+print(c);           // false
+
+// Combinaisons plus complexes
+print((a && b) || (!a && !b));      // false
+print((a || b) && (!a || b));       // false
+print((a && !b) || (b && !a));      // true
+}

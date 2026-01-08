@@ -1,0 +1,6 @@
+{ int a; float b; boolean c; 
+a = 10; b = 2.5; c = true;
+print(a);
+print(b);
+print(c);
+}

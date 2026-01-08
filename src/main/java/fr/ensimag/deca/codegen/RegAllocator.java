@@ -53,7 +53,7 @@ public class RegAllocator {
     * Mark all registers as free
     */
     public void reset(){
-        for (int i = 1; i < maxReg; i++){
+        for (int i = 1; i <= maxReg; i++){
             used[i] = false;
         }
     }
