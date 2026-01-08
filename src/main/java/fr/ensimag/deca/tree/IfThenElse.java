@@ -48,14 +48,11 @@ public class IfThenElse extends AbstractInst {
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass, Type returnType)
             throws ContextualError {
-        // Vérification de la condition
         Type condType = condition.verifyExpr(compiler, localEnv, currentClass);
         if (!condType.isBoolean()) {
             throw new ContextualError("La condition d'une instruction if doit être de type boolean.", condition.getLocation());
         }
-        // Vérification du "then"
         thenBranch.verifyListInst(compiler, localEnv, currentClass, returnType);
-        // Vérification du "else"
         elseBranch.verifyListInst(compiler, localEnv, currentClass, returnType);
     }
 
@@ -65,18 +62,10 @@ public class IfThenElse extends AbstractInst {
         Label labelElse = new Label("else_" + id);
         Label labelEnd = new Label("endif_" + id);
 
-        GPRegister rCond = compiler.getRegAllocator().alloc();
-        if (rCond == null){
-            rCond = Register.R0;
-        }
-        condition.codeGenExpr(compiler, rCond);
+        condition.codeGenExpr(compiler);
 
-        compiler.addInstruction(new CMP(new ImmediateInteger(0), rCond));
+        compiler.addInstruction(new CMP(new ImmediateInteger(0), Register.R1));
         compiler.addInstruction(new BEQ(labelElse));
-
-        if (!rCond.equals(Register.R0)){
-            compiler.getRegAllocator().free(rCond);
-        }
 
         thenBranch.codeGenListInst(compiler);
         compiler.addInstruction(new BRA(labelEnd));
@@ -85,7 +74,6 @@ public class IfThenElse extends AbstractInst {
         if (elseBranch != null){
             elseBranch.codeGenListInst(compiler);
         }
-
         compiler.addLabel(labelEnd);
     }
 

@@ -240,7 +240,7 @@ public class Identifier extends AbstractIdentifier {
     
     @Override
     protected DAddr codeGenAddr(DecacCompiler compiler) {
-        return ((VariableDefinition) getDefinition()).getOperand();
+        return getExpDefinition().getOperand();
     }
 
     @Override

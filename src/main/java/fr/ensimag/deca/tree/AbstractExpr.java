@@ -137,7 +137,7 @@ public abstract class AbstractExpr extends AbstractInst {
      * @param compiler
      */
     protected void codeGenPrint(DecacCompiler compiler) {
-        codeGenExpr(compiler, Register.R1);
+        codeGenExpr(compiler);
         Type t = getType();
         if (t.isInt() || t.isBoolean()) compiler.addInstruction(new WINT());
         else if (t.isFloat()) compiler.addInstruction(new WFLOAT());
@@ -150,7 +150,7 @@ public abstract class AbstractExpr extends AbstractInst {
     protected abstract void codeGenExpr(DecacCompiler compiler, GPRegister target);
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        codeGenExpr(compiler, Register.R1);
+        codeGenExpr(compiler);
     }
     
 
