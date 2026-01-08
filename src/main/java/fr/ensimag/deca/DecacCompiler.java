@@ -48,10 +48,8 @@ public class DecacCompiler {
      */
     private static final String nl = System.getProperty("line.separator", "\n");
     private int labelId = 0; // pour generation de code et pouvoir jump au bon label : label_labelId
-    private int availableRegisters; // nombre de registre dispo
     private final RegAllocator regAllocator;
     private final StackManager stackManager = new StackManager();
-    
 
     public DecacCompiler(CompilerOptions compilerOptions, File source) {
         super();
@@ -99,28 +97,6 @@ public class DecacCompiler {
         return labelId++;
     }
 
-    public int getAvailableRegisters()
-    {
-        return availableRegisters;
-    }
-
-    public void decreaseAvailableRegisters() {
-        availableRegisters--;
-    }
-
-    public void increaseAvailableRegisters() {
-        System.out.println("increaseAvailableRegisters");
-        availableRegisters++;
-        if (availableRegisters > compilerOptions.getRegisterCount() - 1) 
-        {
-            availableRegisters = compilerOptions.getRegisterCount() - 1;
-        }
-    }
-
-    public int getNextRegister()
-    {
-        return compilerOptions.getRegisterCount() - 1 - availableRegisters + 1;
-    }
 
     /**
      * Compilation options (e.g. when to stop compilation, number of registers
@@ -184,7 +160,7 @@ public class DecacCompiler {
      * The main program. Every instruction generated will eventually end up here.
      */
     private final IMAProgram program = new IMAProgram();
- 
+
 
     /** The global environment for types (and the symbolTable) */
     public final SymbolTable symbolTable = new SymbolTable();
@@ -269,10 +245,6 @@ public class DecacCompiler {
 
         prog.verifyProgram(this);
         assert(prog.checkAllDecorations());
-
-        // nombre registres de base - 2
-        availableRegisters = compilerOptions.getRegisterCount() - 2;
-        //
 
         addComment("start main program");
         prog.codeGenProgram(this);
