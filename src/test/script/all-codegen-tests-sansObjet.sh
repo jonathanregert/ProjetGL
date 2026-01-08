@@ -8,7 +8,7 @@ cd "$(dirname "$0")"/../../.. || exit 1
 
 PATH=./src/main/bin:"$PATH"
 
-CODEGEN_DIR="src/test/deca/codegen"
+CODEGEN_DIR="src/test/deca/context"
 
 echo "Tests codegen"
 
@@ -16,7 +16,7 @@ echo "Tests codegen"
 
 echo "Tests INVALIDES"
 
-find "$CODEGEN_DIR/invalid" -name "*.deca" | sort | while read testfile; do
+find "$CODEGEN_DIR/invalid/sansObjet" -name "*.deca" | sort | while read testfile; do
     echo "Test invalide attendu : $testfile"
 
     if decac "$testfile" > /dev/null 2>&1; then
@@ -38,7 +38,7 @@ done
 
 echo "Tests VALIDES"
 
-find "$CODEGEN_DIR/valid" -name "*.deca" | sort | while read testfile; do
+find "$CODEGEN_DIR/valid/sansObjet" -name "*.deca" | sort | while read testfile; do
     echo "Test valide attendu : $testfile"
 
     if decac "$testfile" > /dev/null 2>&1; then
