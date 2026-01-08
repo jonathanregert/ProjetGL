@@ -20,10 +20,4 @@ public class Print extends AbstractPrint {
     String getSuffix() {
         return "";
     }
-
-    @Override
-    protected void codeGenInst(DecacCompiler compiler) {
-        super.codeGenInst(compiler);
-        compiler.addInstruction(new WNL());
-    }
 }
