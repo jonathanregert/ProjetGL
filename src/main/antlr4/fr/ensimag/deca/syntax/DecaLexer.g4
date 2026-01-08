@@ -95,7 +95,7 @@ IDENT : (LETTER | '_' | '$') (LETTER | DIGIT | '_' | '$')*;
 // INCLUDE
 
 INCLUDE : '#include' [ \t]* '"' FILENAME '"';
-FILENAME : [a-zA-Z0-9._-]+;
+fragment FILENAME : [a-zA-Z0-9._-]+;
 
 // Commentaires et espaces
 
