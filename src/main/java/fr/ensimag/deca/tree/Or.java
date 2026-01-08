@@ -35,7 +35,4 @@ public class Or extends AbstractOpBool {
     protected int getShortCircuitValue(){
         return 1;
     }
-
-
-
 }

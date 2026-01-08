@@ -4,6 +4,7 @@ import fr.ensimag.deca.context.EnvironmentType;
 import fr.ensimag.deca.codegen.RegAllocator;
 import fr.ensimag.deca.codegen.StackManager;
 import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.deca.codegen.ErrorManager;
 import fr.ensimag.deca.syntax.DecaLexer;
 import fr.ensimag.deca.syntax.DecaParser;
 import fr.ensimag.deca.tools.DecacInternalError;
@@ -50,6 +51,7 @@ public class DecacCompiler {
     private int labelId = 0; // pour generation de code et pouvoir jump au bon label : label_labelId
     private final RegAllocator regAllocator;
     private final StackManager stackManager = new StackManager();
+    private final ErrorManager errorManager = new ErrorManager();
 
     public DecacCompiler(CompilerOptions compilerOptions, File source) {
         super();
@@ -66,6 +68,13 @@ public class DecacCompiler {
 
     public StackManager getStackManager(){
         return stackManager;
+    }
+
+    /**
+     * Gestion des errurs
+     */
+    public ErrorManager getErrorManager(){
+        return errorManager;
     }
 
     public void addFirst(Instruction i) {

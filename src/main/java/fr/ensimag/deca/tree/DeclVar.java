@@ -88,7 +88,7 @@ public class DeclVar extends AbstractDeclVar {
         // ex: new RegisterOffset(offset, Register.GB)
 
         // 2) l'attacher à la variable
-        varName.getVariableDefinition().setOperand(addr);
+        varName.getExpDefinition().setOperand(addr);
 
         // 3) générer init (fait STORE vers addr)
         initialization.codeGenInitialization(compiler, addr);

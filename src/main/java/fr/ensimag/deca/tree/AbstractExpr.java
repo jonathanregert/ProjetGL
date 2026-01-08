@@ -8,14 +8,10 @@ import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.GPRegister;
-import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.WFLOAT;
 import fr.ensimag.ima.pseudocode.instructions.WINT;
 import java.io.PrintStream;
-import java.rmi.registry.Registry;
-
 import org.apache.commons.lang.Validate;
 
 /**
@@ -141,37 +137,20 @@ public abstract class AbstractExpr extends AbstractInst {
      * @param compiler
      */
     protected void codeGenPrint(DecacCompiler compiler) {
-        GPRegister r = codeGenExpr(compiler);
-
-        // convention print : valeur en R1 avant WINT/WFLOAT
-        if (r != Register.R1){
-            compiler.addInstruction(new LOAD(r, Register.R1));
-            compiler.getRegAllocator().free(r);
-        } else {
-            // R1 utilisé : on le libèrera après le print
-            compiler.getRegAllocator().free(r);
-        }
+        codeGenExpr(compiler);
         Type t = getType();
         if (t.isInt() || t.isBoolean()) compiler.addInstruction(new WINT());
         else if (t.isFloat()) compiler.addInstruction(new WFLOAT());
         else throw new UnsupportedOperationException("print non supporté pour " + t);
     }
-    protected GPRegister codeGenExpr(DecacCompiler compiler){ //méthode helper
-        //Compile l'expression et retourne le registre résultat
-        GPRegister r = compiler.getRegAllocator().alloc();
-        if (r == null){
-            throw new UnsupportedOperationException("Plus de registres disponibles");
-        }
-        codeGenExpr(compiler, r);
-        return r;
+    protected GPRegister codeGenExpr(DecacCompiler compiler){
+        codeGenExpr(compiler, Register.R1);
+        return Register.R1;
     }
-
-    protected abstract void codeGenExpr(DecacCompiler compiler, GPRegister target); // Une fois l'expression compilée, on la laisse dans target
-
+    protected abstract void codeGenExpr(DecacCompiler compiler, GPRegister target);
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        GPRegister r = codeGenExpr(compiler);
-        compiler.getRegAllocator().free(r);
+        codeGenExpr(compiler);
     }
     
 

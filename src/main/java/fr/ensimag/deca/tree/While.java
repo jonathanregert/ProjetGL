@@ -49,19 +49,11 @@ public class While extends AbstractInst {
         Label labelEnd  = new Label("while_end_" + id);
 
         compiler.addLabel(labelTest);
+        condition.codeGenExpr(compiler, Register.R1);
 
-        GPRegister rCond = compiler.getRegAllocator().alloc();
-        if (rCond == null){
-            rCond = Register.R0;
-        }
-        condition.codeGenExpr(compiler, rCond);
-
-        compiler.addInstruction(new CMP(new ImmediateInteger(0), rCond));
+        compiler.addInstruction(new CMP(new ImmediateInteger(0), Register.R1));
         compiler.addInstruction(new BEQ(labelEnd));
-        
-        if (!rCond.equals(Register.R0)){
-            compiler.getRegAllocator().free(rCond);
-        }
+    
         body.codeGenListInst(compiler);
         compiler.addInstruction(new BRA(labelTest));
         compiler.addLabel(labelEnd);

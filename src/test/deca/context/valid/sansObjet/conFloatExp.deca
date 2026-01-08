@@ -1,0 +1,6 @@
+{
+    float y;
+    int x = 3;
+    int z = 1;
+    y = x+z;
+}
