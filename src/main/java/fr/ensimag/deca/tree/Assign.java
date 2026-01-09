@@ -33,33 +33,17 @@ public class Assign extends AbstractBinaryExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-                
         // Partie gauche doit être une lvalue (p 58)
         if (!(getLeftOperand() instanceof AbstractLValue)) {
         throw new ContextualError("La partie gauche d'une affectation doit être une lvalue.",
                 getLeftOperand().getLocation());
         }
 
-
         Type typeGauche = getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
-        Type typeDroit = getRightOperand().verifyExpr(compiler, localEnv, currentClass);
 
-        if (!typeDroit.sameType(typeGauche)) {
-            // Cas particulier :
-            // float = int 
-            if (typeGauche.isFloat() && typeDroit.isInt()) {
-                // On insere une conversion de int vers float
-                AbstractExpr convertExpr = new ConvFloat(getRightOperand());
-                convertExpr.setLocation(getRightOperand().getLocation());
-                setRightOperand(convertExpr);
-                convertExpr.verifyExpr(compiler, localEnv, currentClass);
-            } else {
-                throw new ContextualError("Incompatible types: impossible assign " +
-                        typeDroit.getName().getName() + " à " +
-                        typeGauche.getName().getName(), getLocation());
-            }
-        }
-        // Deco
+        AbstractExpr rhs = getRightOperand().verifyRValue(compiler, localEnv, currentClass, typeGauche);
+        setRightOperand(rhs);
+
         this.setType(typeGauche);
         return typeGauche;
     }
