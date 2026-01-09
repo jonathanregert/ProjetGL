@@ -12,9 +12,8 @@
 // - if / else if / else
 // - while
 // - print / println / printx / printlnx
-// - cast explicite int -> float
+// - cast explicite
 // - littéraux int, float, string, true, false, null
-// - return (dans bloc)
 // - listes d’expressions
 //
 // Resultats :
@@ -26,25 +25,49 @@
     // --------------------------------
     int a = 3, b = 7, c;
     int i = 0, j, acc = 0;
-    float f = 2.5, g;
+    int k;
+    float f = 2.5, g, h;
     boolean ok = true, flag = false;
     boolean cond;
 
     // --------------------------------
-    // Affectations complexes
+    // Affectations complexes + casts
     // --------------------------------
     c = -a + (b * (a + 2)) - (b / (a + 1));
-    g = c + f * 2.0;
+
+    g = (float)(c) + (float)(a + b) * 2.0;
+    h = (float)(c * (a - b)) / (float)(a + 1);
 
     print("c = ");
     println(c);
     print("g = ");
     println(g);
+    print("h = ");
+    println(h);
 
     // --------------------------------
-    // Booléens et comparaisons
+    // Cast float -> int
     // --------------------------------
-    cond = !(a < b) || (a == 3 && b != 0);
+    k = (int)(g);
+    j = (int)(h + 3.7);
+
+    print("k = ");
+    println(k);
+    print("j = ");
+    println(j);
+
+    // --------------------------------
+    // Cast imbriqués
+    // --------------------------------
+    k = (int)((float)(a + b) * 1.5);
+
+    print("k (nested cast) = ");
+    println(k);
+
+    // --------------------------------
+    // Booléens, comparaisons et casts
+    // --------------------------------
+    cond = !((int)(g) < (int)(h)) || ((int)(f) == 2 && b != 0);
 
     print("cond = ");
     println(cond);
@@ -52,29 +75,29 @@
     // --------------------------------
     // if / else if / else
     // --------------------------------
-    if (a < b) {
-        println("a < b");
-    } else if (a == b) {
-        println("a == b");
+    if ((int)(g) > (int)(h)) {
+        println("g > h");
+    } else if ((int)(g) == (int)(h)) {
+        println("g == h");
     } else {
-        println("a > b");
+        println("g < h");
     }
 
     // --------------------------------
-    // while
+    // while avec cast dans la condition
     // --------------------------------
-    while (i < 5) {
-        acc = acc + i;
-        i = i + 1;
+    while ((int)(f) < 5) {
+        acc = acc + (int)(f);
+        f = f + 1.0;
     }
 
     print("acc = ");
     println(acc);
 
     // --------------------------------
-    // Affectations imbriquées
+    // Affectations imbriquées avec cast
     // --------------------------------
-    j = a = b = 4;
+    j = a = (int)((float)(b) * 1.0);
 
     print("a = ");
     println(a);
@@ -84,10 +107,14 @@
     println(j);
 
     // --------------------------------
-    // Listes d'expressions
+    // Listes d'expressions avec casts
     // --------------------------------
     print("values: ");
-    print(a, ", ", b, ", ", c);
+    print(
+        (int)(g), ", ",
+        (float)(a), ", ",
+        (int)((float)(c) / 2.0)
+    );
     println();
 
     // --------------------------------
@@ -97,10 +124,10 @@
     printlnx(acc);
 
     // --------------------------------
-    // Expressions avec null / booleens
+    // Expressions booléennes finales
     // --------------------------------
     flag = false;
-    ok = !flag && true || false;
+    ok = !flag && ((int)(f) >= 5) || false;
 
     print("ok = ");
     println(ok);
