@@ -52,6 +52,7 @@ public class ReadFloat extends AbstractReadExpr {
     @Override
     protected void codeGenExpr(DecacCompiler compiler, GPRegister target) {
         compiler.addInstruction(new RFLOAT());
+        compiler.getErrorManager().genCheckReadFloat(compiler);
         if (!target.equals(Register.R1)){
             compiler.addInstruction(new LOAD(Register.R1, target));
         }

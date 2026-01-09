@@ -1,0 +1,11 @@
+{
+    boolean b;
+    int x = 3;
+
+    b = x > 0;
+    if (b) {
+        println(1);
+    } else {
+        println(0);
+    }
+}

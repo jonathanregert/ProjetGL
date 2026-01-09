@@ -1,0 +1,107 @@
+// Description :
+// Programme de test grammaticale Deca SANS OBJET.
+// Ce test exerce de façon intensive toutes les règles du langage sans objet :
+// - bloc principal
+// - déclarations simples et multiples
+// - initialisation et non-initialisation
+// - affectations imbriquées
+// - priorités opérateurs arithmétiques
+// - opérateurs de comparaison
+// - opérateurs booléens (&&, ||, !)
+// - expressions unaires (-)
+// - if / else if / else
+// - while
+// - print / println / printx / printlnx
+// - cast explicite int -> float
+// - littéraux int, float, string, true, false, null
+// - return (dans bloc)
+// - listes d’expressions
+//
+// Resultats :
+// Le programme affiche des valeurs cohérentes et se termine sans erreur.
+
+{
+    // --------------------------------
+    // Déclarations
+    // --------------------------------
+    int a = 3, b = 7, c;
+    int i = 0, j, acc = 0;
+    float f = 2.5, g;
+    boolean ok = true, flag = false;
+    boolean cond;
+
+    // --------------------------------
+    // Affectations complexes
+    // --------------------------------
+    c = -a + (b * (a + 2)) - (b / (a + 1));
+    g = c + f * 2.0;
+
+    print("c = ");
+    println(c);
+    print("g = ");
+    println(g);
+
+    // --------------------------------
+    // Booléens et comparaisons
+    // --------------------------------
+    cond = !(a < b) || (a == 3 && b != 0);
+
+    print("cond = ");
+    println(cond);
+
+    // --------------------------------
+    // if / else if / else
+    // --------------------------------
+    if (a < b) {
+        println("a < b");
+    } else if (a == b) {
+        println("a == b");
+    } else {
+        println("a > b");
+    }
+
+    // --------------------------------
+    // while
+    // --------------------------------
+    while (i < 5) {
+        acc = acc + i;
+        i = i + 1;
+    }
+
+    print("acc = ");
+    println(acc);
+
+    // --------------------------------
+    // Affectations imbriquées
+    // --------------------------------
+    j = a = b = 4;
+
+    print("a = ");
+    println(a);
+    print("b = ");
+    println(b);
+    print("j = ");
+    println(j);
+
+    // --------------------------------
+    // Listes d'expressions
+    // --------------------------------
+    print("values: ");
+    print(a, ", ", b, ", ", c);
+    println();
+
+    // --------------------------------
+    // printx / printlnx
+    // --------------------------------
+    printx("acc (hex) = ");
+    printlnx(acc);
+
+    // --------------------------------
+    // Expressions avec null / booleens
+    // --------------------------------
+    flag = false;
+    ok = !flag && true || false;
+
+    print("ok = ");
+    println(ok);
+}

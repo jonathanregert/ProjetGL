@@ -1,4 +1,4 @@
-// Generated from /home/hiba/gl42/src/main/antlr4/fr/ensimag/deca/syntax/DecaParser.g4 by ANTLR 4.13.1
+// Generated from /Users/jonathanregert/Documents/Ensimag/Semestre8/ProjetGL/git/tests/gl42/src/main/antlr4/fr/ensimag/deca/syntax/DecaParser.g4 by ANTLR 4.13.1
 
     import fr.ensimag.deca.tree.*;
     import fr.ensimag.deca.DecacCompiler;
@@ -27,8 +27,8 @@ public class DecaParser extends AbstractDecaParser {
 		EQEQ=23, NEQ=24, LEQ=25, GEQ=26, PLUS=27, MINUS=28, TIMES=29, SLASH=30, 
 		PERCENT=31, LT=32, GT=33, EXCLAM=34, EQUALS=35, OBRACE=36, CBRACE=37, 
 		OPARENT=38, CPARENT=39, SEMI=40, COMMA=41, COLON=42, DOT=43, INT=44, FLOAT=45, 
-		STRING=46, MULTI_LINE_STRING=47, IDENT=48, INCLUDE=49, FILENAME=50, LINE_COMMENT=51, 
-		BLOCK_COMMENT=52, WS=53;
+		STRING=46, MULTI_LINE_STRING=47, IDENT=48, INCLUDE=49, LINE_COMMENT=50, 
+		BLOCK_COMMENT=51, WS=52;
 	public static final int
 		RULE_prog = 0, RULE_main = 1, RULE_block = 2, RULE_list_decl = 3, RULE_decl_var_set = 4, 
 		RULE_list_decl_var = 5, RULE_decl_var = 6, RULE_list_inst = 7, RULE_inst = 8, 
@@ -72,7 +72,7 @@ public class DecaParser extends AbstractDecaParser {
 			"NEQ", "LEQ", "GEQ", "PLUS", "MINUS", "TIMES", "SLASH", "PERCENT", "LT", 
 			"GT", "EXCLAM", "EQUALS", "OBRACE", "CBRACE", "OPARENT", "CPARENT", "SEMI", 
 			"COMMA", "COLON", "DOT", "INT", "FLOAT", "STRING", "MULTI_LINE_STRING", 
-			"IDENT", "INCLUDE", "FILENAME", "LINE_COMMENT", "BLOCK_COMMENT", "WS"
+			"IDENT", "INCLUDE", "LINE_COMMENT", "BLOCK_COMMENT", "WS"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -3458,7 +3458,7 @@ public class DecaParser extends AbstractDecaParser {
 	}
 
 	public static final String _serializedATN =
-		"\u0004\u00015\u0248\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002"+
+		"\u0004\u00014\u0248\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002"+
 		"\u0002\u0007\u0002\u0002\u0003\u0007\u0003\u0002\u0004\u0007\u0004\u0002"+
 		"\u0005\u0007\u0005\u0002\u0006\u0007\u0006\u0002\u0007\u0007\u0007\u0002"+
 		"\b\u0007\b\u0002\t\u0007\t\u0002\n\u0007\n\u0002\u000b\u0007\u000b\u0002"+

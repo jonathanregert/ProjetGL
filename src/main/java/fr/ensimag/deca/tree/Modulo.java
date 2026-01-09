@@ -41,6 +41,7 @@ public class Modulo extends AbstractOpArith {
 
     @Override
     protected void codeGenOperator(DecacCompiler compiler, GPRegister rRight, GPRegister rLeft) {
+        compiler.getErrorManager().genCheckIntModByZero(compiler, rRight);
         compiler.addInstruction(new REM(rRight, rLeft));
     }
 
