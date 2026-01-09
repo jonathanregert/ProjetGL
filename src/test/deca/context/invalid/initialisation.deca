@@ -1,0 +1,10 @@
+// Description :
+//    Initialisation invalide : utilisation de la variable dans sa propre initialisation.
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne 9 : Variable x non déclarée
+
+{
+    int x = x+1;
+}

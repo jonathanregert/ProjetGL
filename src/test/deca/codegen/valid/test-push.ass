@@ -1,0 +1,80 @@
+; Main Program
+	TSTO #12
+	BOV pile_pleine
+	ADDSP #12
+; start main program
+; Main program
+; Beginning of main instructions:
+	LOAD #1, R3
+	STORE R3, 1(GB)
+	LOAD #2, R3
+	STORE R3, 2(GB)
+	LOAD #3, R3
+	STORE R3, 3(GB)
+	LOAD #4, R3
+	STORE R3, 4(GB)
+	LOAD #5, R3
+	STORE R3, 5(GB)
+	LOAD #6, R3
+	STORE R3, 6(GB)
+	LOAD #7, R3
+	STORE R3, 7(GB)
+	LOAD #8, R3
+	STORE R3, 8(GB)
+	LOAD 1(GB), R3
+	PUSH R3
+	LOAD 2(GB), R3
+	POP R2
+	ADD R3, R2
+	BOV overflow_arith
+	LOAD R2, R3
+	PUSH R3
+	LOAD 3(GB), R3
+	PUSH R3
+	LOAD 4(GB), R3
+	POP R2
+	ADD R3, R2
+	BOV overflow_arith
+	LOAD R2, R3
+	POP R2
+	MUL R3, R2
+	BOV overflow_arith
+	LOAD R2, R3
+	PUSH R3
+	LOAD 5(GB), R3
+	PUSH R3
+	LOAD 6(GB), R3
+	POP R2
+	ADD R3, R2
+	BOV overflow_arith
+	LOAD R2, R3
+	PUSH R3
+	LOAD 7(GB), R3
+	PUSH R3
+	LOAD 8(GB), R3
+	POP R2
+	ADD R3, R2
+	BOV overflow_arith
+	LOAD R2, R3
+	POP R2
+	MUL R3, R2
+	BOV overflow_arith
+	LOAD R2, R3
+	POP R2
+	ADD R3, R2
+	BOV overflow_arith
+	LOAD R2, R3
+	STORE R3, 9(GB)
+	LOAD 9(GB), R1
+	WINT
+	HALT
+; Message d'erreurs
+pile_pleine:
+	WSTR "Erreur : debordement de pile"
+	WNL
+	ERROR
+overflow_arith:
+	WSTR "Erreur : overflow_arithmetique"
+	WNL
+	ERROR
+; end main program
