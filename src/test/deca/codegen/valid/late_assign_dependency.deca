@@ -1,0 +1,10 @@
+{
+    int a;
+    int b;
+    int c;
+
+    a = 1;
+    b = a + 2;
+    c = b + a;
+    println(c);
+}

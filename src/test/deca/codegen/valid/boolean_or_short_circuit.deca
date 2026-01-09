@@ -1,0 +1,6 @@
+{
+    int x = 0;
+    boolean r;
+    r = true || (1 / x > 0);
+    println(r);
+}

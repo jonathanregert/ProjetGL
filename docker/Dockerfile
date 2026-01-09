@@ -1,8 +1,13 @@
 ARG BASE_IMAGE
 FROM ubuntu:24.04
 LABEL maintainer="Patrick.Reignier@imag.fr"
-RUN apt-get update -yq
-RUN apt-get install -yq tzdata && ln -fs /usr/share/zoneinfo/Europe/Paris /etc/localtime && dpkg-reconfigure -f noninteractive tzdata
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get clean \
+ && rm -rf /var/lib/apt/lists/* \
+ && apt-get update \
+ && apt-get install -y tzdata
+
 RUN apt-get install -yq wget 
 RUN cd /usr/local; wget "https://github.com/adoptium/temurin23-binaries/releases/download/jdk-23.0.2+7/OpenJDK23U-jdk_x64_linux_hotspot_23.0.2_7.tar.gz"
 RUN cd /usr/local; tar xzvf OpenJDK23U-jdk_x64_linux_hotspot_23.0.2_7.tar.gz
