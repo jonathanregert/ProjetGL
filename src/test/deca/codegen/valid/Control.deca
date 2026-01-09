@@ -11,13 +11,16 @@
     int y = 3;
     int z;
     boolean go = true;
+    int i = 3;
+    int j;
+    int tmp;
 
     x = base + y;
     z = 0;
 
-    int i = 3;
+    
     while (i > 0) {
-        int j = i + 1;
+        j = i + 1;
         while (j > 0) {
             if ((i + j) > (base * 2)) {
                 z = z + (i * j) - (base + y);
@@ -27,7 +30,7 @@
 
             // bloc interne + assign tardif
             {
-                int tmp = (z + i) - (j * base);
+                tmp = (z + i) - (j * base);
                 if (tmp < 0) {
                     go = go && true;
                 } else {

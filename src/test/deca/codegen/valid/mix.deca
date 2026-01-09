@@ -15,6 +15,9 @@
     float g;
     boolean ok = true;
     boolean flag;
+    int i = 4;
+    int j;
+    int acc = 0;
 
     // Assign + UnaryMinus + OpArith
     c = -a + (b * (a + 2)) - (b / (a + 1));
@@ -38,9 +41,7 @@
     }
 
     // While imbriqué + dépendances
-    int i = 4;
-    int j;
-    int acc = 0;
+    
 
     while (i > 0 && ok) {
         j = i;
