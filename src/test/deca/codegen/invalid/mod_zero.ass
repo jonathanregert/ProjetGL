@@ -5,10 +5,9 @@
 ; start main program
 ; Main program
 ; Beginning of main instructions:
-	LOAD #7, R3
-	OPP R3, R3
+	LOAD #10, R3
 	STORE R3, 1(GB)
-	LOAD #4, R3
+	LOAD #0, R3
 	STORE R3, 2(GB)
 	LOAD 1(GB), R1
 	LOAD 2(GB), R3
@@ -16,7 +15,6 @@
 	BEQ reste_par_zero
 	REM R3, R1
 	WINT
-	WNL
 	HALT
 ; Message d'erreurs
 pile_pleine:

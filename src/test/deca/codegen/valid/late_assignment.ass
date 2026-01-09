@@ -5,22 +5,15 @@
 ; start main program
 ; Main program
 ; Beginning of main instructions:
-	RINT
-	BOV erreur_lecture_int
+	LOAD #3, R1
 	STORE R1, 1(GB)
-	LOAD #0x1.0p-1, R1
-	LOAD 1(GB), R3
-	PUSH R3
-	LOAD 1(GB), R3
-	POP R2
-	MUL R3, R2
+	LOAD 1(GB), R1
+	LOAD #2, R3
+	ADD R3, R1
 	BOV overflow_arith
-	LOAD R2, R3
-	FLOAT R3, R3
-	MUL R3, R1
-	BOV overflow_arith
-	WFLOAT
-	WNL
+	STORE R1, 2(GB)
+	LOAD 2(GB), R1
+	WINT
 	HALT
 ; Message d'erreurs
 pile_pleine:
@@ -29,10 +22,6 @@ pile_pleine:
 	ERROR
 overflow_arith:
 	WSTR "Erreur : overflow_arithmetique"
-	WNL
-	ERROR
-erreur_lecture_int:
-	WSTR "Erreur : lecture d'un entier invalide"
 	WNL
 	ERROR
 ; end main program

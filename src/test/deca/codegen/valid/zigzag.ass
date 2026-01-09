@@ -36,6 +36,8 @@
 	PUSH R3
 	LOAD 2(GB), R3
 	POP R2
+	CMP #0, R3
+	BEQ reste_par_zero
 	REM R3, R2
 	LOAD R2, R3
 	FLOAT R3, R3
@@ -63,6 +65,10 @@ pile_pleine:
 	ERROR
 division_par_zero:
 	WSTR "Erreur : divion entiere par zero"
+	WNL
+	ERROR
+reste_par_zero:
+	WSTR "Erreur : reste de la division entiere par zero"
 	WNL
 	ERROR
 overflow_arith:

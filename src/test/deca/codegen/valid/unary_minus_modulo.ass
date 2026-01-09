@@ -1,22 +1,26 @@
 ; Main Program
-	TSTO #2
+	TSTO #3
 	BOV pile_pleine
-	ADDSP #2
+	ADDSP #3
 ; start main program
 ; Main program
 ; Beginning of main instructions:
-	LOAD #7, R3
+	LOAD #3, R3
 	OPP R3, R3
 	STORE R3, 1(GB)
-	LOAD #4, R3
-	STORE R3, 2(GB)
-	LOAD 1(GB), R1
-	LOAD 2(GB), R3
+	LOAD #10, R3
+	PUSH R3
+	LOAD #3, R3
+	POP R2
 	CMP #0, R3
 	BEQ reste_par_zero
-	REM R3, R1
+	REM R3, R2
+	LOAD R2, R3
+	STORE R3, 2(GB)
+	LOAD 1(GB), R1
 	WINT
-	WNL
+	LOAD 2(GB), R1
+	WINT
 	HALT
 ; Message d'erreurs
 pile_pleine:

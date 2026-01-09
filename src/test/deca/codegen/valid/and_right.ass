@@ -5,26 +5,23 @@
 ; start main program
 ; Main program
 ; Beginning of main instructions:
-	LOAD #7, R3
-	OPP R3, R3
+	LOAD #1, R3
 	STORE R3, 1(GB)
-	LOAD #4, R3
+	LOAD #1, R3
 	STORE R3, 2(GB)
 	LOAD 1(GB), R1
-	LOAD 2(GB), R3
-	CMP #0, R3
-	BEQ reste_par_zero
-	REM R3, R1
+	CMP #0, R1
+	BEQ bool_sc_0
+	LOAD 2(GB), R1
+	BRA bool_end_0
+bool_sc_0:
+	LOAD #0, R1
+bool_end_0:
 	WINT
-	WNL
 	HALT
 ; Message d'erreurs
 pile_pleine:
 	WSTR "Erreur : debordement de pile"
-	WNL
-	ERROR
-reste_par_zero:
-	WSTR "Erreur : reste de la division entiere par zero"
 	WNL
 	ERROR
 ; end main program
