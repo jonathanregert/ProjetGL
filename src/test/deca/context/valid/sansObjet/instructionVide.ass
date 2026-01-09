@@ -1,12 +1,10 @@
 ; Main Program
-	TSTO #1
+	TSTO #0
 	BOV pile_pleine
-	ADDSP #1
+	ADDSP #0
 ; start main program
 ; Main program
 ; Beginning of main instructions:
-	LOAD #1, R3
-	STORE R3, 1(GB)
 	HALT
 ; Message d'erreurs
 pile_pleine:

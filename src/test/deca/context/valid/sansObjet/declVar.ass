@@ -5,8 +5,8 @@
 ; start main program
 ; Main program
 ; Beginning of main instructions:
-	LOAD #0x1.733334p2, R1
-	STORE R1, 1(GB)
+	LOAD #0x1.733334p2, R3
+	STORE R3, 1(GB)
 	HALT
 ; Message d'erreurs
 pile_pleine:

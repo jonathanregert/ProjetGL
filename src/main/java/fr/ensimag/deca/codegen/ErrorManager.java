@@ -46,7 +46,7 @@ public class ErrorManager {
             case STACK_OVERFLOW :    return "pile_pleine";
             case HEAP_OVERFLOW :     return "tas_plein";
 
-            case INT_DIV_BY_ZERO:    return "division par zero";
+            case INT_DIV_BY_ZERO:    return "division_par_zero";
             case INT_MOD_BY_ZERO:    return "reste_par_zero";
             case FLOAT_DIV_BY_ZERO: return "division_par_zero_float";
 

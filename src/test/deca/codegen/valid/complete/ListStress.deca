@@ -1,0 +1,41 @@
+// Description :
+// Stress des listes : ListDeclVar, ListInst, ListExpr
+// Plusieurs prints/println avec expressions complexes et variées
+//
+// Resultats :
+// Plusieurs sorties cohérentes, terminaison sans erreur
+
+{
+    int a = 1;
+    int b = 2;
+    int c = 3;
+    int d = 4;
+    int e = 5;
+
+    // Print avec ListExpr (plusieurs arguments)
+    print("sum=");
+    println(a + b + c + d + e);
+
+    int r1;
+    int r2;
+    int r3;
+
+    // Arbre équilibré
+    r1 = ((a + b) * (c + d)) - (e * (a + c));
+    // Arbre droite
+    r2 = a + (b + (c + (d + e)));
+    // Zigzag + mix ops
+    r3 = ((a * (b + c)) - (d - e)) + ((a + d) * (c - b));
+
+    print("r1=");
+    println(r1);
+    print("r2=");
+    println(r2);
+    print("r3=");
+    println(r3);
+
+    boolean t;
+    t = (r1 > r2) && (r3 != 0) || !(r2 < 0);
+    print("t=");
+    println(t);
+}

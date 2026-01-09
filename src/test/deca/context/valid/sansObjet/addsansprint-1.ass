@@ -5,18 +5,23 @@
 ; start main program
 ; Main program
 ; Beginning of main instructions:
-	LOAD #3, R1
-	STORE R1, 1(GB)
-	LOAD #2, R1
-	STORE R1, 2(GB)
+	LOAD #3, R3
+	STORE R3, 1(GB)
+	LOAD #2, R3
+	STORE R3, 2(GB)
 	LOAD 1(GB), R1
-	LOAD 2(GB), R2
-	ADD R2, R1
+	LOAD 2(GB), R3
+	ADD R3, R1
+	BOV overflow_arith
 	WINT
 	HALT
 ; Message d'erreurs
 pile_pleine:
 	WSTR "Erreur : debordement de pile"
+	WNL
+	ERROR
+overflow_arith:
+	WSTR "Erreur : overflow_arithmetique"
 	WNL
 	ERROR
 ; end main program

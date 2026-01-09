@@ -1,5 +1,5 @@
 ; Main Program
-	TSTO #1
+	TSTO #2
 	BOV pile_pleine
 	ADDSP #2
 ; start main program
@@ -11,17 +11,23 @@
 	LOAD 1(GB), R3
 	PUSH R3
 	LOAD 1(GB), R3
-	POP R0
-	MUL R3, R0
-	LOAD R0, R3
-	FLOAT R2, R2
-	MUL R2, R1
+	POP R2
+	MUL R3, R2
+	BOV overflow_arith
+	LOAD R2, R3
+	FLOAT R3, R3
+	MUL R3, R1
+	BOV overflow_arith
 	WFLOAT
 	WNL
 	HALT
 ; Message d'erreurs
 pile_pleine:
 	WSTR "Erreur : debordement de pile"
+	WNL
+	ERROR
+overflow_arith:
+	WSTR "Erreur : overflow_arithmetique"
 	WNL
 	ERROR
 ; end main program
