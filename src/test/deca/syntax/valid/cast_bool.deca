@@ -1,0 +1,11 @@
+// Description :
+// Cast explicite boolean 
+// Devrait marcher pour l'étape syntaxique
+//
+// Resultats :
+// Accepté par l'analyse syntaxique.
+
+{
+    boolean b;
+    b = (boolean)(1 > 0);
+}
