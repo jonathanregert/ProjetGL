@@ -1,3 +1,9 @@
+// Description :
+//    Evaluation de differents expressions boolean
+//
+// Resultats :
+// ok
+
 {
     int i = 10;
     float f = 3.14;

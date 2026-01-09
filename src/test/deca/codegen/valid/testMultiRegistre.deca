@@ -1,0 +1,12 @@
+{
+    int a = 3;
+    int b = 2;
+    int x = 11;
+    int y = 7;
+    int z = 9;
+
+    int c = 0;
+
+    int w = (a + b) + (x + y);
+
+}

@@ -1,3 +1,9 @@
+// Description :
+//    Unary Minus avec ConvFloat
+//
+// Resultats :
+// ok
+
 {
     float y;
     int x = 3;
