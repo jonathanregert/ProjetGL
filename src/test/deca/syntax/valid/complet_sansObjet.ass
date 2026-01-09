@@ -1,0 +1,223 @@
+; Main Program
+	TSTO #13
+	BOV pile_pleine
+	ADDSP #13
+; start main program
+; Main program
+; Beginning of main instructions:
+	LOAD #3, R3
+	STORE R3, 1(GB)
+	LOAD #7, R3
+	STORE R3, 2(GB)
+	LOAD #0, R3
+	STORE R3, 4(GB)
+	LOAD #0, R3
+	STORE R3, 6(GB)
+	LOAD #0x1.4p1, R3
+	STORE R3, 7(GB)
+	LOAD #1, R3
+	STORE R3, 9(GB)
+	LOAD #0, R3
+	STORE R3, 10(GB)
+	LOAD 1(GB), R1
+	OPP R1, R1
+	LOAD 2(GB), R3
+	PUSH R3
+	LOAD 1(GB), R3
+	PUSH R3
+	LOAD #2, R3
+	POP R2
+	ADD R3, R2
+	BOV overflow_arith
+	LOAD R2, R3
+	POP R2
+	MUL R3, R2
+	BOV overflow_arith
+	LOAD R2, R3
+	ADD R3, R1
+	BOV overflow_arith
+	LOAD 2(GB), R3
+	PUSH R3
+	LOAD 1(GB), R3
+	PUSH R3
+	LOAD #1, R3
+	POP R2
+	ADD R3, R2
+	BOV overflow_arith
+	LOAD R2, R3
+	POP R2
+	CMP #0, R3
+	BEQ division_par_zero
+	QUO R3, R2
+	BOV overflow_arith
+	LOAD R2, R3
+	SUB R3, R1
+	BOV overflow_arith
+	STORE R1, 3(GB)
+	LOAD 3(GB), R1
+	FLOAT R1, R1
+	LOAD 7(GB), R3
+	PUSH R3
+	LOAD #0x1.0p1, R3
+	POP R2
+	MUL R3, R2
+	BOV overflow_arith
+	LOAD R2, R3
+	ADD R3, R1
+	BOV overflow_arith
+	STORE R1, 8(GB)
+	WSTR "c = "
+	LOAD 3(GB), R1
+	WINT
+	WNL
+	WSTR "g = "
+	LOAD 8(GB), R1
+	WFLOAT
+	WNL
+	LOAD 1(GB), R1
+	LOAD 2(GB), R3
+	CMP R3, R1
+	SLT R1
+	CMP #0, R1
+	SEQ R1
+	CMP #0, R1
+	BNE bool_sc_0
+	LOAD 1(GB), R1
+	LOAD #3, R3
+	CMP R3, R1
+	SEQ R1
+	CMP #0, R1
+	BEQ bool_sc_1
+	LOAD 2(GB), R1
+	LOAD #0, R3
+	CMP R3, R1
+	SNE R1
+	BRA bool_end_1
+bool_sc_1:
+	LOAD #0, R1
+bool_end_1:
+	BRA bool_end_0
+bool_sc_0:
+	LOAD #1, R1
+bool_end_0:
+	STORE R1, 11(GB)
+	WSTR "cond = "
+	LOAD 11(GB), R1
+	WINT
+	WNL
+	LOAD 1(GB), R1
+	LOAD 2(GB), R3
+	CMP R3, R1
+	SLT R1
+	CMP #0, R1
+	BEQ else_2
+	WSTR "a < b"
+	WNL
+	BRA endif_2
+else_2:
+	LOAD 1(GB), R1
+	LOAD 2(GB), R3
+	CMP R3, R1
+	SEQ R1
+	CMP #0, R1
+	BEQ else_3
+	WSTR "a == b"
+	WNL
+	BRA endif_3
+else_3:
+	WSTR "a > b"
+	WNL
+endif_3:
+endif_2:
+while_test_4:
+	LOAD 4(GB), R1
+	LOAD #5, R3
+	CMP R3, R1
+	SLT R1
+	CMP #0, R1
+	BEQ while_end_4
+	LOAD 6(GB), R1
+	LOAD 4(GB), R3
+	ADD R3, R1
+	BOV overflow_arith
+	STORE R1, 6(GB)
+	LOAD 4(GB), R1
+	LOAD #1, R3
+	ADD R3, R1
+	BOV overflow_arith
+	STORE R1, 4(GB)
+	BRA while_test_4
+while_end_4:
+	WSTR "acc = "
+	LOAD 6(GB), R1
+	WINT
+	WNL
+	LOAD #4, R1
+	STORE R1, 2(GB)
+	STORE R1, 1(GB)
+	STORE R1, 5(GB)
+	WSTR "a = "
+	LOAD 1(GB), R1
+	WINT
+	WNL
+	WSTR "b = "
+	LOAD 2(GB), R1
+	WINT
+	WNL
+	WSTR "j = "
+	LOAD 5(GB), R1
+	WINT
+	WNL
+	WSTR "values: "
+	LOAD 1(GB), R1
+	WINT
+	WSTR ", "
+	LOAD 2(GB), R1
+	WINT
+	WSTR ", "
+	LOAD 3(GB), R1
+	WINT
+	WNL
+	WSTR "acc (hex) = "
+	LOAD 6(GB), R1
+	WINT
+	WNL
+	LOAD #0, R1
+	STORE R1, 10(GB)
+	LOAD 10(GB), R1
+	CMP #0, R1
+	SEQ R1
+	CMP #0, R1
+	BEQ bool_sc_6
+	LOAD #1, R1
+	BRA bool_end_6
+bool_sc_6:
+	LOAD #0, R1
+bool_end_6:
+	CMP #0, R1
+	BNE bool_sc_5
+	LOAD #0, R1
+	BRA bool_end_5
+bool_sc_5:
+	LOAD #1, R1
+bool_end_5:
+	STORE R1, 9(GB)
+	WSTR "ok = "
+	LOAD 9(GB), R1
+	WINT
+	WNL
+	HALT
+; Message d'erreurs
+pile_pleine:
+	WSTR "Erreur : debordement de pile"
+	WNL
+	ERROR
+division_par_zero:
+	WSTR "Erreur : divion entiere par zero"
+	WNL
+	ERROR
+overflow_arith:
+	WSTR "Erreur : overflow_arithmetique"
+	WNL
+	ERROR
+; end main program
