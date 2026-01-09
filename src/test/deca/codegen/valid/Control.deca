@@ -29,14 +29,13 @@
             }
 
             // bloc interne + assign tardif
-            {
-                tmp = (z + i) - (j * base);
-                if (tmp < 0) {
+            
+            tmp = (z + i) - (j * base);
+            if (tmp < 0) {
                     go = go && true;
                 } else {
                     go = go && (tmp != 0);
                 }
-            }
 
             j = j - 1;
         }
