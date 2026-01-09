@@ -48,6 +48,7 @@ public class ReadInt extends AbstractReadExpr {
     @Override
     protected void codeGenExpr(DecacCompiler compiler, GPRegister target) {
         compiler.addInstruction(new RINT());
+        compiler.getErrorManager().genCheckReadInt(compiler);
         if (!target.equals(Register.R1)){
             compiler.addInstruction(new LOAD(Register.R1, target));
         }
