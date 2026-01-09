@@ -1,3 +1,7 @@
+// Description :
+// Test de l'addition combinée de plusieurs entiers en utilisant plusieurs registres.
+// Resultats :
+// w vaut 23, pas d'affichage
 {
     int a = 3;
     int b = 2;
@@ -8,5 +12,4 @@
     int c = 0;
 
     int w = (a + b) + (x + y);
-
 }

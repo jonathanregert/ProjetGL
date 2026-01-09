@@ -1,3 +1,8 @@
+// Description :
+// Test complet de l'opérateur logique AND avec toutes les combinaisons de valeurs booléennes.
+//
+// Resultats :
+// true, false, false, false affichés
 {
     print(true && true);
     print(true && false);

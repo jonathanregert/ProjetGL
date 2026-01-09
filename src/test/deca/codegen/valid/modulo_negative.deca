@@ -1,3 +1,7 @@
+// Description :
+// Test de l'opération modulo avec un entier négatif.
+// Resultats :
+// -3 affiché
 {
     int a = -7;
     int b = 4;

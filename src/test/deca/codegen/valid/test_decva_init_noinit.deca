@@ -1,3 +1,7 @@
+// Description :
+// Test d'une expression booléenne complexe avec opérations sur int et float.
+// Resultats :
+// true affiché
 {
     int a = 3;
     int b = 5;
@@ -7,8 +11,8 @@
     float x;
     float y;
 
-    x = a + b;      // ConvFloat implicite
-    y = c - d;      // ConvFloat implicite
+    x = a + b;
+    y = c - d;
 
     r =
         (

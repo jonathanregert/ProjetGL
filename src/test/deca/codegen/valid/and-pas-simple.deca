@@ -1,3 +1,8 @@
+// Description :
+// Test logique AND avec court-circuit où la division est sûre car a != 0.
+//
+// Resultats :
+// true affiché
 {
   int a = 2;
   print((a != 0) && (1 / a > 0));

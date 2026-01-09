@@ -1,3 +1,8 @@
+// Description :
+// test de l'évaluation courte-circuit de l'opérateur logique ||
+//
+// Resultats :
+// ok, affiche true sans erreur de division par zéro
 {
     int x = 0;
     boolean r;

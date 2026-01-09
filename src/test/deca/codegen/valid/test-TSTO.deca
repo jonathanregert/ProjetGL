@@ -1,3 +1,6 @@
+// Description :
+// Test TSTO
+// c vaut 7, pas d'affichage
 {
     int a;
     int b;

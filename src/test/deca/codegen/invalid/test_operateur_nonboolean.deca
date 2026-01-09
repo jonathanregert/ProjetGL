@@ -1,0 +1,7 @@
+// Resultats :
+// Erreur attendue : type booléen attendu
+{
+    int a = 1;
+    int b = 0;
+    boolean c = a && b;
+}

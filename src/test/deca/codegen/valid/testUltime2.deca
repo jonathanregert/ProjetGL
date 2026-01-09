@@ -1,3 +1,7 @@
+// Description :
+// Test d'une expression arithmétique complexe combinant addition, multiplication, division et modulo.
+// Resultats :
+// i vaut 6, pas d'affichage
 {
     int x = 3;
     int y = 2;

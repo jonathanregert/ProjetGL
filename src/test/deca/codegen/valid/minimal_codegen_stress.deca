@@ -1,3 +1,7 @@
+// Description :
+// Test d'une expression booléenne combinant && et des comparaisons arithmétiques.
+// Resultats :
+// true affiché
 {
     int a = 1;
     int b = 2;

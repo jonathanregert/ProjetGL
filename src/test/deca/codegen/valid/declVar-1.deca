@@ -1,3 +1,7 @@
+// Description :
+// Test de l'initialisation d'une variable entière.
+// Resultats :
+// Pas d'affichage
 {
     int a = 1;
 }

@@ -1,3 +1,7 @@
+// Description :
+// Test de l'affectation et de l'addition de variables entières.
+// Resultats :
+// 4 affiché
 {
     int a;
     int b;

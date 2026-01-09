@@ -1,3 +1,7 @@
+// Description :
+// Test d'une expression booléenne complexe avec NOT, OR, et opérations arithmétiques.
+// Resultats :
+// false affiché
 {
     int a = 3;
     int b = 5;

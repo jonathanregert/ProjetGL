@@ -1,5 +1,13 @@
+// Description :
+// Test de l'addition et multiplication combinées avec des entiers.
+// Resultats :
+// 21 affiché
 {
-  int a = 1; int b = 2; int c = 3; int d = 4;
-  int x = (a+b) * (c+d);
-  print(x);
+    int a = 1; 
+    int b = 2; 
+    int c = 3; 
+    int d = 4;
+    int x = (a + b) * (c + d);
+    print(x);
 }
+
