@@ -10,7 +10,7 @@
     int b = 4;
     int c = 6;
     int d = 2;
-    int r;
+    float r;
 
     float x = a / (b + d);   // ConvFloat implicite
 
