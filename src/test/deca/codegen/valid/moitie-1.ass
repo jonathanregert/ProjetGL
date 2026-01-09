@@ -6,6 +6,7 @@
 ; Main program
 ; Beginning of main instructions:
 	RINT
+	BOV erreur_lecture_int
 	STORE R1, 1(GB)
 	LOAD #0x1.0p-1, R1
 	LOAD 1(GB), R3
@@ -28,6 +29,10 @@ pile_pleine:
 	ERROR
 overflow_arith:
 	WSTR "Erreur : overflow_arithmetique"
+	WNL
+	ERROR
+erreur_lecture_int:
+	WSTR "Erreur : lecture d'un entier invalide"
 	WNL
 	ERROR
 ; end main program

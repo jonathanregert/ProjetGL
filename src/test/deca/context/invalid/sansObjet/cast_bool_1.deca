@@ -1,0 +1,11 @@
+// Description :
+//    Conversion invalide
+//    Voir SYNTAXE paragraphe 9
+//
+// Resultats :
+//    Erreur contextuelle
+
+{
+    boolean b;
+    b = (boolean)(1 > 0);
+}
