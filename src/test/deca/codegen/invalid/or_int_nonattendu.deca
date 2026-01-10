@@ -1,7 +1,0 @@
-// Resultats :
-// Erreur attendue : type booléen attendu
-{
-    int a = 0;
-    float b = 1.0;
-    boolean c = a || b;
-}

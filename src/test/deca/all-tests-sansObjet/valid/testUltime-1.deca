@@ -1,0 +1,11 @@
+// Description :
+// Test de l'addition avec parenthèses pour vérifier la priorité des opérations.
+// Resultats :
+// w vaut 12, pas d'affichage
+{
+    int x = 3;
+    int y = 2;
+    int z = 7;
+    int w;
+    w = x + (y + z);
+}

@@ -21,3 +21,5 @@ mvn clean verify -Djacoco.skip=false -DskipTests -Dexec.executable="./src/test/s
 mvn jacoco:restore-instrumented-classes -Djacoco.skip=false
 mvn jacoco:report -Djacoco.skip=false
 google-chrome target/site/jacoco/index.html
+
+

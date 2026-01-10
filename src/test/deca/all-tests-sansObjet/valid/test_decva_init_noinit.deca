@@ -1,0 +1,31 @@
+// Description :
+// Test d'une expression booléenne complexe avec opérations sur int et float.
+// Resultats :
+// true affiché
+{
+    int a = 3;
+    int b = 5;
+    int c = 7;
+    int d = 2;
+    boolean r;
+    float x;
+    float y;
+
+    x = a + b;
+    y = c - d;
+
+    r =
+        (
+            (x * y > a * c)
+            &&
+            !((b + d) == a)
+        )
+        ||
+        (
+            (x + y > c)
+            &&
+            (a * d <= b + c)
+        );
+
+    println(r);
+}

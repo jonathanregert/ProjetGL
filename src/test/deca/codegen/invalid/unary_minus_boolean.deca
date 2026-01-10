@@ -1,6 +1,0 @@
-// Resultats :
-// Erreur attendue : type non supporté
-{
-    boolean b = true;
-    b = -b;
-}

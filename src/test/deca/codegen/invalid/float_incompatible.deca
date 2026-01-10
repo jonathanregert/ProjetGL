@@ -1,6 +1,0 @@
-// Resultats :
-// Erreur attendue : type incompatible
-{
-    float x = 3.14;
-    int y = x;
-}

@@ -1,0 +1,12 @@
+// Description :
+// Test de la boucle while avec condition fausse dès le départ.
+//
+// Resultats :
+// 1 affiché
+{
+    int i = 10;
+    while (i < 0) {
+        print(100000);
+    }
+    print(1);
+}
