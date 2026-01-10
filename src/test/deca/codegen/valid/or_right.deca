@@ -1,0 +1,10 @@
+// Description :
+//  test OR complet : gauche false → droite évaluée
+//
+// Resultats :
+// true affiché
+{
+    boolean a = false;
+    boolean b = true;
+    print(a || b);
+}

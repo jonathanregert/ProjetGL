@@ -1,0 +1,10 @@
+// Description :
+//    Type invalide
+//
+// Resultats :
+//    Erreur contextuelle
+
+{
+    int a;
+    a = (bool)(1);
+}

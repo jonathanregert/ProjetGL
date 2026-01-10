@@ -1,0 +1,12 @@
+// Description :
+// Test syntaxique invalide : cast mal parenthésé.
+//
+// Resultats :
+// Erreur syntaxique.
+
+{
+    int a;
+    float f;
+
+    f = float(a);
+}

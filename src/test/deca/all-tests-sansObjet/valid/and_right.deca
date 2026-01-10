@@ -1,0 +1,10 @@
+// Description :
+//  test AND complet : gauche true → droite évaluée
+//
+// Resultats :
+// true affiché
+{
+    boolean a = true;
+    boolean b = true;
+    print(a && b);
+}

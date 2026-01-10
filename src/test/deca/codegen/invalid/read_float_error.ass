@@ -1,0 +1,23 @@
+; Main Program
+	TSTO #1
+	BOV pile_pleine
+	ADDSP #1
+; start main program
+; Main program
+; Beginning of main instructions:
+	RFLOAT
+	BOV erreur_lecture_float
+	STORE R1, 1(GB)
+	LOAD 1(GB), R1
+	WFLOAT
+	HALT
+; Message d'erreurs
+pile_pleine:
+	WSTR "Erreur : debordement de pile"
+	WNL
+	ERROR
+erreur_lecture_float:
+	WSTR "Erreur : lecture d'un flottant invalide"
+	WNL
+	ERROR
+; end main program

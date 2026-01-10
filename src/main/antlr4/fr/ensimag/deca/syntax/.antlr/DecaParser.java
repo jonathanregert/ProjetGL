@@ -2208,7 +2208,7 @@ public class DecaParser extends AbstractDecaParser {
 		public List_exprContext args;
 		public ExprContext expr;
 		public Token r;
-		public Token cast;
+		public Token OPARENT;
 		public TypeContext type;
 		public LiteralContext literal;
 		public TerminalNode NEW() { return getToken(DecaParser.NEW, 0); }
@@ -2345,21 +2345,23 @@ public class DecaParser extends AbstractDecaParser {
 				enterOuterAlt(_localctx, 7);
 				{
 				setState(444);
-				((Primary_exprContext)_localctx).cast = match(OPARENT);
+				((Primary_exprContext)_localctx).OPARENT = match(OPARENT);
 				setState(445);
 				((Primary_exprContext)_localctx).type = type();
 				setState(446);
 				match(CPARENT);
 				setState(447);
-				match(OPARENT);
+				((Primary_exprContext)_localctx).OPARENT = match(OPARENT);
 				setState(448);
 				((Primary_exprContext)_localctx).expr = expr();
 				setState(449);
 				match(CPARENT);
 
-				            assert(((Primary_exprContext)_localctx).type.tree != null);
-				            assert(((Primary_exprContext)_localctx).expr.tree != null);
-				        
+				        assert(((Primary_exprContext)_localctx).type.tree != null);
+				        assert(((Primary_exprContext)_localctx).expr.tree != null);
+				        ((Primary_exprContext)_localctx).tree =  new Cast(((Primary_exprContext)_localctx).type.tree, ((Primary_exprContext)_localctx).expr.tree);
+				        setLocation(_localctx.tree, ((Primary_exprContext)_localctx).OPARENT);
+				    
 				}
 				break;
 			case 8:

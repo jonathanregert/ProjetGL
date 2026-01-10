@@ -8,7 +8,7 @@ cd "$(dirname "$0")"/../../.. || exit 1
 
 PATH=./src/main/bin:"$PATH"
 
-CODEGEN_DIR="src/test/deca/codegen"
+CODEGEN_DIR="src/test/deca/all-tests-sansObjet"
 
 echo "Tests codegen"
 

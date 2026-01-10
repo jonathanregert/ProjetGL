@@ -1,0 +1,146 @@
+Tests codegen :
+Tests INVALIDES
+Test invalide attendu : src/test/deca/codegen/invalid/div_zero.deca
+Echec attendu a l'execution
+Test invalide attendu : src/test/deca/codegen/invalid/float_div_zero.deca
+Echec attendu a l'execution
+Test invalide attendu : src/test/deca/codegen/invalid/float_incompatible.deca
+Erreur inattendue a la compilation
+Test invalide attendu : src/test/deca/codegen/invalid/mod_zero.deca
+Echec attendu a l'execution
+Test invalide attendu : src/test/deca/codegen/invalid/non_initialise.deca
+Echec attendu a l'execution
+Test invalide attendu : src/test/deca/codegen/invalid/or_int_nonattendu.deca
+Erreur inattendue a la compilation
+Test invalide attendu : src/test/deca/codegen/invalid/overflow.deca
+Echec attendu a l'execution
+Test invalide attendu : src/test/deca/codegen/invalid/read_float_error.deca
+Echec attendu a l'execution
+Test invalide attendu : src/test/deca/codegen/invalid/read_int_error.deca
+Echec attendu a l'execution
+Test invalide attendu : src/test/deca/codegen/invalid/test_operateur_nonboolean.deca
+Erreur inattendue a la compilation
+Test invalide attendu : src/test/deca/codegen/invalid/unary_minus_boolean.deca
+Erreur inattendue a la compilation
+Tests VALIDES
+Test valide attendu : src/test/deca/codegen/valid/And_short_circuit.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/Control.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/ListStress.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/add-avance.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/add-print.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/and-fadwa.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/and-pas-simple.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/and-simple.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/and_boolean.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/and_right.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/andsimple.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/arith_int.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/balanced.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/bizzarre.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/boolean_from_arith.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/boolean_not_nested.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/boolean_or_short_circuit.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/boolean_variable_reuse.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/casts.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/complet_sansObjet.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/cond0.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/convfloat_and.deca
+Erreur a la compilation
+Test valide attendu : src/test/deca/codegen/valid/convfloat_lifetime.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/critique.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/declVar-1.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/ecrit0.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/entier1.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/exdoc.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/exmathdoc.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/expression-poly-1-6R.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/expression-poly-1.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/late_assign_dependency.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/late_assignment.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/left_deep.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/minimal_codegen_stress.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/minus-1.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/mix.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/mixed_logic.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/modulo_negative.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/moitie-1.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/operator_precedence.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/or_right.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/or_short_circuit.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/right_deep.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/test-Fadwa.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/test-TSTO.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/test-push.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/test1-8.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/test2-8.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/test3-8.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/testMultiRegistre.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/testUltime-1.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/testUltime2.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/test_decva_init_noinit.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/unary_minus_modulo.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/unaryminus.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/while.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/while_never_entered.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/while_zero_interation.deca
+Erreur a l'execution
+Test valide attendu : src/test/deca/codegen/valid/zigzag.deca
+Erreur a l'execution
+

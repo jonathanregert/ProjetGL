@@ -1,0 +1,10 @@
+// Description :
+// Test syntaxique valide : cast explicite bien parenthésé.
+//
+// Resultats :
+// Accepté par l'analyse syntaxique.
+
+{
+    int a;
+    a = (int)(3.7);
+}

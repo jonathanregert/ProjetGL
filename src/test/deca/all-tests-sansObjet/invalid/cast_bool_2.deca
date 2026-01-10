@@ -1,0 +1,10 @@
+// Description :
+//    Conversion invalide
+//
+// Resultats :
+//    Erreur contextuelle
+
+{
+    int a;
+    a = (int)(true);
+}

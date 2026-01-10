@@ -1,0 +1,6 @@
+// Resultats :
+// message d'erreur "overflow_arithmetique"
+{
+    int max = 2147483647;
+    print(max + 1);
+}
