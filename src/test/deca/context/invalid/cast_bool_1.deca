@@ -1,9 +1,9 @@
 // Description :
-//    Conversion invalide
-//    Voir SYNTAXE paragraphe 9
+//    Cast de boolean vers boolean impossible
 //
 // Resultats :
 //    Erreur contextuelle
+//    Ligne 10 : Cast invalide de boolean vers boolean
 
 {
     boolean b;

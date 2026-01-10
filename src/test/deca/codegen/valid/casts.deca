@@ -1,7 +1,6 @@
 // Description :
 // Programme de test des conversions de type (casts) en Deca SANS OBJET.
 // Étape C — génération de code + exécution.
-//
 // Ce test couvre de façon exhaustive :
 // - conversions implicites int -> float
 // - conversions explicites int -> float

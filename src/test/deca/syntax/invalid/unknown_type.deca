@@ -1,5 +1,8 @@
-// Resultats :
-// Erreur contextuelle
-// Ligne 2 : type inconnu 'myType'
+// Description:
+//    Unkown type
+//
+// Resultats:
+//    Erreur syntaxique 
+//    Ligne 8 : no viable alternative at input 'myType'
 
 myType x = new myType();

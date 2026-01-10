@@ -3,7 +3,7 @@
 // Devrait marcher pour l'étape syntaxique
 //
 // Resultats :
-// Accepté par l'analyse syntaxique.
+// ok
 
 {
     int a;

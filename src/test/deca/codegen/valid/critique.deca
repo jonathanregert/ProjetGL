@@ -2,6 +2,7 @@
 // Test de l'addition simple avec priorité des parenthèses.
 // Resultats :
 // 6 affiché
+
 {
     int a = 1;
     int b = 2;

@@ -1,6 +1,9 @@
+// Description :
+//    if incomplete
+//
 // Resultats :
-// Erreur contextuelle
-// Ligne 3 : instruction if incomplète
+//    Erreur syntaxique
+//    Ligne 8 : no viable alternative at input 'if'
 
 if (true) {
     int a = 5;

@@ -1,5 +1,8 @@
+// Description :
+//    Nom de l'identificateur invalide
+//
 // Resultats :
-// Erreur contextuelle
-// Ligne 1 : identifiant invalide commençant par un chiffre
+//    Erreur syntaxique
+//    Ligne 8 : no viable alternative at input 'int'
 
 int 1abc = 5;

@@ -1,6 +1,9 @@
+// Description :
+//    charactère invalid
+//
 // Resultats :
-// Erreur contextuelle
-// Ligne 3 : caractère invalide '$'
+//    Erreur syntaxique
+//    Ligne 8 : no viable alternative at input 'int'
 
 int a = 5;
 int b = 10;

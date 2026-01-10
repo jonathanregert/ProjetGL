@@ -2,6 +2,8 @@
 // Test d'opérations arithmétiques sur int et conversion implicite vers float.
 // Resultats :
 // 2.0 affiché
+
+
 {
     int a = 3;
     int b = 2;

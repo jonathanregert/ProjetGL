@@ -1,6 +1,9 @@
+// Description :
+//    point virgule manquante
+//
 // Resultats :
-// Erreur contextuelle
-// Ligne 2 : point-virgule manquant
+//    Erreur syntaxique
+//    Ligne 8 : no viable alternative at input 'int'
 
 int x = 10
 int y = 20;

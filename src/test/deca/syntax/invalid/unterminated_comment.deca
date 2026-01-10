@@ -1,6 +1,9 @@
-// Resultats :
-// Erreur contextuelle
-// Ligne 2 : commentaire non terminé
+// Description:
+//    commentaire pas fini
+//
+// Resultats:
+//    Erreur syntaxique 
+//    Ligne 8 : no viable alternative at input '/'
 
 /* ceci est un commentaire non terminé
 int x = 5;

@@ -2,6 +2,7 @@
 // Test d'opérations arithmétiques combinées avec int.
 // Resultats :
 // Pas d'affichage, x devient 2
+
 {
     int x = 1;
     int y = 2;

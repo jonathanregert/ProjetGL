@@ -1,6 +1,9 @@
+// Description :
+//    while incomplete
+//
 // Resultats :
-// Erreur contextuelle
-// Ligne 2 : expression de condition manquante
+//    Erreur syntaxique
+//    Ligne 8 : no viable alternative at input 'while'
 
 while () {
     int x = 0;

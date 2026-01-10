@@ -3,6 +3,7 @@
 //
 // Resultats :
 // 1 affiché
+
 {
     int i = 10;
     while (i < 0) {

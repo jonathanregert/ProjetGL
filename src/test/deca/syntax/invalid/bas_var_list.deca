@@ -1,5 +1,8 @@
+// Description :
+//    Liste de variable avec missing variable.
+//
 // Resultats :
-// Erreur contextuelle
-// Ligne 2 : déclaration de variable mal formée
+//    Erreur syntaxique
+//    Ligne 8 : no viable alternative at input 'int'
 
 int a, , b;
