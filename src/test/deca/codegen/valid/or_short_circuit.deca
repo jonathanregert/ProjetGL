@@ -5,6 +5,5 @@
 // true affiché sans erreur
 {
     boolean a = true;
-    boolean b = (1/0==0);
-    print(a || b);
+    print(a || (1/0==0));
 }

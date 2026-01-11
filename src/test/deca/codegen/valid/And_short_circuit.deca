@@ -5,6 +5,5 @@
 // false affiché sans erreur
 {
     boolean a = false;
-    boolean b = (1/0==0); // normalement non évalué
-    print(a && b);
+    print(a && (1/0==0));
 }

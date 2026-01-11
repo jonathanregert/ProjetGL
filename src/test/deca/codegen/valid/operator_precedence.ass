@@ -1,31 +1,37 @@
 ; Main Program
-	TSTO #2
+	TSTO #3
 	BOV pile_pleine
-	ADDSP #2
+	ADDSP #3
 ; start main program
 ; Main program
 ; Beginning of main instructions:
 	LOAD #1, R3
-	LOAD #2, R4
-	PUSH R4
-	LOAD #3, R4
+	PUSH R3
+	LOAD #2, R3
+	PUSH R3
+	LOAD #3, R3
 	POP R2
-	MUL R4, R2
+	MUL R3, R2
 	BOV overflow_arith
-	LOAD R2, R4
-	ADD R4, R3
-	BOV overflow_arith
-	LOAD #4, R4
-	PUSH R4
-	LOAD #2, R4
+	LOAD R2, R3
 	POP R2
-	CMP #0, R4
+	ADD R3, R2
+	BOV overflow_arith
+	LOAD R2, R3
+	PUSH R3
+	LOAD #4, R3
+	PUSH R3
+	LOAD #2, R3
+	POP R2
+	CMP #0, R3
 	BEQ division_par_zero
-	QUO R4, R2
+	QUO R3, R2
 	BOV overflow_arith
-	LOAD R2, R4
-	SUB R4, R3
+	LOAD R2, R3
+	POP R2
+	SUB R3, R2
 	BOV overflow_arith
+	LOAD R2, R3
 	STORE R3, 1(GB)
 	LOAD 1(GB), R1
 	WINT

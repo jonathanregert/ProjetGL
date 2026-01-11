@@ -1,26 +1,24 @@
 ; Main Program
-	TSTO #2
+	TSTO #1
 	BOV pile_pleine
-	ADDSP #2
+	ADDSP #1
 ; start main program
 ; Main program
 ; Beginning of main instructions:
 	LOAD #1, R3
 	STORE R3, 1(GB)
-	LOAD #1, R3
-	LOAD #0, R4
-	CMP #0, R4
-	BEQ division_par_zero
-	QUO R4, R3
-	BOV overflow_arith
-	LOAD #0, R4
-	CMP R4, R3
-	SEQ R3
-	STORE R3, 2(GB)
 	LOAD 1(GB), R1
 	CMP #0, R1
 	BNE bool_sc_0
-	LOAD 2(GB), R1
+	LOAD #1, R1
+	LOAD #0, R3
+	CMP #0, R3
+	BEQ division_par_zero
+	QUO R3, R1
+	BOV overflow_arith
+	LOAD #0, R3
+	CMP R3, R1
+	SEQ R1
 	BRA bool_end_0
 bool_sc_0:
 	LOAD #1, R1

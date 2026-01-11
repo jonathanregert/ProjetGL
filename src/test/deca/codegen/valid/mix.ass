@@ -1,7 +1,7 @@
 ; Main Program
-	TSTO #11
+	TSTO #12
 	BOV pile_pleine
-	ADDSP #11
+	ADDSP #12
 ; start main program
 ; Main program
 ; Beginning of main instructions:
@@ -20,38 +20,47 @@
 	LOAD 1(GB), R1
 	OPP R1, R1
 	LOAD 2(GB), R3
-	LOAD 1(GB), R4
-	PUSH R4
-	LOAD #2, R4
+	PUSH R3
+	LOAD 1(GB), R3
+	PUSH R3
+	LOAD #2, R3
 	POP R2
-	ADD R4, R2
+	ADD R3, R2
 	BOV overflow_arith
-	LOAD R2, R4
-	MUL R4, R3
+	LOAD R2, R3
+	POP R2
+	MUL R3, R2
 	BOV overflow_arith
+	LOAD R2, R3
 	ADD R3, R1
 	BOV overflow_arith
 	LOAD 2(GB), R3
-	LOAD 1(GB), R4
-	PUSH R4
-	LOAD #1, R4
+	PUSH R3
+	LOAD 1(GB), R3
+	PUSH R3
+	LOAD #1, R3
 	POP R2
-	ADD R4, R2
+	ADD R3, R2
 	BOV overflow_arith
-	LOAD R2, R4
-	CMP #0, R4
+	LOAD R2, R3
+	POP R2
+	CMP #0, R3
 	BEQ division_par_zero
-	QUO R4, R3
+	QUO R3, R2
 	BOV overflow_arith
+	LOAD R2, R3
 	SUB R3, R1
 	BOV overflow_arith
 	STORE R1, 3(GB)
 	LOAD 3(GB), R1
 	FLOAT R1, R1
 	LOAD 4(GB), R3
-	LOAD #0x1.0p1, R4
-	MUL R4, R3
+	PUSH R3
+	LOAD #0x1.0p1, R3
+	POP R2
+	MUL R3, R2
 	BOV overflow_arith
+	LOAD R2, R3
 	ADD R3, R1
 	BOV overflow_arith
 	STORE R1, 5(GB)
@@ -136,24 +145,33 @@ while_test_6:
 	BEQ while_end_6
 	LOAD 10(GB), R1
 	LOAD 8(GB), R3
-	LOAD 9(GB), R4
-	ADD R4, R3
-	BOV overflow_arith
-	LOAD 8(GB), R4
-	PUSH R4
-	LOAD #1, R4
+	PUSH R3
+	LOAD 9(GB), R3
 	POP R2
-	SUB R4, R2
+	ADD R3, R2
 	BOV overflow_arith
-	LOAD R2, R4
-	MUL R4, R3
+	LOAD R2, R3
+	PUSH R3
+	LOAD 8(GB), R3
+	PUSH R3
+	LOAD #1, R3
+	POP R2
+	SUB R3, R2
 	BOV overflow_arith
+	LOAD R2, R3
+	POP R2
+	MUL R3, R2
+	BOV overflow_arith
+	LOAD R2, R3
 	ADD R3, R1
 	BOV overflow_arith
 	LOAD 9(GB), R3
-	LOAD #2, R4
-	MUL R4, R3
+	PUSH R3
+	LOAD #2, R3
+	POP R2
+	MUL R3, R2
 	BOV overflow_arith
+	LOAD R2, R3
 	SUB R3, R1
 	BOV overflow_arith
 	STORE R1, 10(GB)
