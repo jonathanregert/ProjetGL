@@ -7,5 +7,5 @@
 
 {
     int a;
-    a = (bool)(1);
+    a = (boolean)(1);
 }
