@@ -1151,6 +1151,9 @@ public class DecaParser extends AbstractDecaParser {
 				setState(238);
 				((Assign_exprContext)_localctx).r = assign_expr();
 				 
+				        if (!(((Assign_exprContext)_localctx).e.tree instanceof AbstractLValue)) {
+				              throw new InvalidLValue(this, ((Assign_exprContext)_localctx).e);
+				          }
 				          ((Assign_exprContext)_localctx).tree =  new Assign((AbstractLValue)((Assign_exprContext)_localctx).e.tree, ((Assign_exprContext)_localctx).r.tree); 
 				          setLocation(_localctx.tree, (((Assign_exprContext)_localctx).e!=null?(((Assign_exprContext)_localctx).e.start):null));
 				        
