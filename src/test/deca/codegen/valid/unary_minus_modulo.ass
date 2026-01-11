@@ -1,0 +1,31 @@
+; Main Program
+	TSTO #2
+	BOV pile_pleine
+	ADDSP #2
+; start main program
+; Main program
+; Beginning of main instructions:
+	LOAD #3, R3
+	OPP R3, R3
+	STORE R3, 1(GB)
+	LOAD #10, R3
+	LOAD #3, R4
+	CMP #0, R4
+	BEQ reste_par_zero
+	REM R4, R3
+	STORE R3, 2(GB)
+	LOAD 1(GB), R1
+	WINT
+	LOAD 2(GB), R1
+	WINT
+	HALT
+; Message d'erreurs
+pile_pleine:
+	WSTR "Erreur : debordement de pile"
+	WNL
+	ERROR
+reste_par_zero:
+	WSTR "Erreur : reste de la division entiere par zero"
+	WNL
+	ERROR
+; end main program

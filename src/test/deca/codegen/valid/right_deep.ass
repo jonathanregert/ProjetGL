@@ -1,0 +1,91 @@
+; Main Program
+	TSTO #8
+	BOV pile_pleine
+	ADDSP #8
+; start main program
+; Main program
+; Beginning of main instructions:
+	LOAD #10, R3
+	STORE R3, 1(GB)
+	LOAD #5, R3
+	STORE R3, 2(GB)
+	LOAD #0, R3
+	STORE R3, 3(GB)
+	LOAD 1(GB), R3
+	LOAD 2(GB), R4
+	ADD R4, R3
+	BOV overflow_arith
+	FLOAT R3, R3
+	STORE R3, 4(GB)
+	LOAD 4(GB), R1
+	LOAD #0x1.8p3, R3
+	CMP R3, R1
+	SGT R1
+	CMP #0, R1
+	BNE bool_sc_0
+	LOAD 1(GB), R1
+	LOAD 2(GB), R3
+	LOAD #2, R4
+	PUSH R4
+	LOAD #3, R4
+	PUSH R4
+	LOAD #4, R4
+	PUSH R4
+	LOAD #5, R4
+	POP R2
+	ADD R4, R2
+	BOV overflow_arith
+	LOAD R2, R4
+	POP R2
+	MUL R4, R2
+	BOV overflow_arith
+	LOAD R2, R4
+	POP R2
+	ADD R4, R2
+	BOV overflow_arith
+	LOAD R2, R4
+	MUL R4, R3
+	BOV overflow_arith
+	ADD R3, R1
+	BOV overflow_arith
+	LOAD #0, R3
+	CMP R3, R1
+	SGT R1
+	CMP #0, R1
+	BEQ bool_sc_1
+	LOAD 1(GB), R1
+	LOAD 3(GB), R3
+	CMP #0, R3
+	BEQ division_par_zero
+	QUO R3, R1
+	BOV overflow_arith
+	LOAD #1, R3
+	CMP R3, R1
+	SGT R1
+	BRA bool_end_1
+bool_sc_1:
+	LOAD #0, R1
+bool_end_1:
+	BRA bool_end_0
+bool_sc_0:
+	LOAD #1, R1
+bool_end_0:
+	STORE R1, 5(GB)
+	LOAD 5(GB), R1
+	WINT
+	WNL
+	HALT
+; Message d'erreurs
+pile_pleine:
+	WSTR "Erreur : debordement de pile"
+	WNL
+	ERROR
+division_par_zero:
+	WSTR "Erreur : divion entiere par zero"
+	WNL
+	ERROR
+overflow_arith:
+	WSTR "Erreur : overflow_arithmetique"
+	WNL
+	ERROR
+; end main program
