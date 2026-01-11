@@ -23,6 +23,9 @@ public class Assign extends AbstractBinaryExpr {
     public AbstractLValue getLeftOperand() {
         // The cast succeeds by construction, as the leftOperand has been set
         // as an AbstractLValue by the constructor.
+        if (!(super.getLeftOperand() instanceof AbstractLValue)) {
+            throw new IllegalStateException("Left operand n'est pas une lvalue");
+        }
         return (AbstractLValue)super.getLeftOperand();
     }
 
