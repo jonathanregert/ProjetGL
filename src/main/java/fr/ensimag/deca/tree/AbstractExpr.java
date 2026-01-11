@@ -143,11 +143,14 @@ public abstract class AbstractExpr extends AbstractInst {
         else if (t.isFloat()) compiler.addInstruction(new WFLOAT());
         else throw new UnsupportedOperationException("print non supporté pour " + t);
     }
+
     protected GPRegister codeGenExpr(DecacCompiler compiler){
         codeGenExpr(compiler, Register.R1);
         return Register.R1;
     }
+
     protected abstract void codeGenExpr(DecacCompiler compiler, GPRegister target);
+    
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
         codeGenExpr(compiler);
