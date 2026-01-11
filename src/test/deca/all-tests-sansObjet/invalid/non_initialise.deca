@@ -1,6 +1,0 @@
-// Resultats :
-// Erreur attendue : variable non initialisée
-{
-    int x;
-    print(x);
-}

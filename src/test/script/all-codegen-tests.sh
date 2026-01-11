@@ -8,7 +8,7 @@ cd "$(dirname "$0")"/../../.. || exit 1
 
 PATH=./src/main/bin:"$PATH"
 
-CODEGEN_DIR="src/test/deca/all-tests-sansObjet"
+CODEGEN_DIR="src/test/deca/codegen"
 
 echo "Tests codegen"
 
@@ -29,6 +29,7 @@ find "$CODEGEN_DIR/invalid/" -name "*.deca" | sort | while read testfile; do
         fi
     else
         echo "Erreur inattendue a la compilation"
+        exit 1
     fi
 done
 
@@ -46,9 +47,11 @@ find "$CODEGEN_DIR/valid/" -name "*.deca" | sort | while read testfile; do
             echo "Succes attendu"
         else
             echo "Erreur a l'execution"
+            exit 1
         fi
     else
         echo "Erreur a la compilation"
+        exit 1
     fi
 done
 
