@@ -70,6 +70,10 @@ public class DecacCompiler {
         return stackManager;
     }
 
+    public boolean getNoCheckOption() {
+        return compilerOptions.getNoCheckOption();
+    }
+
     /**
      * Gestion des errurs
      */

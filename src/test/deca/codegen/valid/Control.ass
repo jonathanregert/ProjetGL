@@ -1,7 +1,7 @@
 ; Main Program
-	TSTO #8
+	TSTO #9
 	BOV pile_pleine
-	ADDSP #8
+	ADDSP #9
 ; start main program
 ; Main program
 ; Beginning of main instructions:
@@ -44,24 +44,33 @@ while_test_1:
 	ADD R3, R1
 	BOV overflow_arith
 	LOAD 1(GB), R3
-	LOAD #2, R4
-	MUL R4, R3
+	PUSH R3
+	LOAD #2, R3
+	POP R2
+	MUL R3, R2
 	BOV overflow_arith
+	LOAD R2, R3
 	CMP R3, R1
 	SGT R1
 	CMP #0, R1
 	BEQ else_2
 	LOAD 4(GB), R1
 	LOAD 6(GB), R3
-	LOAD 7(GB), R4
-	MUL R4, R3
+	PUSH R3
+	LOAD 7(GB), R3
+	POP R2
+	MUL R3, R2
 	BOV overflow_arith
+	LOAD R2, R3
 	ADD R3, R1
 	BOV overflow_arith
 	LOAD 1(GB), R3
-	LOAD 3(GB), R4
-	ADD R4, R3
+	PUSH R3
+	LOAD 3(GB), R3
+	POP R2
+	ADD R3, R2
 	BOV overflow_arith
+	LOAD R2, R3
 	SUB R3, R1
 	BOV overflow_arith
 	STORE R1, 4(GB)
@@ -69,9 +78,12 @@ while_test_1:
 else_2:
 	LOAD 4(GB), R1
 	LOAD 7(GB), R3
-	LOAD 6(GB), R4
-	SUB R4, R3
+	PUSH R3
+	LOAD 6(GB), R3
+	POP R2
+	SUB R3, R2
 	BOV overflow_arith
+	LOAD R2, R3
 	SUB R3, R1
 	BOV overflow_arith
 	STORE R1, 4(GB)
@@ -81,9 +93,12 @@ endif_2:
 	ADD R3, R1
 	BOV overflow_arith
 	LOAD 7(GB), R3
-	LOAD 1(GB), R4
-	MUL R4, R3
+	PUSH R3
+	LOAD 1(GB), R3
+	POP R2
+	MUL R3, R2
 	BOV overflow_arith
+	LOAD R2, R3
 	SUB R3, R1
 	BOV overflow_arith
 	STORE R1, 8(GB)

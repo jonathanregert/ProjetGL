@@ -1,7 +1,7 @@
 ; Main Program
-	TSTO #16
+	TSTO #17
 	BOV pile_pleine
-	ADDSP #16
+	ADDSP #17
 ; start main program
 ; Main program
 ; Beginning of main instructions:
@@ -68,9 +68,12 @@ endif_0:
 	STORE R1, 14(GB)
 	LOAD 2(GB), R1
 	LOAD 3(GB), R3
-	LOAD 4(GB), R4
-	MUL R4, R3
+	PUSH R3
+	LOAD 4(GB), R3
+	POP R2
+	MUL R3, R2
 	BOV overflow_arith
+	LOAD R2, R3
 	ADD R3, R1
 	BOV overflow_arith
 	FLOAT R1, R1
@@ -183,26 +186,35 @@ endif_8:
 	FLOAT R1, R1
 	LOAD 2(GB), R3
 	FLOAT R3, R3
-	LOAD #0x1.0p1, R4
-	MUL R4, R3
+	PUSH R3
+	LOAD #0x1.0p1, R3
+	POP R2
+	MUL R3, R2
 	BOV overflow_arith
+	LOAD R2, R3
 	ADD R3, R1
 	BOV overflow_arith
 	LOAD 3(GB), R3
 	FLOAT R3, R3
-	LOAD 4(GB), R4
-	FLOAT R4, R4
-	MUL R4, R3
+	PUSH R3
+	LOAD 4(GB), R3
+	FLOAT R3, R3
+	POP R2
+	MUL R3, R2
 	BOV overflow_arith
+	LOAD R2, R3
 	ADD R3, R1
 	BOV overflow_arith
 	LOAD 5(GB), R3
 	FLOAT R3, R3
-	LOAD #0x1.0p1, R4
-	CMP #0x0.0p0, R4
+	PUSH R3
+	LOAD #0x1.0p1, R3
+	POP R2
+	CMP #0x0.0p0, R3
 	BEQ division_par_zero_float
-	DIV R4, R3
+	DIV R3, R2
 	BOV overflow_arith
+	LOAD R2, R3
 	SUB R3, R1
 	BOV overflow_arith
 	LOAD #0x1.f9999ap2, R3

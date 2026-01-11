@@ -64,10 +64,18 @@ public class Program extends AbstractProgram {
 
         int d2 = compiler.getStackManager().getTSTOForMain();
 
-        Label pilePleine = compiler.getErrorManager().label(ErrorManager.RuntimeError.STACK_OVERFLOW);
+        // Label pilePleine = compiler.getErrorManager().label(ErrorManager.RuntimeError.STACK_OVERFLOW);
 
         compiler.addFirst(new ADDSP(new ImmediateInteger(d2)));
-        compiler.addFirst(new BOV(pilePleine));
+        // BOV : seulement si -n n'est PAS actif
+        if (!compiler.getNoCheckOption()) {
+            compiler.addFirst(
+                new BOV(
+                    compiler.getErrorManager()
+                            .label(ErrorManager.RuntimeError.STACK_OVERFLOW)
+                )
+            );
+        }
         compiler.addFirst(new TSTO(new ImmediateInteger(d2)));
         compiler.addFirstComment("Main Program");
 

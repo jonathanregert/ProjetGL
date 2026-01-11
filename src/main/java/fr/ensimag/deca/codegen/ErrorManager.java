@@ -77,30 +77,36 @@ public class ErrorManager {
     }
 
     public void genCheckStackOverflow(DecacCompiler compiler) {
+        if (compiler.getNoCheckOption()) return;
         compiler.addInstruction(new BOV(label(RuntimeError.STACK_OVERFLOW)));
     }
 
     public void genCheckHeapOverflow(DecacCompiler compiler) {
+        if (compiler.getNoCheckOption()) return;
         compiler.addInstruction(new BOV(label(RuntimeError.HEAP_OVERFLOW)));
     }
 
     public void genCheckIntDivByZero(DecacCompiler compiler, GPRegister divisor) {
+        if (compiler.getNoCheckOption()) return;
         compiler.addInstruction(new CMP(new ImmediateInteger(0), divisor));
         compiler.addInstruction(new BEQ(label(RuntimeError.INT_DIV_BY_ZERO)));
     }
 
     public void genCheckFloatDivByZero(DecacCompiler compiler, GPRegister divisor) {
+        if (compiler.getNoCheckOption()) return;
         compiler.addInstruction(new CMP(new ImmediateFloat(0), divisor));
         compiler.addInstruction(new BEQ(label(RuntimeError.FLOAT_DIV_BY_ZERO)));
     }
 
     public void genCheckIntModByZero(DecacCompiler compiler, GPRegister divisor) {
+        if (compiler.getNoCheckOption()) return;
         compiler.addInstruction(new CMP(new ImmediateInteger(0), divisor));
         compiler.addInstruction(new BEQ(label(RuntimeError.INT_MOD_BY_ZERO)));
     }
 
     /** Overflow arithmétique (si vous décidez de le gérer maintenant). */
     public void genCheckOverflow(DecacCompiler compiler) {
+        if (compiler.getNoCheckOption()) return;
         compiler.addInstruction(new BOV(label(RuntimeError.ARITH_OVERFLOW)));
     }
 

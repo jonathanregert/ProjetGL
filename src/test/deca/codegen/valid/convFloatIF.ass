@@ -1,7 +1,7 @@
 ; Main Program
-	TSTO #3
+	TSTO #4
 	BOV pile_pleine
-	ADDSP #3
+	ADDSP #4
 ; start main program
 ; Main program
 ; Beginning of main instructions:
@@ -13,14 +13,18 @@
 	FLOAT R3, R3
 	STORE R3, 2(GB)
 	LOAD 1(GB), R3
-	LOAD #0, R4
-	CMP R4, R3
+	PUSH R3
+	LOAD #0, R3
+	POP R2
+	CMP R3, R2
 	SGT R3
 	CMP #0, R3
 	BEQ bool_sc_0
 	LOAD 2(GB), R3
-	LOAD #0x1.5p3, R4
-	CMP R4, R3
+	PUSH R3
+	LOAD #0x1.5p3, R3
+	POP R2
+	CMP R3, R2
 	SLT R3
 	BRA bool_end_0
 bool_sc_0:
