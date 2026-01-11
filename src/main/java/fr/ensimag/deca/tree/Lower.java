@@ -27,4 +27,7 @@ public class Lower extends AbstractOpIneq {
         compiler.addInstruction(new SLT(target));
     }
 
+    @Override
+    public int getPriorite() { return 60; }
+
 }

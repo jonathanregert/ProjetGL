@@ -102,4 +102,8 @@ public class Cast extends AbstractExpr {
         typeIdent.iter(f);
         expr.iter(f);
     }
+
+    @Override
+    public int getPriorite() { return 90; }
+
 }

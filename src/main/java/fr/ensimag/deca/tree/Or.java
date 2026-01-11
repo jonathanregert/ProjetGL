@@ -35,4 +35,14 @@ public class Or extends AbstractOpBool {
     protected int getShortCircuitValue(){
         return 1;
     }
+
+    @Override
+    public int getPriorite() { return 30; }
+
+    @Override
+    protected boolean isLeftAssociative() { return true; }
+
+    @Override
+    protected boolean isRightAssociative() { return true; }
+
 }

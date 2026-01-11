@@ -41,4 +41,7 @@ public class UnaryMinus extends AbstractUnaryExpr {
         getOperand().codeGenExpr(compiler, target);
         compiler.addInstruction(new OPP(target, target));
     }
+
+    @Override
+    public int getPriorite() { return 90; }
 }

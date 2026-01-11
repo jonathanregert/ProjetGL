@@ -27,4 +27,7 @@ public class NotEquals extends AbstractOpExactCmp {
         compiler.addInstruction(new SNE(target));
     }
 
+    @Override
+    public int getPriorite() { return 50; }
+
 }

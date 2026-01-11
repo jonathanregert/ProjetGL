@@ -27,4 +27,6 @@ public class Greater extends AbstractOpIneq {
         compiler.addInstruction(new SGT(target));
     }
 
+    @Override
+    public int getPriorite() { return 60; }
 }

@@ -26,8 +26,18 @@ public abstract class AbstractUnaryExpr extends AbstractExpr {
     @Override
     public void decompile(IndentPrintStream s) {
         s.print(getOperatorName());
+
+        boolean needParen = operand instanceof AbstractBinaryExpr;
+
+        if (needParen) {
+            s.print("(");
+        }
         operand.decompile(s);
+        if (needParen) {
+            s.print(")");
+        }
     }
+
 
     @Override
     protected void iterChildren(TreeFunction f) {

@@ -45,4 +45,11 @@ public class Modulo extends AbstractOpArith {
         compiler.addInstruction(new REM(rRight, rLeft));
     }
 
+    @Override
+    public int getPriorite() { return 80; }
+
+    @Override
+    protected boolean isLeftAssociative() {
+        return true;
+    }
 }

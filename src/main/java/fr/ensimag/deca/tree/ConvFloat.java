@@ -47,4 +47,6 @@ public class ConvFloat extends AbstractUnaryExpr {
         );
     }
 
+    @Override
+    public int getPriorite() { return 90; }
 }

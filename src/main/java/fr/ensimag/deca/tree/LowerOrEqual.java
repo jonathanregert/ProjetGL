@@ -26,4 +26,6 @@ public class LowerOrEqual extends AbstractOpIneq {
         compiler.addInstruction(new SLE(target));
     }
 
+    @Override
+    public int getPriorite() { return 60; }
 }

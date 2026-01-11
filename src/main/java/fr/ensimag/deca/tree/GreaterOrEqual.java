@@ -28,4 +28,6 @@ public class GreaterOrEqual extends AbstractOpIneq {
         compiler.addInstruction(new SGE(target));
     }
 
+    @Override
+    public int getPriorite() { return 60; }
 }

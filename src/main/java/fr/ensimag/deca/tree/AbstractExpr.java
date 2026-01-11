@@ -173,4 +173,6 @@ public abstract class AbstractExpr extends AbstractInst {
             s.println();
         }
     }
+
+    public int getPriorite() { return 100; }
 }

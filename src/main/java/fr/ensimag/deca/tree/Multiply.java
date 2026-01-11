@@ -29,5 +29,13 @@ public class Multiply extends AbstractOpArith {
         compiler.getErrorManager().genCheckOverflow(compiler);
     }
 
+    @Override
+    public int getPriorite() { return 80; }
+
+    @Override
+    protected boolean isLeftAssociative() { return true; }
+
+    @Override
+    protected boolean isRightAssociative() { return true; }
 
 }

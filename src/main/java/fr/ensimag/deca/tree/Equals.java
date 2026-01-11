@@ -26,5 +26,7 @@ public class Equals extends AbstractOpExactCmp {
     protected void codeGenSet(DecacCompiler compiler, GPRegister target){
         compiler.addInstruction(new SEQ(target));
     }
-    
+
+    @Override
+    public int getPriorite() { return 50; }
 }

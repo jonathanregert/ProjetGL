@@ -2,7 +2,7 @@
 // Test syntaxique valide : cast explicite bien parenthésé.
 //
 // Resultats :
-// Accepté par l'analyse syntaxique.
+// ok
 
 {
     int a;

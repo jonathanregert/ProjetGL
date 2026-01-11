@@ -91,5 +91,11 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
      * @param target
      */
     protected abstract void codeGenSet(DecacCompiler compiler, GPRegister target);
+
+    @Override
+    protected boolean needsParensForChild(AbstractExpr child) {
+        return child instanceof AbstractOpCmp;
+    }
+
     
 }

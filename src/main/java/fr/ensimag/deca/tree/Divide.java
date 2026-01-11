@@ -37,4 +37,11 @@ public class Divide extends AbstractOpArith {
         compiler.getErrorManager().genCheckOverflow(compiler);
     }
 
+    @Override
+    public int getPriorite() { return 80; }
+
+    @Override
+    protected boolean isLeftAssociative() {
+        return true;
+    }
 }

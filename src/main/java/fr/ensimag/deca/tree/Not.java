@@ -47,4 +47,7 @@ public class Not extends AbstractUnaryExpr {
         compiler.addInstruction(new CMP(new ImmediateInteger(0), target));
         compiler.addInstruction(new SEQ(target));
     }
+
+    @Override
+    public int getPriorite() { return 90; }
 }

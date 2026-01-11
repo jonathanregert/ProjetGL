@@ -25,4 +25,11 @@ public class Minus extends AbstractOpArith {
         compiler.addInstruction (new SUB(rRight, rLeft));
         compiler.getErrorManager().genCheckOverflow(compiler);
     }
+
+    @Override
+    public int getPriorite() { return 70; }
+
+    @Override
+    protected boolean isLeftAssociative() { return true; }
+
 }

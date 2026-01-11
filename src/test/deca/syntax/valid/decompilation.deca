@@ -1,0 +1,220 @@
+// Description :
+// Test des priorités, associativités et décompilation.
+// Expressions très longues et profondément imbriquées.
+// Affectations comme expressions, casts, booléens, unaires, comparaisons.
+//
+// Resultats :
+// ok
+
+{
+    int a;
+    int b;
+    int c;
+    int d;
+    int e;
+    int g;
+
+    boolean x;
+    boolean y;
+    boolean z;
+    boolean t;
+
+    float f;
+    float h;
+
+    // =========================
+    // Initialisations
+    // =========================
+    a = 1;
+    b = 2;
+    c = 3;
+    d = 4;
+    e = 5;
+    g = 6;
+
+    x = true;
+    y = false;
+    z = true;
+    t = false;
+
+    f = 2.0;
+    h = 3.5;
+
+    // =========================
+    // Affectations imbriquées
+    // =========================
+    a = b = c = d = e = 7;
+
+    a = (b = (c = 4) + (d = 5)) * (e = 2) + 1;
+
+    a = 1 + (b = (c = (d = 3) + 2) * 4);
+
+    a = (b = 3) + (c = 4) * (d = 5 + (e = 6));
+
+    // =========================
+    // Arithmétique longue
+    // =========================
+    a = b + c * d - e * (a + b * c) + d;
+
+    a = (b + c) * (d - e + a) - b * (c + d * e);
+
+    a = b * c + d * e - a + b * (c - d + e);
+
+    // =========================
+    // Comparaisons complexes
+    // =========================
+    x = b + c * d >= e + a * b;
+
+    x = (b + c) * (d - e) >= a + b * c;
+
+    x = ((a = 1) + b * c) < (d + e);
+
+    x = ((a = (b = 2) + 1) * c) <= d + e;
+
+    // =========================
+    // Booléens imbriqués
+    // =========================
+    z = x || y && z || t && x;
+
+    z = (x || y) && (z || t && x);
+
+    z = x || (y && (z || (t && x)));
+
+    // =========================
+    // Affectations dans booléens
+    // =========================
+    z = (x = true) && (y = false) || (t = true);
+
+    z = (x = false) || ((y = true) && (z = false));
+
+    z = ((x = true) && y) || ((z = false) && t);
+
+    // =========================
+    // Unaires imbriqués
+    // =========================
+    a = -b + c - -d;
+
+    a = -(b + c * d) + e;
+
+    a = -((b + c) * (d - e));
+
+    a = -(b * (c + d - e));
+
+    z = !x && y || !z;
+
+    z = !(x && (y || !z));
+
+    // =========================
+    // Casts imbriqués
+    // =========================
+    f = (float)(a + b * c);
+
+    f = (float)((a = 3) + (b = 4) * (c + d));
+
+    a = (int)((float)(b + c * d) * f);
+
+    a = (int)((float)((b = 2) + (c = 3)) * (f = 2.0));
+
+    x = (boolean)((a = 1) < (int)(f = 2.5));
+
+    // =========================
+    // Mélange
+    // =========================
+    z = ((x = (a + b * c > d)) && !(y || (z = false)))
+        || ((t = true) && (a = b = c) > 0);
+
+    a = (b = (c = 1) + (int)((float)(d + e) * f))
+        * (g = (int)(h = 4.0)) + 2;
+
+    // =========================
+    // Chaînes finales
+    // =========================
+    a = b = c = d = e = g = 9;
+
+    x = y = z = t = (a = b = c) > 0;
+
+    // =========================
+    // Expressions seules
+    // =========================
+    (a = b = c) + d * e;
+    (x = true) && (y = false || z);
+    !(x && y) || (z = false);
+
+    // =========================
+    // Associativité
+    // =========================
+
+    // '-' : deux arbres différents
+    a = a - (b - c);
+    a = (a - b) - c;
+
+    // '/' : deux arbres différents
+    a = a / (b / c);
+    a = (a / b) / c;
+
+    // '%' : deux arbres différents
+    a = a % (b % c);
+    a = (a % b) % c;
+
+    // mix avec assign à droite : parenthèses cruciales
+    a = a - ((b = 3) - c);
+    a = a / ((b = 3) / c);
+    a = a % ((b = 3) % c);
+
+    // booléens profonds : mélange || et &&
+    z = x || y && (z || t && (x || y && z));
+    z = (x || y) && (z || t) || (x && y) || z;
+
+    // =========================
+    // Non-associativité des comparaisons / égalités
+    // =========================
+
+    // Comparaisons simples imbriquées
+    z = (a < b) == (c < d);
+    z = (a <= b) != (c >= d);
+
+    // Comparaisons avec expressions arithmétiques
+    z = ((a + b * c) < (d - e)) == ((b * c) < (a + d));
+    z = ((a * b) >= (c + d)) != ((e - a) <= (b + c));
+
+    // Comparaisons avec affectations internes
+    z = ((a = b + 1) < (c = d - 1)) == ((b = c * 2) < (d = e + 3));
+    z = ((a = 1) <= (b = 2)) != ((c = 3) >= (d = 4));
+
+    // Comparaisons avec casts imbriqués
+    z = ((int)(a + b) < (int)(c + d)) == ((int)(e) < (int)(a));
+    z = ((float)(a) >= (float)(b + c)) != ((float)(d) <= (float)(e));
+
+    // Comparaisons + booléens (&& / ||)
+    z = ((a < b) && (c < d)) == ((a <= b) && (c >= d));
+    z = ((a < b) || (c < d)) != ((a >= b) || (c <= d));
+
+    // Comparaisons + négation
+    z = (!(a < b)) == (!(c < d));
+    z = (!(a <= b)) != (!(c >= d));
+
+    // Comparaisons + affectations booléennes
+    z = ((x = a < b) == (y = c < d));
+    z = ((x = a <= b) != (y = c >= d));
+
+    // Comparaisons + chaînes d’affectations
+    z = ((x = y = (a < b)) == (z = t = (c < d)));
+    z = ((x = (a <= b)) != (y = (c >= d)));
+
+    // Comparaisons + booléens + affectations mélangés
+    z = (((x = true) && (a < b)) == ((y = false) || (c < d)));
+    z = (((x = a < b) || y) != ((z = c < d) && t));
+
+    // Comparaisons profondément imbriquées (forcent les parenthèses)
+    z = ((a < b) == ((c < d) == (e < a)));
+    z = (((a <= b) != (c >= d)) == ((b < c) != (d < e)));
+
+    // Comparaisons non associatives en cascade (doivent être parenthésées)
+    z = ((a < b) == (c < d)) == (e < a);
+    z = (a < b) == ((c < d) == (e < a));
+
+    // Comparaisons avec expressions seules (INST → EXPR)
+    ((a < b) == (c < d));
+    ((a <= b) != (c >= d));
+
+}

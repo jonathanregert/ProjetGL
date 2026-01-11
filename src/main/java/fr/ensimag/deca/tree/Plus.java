@@ -27,4 +27,15 @@ public class Plus extends AbstractOpArith {
         compiler.addInstruction(new ADD(rRight, rLeft));
         compiler.getErrorManager().genCheckOverflow(compiler);
     }
+
+    @Override
+    public int getPriorite() { return 70; }
+
+    @Override
+    protected boolean isLeftAssociative() { return true; }
+
+    @Override
+    protected boolean isRightAssociative() { return true; }
+
+
 }
