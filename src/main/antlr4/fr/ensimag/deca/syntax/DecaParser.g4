@@ -232,15 +232,13 @@ expr returns[AbstractExpr tree]
     ;
 
 assign_expr returns [AbstractExpr tree]
-    : e=lvalue 
+    : e=or_expr 
       ( EQUALS r=assign_expr { 
-
-        // verification que e est bien une lvalue
         if (!($e.tree instanceof AbstractLValue)) {
               throw new InvalidLValue(this, $e.ctx);
           }
-        $tree = new Assign((AbstractLValue)$e.tree, $r.tree); 
-        setLocation($tree, $e.start);
+          $tree = new Assign((AbstractLValue)$e.tree, $r.tree); 
+          setLocation($tree, $e.start);
         }
       | /* epsilon */
       {
@@ -248,6 +246,7 @@ assign_expr returns [AbstractExpr tree]
         }
       )
     ;
+
 
 lvalue returns [AbstractLValue tree]
     : i=ident {
