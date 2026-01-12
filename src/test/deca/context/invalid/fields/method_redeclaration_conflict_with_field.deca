@@ -3,7 +3,7 @@
 //
 // Resultats :
 //    Erreur contextuelle
-//    Ligne <No_de_ligne> : <message d'erreur de votre compilateur>
+//    Ligne 12 : Méthode f déjà définie
 
 class A {
     int f() {

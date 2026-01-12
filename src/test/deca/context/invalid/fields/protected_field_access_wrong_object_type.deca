@@ -3,7 +3,7 @@
 //
 // Resultats :
 //    Erreur contextuelle
-//    Ligne <No_de_ligne> : <message d'erreur de votre compilateur>
+//    Ligne 15 : Accès protégé invalide : le type de l'objet (A) n'est pas un sous-type de la classe courante (B)
 
 class A {
 protected int x;

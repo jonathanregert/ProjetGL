@@ -3,7 +3,7 @@
 //
 // Resultats :
 //    Erreur contextuelle
-//    Ligne <No_de_ligne> : <message d'erreur de votre compilateur>
+//    Ligne 14 : La classe actuelle B n'a pas accès au champ protégé de A
 
 class A {
 protected int x;

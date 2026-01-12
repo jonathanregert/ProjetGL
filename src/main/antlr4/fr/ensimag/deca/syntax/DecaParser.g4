@@ -641,7 +641,7 @@ list_params returns [ListDeclParam tree]
         } (COMMA p2=param {
         $tree.add($p2.tree);
         }
-      ))*
+      )*)?
     | /* epsilon */ 
     ;
 

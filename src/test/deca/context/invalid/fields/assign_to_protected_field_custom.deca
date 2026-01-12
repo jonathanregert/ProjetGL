@@ -2,8 +2,8 @@
 // tentative d'affecter un champ protected depuis une autre classe
 //
 // Resultats :
-// Erreur contextuelle
-// Ligne 12 : violation de visibilité protected
+//    Erreur contextuelle
+//    Ligne 15 : La classe actuelle J n'a pas accès au champ protégé de ParentField
 
 class ParentField {
     protected int val;
