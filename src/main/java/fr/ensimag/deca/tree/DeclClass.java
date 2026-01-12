@@ -272,8 +272,7 @@ public class DeclClass extends AbstractDeclClass {
             compiler.getStackManager().useTemp(1);
         }
 
-        // TODO : init des champs (à ajouter après)
-        // classFields.codeGenInitFields(compiler, classDef);
+        classFields.codeGenInitFields(compiler, classDef);
 
         for (int r = last; r >= first; r--) {
             compiler.addToBlock(new POP(Register.getR(r)));

@@ -187,7 +187,11 @@ public class DecacCompiler {
      * fr.ensimag.ima.pseudocode.IMAProgram#addInstruction(fr.ensimag.ima.pseudocode.Instruction)
      */
     public void addInstruction(Instruction instruction) {
-        program.addInstruction(instruction);
+        if (blockBody != null){
+            blockBody.add(instruction);
+        } else {
+            program.addInstruction(instruction);
+        }
     }
 
     /**
@@ -196,7 +200,11 @@ public class DecacCompiler {
      * java.lang.String)
      */
     public void addInstruction(Instruction instruction, String comment) {
-        program.addInstruction(instruction, comment);
+        if (blockBody != null){
+            blockBody.add(instruction);
+        } else {
+            program.addInstruction(instruction, comment);
+        }
     }
     
     /**

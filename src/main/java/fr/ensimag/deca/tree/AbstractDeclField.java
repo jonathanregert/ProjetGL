@@ -35,7 +35,8 @@ public abstract class AbstractDeclField extends Tree {
 
     protected abstract AbstractIdentifier getFieldName();
 
+    protected abstract void codeGenInitField(DecacCompiler compiler, ClassDefinition currentClass);
+
     protected abstract void verifyFieldInitialization(DecacCompiler compiler,
             ClassDefinition currentClass) throws ContextualError;
-    
 }
