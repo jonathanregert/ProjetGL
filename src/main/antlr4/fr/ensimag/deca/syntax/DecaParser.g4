@@ -428,6 +428,10 @@ primary_expr returns[AbstractExpr tree]
             $tree = new MethodCall($lv.tree, $m.tree, $args.tree);
             setLocation($tree, $lv.start);
         }
+    | THIS
+        { $tree = new This(); 
+          setLocation($tree, $THIS); 
+        }
     | OPARENT expr CPARENT {
             assert($expr.tree != null);
             $tree = $expr.tree;
