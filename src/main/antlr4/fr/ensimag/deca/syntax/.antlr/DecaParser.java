@@ -3146,7 +3146,7 @@ public class DecaParser extends AbstractDecaParser {
 				setState(545);
 				((Decl_methodContext)_localctx).b = block();
 
-				        ((Decl_methodContext)_localctx).tree =  new DeclMethod( ((Decl_methodContext)_localctx).t.tree, ((Decl_methodContext)_localctx).id.tree, ((Decl_methodContext)_localctx).params.tree, ((Decl_methodContext)_localctx).b.insts);
+				        ((Decl_methodContext)_localctx).tree =  new DeclMethod( ((Decl_methodContext)_localctx).t.tree, ((Decl_methodContext)_localctx).id.tree, ((Decl_methodContext)_localctx).params.tree, ((Decl_methodContext)_localctx).b.decls, ((Decl_methodContext)_localctx).b.insts);
 				        setLocation(_localctx.tree, (((Decl_methodContext)_localctx).id!=null?(((Decl_methodContext)_localctx).id.start):null));
 				        
 				}
