@@ -106,18 +106,12 @@ public class Selection extends AbstractLValue{
         field.iter(f);
     }
 
-    @Override
-    protected DAddr codeGenAddr(DecacCompiler compiler) {
-        object.codeGenInst(compiler);
-        FieldDefinition fieldDef = (FieldDefinition) field.getDefinition();
-        return new RegisterOffset(fieldDef.getIndex(), Register.R1);
-    }
-
-    @Override
-    protected void codeGenExpr(DecacCompiler compiler, GPRegister register) {
-        DAddr addr = codeGenAddr(compiler);
-         compiler.addInstruction(new LOAD(addr, register));
-    }
+    // @Override
+    // protected DAddr codeGenAddr(DecacCompiler compiler) {
+    //     object.codeGenInst(compiler);
+    //     FieldDefinition fieldDef = (FieldDefinition) field.getDefinition();
+    //     return new RegisterOffset(fieldDef.getIndex(), Register.R1);
+    // }
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
@@ -130,5 +124,28 @@ public class Selection extends AbstractLValue{
         object.decompile(s);
         s.print(".");
         field.decompile(s);
+    }
+
+    @Override
+    protected DAddr codeGenAddr(DecacCompiler compiler){
+        // 1. Évaluer l'objet
+        object.codeGenExpr(compiler, Register.R1);
+        // 2) (Optionnel) null-check : si R1 == 0 => erreur
+        // Si vous avez un handler "dereference null" dans ErrorManager, branche dessus ici.
+        // Exemple minimal: compare à 0 et branche vers label erreur.
+        // Label derefNull = compiler.getErrorManager().label(RuntimeError.DEREF_NULL);
+        // compiler.addInstruction(new CMP(new ImmediateInteger(0), Register.R1));
+        // compiler.addInstruction(new BEQ(derefNull));
+
+        FieldDefinition fieldDef = (FieldDefinition) field.getDefinition();
+
+        // Adresse du champ = index(R1)
+        return new RegisterOffset(fieldDef.getIndex(), Register.R1);
+    }
+
+    @Override
+    protected void codeGenExpr(DecacCompiler compiler, GPRegister target){
+        DAddr addr = codeGenAddr(compiler);
+        compiler.addInstruction(new LOAD(addr, target));
     }
 }

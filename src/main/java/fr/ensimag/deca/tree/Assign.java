@@ -57,7 +57,18 @@ public class Assign extends AbstractBinaryExpr {
                     + id.getName() + "' interdite", getLocation());
             }
             }
+        if (getLeftOperand() instanceof Selection) {
+            Selection sel = (Selection) getLeftOperand();
+            Definition def = sel.getField().getDefinition();
+            if (def != null && def.isField()) {
+                FieldDefinition fieldDef = (FieldDefinition) def;
+                if (fieldDef.isFinal()) {
+                    throw new ContextualError("Affectation à un champ final '"
+                            + sel.getField().getName() + "' interdite", getLocation());
+                }
+            }
         }
+    }
 
         // partie droite
         AbstractExpr rhs = getRightOperand().verifyRValue(compiler, localEnv, currentClass, typeGauche);
@@ -66,7 +77,6 @@ public class Assign extends AbstractBinaryExpr {
         this.setType(typeGauche);
         return typeGauche;
     }
-
 
     @Override
     protected String getOperatorName() {
