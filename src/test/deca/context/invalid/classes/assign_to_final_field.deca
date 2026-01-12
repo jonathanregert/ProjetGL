@@ -2,8 +2,8 @@
 // test affectation à un champ final
 //
 // Resultats :
-// Erreur contextuelle
-// Ligne 7 : Affectation à un champ final interdite
+//    Erreur contextuelle
+//    Ligne 11 : Affectation à un champ final 'x' interdite
 
 class A {
     final int x;
