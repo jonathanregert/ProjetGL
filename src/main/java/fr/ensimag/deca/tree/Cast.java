@@ -72,8 +72,6 @@ public class Cast extends AbstractExpr {
     @Override
     protected void codeGenExpr(DecacCompiler compiler, GPRegister target) {
         expr.codeGenExpr(compiler, target);
-
-        // Conversion selon les types
         if (getType().isFloat() && expr.getType().isInt()) {
             compiler.addInstruction(new FLOAT(target, target));
         }

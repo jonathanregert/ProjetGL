@@ -13,6 +13,7 @@ import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.BEQ;
 import fr.ensimag.ima.pseudocode.instructions.BRA;
 import fr.ensimag.ima.pseudocode.instructions.CMP;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
 
 
 /**
@@ -34,7 +35,9 @@ public class Return extends AbstractInst {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        expr.codeGenInst(compiler); // résultat dans R1
+        expr.codeGenInst(compiler); // résultat en R1
+        compiler.addInstruction(new LOAD(Register.R1, Register.R0));
+        compiler.addInstruction(new BRA(compiler.getCurrentMethodEndLabel()));
         
     }
 
@@ -56,8 +59,8 @@ public class Return extends AbstractInst {
         " incompatible avec le type de retour " + returnType,
         expr.getLocation()
     );
-}
-  }
+        }
+    }
 
     @Override
     public void decompile(IndentPrintStream s) {

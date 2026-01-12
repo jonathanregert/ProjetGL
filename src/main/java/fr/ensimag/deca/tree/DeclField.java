@@ -24,13 +24,15 @@ public class DeclField extends AbstractDeclField {
     final private AbstractIdentifier type;
     final private AbstractIdentifier fieldName;
     final private AbstractInitialization initialization;
+    final private boolean isFinal;
 
-    public DeclField(Visibility visibility, AbstractIdentifier type, AbstractIdentifier fieldName, AbstractInitialization initialization) {
+    public DeclField(Visibility visibility, AbstractIdentifier type, AbstractIdentifier fieldName, AbstractInitialization initialization, boolean isFinal) {
         Validate.notNull(visibility);
         Validate.notNull(type);
         Validate.notNull(fieldName);
         Validate.notNull(initialization);
         this.visibility = visibility;
+        this.isFinal = isFinal;
         this.type = type;
         this.fieldName = fieldName;
         this.initialization = initialization;
@@ -61,7 +63,7 @@ public class DeclField extends AbstractDeclField {
 
     // fieldDef : type, nom, visibilité, classe courante, index
     FieldDefinition fieldDef = new FieldDefinition(t, fieldName.getLocation(), 
-                                                   visibility, currentClass, index);
+                                                   visibility, currentClass, index, this.isFinal);
 
 
     // Debug

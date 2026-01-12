@@ -199,7 +199,7 @@ public class StackManager {
      * teste locales + temporaires maximaux.
      * @return
      */
-    public int getTSTOForLoacals(){
+    public int getTSTOForLocals(){
         return getLocalCount() + getMaxTemp();
     }
 }

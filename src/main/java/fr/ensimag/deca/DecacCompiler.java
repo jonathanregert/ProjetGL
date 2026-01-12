@@ -52,6 +52,46 @@ public class DecacCompiler {
     private final RegAllocator regAllocator;
     private final StackManager stackManager = new StackManager();
     private final ErrorManager errorManager = new ErrorManager();
+    private java.util.ArrayList<fr.ensimag.ima.pseudocode.Instruction> blockPrefix = null;
+    private java.util.ArrayList<fr.ensimag.ima.pseudocode.Instruction> blockBody = null;
+    private Label currentMethodEndLabel;
+    private String currentClassName;
+
+    public void setCurrentClassName(String n) { currentClassName = n; }
+    public String getCurrentClassName() { return currentClassName; }
+
+
+    public void setCurrentMethodEndLabel(Label l) { currentMethodEndLabel = l; }
+    public Label getCurrentMethodEndLabel() { return currentMethodEndLabel; }
+
+    public void beginBlock() {
+    blockPrefix = new java.util.ArrayList<>();
+    blockBody = new java.util.ArrayList<>();
+    }
+
+    public void addToBlock(fr.ensimag.ima.pseudocode.Instruction i) {
+        if (blockBody == null) {
+            addInstruction(i);
+        } else {
+            blockBody.add(i);
+        }
+    }
+
+    public void addFirstToBlock(fr.ensimag.ima.pseudocode.Instruction i) {
+        if (blockPrefix == null) {
+            addFirst(i); // fallback, mais idéalement jamais utilisé ici
+        } else {
+            blockPrefix.add(i);
+        }
+    }
+
+    public void endBlock() {
+        if (blockBody == null) return;
+        for (var i : blockPrefix) addInstruction(i);
+        for (var i : blockBody) addInstruction(i);
+        blockPrefix = null;
+        blockBody = null;
+    }
 
     public DecacCompiler(CompilerOptions compilerOptions, File source) {
         super();
