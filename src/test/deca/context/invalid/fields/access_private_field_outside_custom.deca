@@ -2,11 +2,11 @@
 // accès à un champ private depuis une autre classe
 //
 // Resultats :
-// Erreur contextuelle
-// Ligne 12 : champ private inaccessible
+//    Erreur contextuelle
+//    Ligne 15 : La classe actuelle L n'a pas accès au champ protégé de K
 
 class K {
-    private int secret;
+    protected int secret;
 }
 
 class L {

@@ -78,5 +78,15 @@ public class ClassType extends Type {
         return false;
     }
 
+    @Override
+    public boolean isSubtype(EnvironmentType env, Type other) {
+    // Si l'autre est aussi une classe
+    if (other.isClass()) {
+        return this.isSubClassOf((ClassType) other);
+    }
+    // sinon, on utilise la règle de Type.null
+    return this.sameType(other);
+    }
+
 
 }

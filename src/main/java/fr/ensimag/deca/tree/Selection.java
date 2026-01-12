@@ -56,7 +56,7 @@ public class Selection extends AbstractLValue{
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-                
+
         Type objectType = object.verifyExpr(compiler, localEnv, currentClass);
 
         if (!objectType.isClass()) {
@@ -68,11 +68,25 @@ public class Selection extends AbstractLValue{
         Symbol fieldSym = field.getName(); 
         ExpDefinition memberDef = classDef.getMembers().get(fieldSym);
 
-        if (memberDef == null) {
+        if (memberDef == null || !memberDef.isField()) {
             throw new ContextualError("Le membre " + fieldSym + " n'existe pas dans " + objectType, field.getLocation());
         }
 
-
+        // verif de la visibilité
+        FieldDefinition fieldDef = (FieldDefinition) memberDef;
+        if (fieldDef.getVisibility() == Visibility.PROTECTED){
+            // cond 2 : il faut qu'on soit dans une sous-classe de la classe où est défini le champ
+            if (currentClass == null) {
+                throw new ContextualError("Accès à un champ protégé '" + fieldSym + "' interdit dans le Main", field.getLocation());
+            }
+            if (!currentClass.getType().isSubtype(compiler.environmentType, fieldDef.getContainingClass().getType())) {
+                throw new ContextualError("La classe actuelle " + currentClass.getType() + " n'a pas accès au champ protégé de " + fieldDef.getContainingClass().getType(), field.getLocation());
+            }
+            //cond 1 : l'objet doit être sous type de la classe où est défini le champ
+            if (!objectType.isSubtype(compiler.environmentType, currentClass.getType())) {
+                throw new ContextualError("Accès protégé invalide : le type de l'objet (" + objectType + ") n'est pas un sous-type de la classe courante (" + currentClass.getType() + ")", object.getLocation());
+            }
+        }
         field.setDefinition(memberDef);
         setType(memberDef.getType());
 
