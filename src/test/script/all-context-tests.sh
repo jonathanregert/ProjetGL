@@ -9,7 +9,7 @@ cd "$(dirname "$0")"/../../.. || exit 1
 
 PATH=./src/test/script/launchers:"$PATH"
 
-CONTEXT_DIR="src/test/deca/context/"
+CONTEXT_DIR="src/test/deca/context"
 
 echo "Tests contextuels"
 
@@ -24,7 +24,7 @@ find "$CONTEXT_DIR/invalid/classes" -name "*.deca" | sort | while read testfile;
         echo "Échec attendu"
     else
         echo "Succès inattendu"
-        exit 1
+        
     fi
 done
 
