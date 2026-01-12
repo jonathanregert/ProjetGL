@@ -37,6 +37,32 @@ public abstract class AbstractDeclClass extends Tree {
 
 
     public abstract AbstractIdentifier getName();
-    
 
+    /**
+     * Prépare les tables de méthodes sans générer d'instructions exécutables.
+     * 1. Pour chaque classe : calcule la taille de la table
+     * 2. Réserve les cases mémoire en GB
+     * 3. Mémorise l'adresse de base de la table
+     * @param compiler
+     */
+    public abstract void codeGenMTable(DecacCompiler compiler);
+
+    /**
+     * Écrit les tables en mémoire
+     * @param compiler
+     */
+    public abstract void codeGenBuildMTable(DecacCompiler compiler);
+
+    /**
+     * Génère le sous-programme init.A
+     * @param compiler
+     */
+    public abstract void codeGenInit(DecacCompiler compiler);
+
+
+    /**
+     * Génère le code des méthodes de la classe
+     * @param compiler
+     */
+    public abstract void codeGenMethods(DecacCompiler compiler);
 }

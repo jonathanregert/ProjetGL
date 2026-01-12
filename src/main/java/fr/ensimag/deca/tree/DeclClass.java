@@ -2,6 +2,7 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.ClassType;
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.EnvironmentExp.DoubleDefException;
@@ -10,7 +11,12 @@ import fr.ensimag.deca.context.TypeDefinition;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
-import fr.ensimag.deca.context.ClassDefinition;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.LEA;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.STORE;
+
 import java.io.PrintStream;
 // import java.lang.instrument.ClassDefinition;
 
@@ -162,6 +168,63 @@ public class DeclClass extends AbstractDeclClass {
     protected void iterChildren(TreeFunction f) {
         ClassName.iter(f);
         ClassExtention.iter(f);
-        classMethods.iter(f);}
+        classMethods.iter(f);
+    }
+
+    // Gencode
+
+    @Override
+    public void codeGenMTable(DecacCompiler compiler){
+        ClassDefinition classDef = this.classDefinition;
+
+        int tailleTable = 1 + classDef.getNumberOfMethods();
+
+        RegisterOffset base = compiler.getStackManager().allocGlobalBlock(tailleTable);
+
+        // On stocke l'adresse dans la ClassDefinition
+        classDef.setAddrTable(base);
+        
+        compiler.addComment("Passe1 table de méthode : " + classDef.getType().getName()
+            + " base=" + base + " taille=" + tailleTable);
+    }
+
+    @Override
+    public void codeGenBuildMTable(DecacCompiler compiler) {
+        ClassDefinition classDef = this.classDefinition;
+        RegisterOffset base = classDef.getAddrTable(); // base de la table en GB
+
+        // case 0
+        if (classDef.getSuperClass() == null){
+            // classe racine = Object
+            compiler.addInstruction(new LOAD(new ImmediateNull(), Register.R0));
+            compiler.addInstruction(new STORE(Register.R0, base));
+        } else {
+            RegisterOffset superBase = classDef.getSuperClass().getAddrTable();
+            compiler.addInstruction(new LEA(superBase, Register.R0));
+            compiler.addInstruction(new STORE(Register.R0, base));
+        }
+
+        // 1) Héritage : recopier les pointeurs de méthodes depuis la super-classe
+        // si super existe
+        if (classDef.getSuperClass() != null){
+            int n = classDef.getNumberOfMethods();
+            RegisterOffset superBase = classDef.getSuperClass().getAddrTable();
+        }
+    }
+
+    @Override
+    public void codeGenInit(DecacCompiler compiler) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'codeGenInit'");
+    }
+
+    @Override
+    public void codeGenMethods(DecacCompiler compiler) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'codeGenMethods'");
+    }
+
+    @
+    
 
 }

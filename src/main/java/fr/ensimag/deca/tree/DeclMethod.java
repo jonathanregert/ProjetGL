@@ -6,6 +6,8 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.Label;
+
 import java.io.PrintStream;
 import java.lang.reflect.Method;
 import fr.ensimag.deca.context.Signature;
@@ -22,7 +24,7 @@ public class DeclMethod extends AbstractDeclMethod {
     private final AbstractIdentifier returnType;
     private final AbstractIdentifier methodName;
     private final ListDeclParam params;
-    private final ListDeclVar localVars;    
+    private final ListDeclVar localVars;
     private final ListInst body;
 
     public DeclMethod(AbstractIdentifier returnType, AbstractIdentifier methodName, ListDeclParam params, ListDeclVar localVars, ListInst body) {
@@ -42,28 +44,60 @@ public class DeclMethod extends AbstractDeclMethod {
     protected void verifyDeclMethod(DecacCompiler compiler, ClassDefinition currentClass)
             throws ContextualError {
         
-        // on recup le type
+        // Type de retour
         Type t = returnType.verifyType(compiler);
-        // on recup la sig
+        // Signature
         Signature sig = this.params.verifyListDeclParam(compiler);
+
+        // Méthode de même nom dans la super-classe(si elle existe)
+        MethodDefinition superMethod = null;
+        if (currentClass.getSuperClass() != null){
+            if (currentClass.getSuperClass().getMembers().get(methodName.getName()) != null){
+                superMethod = currentClass.getSuperClass().getMembers()
+                        .get(methodName.getName()).asMethodDefinition(
+                            "Le membre " + methodName.getName() + " n'est pas une méthode",
+                            getLocation()
+                        );
+            }
+        }
+
+        int index;
+        if (superMethod != null){
+            // Override = mêmes contraintes
+            if (!sig.equals(superMethod.getSignature())){
+                throw new ContextualError("Signature incompatible avec la méthode de la super-classe.", getLocation());
+            }
+            if (!t.sameType(superMethod.getType())){
+                throw new ContextualError("Type de retour incompatible avec la méthode de la super-classe.", getLocation());
+            }
+            index = superMethod.getIndex();
+        } else {
+            // Nouvelle méthode : nouvel index
+            index = currentClass.incNumberOfMethods() - 1;
+        }
 
         // les conditions :
         // 2.7 cas du override :
-        MethodDefinition superMethod = (MethodDefinition) currentClass.getSuperClass()
-                                    .getMembers().get(methodName.getName());
+        // MethodDefinition superMethod = (MethodDefinition) currentClass.getSuperClass()
+        //                             .getMembers().get(methodName.getName());
 
-        if (superMethod != null) { // il y a override
-        // Vérifier que sig == sig2
-        if (!sig.equals(superMethod.getSignature())) {
-            throw new ContextualError("Signature pas convenable en override avec la super classe", getLocation());
-        }
-        // Vérifier subtype(env_types, type, type2)
-        if (!t.sameType(superMethod.getType())) {
-            throw new ContextualError("Return type incompatible avec la super méthode", getLocation());
-        }
-        }
+        // if (superMethod != null) { // il y a override
+        // // Vérifier que sig == sig2
+        // if (!sig.equals(superMethod.getSignature())) {
+        //     throw new ContextualError("Signature pas convenable en override avec la super classe", getLocation());
+        // }
+        // // Vérifier subtype(env_types, type, type2)
+        // if (!t.sameType(superMethod.getType())) {
+        //     throw new ContextualError("Return type incompatible avec la super méthode", getLocation());
+        // }
+        // }
 
-        MethodDefinition methodDef = new MethodDefinition(t, getLocation(), sig, 0);
+        MethodDefinition methodDef = new MethodDefinition(t, getLocation(), sig, index);
+
+        String className = currentClass.getType().getName().getName();
+        String methodeName = methodName.getName().getName();
+        methodDef.setLabel(new Label("code." + className + "." + methodeName));
+
         try {
             currentClass.getMembers().declare(methodName.getName(), methodDef);
         } catch (EnvironmentExp.DoubleDefException e) {
@@ -71,7 +105,7 @@ public class DeclMethod extends AbstractDeclMethod {
                     methodName.getLocation());
         }
         
-        // Deco
+        // Décoration
         methodName.setDefinition(methodDef);
         
     }

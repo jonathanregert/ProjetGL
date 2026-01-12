@@ -2,6 +2,9 @@ package fr.ensimag.deca.context;
 
 import fr.ensimag.deca.tree.Location;
 import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
+
 import org.apache.commons.lang.Validate;
 
 /**
@@ -75,6 +78,16 @@ public class ClassDefinition extends TypeDefinition {
         }
         members = new EnvironmentExp(parent);
         this.superClass = superClass;
+    }
+
+    private RegisterOffset addrTable;
+
+    public void setAddrTable(RegisterOffset addr){
+        this.addrTable = addr;
+    }
+
+    public RegisterOffset getAddrTable(){
+        return addrTable;
     }
     
 }
