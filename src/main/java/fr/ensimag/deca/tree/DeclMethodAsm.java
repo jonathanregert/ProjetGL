@@ -1,15 +1,18 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.Type;
-import fr.ensimag.deca.context.VariableDefinition;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.deca.context.MethodDefinition;
+import fr.ensimag.deca.context.Signature;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import java.io.PrintStream;
-import java.lang.reflect.Method;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.Line;
+import fr.ensimag.ima.pseudocode.instructions.RTS;
 
+import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
 
 /**
@@ -38,14 +41,51 @@ public class DeclMethodAsm extends AbstractDeclMethod {
     @Override
     protected void verifyDeclMethod(DecacCompiler compiler, ClassDefinition currentClass)
             throws ContextualError {
-        
-        // Type t = type.verifyType(compiler);
-        // params.verifyListDeclVariable(compiler, localEnv, currentClass);
-   //manque verify de code (minimal)
-        
+
+        Type t = type.verifyType(compiler);
+        Signature sig = params.verifyListDeclParam(compiler);
+
+        MethodDefinition superMethod = null;
+        if (currentClass.getSuperClass() != null) {
+            if (currentClass.getSuperClass().getMembers().get(methodName.getName()) != null) {
+                superMethod = currentClass.getSuperClass().getMembers()
+                        .get(methodName.getName())
+                        .asMethodDefinition(
+                            "Le membre " + methodName.getName() + " n'est pas une méthode",
+                            getLocation()
+                        );
+            }
+        }
+        int index;
+        if (superMethod != null) {
+            if (!sig.equals(superMethod.getSignature())) {
+                throw new ContextualError("Signature incompatible avec la méthode de la super-classe",
+                        getLocation());
+            }
+            if (!t.sameType(superMethod.getType())) {
+                throw new ContextualError("Type de retour incompatible avec la méthode de la super-classe",
+                        getLocation());
+            }
+            index = superMethod.getIndex();
+        } else {
+            index = currentClass.incNumberOfMethods() - 1;
+        }
+
+        MethodDefinition methodDef = new MethodDefinition(t, getLocation(), sig, index);
+
+        String classNameStr = currentClass.getType().getName().getName();
+        String methodNameStr = methodName.getName().getName();
+        methodDef.setLabel(new Label("code." + classNameStr + "." + methodNameStr));
+
+        try {
+            currentClass.getMembers().declare(methodName.getName(), methodDef);
+        } catch (EnvironmentExp.DoubleDefException e) {
+            throw new ContextualError("Méthode " + methodName.getName() + " déjà définie",
+                    methodName.getLocation());
+        }
+        methodName.setDefinition(methodDef);
     }
 
-    
 
     
     @Override
@@ -77,7 +117,22 @@ public class DeclMethodAsm extends AbstractDeclMethod {
 
     @Override
     public void codeGenDeclMethod(DecacCompiler compiler) {
-        
+        MethodDefinition md = methodName.getMethodDefinition();
+        compiler.addLabel(md.getLabel());
+        compiler.addComment("Méthode ASM " + md.getLabel());
+
+        String[] lines = code.split("\\R");
+        for (String l : lines){
+            String trimmed = l.trim();
+            if (!trimmed.isEmpty()){
+                compiler.add(new Line(trimmed));
+            }
+        }
+
+        String codeTrim = code.trim().toUpperCase();
+        if (!codeTrim.endsWith("RTS") && !codeTrim.contains("\nRTS") && !codeTrim.contains("\rRTS")){
+            compiler.addInstruction(new RTS());
+        }
     }
 
     @Override
@@ -87,9 +142,9 @@ public class DeclMethodAsm extends AbstractDeclMethod {
     }
 
     @Override
-    protected  void verifyMethodBody(DecacCompiler compiler, 
+    protected  void verifyMethodBody(DecacCompiler compiler,
         EnvironmentExp envExp, // L'environnement global
-        ClassDefinition currentClass, 
+        ClassDefinition currentClass,
         Type returnType)
             throws ContextualError{};
 }

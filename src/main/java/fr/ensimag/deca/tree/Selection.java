@@ -69,8 +69,8 @@ public class Selection extends AbstractLValue{
             throw new ContextualError("Le membre " + field.getName() + " n'existe pas dans " + objectType, field.getLocation());
         }
 
-        field.setDefinition(memberDef); 
-        setType(memberDef.getType());   
+        field.setDefinition(memberDef);
+        setType(memberDef.getType());
 
         return getType();
     }
@@ -112,13 +112,4 @@ public class Selection extends AbstractLValue{
         s.print(".");
         field.decompile(s);
     }
-
-  
-
-    // @Override
-    // protected DAddr codeGenAddr(DecacCompiler compiler) {
-    //     object.codeGenInst(compiler);
-    //     FieldDefinition fieldDef = field.getFieldDefinition();
-    //     return new RegisterOffset(fieldDef.getIndex(), Register.R1);
-    // }
 }

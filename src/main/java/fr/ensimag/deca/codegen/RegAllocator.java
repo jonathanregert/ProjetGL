@@ -17,6 +17,10 @@ public class RegAllocator {
         this.used = new boolean[maxReg + 1];
     }
 
+    public int getFirstAlloc() {
+        return FIRST_ALLOC;
+    }
+
     /**
      * Allocate a free register among R3..Rmax
      * @return a GPRegister if available, otherwise null
@@ -75,5 +79,9 @@ public class RegAllocator {
         int i = r.getNumber();
         if (i <= FIRST_ALLOC || i > maxReg) return false;
         return used[i];
+    }
+
+    public boolean[] getUsedSnaphot(){
+        return used.clone();
     }
 }

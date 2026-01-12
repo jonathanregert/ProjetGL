@@ -2,20 +2,34 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.ClassType;
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.codegen.ErrorManager.RuntimeError;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.EnvironmentExp.DoubleDefException;
 import fr.ensimag.deca.context.EnvironmentType;
+import fr.ensimag.deca.context.MethodDefinition;
 import fr.ensimag.deca.context.TypeDefinition;
+import fr.ensimag.deca.codegen.StackManager;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.BOV;
 import fr.ensimag.ima.pseudocode.instructions.LEA;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.POP;
+import fr.ensimag.ima.pseudocode.instructions.PUSH;
+import fr.ensimag.ima.pseudocode.instructions.RTS;
 import fr.ensimag.ima.pseudocode.instructions.STORE;
+import fr.ensimag.ima.pseudocode.instructions.TSTO;
+import fr.ensimag.ima.pseudocode.ImmediateInteger;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.LabelOperand;
+import fr.ensimag.ima.pseudocode.NullOperand;
+
+import static org.mockito.ArgumentMatchers.*;
 
 import java.io.PrintStream;
 // import java.lang.instrument.ClassDefinition;
@@ -196,7 +210,11 @@ public class DeclClass extends AbstractDeclClass {
         // case 0
         if (classDef.getSuperClass() == null){
             // classe racine = Object
+<<<<<<< HEAD
+            compiler.addInstruction(new LOAD(new NullOperand(), Register.R0));
+=======
             // compiler.addInstruction(new LOAD(new ImmediateNull(), Register.R0));
+>>>>>>> 888278c426dcbde3be35809c97bc826286b9ba86
             compiler.addInstruction(new STORE(Register.R0, base));
         } else {
             RegisterOffset superBase = classDef.getSuperClass().getAddrTable();
@@ -209,20 +227,90 @@ public class DeclClass extends AbstractDeclClass {
         if (classDef.getSuperClass() != null){
             int n = classDef.getNumberOfMethods();
             RegisterOffset superBase = classDef.getSuperClass().getAddrTable();
+
+            for (int i = 0; i < n; i++){
+                RegisterOffset src = new RegisterOffset(superBase.getOffset() + 1 + i, Register.GB);
+                RegisterOffset dst = new RegisterOffset(base.getOffset() + 1 + i, Register.GB);
+
+                compiler.addInstruction(new LOAD(src, Register.R0));
+                compiler.addInstruction(new STORE(Register.R0, dst));
+            }
         }
+
+        // 2) Redéfinition / ajout : on écrit les mthd déclarées dans la classe courante
+        for (AbstractDeclMethod m : classMethods.getList()){
+        MethodDefinition md = m.getMethodName().getMethodDefinition();
+        int index = md.getIndex();
+        Label label = md.getLabel();
+
+        RegisterOffset cell = new RegisterOffset(base.getOffset() + 1 + index, Register.GB);
+        compiler.addInstruction(new LOAD(new LabelOperand(label), Register.R0));
+        compiler.addInstruction(new STORE(Register.R0, cell));
+    }
     }
 
     @Override
     public void codeGenInit(DecacCompiler compiler) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'codeGenInit'");
+        ClassDefinition classDef = this.classDefinition;
+        String className = classDef.getType().getName().getName();
+
+        Label initLabel = new Label("init." + className);
+        Label pilePleine = compiler.getErrorManager().label(RuntimeError.STACK_OVERFLOW);
+
+        compiler.addLabel(initLabel);
+        compiler.addComment("init." + className + " (this dans R1)");
+
+        compiler.getRegAllocator().reset();
+        compiler.getStackManager().enterBlock();
+
+        // On bufferise le bloc pour pouvoir insérer TSTO/BOV au début après coup
+        compiler.beginBlock();
+
+        int first = 3;
+        int last = compiler.getRegAllocator().getMaxReg();
+
+        // Sauvegarde pessimiste des registres temporaires
+        for (int r = first; r <= last; r++) {
+            compiler.addToBlock(new PUSH(Register.getR(r)));
+            compiler.getStackManager().useTemp(1);
+        }
+
+        // TODO : init des champs (à ajouter après)
+        // classFields.codeGenInitFields(compiler, classDef);
+
+        for (int r = last; r >= first; r--) {
+            compiler.addToBlock(new POP(Register.getR(r)));
+            compiler.getStackManager().releaseTemp(1);
+        }
+
+        compiler.addToBlock(new RTS());
+
+        // Maintenant on connaît d (poly)
+        int d = compiler.getStackManager().getTSTOForLocals();
+        compiler.addFirstToBlock(new TSTO(new ImmediateInteger(d)));
+        compiler.addFirstToBlock(new BOV(pilePleine));
+
+        compiler.endBlock();
+        compiler.getStackManager().exitBlock();
     }
 
     @Override
     public void codeGenMethods(DecacCompiler compiler) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'codeGenMethods'");
+        String className = this.classDefinition.getType().getName().getName();
+
+        compiler.addComment("Code des méthodes de la classe " + className);
+
+        compiler.setCurrentClassName(className);
+
+        for (AbstractDeclMethod m : classMethods.getList()){
+            m.codeGenDeclMethod(compiler);
+        }
+
+        compiler.setCurrentClassName(null);
     }
+<<<<<<< HEAD
+=======
     
 
+>>>>>>> 888278c426dcbde3be35809c97bc826286b9ba86
 }
