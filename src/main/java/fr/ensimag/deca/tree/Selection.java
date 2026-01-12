@@ -56,7 +56,7 @@ public class Selection extends AbstractLValue{
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-               Type objectType = object.verifyExpr(compiler, localEnv, currentClass);
+        Type objectType = object.verifyExpr(compiler, localEnv, currentClass);
 
         if (!objectType.isClass()) {
             throw new ContextualError("Sélection impossible sur un type non-objet", object.getLocation());
@@ -64,10 +64,13 @@ public class Selection extends AbstractLValue{
 
         ClassDefinition classDef = ((ClassType) objectType).getDefinition();
 
-        ExpDefinition memberDef = classDef.getMembers().get(field.getName());
+        Symbol fieldSym = field.getName(); 
+        ExpDefinition memberDef = classDef.getMembers().get(fieldSym);
+
         if (memberDef == null) {
-            throw new ContextualError("Le membre " + field.getName() + " n'existe pas dans " + objectType, field.getLocation());
+            throw new ContextualError("Le membre " + fieldSym + " n'existe pas dans " + objectType, field.getLocation());
         }
+
 
         field.setDefinition(memberDef); 
         setType(memberDef.getType());   
@@ -91,13 +94,14 @@ public class Selection extends AbstractLValue{
     @Override
     protected DAddr codeGenAddr(DecacCompiler compiler) {
         object.codeGenInst(compiler);
-        FieldDefinition fieldDef = field.getFieldDefinition();
+        FieldDefinition fieldDef = (FieldDefinition) field.getDefinition();
         return new RegisterOffset(fieldDef.getIndex(), Register.R1);
     }
 
     @Override
     protected void codeGenExpr(DecacCompiler compiler, GPRegister register) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        DAddr addr = codeGenAddr(compiler);
+         compiler.addInstruction(new LOAD(addr, register));
     }
 
     @Override

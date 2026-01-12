@@ -232,18 +232,14 @@ expr returns[AbstractExpr tree]
     ;
 
 assign_expr returns [AbstractExpr tree]
-    : e=or_expr 
-      ( EQUALS r=assign_expr { 
-          $tree = new Assign((AbstractLValue)$e.tree, $r.tree); 
-          setLocation($tree, $e.start);
-        }
-      | /* epsilon */
-      {
+    : lv=lvalue EQUALS r=assign_expr {
+          $tree = new Assign($lv.tree, $r.tree);
+          setLocation($tree, $lv.start);
+      }
+    | e=or_expr {
           $tree = $e.tree;
-        }
-      )
+      }
     ;
-
 
 lvalue returns [AbstractLValue tree]
     : i=ident {
@@ -403,16 +399,15 @@ select_expr returns[AbstractExpr tree]
             assert($e.tree != null);
             $tree = $e.tree;
         }
-    | e1=select_expr DOT i=ident {
-            // assert($e1.tree != null);
-            // assert($i.tree != null);
-        }
+    | e1=select_expr DOT i=ident 
         (o=OPARENT args=list_expr CPARENT {
-            // we matched "e1.i(args)"
-            assert($args.tree != null);
+            $tree = new MethodCall($e1.tree, $i.tree, $args.tree);
+            setLocation($tree, $e1.start);
         }
         | /* epsilon */ {
             // we matched "e.i"
+            $tree = new Selection($e1.tree, $i.tree);
+            setLocation($tree, $e1.start);
         }
         )
     ;
@@ -423,10 +418,9 @@ primary_expr returns[AbstractExpr tree]
             $tree = new New($ident.tree);
             setLocation($tree, $NEW);
         }
-    | m=ident OPARENT args=list_expr CPARENT {
-            assert($args.tree != null);
-            assert($m.tree != null);
-
+    | lv=lvalue DOT m=ident OPARENT args=list_expr CPARENT {
+            $tree = new MethodCall($lv.tree, $m.tree, $args.tree);
+            setLocation($tree, $lv.start);
         }
     | OPARENT expr CPARENT {
             assert($expr.tree != null);
