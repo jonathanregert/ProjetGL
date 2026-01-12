@@ -2,14 +2,18 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.codegen.ErrorManager.RuntimeError;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.ImmediateInteger;
 import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.instructions.BOV;
+import fr.ensimag.ima.pseudocode.instructions.RTS;
+import fr.ensimag.ima.pseudocode.instructions.TSTO;
 
 import java.io.PrintStream;
-import java.lang.reflect.Method;
 import fr.ensimag.deca.context.Signature;
 import fr.ensimag.deca.context.MethodDefinition;
 import org.apache.commons.lang.Validate;
@@ -159,9 +163,47 @@ public class DeclMethod extends AbstractDeclMethod {
 
     @Override
     public void codeGenDeclMethod(DecacCompiler compiler) {
-        
-    }
+        MethodDefinition md = methodName.getMethodDefinition();
+        Label start = md.getLabel();
 
+        String className = compiler.getCurrentClassName();
+        if (className == null) className = "UnknownClass";
+        String mName = methodName.getName().getName();
+        Label end = new Label("fin." + className + "." + mName);
+
+        Label pilePleine = compiler.getErrorManager().label(RuntimeError.STACK_OVERFLOW);
+
+        compiler.addLabel(start);
+        compiler.addComment("Méthode " + className + "." + mName);
+
+        compiler.getRegAllocator().reset();
+        compiler.getStackManager().enterBlock();
+
+        compiler.setCurrentMethodEndLabel(end);
+
+        // On bufferise juste pour insérer TSTO/BOV avant les instructions du corps
+        compiler.beginBlock();
+
+        // Corps (à terme: utiliser addToBlock dans les inst, mais OK pour MVP)
+        body.codeGenListInst(compiler);
+
+        // Saut fin (si on sort sans return, on tombe ici)
+        // (Poly: ERROR si non-void, on le fera après)
+        compiler.addToBlock(new RTS());
+
+        int d = compiler.getStackManager().getTSTOForLocals();
+        compiler.addFirstToBlock(new TSTO(new ImmediateInteger(d)));
+        compiler.addFirstToBlock(new BOV(pilePleine));
+
+        compiler.endBlock();
+
+        // Label de fin après le bloc (pour que les return BRA end marchent)
+        compiler.addLabel(end);
+        compiler.addInstruction(new RTS());
+
+        compiler.setCurrentMethodEndLabel(null);
+        compiler.getStackManager().exitBlock();
+    }
     @Override
     public AbstractIdentifier getMethodName()
     {
