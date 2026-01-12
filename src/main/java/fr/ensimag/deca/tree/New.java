@@ -46,6 +46,10 @@ public class New extends AbstractExpr {
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
         Type t = className.verifyType(compiler);
+        if (!t.isClass()) {
+        throw new ContextualError("L'opérateur 'new' ne s'applique qu'aux classes.", 
+                                   className.getLocation());
+        }
         this.setType(t);
         return t;
     }

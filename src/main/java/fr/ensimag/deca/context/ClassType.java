@@ -18,6 +18,11 @@ public class ClassType extends Type {
     public ClassDefinition getDefinition() {
         return this.definition;
     }
+
+    public void setDefinition(ClassDefinition def) {
+        Validate.notNull(def);
+        this.definition = def;
+    }
             
     @Override
     public ClassType asClassType(String errorMessage, Location l) {

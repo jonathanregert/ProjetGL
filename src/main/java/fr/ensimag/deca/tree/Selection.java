@@ -56,6 +56,7 @@ public class Selection extends AbstractLValue{
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
+                
         Type objectType = object.verifyExpr(compiler, localEnv, currentClass);
 
         if (!objectType.isClass()) {

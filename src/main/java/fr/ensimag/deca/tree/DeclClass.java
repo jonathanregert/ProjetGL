@@ -133,18 +133,17 @@ public class DeclClass extends AbstractDeclClass {
     this.classDefinition = new ClassDefinition(newClassType, getLocation(), superClassDefinition);
 
 
-        
-    
+    newClassType.setDefinition(this.classDefinition); // pour selection fields
+
     try {
-        // On l'ajoute à l'environnement global des types
         compiler.environmentType.declare(ClassName.getName(), this.classDefinition);
-        } catch (EnvironmentType.DoubleDefException e) {
+    } catch (EnvironmentType.DoubleDefException e) {
         throw new ContextualError("Double définition de la classe " + ClassName.getName(), ClassName.getLocation());
-        }
+    }
 
-        ClassName.setDefinition(this.classDefinition); // deco        
-
-        }
+    ClassName.setDefinition(this.classDefinition); // deco
+    
+    }
 
     @Override
     protected void verifyClassMembers(DecacCompiler compiler)
@@ -182,6 +181,7 @@ public class DeclClass extends AbstractDeclClass {
     protected void iterChildren(TreeFunction f) {
         ClassName.iter(f);
         ClassExtention.iter(f);
+        classFields.iter(f);
         classMethods.iter(f);
     }
 
