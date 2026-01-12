@@ -120,7 +120,7 @@ public class DeclMethod extends AbstractDeclMethod {
 
     EnvironmentExp envExpParams = new EnvironmentExp(envExp);
     // Debug
-    System.out.println("Env exp avant params méthode " + methodName.getName() + " :\n" + envExp.toString());
+    // System.out.println("Env exp avant params méthode " + methodName.getName() + " :\n" + envExp.toString());
 
     this.params.verifyListDeclParam(compiler, envExpParams);
     this.localVars.verifyListDeclVariable(compiler, envExpParams, currentClass);

@@ -196,7 +196,7 @@ public class DeclClass extends AbstractDeclClass {
         // case 0
         if (classDef.getSuperClass() == null){
             // classe racine = Object
-            compiler.addInstruction(new LOAD(new ImmediateNull(), Register.R0));
+            // compiler.addInstruction(new LOAD(new ImmediateNull(), Register.R0));
             compiler.addInstruction(new STORE(Register.R0, base));
         } else {
             RegisterOffset superBase = classDef.getSuperClass().getAddrTable();
@@ -223,8 +223,6 @@ public class DeclClass extends AbstractDeclClass {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'codeGenMethods'");
     }
-
-    @
     
 
 }

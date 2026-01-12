@@ -560,7 +560,12 @@ class_body returns[ListDeclField fields, ListDeclMethod methods]
 
 
 decl_field_set returns[ListDeclField tree]
-    : v=visibility t=type {$tree = new ListDeclField();} list_decl_field[$v.vis, $t.tree, $tree] SEMI
+    : v=visibility f=is_final t=type {$tree = new ListDeclField();} list_decl_field[$v.vis, $f.val, $t.tree, $tree] SEMI
+    ;
+
+is_final returns [boolean val]
+    : FINAL { $val = true; }
+    | /* epsilon */ { $val = false; }
     ;
 
 
@@ -574,9 +579,9 @@ visibility returns[Visibility vis]
     ;
 
 
-list_decl_field[Visibility v, AbstractIdentifier t, ListDeclField list]
-    : dv1=decl_field[v, t, list]
-        (COMMA dv2=decl_field[v, t, list]
+list_decl_field[Visibility v, boolean isFinal, AbstractIdentifier t, ListDeclField list]
+    : dv1=decl_field[v, isFinal, t, list]
+        (COMMA dv2=decl_field[v, isFinal, t, list]
       )*
     ;
 
@@ -598,17 +603,17 @@ list_decl_field[Visibility v, AbstractIdentifier t, ListDeclField list]
 //         }
 //     ;
 
-decl_field[Visibility v, AbstractIdentifier t, ListDeclField list]
+decl_field[Visibility v, boolean isFinal, AbstractIdentifier t, ListDeclField list]
     : i=ident
       ( EQUALS e=expr {
             Initialization init = new Initialization($e.tree);
             setLocation(init, $e.start);
-            AbstractDeclField f = new DeclField(v, t, $i.tree, init);
+            AbstractDeclField f = new DeclField(v, t, $i.tree, init, isFinal);
             setLocation(f, $i.start);
             list.add(f);
         }
       | /* epsilon */ {
-            AbstractDeclField f = new DeclField(v, t, $i.tree, new NoInitialization());
+            AbstractDeclField f = new DeclField(v, t, $i.tree, new NoInitialization(), isFinal);
             setLocation(f, $i.start);
             list.add(f);
         }

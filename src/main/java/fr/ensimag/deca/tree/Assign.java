@@ -11,6 +11,7 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.Definition;
 import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.deca.context.FieldDefinition;
 
 /**
  * Assignment, i.e. lvalue = expr.
@@ -45,6 +46,20 @@ public class Assign extends AbstractBinaryExpr {
 
         Type typeGauche = getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
 
+        // verif partie gauche :
+        if (getLeftOperand() instanceof AbstractIdentifier) {
+            AbstractIdentifier id = (AbstractIdentifier) getLeftOperand();
+
+            if (id.getDefinition().isField()) {
+                FieldDefinition fieldDef = (FieldDefinition) id.getDefinition();
+                if (fieldDef.isFinal()) {
+                throw new ContextualError("Affectation à un champ final '" 
+                    + id.getName() + "' interdite", getLocation());
+            }
+            }
+        }
+
+        // partie droite
         AbstractExpr rhs = getRightOperand().verifyRValue(compiler, localEnv, currentClass, typeGauche);
         setRightOperand(rhs);
 
