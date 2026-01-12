@@ -66,23 +66,21 @@ main returns[AbstractMain tree]
             $tree = new EmptyMain();
         }
     | block {
-            assert($block.decls != null);
-            assert($block.insts != null);
-            $tree = new Main($block.decls, $block.insts);
+            assert($block.tree != null);
+            $tree = new Main($block.tree.getVars(), $block.tree.getInsts());
             setLocation($tree, $block.start);
         }
     ;
 
-block returns[ListDeclVar decls, ListInst insts]
+block returns[MethodBody tree]
 @init {
-    $decls = new ListDeclVar();
-    $insts = new ListInst();
+    $tree = new MethodBody(new ListDeclVar(), new ListInst());
     }
     : OBRACE list_decl list_inst CBRACE {
             assert($list_decl.tree != null);
             assert($list_inst.tree != null);
-            $decls = $list_decl.tree;
-            $insts = $list_inst.tree;
+            $tree = new MethodBody($list_decl.tree, $list_inst.tree);
+            setLocation($tree, $OBRACE);
         }
     ;
 
@@ -626,7 +624,7 @@ decl_method returns [AbstractDeclMethod tree]
 @init {
 }
     : t=type id=ident OPARENT params=list_params CPARENT (b=block {
-        $tree = new DeclMethod( $t.tree, $id.tree, $params.tree, $b.decls, $b.insts);
+        $tree = new DeclMethod( $t.tree, $id.tree, $params.tree, $b.tree);
         setLocation($tree, $id.start);
         }
       | ASM OPARENT code=multi_line_string CPARENT SEMI {
