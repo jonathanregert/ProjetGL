@@ -7,6 +7,8 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
+
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
 
@@ -54,7 +56,6 @@ public class DeclVar extends AbstractDeclVar {
         }
         
     }
-
     
     @Override
     public void decompile(IndentPrintStream s) {
@@ -62,6 +63,7 @@ public class DeclVar extends AbstractDeclVar {
         s.print(" ");
         varName.decompile(s);
         initialization.decompile(s);
+        s.print(";");
     }
 
     @Override
@@ -80,14 +82,17 @@ public class DeclVar extends AbstractDeclVar {
     }
 
     @Override
-    public void codeGenDeclVar(DecacCompiler compiler) {
-        // pas d'initialisation
-        if (initialization instanceof NoInitialization) {
-            return;
-        }
+    protected void codeGenDeclVar(DecacCompiler compiler) {
 
-        // initialisation
-        initialization.codeGenInitialization(compiler, varName.getExpDefinition().getOperand());
+        // 1) réserver une adresse globale
+        RegisterOffset addr = compiler.getStackManager().allocGlobal();
+        // ex: new RegisterOffset(offset, Register.GB)
+
+        // 2) l'attacher à la variable
+        varName.getExpDefinition().setOperand(addr);
+
+        // 3) générer init (fait STORE vers addr)
+        initialization.codeGenInitialization(compiler, addr);
     }
 
     @Override

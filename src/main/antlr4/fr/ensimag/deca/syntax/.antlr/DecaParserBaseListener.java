@@ -1,6 +1,7 @@
-// Generated from /home/ed-daoudy/projetgl/gl42/src/main/antlr4/fr/ensimag/deca/syntax/DecaParser.g4 by ANTLR 4.13.1
+// Generated from /Users/jonathanregert/Documents/Ensimag/Semestre8/ProjetGL/git/tests/gl42/src/main/antlr4/fr/ensimag/deca/syntax/DecaParser.g4 by ANTLR 4.13.1
 
     import fr.ensimag.deca.tree.*;
+    import fr.ensimag.deca.DecacCompiler;
     import java.io.PrintStream;
 
 
@@ -171,6 +172,18 @@ public class DecaParserBaseListener implements DecaParserListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitAssign_expr(DecaParser.Assign_exprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterLvalue(DecaParser.LvalueContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitLvalue(DecaParser.LvalueContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

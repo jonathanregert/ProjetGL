@@ -1,0 +1,12 @@
+// Description :
+//    Test syntaxique invalide : cast mal parenthésé.
+//
+// Resultats :
+//    Erreur syntaxique
+//    Ligne 11 : no viable alternative at input 'a'
+
+{
+    int a;
+    float f;
+    f = (float)a;
+}

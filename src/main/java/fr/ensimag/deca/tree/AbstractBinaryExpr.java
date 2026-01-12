@@ -45,12 +45,32 @@ public abstract class AbstractBinaryExpr extends AbstractExpr {
 
     @Override
     public void decompile(IndentPrintStream s) {
-        s.print("(");
-        getLeftOperand().decompile(s);
+        AbstractExpr left = getLeftOperand();
+        AbstractExpr right = getRightOperand();
+
+        boolean parenLeft =
+            left.getPriorite() < this.getPriorite()
+            || (left.getPriorite() == this.getPriorite()
+                && !this.isLeftAssociative())
+            || needsParensForChild(left);
+
+        boolean parenRight =
+            right.getPriorite() < this.getPriorite()
+            || (right.getPriorite() == this.getPriorite()
+                && !this.isRightAssociative())
+            || needsParensForChild(right);
+
+        if (parenLeft) s.print("(");
+        left.decompile(s);
+        if (parenLeft) s.print(")");
+
         s.print(" " + getOperatorName() + " ");
-        getRightOperand().decompile(s);
-        s.print(")");
+
+        if (parenRight) s.print("(");
+        right.decompile(s);
+        if (parenRight) s.print(")");
     }
+
 
     abstract protected String getOperatorName();
 
@@ -65,5 +85,18 @@ public abstract class AbstractBinaryExpr extends AbstractExpr {
         leftOperand.prettyPrint(s, prefix, false);
         rightOperand.prettyPrint(s, prefix, true);
     }
+
+    protected boolean isLeftAssociative() {
+        return false;
+    }
+
+    protected boolean isRightAssociative() {
+        return false;
+    }
+
+    protected boolean needsParensForChild(AbstractExpr child) {
+        return false;
+    }
+
 
 }

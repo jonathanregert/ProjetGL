@@ -1,0 +1,9 @@
+// Description :
+//    Cast direct d'une valeur float à int
+//
+// Resultats :
+// ok
+
+{
+    int a = (int) (0.5);
+}

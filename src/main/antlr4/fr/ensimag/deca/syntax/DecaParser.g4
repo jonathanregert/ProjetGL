@@ -114,7 +114,7 @@ decl_var[AbstractIdentifier t] returns[AbstractDeclVar tree]
             Initialization init = new Initialization($e.tree);
             setLocation(init, $e.start);
 
-            $tree = new DeclVar(t, new Identifier(getCompiler().createSymbol($i.text)), init);
+            $tree = new DeclVar(t, $i.tree, init);
             setLocation($tree, $i.start);
             
       }
@@ -446,10 +446,12 @@ primary_expr returns[AbstractExpr tree]
     | ident {
             $tree = $ident.tree;
         }
-    | cast=OPARENT type CPARENT OPARENT expr CPARENT {
-            assert($type.tree != null);
-            assert($expr.tree != null);
-        }
+    | OPARENT type CPARENT OPARENT expr CPARENT {
+        assert($type.tree != null);
+        assert($expr.tree != null);
+        $tree = new Cast($type.tree, $expr.tree);
+        setLocation($tree, $OPARENT);
+    }
     | literal {
             assert($literal.tree != null);
             $tree = $literal.tree;
@@ -618,7 +620,7 @@ decl_method returns [AbstractDeclMethod tree]
 @init {
 }
     : t=type id=ident OPARENT params=list_params CPARENT (b=block {
-        $tree = new DeclMethod( $t.tree, $id.tree, $params.tree, $b.decls, $b.insts);
+        $tree = new DeclMethod( $t.tree, $id.tree, $params.tree, $b.insts);
         setLocation($tree, $id.start);
         }
       | ASM OPARENT code=multi_line_string CPARENT SEMI {

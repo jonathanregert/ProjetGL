@@ -1,7 +1,9 @@
 package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.MUL;
+import fr.ensimag.ima.pseudocode.instructions.REM;
 
 
 
@@ -22,11 +24,18 @@ public class Multiply extends AbstractOpArith {
     }
 
     @Override
-    protected void codeGenOperator(DecacCompiler compiler) {
-        compiler.addInstruction(
-            new MUL(Register.getR(2), Register.R1)
-        );
+    protected void codeGenOperator(DecacCompiler compiler, GPRegister rRight, GPRegister rLeft) {
+        compiler.addInstruction(new MUL(rRight, rLeft));
+        compiler.getErrorManager().genCheckOverflow(compiler);
     }
 
+    @Override
+    public int getPriorite() { return 80; }
+
+    @Override
+    protected boolean isLeftAssociative() { return true; }
+
+    @Override
+    protected boolean isRightAssociative() { return true; }
 
 }

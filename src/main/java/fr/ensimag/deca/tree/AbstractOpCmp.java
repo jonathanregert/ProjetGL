@@ -1,8 +1,10 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.Type;
+import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.CMP;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.POP;
 import fr.ensimag.ima.pseudocode.instructions.PUSH;
 import fr.ensimag.ima.pseudocode.instructions.SEQ;
@@ -33,21 +35,23 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
         Type typeGauche = this.getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
         Type typeDroite = this.getRightOperand().verifyExpr(compiler, localEnv, currentClass);
 
-        // être de type int ou float 
         if (!(typeGauche.isInt() || typeGauche.isFloat()) || !(typeDroite.isInt() || typeDroite.isFloat())) {
         throw new ContextualError("Les comparaisons d'inégalité ne sont possibles qu'entre nombres.", getLocation());
         }
-
-        // si meme type int ou float, ok, rien a faire
         
         if (typeGauche.isFloat() && typeDroite.isInt()) {
-        setRightOperand(new ConvFloat(getRightOperand()));
-        getRightOperand().verifyExpr(compiler, localEnv, currentClass);
+            setRightOperand(new ConvFloat(getRightOperand()));
+            getRightOperand().verifyExpr(compiler, localEnv, currentClass);
         } else if (typeGauche.isInt() && typeDroite.isFloat()) {
-        setLeftOperand(new ConvFloat(getLeftOperand()));
-        getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
+            setLeftOperand(new ConvFloat(getLeftOperand()));
+            getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
         }
-        
+        else if (!typeGauche.sameType(typeDroite)) {
+            throw new ContextualError("Types incompatibles pour comparaison: " 
+                    + typeGauche.getName().getName() + " et "
+                    + typeDroite.getName().getName(),
+                    this.getLocation());
+        }
         Type bool = compiler.environmentType.BOOLEAN;
         this.setType(bool);
         return bool;
@@ -55,45 +59,43 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
 
 
     @Override
-    protected void codeGenInst(DecacCompiler compiler) {
+    protected void codeGenExpr(DecacCompiler compiler, GPRegister target) {
+        getLeftOperand().codeGenExpr(compiler, target);
 
-        // 1. Évaluer l'opérande gauche → R1
-        getLeftOperand().codeGenInst(compiler);
+        GPRegister rRight = compiler.getRegAllocator().alloc();
 
-        // 2. Sauvegarder le résultat
-        compiler.addInstruction(new PUSH(Register.R1));
-
-        // 3. Évaluer l'opérande droite → R1
-        getRightOperand().codeGenInst(compiler);
-
-        // 4. Récupérer l'opérande gauche dans R2
-        compiler.addInstruction(new POP(Register.getR(2)));
-
-        // 5. Comparer : R2 ? R1   (ATTENTION à l'ordre)
-        compiler.addInstruction(new CMP(Register.R1, Register.getR(2)));
-
-        /*
-        * Après CMP :
-        *   R2 - R1 est évalué
-        *   les flags sont positionnés
-        */
-
-        // 6. Transformer le résultat de comparaison en booléen (0 ou 1)
-        if (this instanceof Lower) {
-            compiler.addInstruction(new SLT(Register.R1));
-        } else if (this instanceof LowerOrEqual) {
-            compiler.addInstruction(new SLE(Register.R1));
-        } else if (this instanceof Greater) {
-            compiler.addInstruction(new SGT(Register.R1));
-        } else if (this instanceof GreaterOrEqual) {
-            compiler.addInstruction(new SGE(Register.R1));
-        } else if (this instanceof Equals) {
-            compiler.addInstruction(new SEQ(Register.R1));
-        } else if (this instanceof NotEquals) {
-            compiler.addInstruction(new SNE(Register.R1));
-        } else {
-            throw new UnsupportedOperationException("Comparateur non supporté");
+        if (rRight != null){
+            getRightOperand().codeGenExpr(compiler, rRight);
+            compiler.addInstruction(new CMP(rRight, target));
+            codeGenSet(compiler, target);
+            compiler.getRegAllocator().free(rRight);
+            return;
         }
+
+        compiler.addInstruction(new PUSH(target));
+        compiler.getStackManager().useTemp(1);
+
+        getRightOperand().codeGenExpr(compiler, target);
+
+        compiler.addInstruction(new POP(Register.getR(2)));
+        compiler.getStackManager().releaseTemp(1);
+
+        compiler.addInstruction(new CMP(target, Register.getR(2)));
+
+        codeGenSet(compiler, target);
     }
+
+    /**
+     * Génère l'instruction qui transforme les flags en booléen dans target.
+     * @param compiler
+     * @param target
+     */
+    protected abstract void codeGenSet(DecacCompiler compiler, GPRegister target);
+
+    @Override
+    protected boolean needsParensForChild(AbstractExpr child) {
+        return child instanceof AbstractOpCmp;
+    }
+
     
 }

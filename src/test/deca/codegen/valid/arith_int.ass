@@ -1,0 +1,56 @@
+; Main Program
+	TSTO #3
+	BOV pile_pleine
+	ADDSP #3
+; start main program
+; Main program
+; Beginning of main instructions:
+	LOAD #10, R3
+	STORE R3, 1(GB)
+	LOAD #5, R3
+	STORE R3, 2(GB)
+	LOAD 1(GB), R1
+	LOAD 2(GB), R3
+	ADD R3, R1
+	BOV overflow_arith
+	STORE R1, 3(GB)
+	LOAD 3(GB), R1
+	WINT
+	LOAD 1(GB), R1
+	LOAD 2(GB), R3
+	SUB R3, R1
+	BOV overflow_arith
+	STORE R1, 3(GB)
+	LOAD 3(GB), R1
+	WINT
+	LOAD 1(GB), R1
+	LOAD 2(GB), R3
+	MUL R3, R1
+	BOV overflow_arith
+	STORE R1, 3(GB)
+	LOAD 3(GB), R1
+	WINT
+	LOAD 1(GB), R1
+	LOAD 2(GB), R3
+	CMP #0, R3
+	BEQ division_par_zero
+	QUO R3, R1
+	BOV overflow_arith
+	STORE R1, 3(GB)
+	LOAD 3(GB), R1
+	WINT
+	HALT
+; Message d'erreurs
+pile_pleine:
+	WSTR "Erreur : debordement de pile"
+	WNL
+	ERROR
+division_par_zero:
+	WSTR "Erreur : divion entiere par zero"
+	WNL
+	ERROR
+overflow_arith:
+	WSTR "Erreur : overflow_arithmetique"
+	WNL
+	ERROR
+; end main program

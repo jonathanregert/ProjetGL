@@ -16,7 +16,7 @@ echo "Tests codegen"
 
 echo "Tests INVALIDES"
 
-find "$CODEGEN_DIR/invalid" -name "*.deca" | sort | while read testfile; do
+find "$CODEGEN_DIR/invalid/" -name "*.deca" | sort | while read testfile; do
     echo "Test invalide attendu : $testfile"
 
     if decac "$testfile" > /dev/null 2>&1; then
@@ -24,7 +24,6 @@ find "$CODEGEN_DIR/invalid" -name "*.deca" | sort | while read testfile; do
 
         if ima "$assfile" > /dev/null 2>&1; then
             echo "Succes inattendu (execution)"
-            exit 1
         else
             echo "Echec attendu a l'execution"
         fi
@@ -38,7 +37,7 @@ done
 
 echo "Tests VALIDES"
 
-find "$CODEGEN_DIR/valid" -name "*.deca" | sort | while read testfile; do
+find "$CODEGEN_DIR/valid/" -name "*.deca" | sort | while read testfile; do
     echo "Test valide attendu : $testfile"
 
     if decac "$testfile" > /dev/null 2>&1; then

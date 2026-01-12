@@ -1,5 +1,8 @@
+// Description :
+//    assign invalid
+//
 // Resultats :
-// Erreur contextuelle
-// Ligne 2 : assignation invalide à une expression
+//    Erreur syntaxique
+//    Ligne 8 : no viable alternative at input '5'
 
 5 = x;

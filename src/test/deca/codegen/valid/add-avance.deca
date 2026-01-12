@@ -1,0 +1,8 @@
+// Description :
+// Test simple d'addition d'entiers suivi d'un print.
+//
+// Resultats :
+// 15 affiché
+{
+    print(1 + 2 + 3 + 4 + 5);
+}

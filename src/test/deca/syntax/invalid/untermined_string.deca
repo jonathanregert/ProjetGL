@@ -1,5 +1,8 @@
-// Resultats :
-// Erreur contextuelle
-// Ligne 2 : chaîne non terminée
+// Description:
+//    chaine de charactère pas finie
+//
+// Resultats:
+//    Erreur syntaxique 
+//    Ligne 8 : no viable alternative at input 'String'
 
 String s = "Hello world;

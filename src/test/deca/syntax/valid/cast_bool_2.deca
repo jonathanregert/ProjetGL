@@ -1,0 +1,11 @@
+// Description :
+// Cast explicite boolean 
+// Devrait marcher pour l'étape syntaxique
+//
+// Resultats :
+// ok
+
+{
+    int a;
+    a = (boolean)(1);
+}

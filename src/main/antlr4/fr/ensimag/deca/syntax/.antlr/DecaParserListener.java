@@ -1,6 +1,7 @@
-// Generated from /home/ed-daoudy/projetgl/gl42/src/main/antlr4/fr/ensimag/deca/syntax/DecaParser.g4 by ANTLR 4.13.1
+// Generated from /Users/jonathanregert/Documents/Ensimag/Semestre8/ProjetGL/git/tests/gl42/src/main/antlr4/fr/ensimag/deca/syntax/DecaParser.g4 by ANTLR 4.13.1
 
     import fr.ensimag.deca.tree.*;
+    import fr.ensimag.deca.DecacCompiler;
     import java.io.PrintStream;
 
 import org.antlr.v4.runtime.tree.ParseTreeListener;
@@ -140,6 +141,16 @@ public interface DecaParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitAssign_expr(DecaParser.Assign_exprContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link DecaParser#lvalue}.
+	 * @param ctx the parse tree
+	 */
+	void enterLvalue(DecaParser.LvalueContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link DecaParser#lvalue}.
+	 * @param ctx the parse tree
+	 */
+	void exitLvalue(DecaParser.LvalueContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link DecaParser#or_expr}.
 	 * @param ctx the parse tree

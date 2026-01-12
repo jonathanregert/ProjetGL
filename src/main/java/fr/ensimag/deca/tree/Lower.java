@@ -1,5 +1,9 @@
 package fr.ensimag.deca.tree;
 
+import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.syntax.DecaParser;
+import fr.ensimag.ima.pseudocode.GPRegister;
+import fr.ensimag.ima.pseudocode.instructions.SLT;
 
 /**
  *
@@ -17,5 +21,13 @@ public class Lower extends AbstractOpIneq {
     protected String getOperatorName() {
         return "<";
     }
+
+    @Override
+    protected void codeGenSet(DecacCompiler compiler, GPRegister target){
+        compiler.addInstruction(new SLT(target));
+    }
+
+    @Override
+    public int getPriorite() { return 60; }
 
 }

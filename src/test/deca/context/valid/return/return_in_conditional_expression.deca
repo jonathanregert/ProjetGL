@@ -1,9 +1,0 @@
-// Description :
-// Return utilisant une expression conditionnelle (if inline)
-// 
-// Resultats :
-// ok
-
-class A {
-    int f(int a) { return a > 0 ? a : -a; }
-}

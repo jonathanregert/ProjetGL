@@ -2,11 +2,8 @@
 //    tests de programme lexicalement correct.
 //
 // Resultats:
-//    Ligne 11 : Erreur de syntaxe.
-//    test_lex ne doit pas donner d'erreur.
-//
-// Historique:
-//    cree le 01/01/2026
+//    Erreur syntaxique 
+//    Ligne 8 : no viable alternative at input 'idf'
 
 idf _autre_idf
 {

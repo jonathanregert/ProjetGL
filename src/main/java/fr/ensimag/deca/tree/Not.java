@@ -1,6 +1,11 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.Type;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.GPRegister;
+import fr.ensimag.ima.pseudocode.ImmediateInteger;
+import fr.ensimag.ima.pseudocode.instructions.CMP;
+import fr.ensimag.ima.pseudocode.instructions.SEQ;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
@@ -34,4 +39,15 @@ public class Not extends AbstractUnaryExpr {
     protected String getOperatorName() {
         return "!";
     }
+
+    @Override
+    protected void codeGenExpr(DecacCompiler compiler, GPRegister target) {
+        getOperand().codeGenExpr(compiler, target);
+        // target = (target == 0)
+        compiler.addInstruction(new CMP(new ImmediateInteger(0), target));
+        compiler.addInstruction(new SEQ(target));
+    }
+
+    @Override
+    public int getPriorite() { return 90; }
 }

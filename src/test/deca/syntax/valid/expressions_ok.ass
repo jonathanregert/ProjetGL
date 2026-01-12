@@ -1,0 +1,46 @@
+; Main Program
+	TSTO #1
+	BOV pile_pleine
+	ADDSP #1
+; start main program
+; Main program
+; Beginning of main instructions:
+	LOAD #1, R1
+	LOAD #2, R3
+	PUSH R3
+	LOAD #3, R3
+	POP R2
+	MUL R3, R2
+	BOV overflow_arith
+	LOAD R2, R3
+	ADD R3, R1
+	BOV overflow_arith
+	LOAD #10, R3
+	CMP R3, R1
+	SLT R1
+	CMP #0, R1
+	BEQ bool_sc_1
+	LOAD #1, R1
+	BRA bool_end_1
+bool_sc_1:
+	LOAD #0, R1
+bool_end_1:
+	CMP #0, R1
+	BNE bool_sc_0
+	LOAD #0, R1
+	BRA bool_end_0
+bool_sc_0:
+	LOAD #1, R1
+bool_end_0:
+	WINT
+	HALT
+; Message d'erreurs
+pile_pleine:
+	WSTR "Erreur : debordement de pile"
+	WNL
+	ERROR
+overflow_arith:
+	WSTR "Erreur : overflow_arithmetique"
+	WNL
+	ERROR
+; end main program

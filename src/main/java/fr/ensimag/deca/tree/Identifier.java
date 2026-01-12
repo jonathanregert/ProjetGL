@@ -19,6 +19,7 @@ import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 import fr.ensimag.ima.pseudocode.DAddr;
+import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 
@@ -239,17 +240,13 @@ public class Identifier extends AbstractIdentifier {
     
     @Override
     protected DAddr codeGenAddr(DecacCompiler compiler) {
-        return ((VariableDefinition) getDefinition()).getOperand();
+        return getExpDefinition().getOperand();
     }
 
     @Override
-    protected void codeGenInst(DecacCompiler compiler) {
-        compiler.addInstruction(
-            new LOAD(
-                getExpDefinition().getOperand(),
-                Register.R1
-            )
-        );
+    protected void codeGenExpr(DecacCompiler compiler, GPRegister target) {
+        // Charger la valeur de la variable dans target
+        compiler.addInstruction(new LOAD(codeGenAddr(compiler), target));
     }
 
 }

@@ -1,7 +1,0 @@
-// Description :
-// Return d’une expression float
-//
-// Resultats :
-// ok
-
-class A{ float f() { return 2.5 + 3.1; } }

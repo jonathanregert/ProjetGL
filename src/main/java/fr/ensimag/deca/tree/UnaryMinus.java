@@ -1,6 +1,9 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.Type;
+import fr.ensimag.ima.pseudocode.GPRegister;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.OPP;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
@@ -33,4 +36,12 @@ public class UnaryMinus extends AbstractUnaryExpr {
         return "-";
     }
 
+    @Override
+    protected void codeGenExpr(DecacCompiler compiler, GPRegister target) {
+        getOperand().codeGenExpr(compiler, target);
+        compiler.addInstruction(new OPP(target, target));
+    }
+
+    @Override
+    public int getPriorite() { return 90; }
 }

@@ -1,8 +1,10 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.Type;
+import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.REM;
+import fr.ensimag.ima.pseudocode.instructions.SUB;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
@@ -38,10 +40,16 @@ public class Modulo extends AbstractOpArith {
     }
 
     @Override
-    protected void codeGenOperator(DecacCompiler compiler) {
-        compiler.addInstruction(
-            new REM(Register.getR(2), Register.R1)
-        );
+    protected void codeGenOperator(DecacCompiler compiler, GPRegister rRight, GPRegister rLeft) {
+        compiler.getErrorManager().genCheckIntModByZero(compiler, rRight);
+        compiler.addInstruction(new REM(rRight, rLeft));
     }
 
+    @Override
+    public int getPriorite() { return 80; }
+
+    @Override
+    protected boolean isLeftAssociative() {
+        return true;
+    }
 }

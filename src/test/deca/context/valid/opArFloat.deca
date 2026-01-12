@@ -1,0 +1,12 @@
+// Description :
+//    Opérations arithmétiques en virgule flottante (addition de floats).
+//
+// Resultats :
+// ok
+
+{
+    float a = 0.5;
+    float b = 5;
+    float c;
+    c = a + b;
+}

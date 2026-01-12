@@ -1,9 +1,0 @@
-// Description :
-// Méthode retourne le résultat d’une expression complexe
-//
-// Resultats :
-// ok
-
-class Z {
-    int compute(int a, int b) { return a*b + (a-b); }
-}

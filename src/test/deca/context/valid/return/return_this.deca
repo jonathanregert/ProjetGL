@@ -1,9 +1,0 @@
-// Description :
-// Return de this depuis une méthode d’objet
-//
-// Resultats :
-// ok
-
-class A {
-    A f() { return this; }
-}

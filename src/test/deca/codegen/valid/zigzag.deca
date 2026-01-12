@@ -1,0 +1,19 @@
+// Description :
+// Arbre en zigzag gauche/droite
+// ConvFloat implicite + UnaryMinus + Modulo
+//
+// Resultats :
+// 11 affiché
+
+{
+    int a = 30;
+    int b = 4;
+    int c = 6;
+    int d = 2;
+    float r;
+
+    float x = a / (b + d);   // ConvFloat implicite
+
+    r = x + ((-c) % b) + (c - d);
+    println(r);
+}

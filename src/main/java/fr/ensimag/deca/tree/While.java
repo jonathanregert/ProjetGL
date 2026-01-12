@@ -6,6 +6,8 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.GPRegister;
+import fr.ensimag.ima.pseudocode.ImmediateInteger;
 import fr.ensimag.ima.pseudocode.Label;
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
@@ -41,33 +43,30 @@ public class While extends AbstractInst {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        Label labelTest = new Label("while_test_" + compiler.getLabelId());
-        Label labelEnd  = new Label("while_end_" + compiler.getLabelId());
+        int id = compiler.getLabelId();
+
+        Label labelTest = new Label("while_test_" + id);
+        Label labelEnd  = new Label("while_end_" + id);
+
         compiler.addLabel(labelTest);
-        condition.codeGenInst(compiler); // eval cond dans R1
+        condition.codeGenExpr(compiler, Register.R1);
 
-        // sortie si cond
-        compiler.addInstruction(new CMP(0, Register.R1));
+        compiler.addInstruction(new CMP(new ImmediateInteger(0), Register.R1));
         compiler.addInstruction(new BEQ(labelEnd));
-
-        body.codeGenListInst(compiler); // corps
-        
-        compiler.addInstruction(new BRA(labelTest)); // nouvelle iteration
-
+    
+        body.codeGenListInst(compiler);
+        compiler.addInstruction(new BRA(labelTest));
         compiler.addLabel(labelEnd);
-
     }
 
     @Override
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass, Type returnType)
             throws ContextualError {
-        // Vérification de la condition
         Type condType = condition.verifyExpr(compiler, localEnv, currentClass);
         if (!condType.isBoolean()) {
             throw new ContextualError("La condition d'une instruction while doit être de type boolean.", condition.getLocation());
         }
-        // Vérification du corps
         body.verifyListInst(compiler, localEnv, currentClass, returnType);
     }
 

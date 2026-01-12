@@ -87,7 +87,7 @@ public abstract class AbstractDecaParser extends Parser {
                 if (e instanceof DecaRecognitionException) {
                     Token offendingToken = e.getOffendingToken();
                     if (offendingToken == null) {
-                        offendingToken = recognizer.getCurrentToken();                        
+                        offendingToken = recognizer.getCurrentToken();
                     }
                     recognizer.notifyErrorListeners(offendingToken, e.getMessage(), e);
                 } else {

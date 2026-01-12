@@ -7,7 +7,8 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.GPRegister;
+import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.WFLOAT;
 import fr.ensimag.ima.pseudocode.instructions.WINT;
 import java.io.PrintStream;
@@ -70,18 +71,18 @@ public abstract class AbstractExpr extends AbstractInst {
             throws ContextualError;
 
     /**
-     * Verify the expression in right hand-side of (implicit) assignments 
+     * Verify the expression in right hand-side of (implicit) assignments
      * 
      * implements non-terminal "rvalue" of [SyntaxeContextuelle] in pass 3
      *
      * @param compiler  contains the "env_types" attribute
      * @param localEnv corresponds to the "env_exp" attribute
      * @param currentClass corresponds to the "class" attribute
-     * @param expectedType corresponds to the "type1" attribute            
+     * @param expectedType corresponds to the "type1" attribute
      * @return this with an additional ConvFloat if needed...
      */
     public AbstractExpr verifyRValue(DecacCompiler compiler,
-            EnvironmentExp localEnv, ClassDefinition currentClass, 
+            EnvironmentExp localEnv, ClassDefinition currentClass,
             Type expectedType)
             throws ContextualError {
                 
@@ -94,7 +95,7 @@ public abstract class AbstractExpr extends AbstractInst {
         }
         
         if (!typeFound.sameType(expectedType)) {
-        throw new ContextualError("Type incompatible : attendu " + expectedType 
+        throw new ContextualError("Type incompatible : attendu " + expectedType
             + ", trouvé " + typeFound, getLocation());
         }
 
@@ -130,30 +131,29 @@ public abstract class AbstractExpr extends AbstractInst {
             );
         }
     }
-
     /**
      * Generate code to print the expression
      *
      * @param compiler
      */
     protected void codeGenPrint(DecacCompiler compiler) {
-        this.codeGenInst(compiler); // résultat dans R1
+        codeGenExpr(compiler);
         Type t = getType();
-
-        if (t.isInt() || t.isBoolean()) {
-            compiler.addInstruction(new WINT());
-        } else if (t.isFloat()) {
-            compiler.addInstruction(new WFLOAT());
-        } else {
-            throw new UnsupportedOperationException(
-                "print non supporté pour le type " + t
-            );
-        }
+        if (t.isInt() || t.isBoolean()) compiler.addInstruction(new WINT());
+        else if (t.isFloat()) compiler.addInstruction(new WFLOAT());
+        else throw new UnsupportedOperationException("print non supporté pour " + t);
     }
 
+    protected GPRegister codeGenExpr(DecacCompiler compiler){
+        codeGenExpr(compiler, Register.R1);
+        return Register.R1;
+    }
+
+    protected abstract void codeGenExpr(DecacCompiler compiler, GPRegister target);
+    
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        throw new UnsupportedOperationException("not yet implemented");
+        codeGenExpr(compiler);
     }
     
 
@@ -173,4 +173,6 @@ public abstract class AbstractExpr extends AbstractInst {
             s.println();
         }
     }
+
+    public int getPriorite() { return 100; }
 }

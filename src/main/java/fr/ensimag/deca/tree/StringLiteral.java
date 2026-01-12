@@ -6,6 +6,7 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.ImmediateString;
 import fr.ensimag.ima.pseudocode.instructions.WSTR;
 
@@ -59,7 +60,7 @@ public class StringLiteral extends AbstractStringLiteral {
 
     @Override
     public void decompile(IndentPrintStream s) {
-        s.print("\"" + value + "\"");
+        s.print(value);
     }
 
     @Override
@@ -76,5 +77,13 @@ public class StringLiteral extends AbstractStringLiteral {
     String prettyPrintNode() {
         return "StringLiteral (" + value + ")";
     }
+
+    @Override
+    protected void codeGenExpr(DecacCompiler compiler, GPRegister target) {
+        throw new UnsupportedOperationException(
+            "StringLiteral n'est pas une expression évaluable en registre (utiliser codeGenPrint)."
+        );
+    }
+
 
 }

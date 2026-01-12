@@ -27,8 +27,8 @@ public class DecaParser extends AbstractDecaParser {
 		EQEQ=23, NEQ=24, LEQ=25, GEQ=26, PLUS=27, MINUS=28, TIMES=29, SLASH=30, 
 		PERCENT=31, LT=32, GT=33, EXCLAM=34, EQUALS=35, OBRACE=36, CBRACE=37, 
 		OPARENT=38, CPARENT=39, SEMI=40, COMMA=41, COLON=42, DOT=43, INT=44, FLOAT=45, 
-		STRING=46, MULTI_LINE_STRING=47, IDENT=48, INCLUDE=49, FILENAME=50, LINE_COMMENT=51, 
-		BLOCK_COMMENT=52, WS=53;
+		STRING=46, MULTI_LINE_STRING=47, IDENT=48, INCLUDE=49, LINE_COMMENT=50, 
+		BLOCK_COMMENT=51, WS=52;
 	public static final int
 		RULE_prog = 0, RULE_main = 1, RULE_block = 2, RULE_list_decl = 3, RULE_decl_var_set = 4, 
 		RULE_list_decl_var = 5, RULE_decl_var = 6, RULE_list_inst = 7, RULE_inst = 8, 
@@ -72,7 +72,7 @@ public class DecaParser extends AbstractDecaParser {
 			"NEQ", "LEQ", "GEQ", "PLUS", "MINUS", "TIMES", "SLASH", "PERCENT", "LT", 
 			"GT", "EXCLAM", "EQUALS", "OBRACE", "CBRACE", "OPARENT", "CPARENT", "SEMI", 
 			"COMMA", "COLON", "DOT", "INT", "FLOAT", "STRING", "MULTI_LINE_STRING", 
-			"IDENT", "INCLUDE", "FILENAME", "LINE_COMMENT", "BLOCK_COMMENT", "WS"
+			"IDENT", "INCLUDE", "LINE_COMMENT", "BLOCK_COMMENT", "WS"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -521,7 +521,7 @@ public class DecaParser extends AbstractDecaParser {
 				            Initialization init = new Initialization(((Decl_varContext)_localctx).e.tree);
 				            setLocation(init, (((Decl_varContext)_localctx).e!=null?(((Decl_varContext)_localctx).e.start):null));
 
-				            ((Decl_varContext)_localctx).tree =  new DeclVar(t, new Identifier(getCompiler().createSymbol((((Decl_varContext)_localctx).i!=null?_input.getText(((Decl_varContext)_localctx).i.start,((Decl_varContext)_localctx).i.stop):null))), init);
+				            ((Decl_varContext)_localctx).tree =  new DeclVar(t, ((Decl_varContext)_localctx).i.tree, init);
 				            setLocation(_localctx.tree, (((Decl_varContext)_localctx).i!=null?(((Decl_varContext)_localctx).i.start):null));
 				            
 				      
@@ -2211,7 +2211,7 @@ public class DecaParser extends AbstractDecaParser {
 		public List_exprContext args;
 		public ExprContext expr;
 		public Token r;
-		public Token cast;
+		public Token OPARENT;
 		public TypeContext type;
 		public LiteralContext literal;
 		public TerminalNode NEW() { return getToken(DecaParser.NEW, 0); }
@@ -2348,21 +2348,23 @@ public class DecaParser extends AbstractDecaParser {
 				enterOuterAlt(_localctx, 7);
 				{
 				setState(444);
-				((Primary_exprContext)_localctx).cast = match(OPARENT);
+				((Primary_exprContext)_localctx).OPARENT = match(OPARENT);
 				setState(445);
 				((Primary_exprContext)_localctx).type = type();
 				setState(446);
 				match(CPARENT);
 				setState(447);
-				match(OPARENT);
+				((Primary_exprContext)_localctx).OPARENT = match(OPARENT);
 				setState(448);
 				((Primary_exprContext)_localctx).expr = expr();
 				setState(449);
 				match(CPARENT);
 
-				            assert(((Primary_exprContext)_localctx).type.tree != null);
-				            assert(((Primary_exprContext)_localctx).expr.tree != null);
-				        
+				        assert(((Primary_exprContext)_localctx).type.tree != null);
+				        assert(((Primary_exprContext)_localctx).expr.tree != null);
+				        ((Primary_exprContext)_localctx).tree =  new Cast(((Primary_exprContext)_localctx).type.tree, ((Primary_exprContext)_localctx).expr.tree);
+				        setLocation(_localctx.tree, ((Primary_exprContext)_localctx).OPARENT);
+				    
 				}
 				break;
 			case 8:
@@ -3144,7 +3146,7 @@ public class DecaParser extends AbstractDecaParser {
 				setState(545);
 				((Decl_methodContext)_localctx).b = block();
 
-				        ((Decl_methodContext)_localctx).tree =  new DeclMethod( ((Decl_methodContext)_localctx).t.tree, ((Decl_methodContext)_localctx).id.tree, ((Decl_methodContext)_localctx).params.tree, ((Decl_methodContext)_localctx).b.decls, ((Decl_methodContext)_localctx).b.insts);
+				        ((Decl_methodContext)_localctx).tree =  new DeclMethod( ((Decl_methodContext)_localctx).t.tree, ((Decl_methodContext)_localctx).id.tree, ((Decl_methodContext)_localctx).params.tree, ((Decl_methodContext)_localctx).b.insts);
 				        setLocation(_localctx.tree, (((Decl_methodContext)_localctx).id!=null?(((Decl_methodContext)_localctx).id.start):null));
 				        
 				}
@@ -3461,7 +3463,7 @@ public class DecaParser extends AbstractDecaParser {
 	}
 
 	public static final String _serializedATN =
-		"\u0004\u00015\u0248\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002"+
+		"\u0004\u00014\u0248\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002"+
 		"\u0002\u0007\u0002\u0002\u0003\u0007\u0003\u0002\u0004\u0007\u0004\u0002"+
 		"\u0005\u0007\u0005\u0002\u0006\u0007\u0006\u0002\u0007\u0007\u0007\u0002"+
 		"\b\u0007\b\u0002\t\u0007\t\u0002\n\u0007\n\u0002\u000b\u0007\u000b\u0002"+

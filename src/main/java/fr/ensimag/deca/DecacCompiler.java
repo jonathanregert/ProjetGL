@@ -1,7 +1,10 @@
 package fr.ensimag.deca;
 
 import fr.ensimag.deca.context.EnvironmentType;
+import fr.ensimag.deca.codegen.RegAllocator;
+import fr.ensimag.deca.codegen.StackManager;
 import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.deca.codegen.ErrorManager;
 import fr.ensimag.deca.syntax.DecaLexer;
 import fr.ensimag.deca.syntax.DecaParser;
 import fr.ensimag.deca.tools.DecacInternalError;
@@ -13,6 +16,7 @@ import fr.ensimag.ima.pseudocode.AbstractLine;
 import fr.ensimag.ima.pseudocode.IMAProgram;
 import fr.ensimag.ima.pseudocode.Instruction;
 import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.Line;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -45,12 +49,52 @@ public class DecacCompiler {
      */
     private static final String nl = System.getProperty("line.separator", "\n");
     private int labelId = 0; // pour generation de code et pouvoir jump au bon label : label_labelId
-
+    private final RegAllocator regAllocator;
+    private final StackManager stackManager = new StackManager();
+    private final ErrorManager errorManager = new ErrorManager();
 
     public DecacCompiler(CompilerOptions compilerOptions, File source) {
         super();
         this.compilerOptions = compilerOptions;
         this.source = source;
+
+        int X = compilerOptions.getRegisterCount();
+        this.regAllocator = new RegAllocator(X-1);
+    }
+
+    public RegAllocator getRegAllocator() {
+        return regAllocator;
+    }
+
+    public StackManager getStackManager(){
+        return stackManager;
+    }
+
+    public boolean getNoCheckOption() {
+        return compilerOptions.getNoCheckOption();
+    }
+
+    /**
+     * Gestion des errurs
+     */
+    public ErrorManager getErrorManager(){
+        return errorManager;
+    }
+
+    public void addFirst(Instruction i) {
+    program.addFirst(i);
+    }
+
+    public void addFirst(Instruction i, String comment) {
+        program.addFirst(i, comment);
+    }
+
+    public void addFirst(Label l) {
+        program.addFirst(new Line(l));
+    }
+
+    public void addFirstComment(String s) {
+        program.addFirst(new Line(s));
     }
 
     /**
@@ -129,7 +173,7 @@ public class DecacCompiler {
      * The main program. Every instruction generated will eventually end up here.
      */
     private final IMAProgram program = new IMAProgram();
- 
+
 
     /** The global environment for types (and the symbolTable) */
     public final SymbolTable symbolTable = new SymbolTable();

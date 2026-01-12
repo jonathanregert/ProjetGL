@@ -1,8 +1,10 @@
 package fr.ensimag.deca.tree;
-import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.instructions.SUB;
 
+import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.ima.pseudocode.GPRegister;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.ADD;
+import fr.ensimag.ima.pseudocode.instructions.SUB;
 
 /**
  * @author gl42
@@ -13,17 +15,21 @@ public class Minus extends AbstractOpArith {
         super(leftOperand, rightOperand);
     }
 
-
     @Override
     protected String getOperatorName() {
         return "-";
     }
 
     @Override
-    protected void codeGenOperator(DecacCompiler compiler) {
-        compiler.addInstruction(
-            new SUB(Register.getR(2), Register.R1)
-        );
+    protected void codeGenOperator(DecacCompiler compiler, GPRegister rRight, GPRegister rLeft) {
+        compiler.addInstruction (new SUB(rRight, rLeft));
+        compiler.getErrorManager().genCheckOverflow(compiler);
     }
+
+    @Override
+    public int getPriorite() { return 70; }
+
+    @Override
+    protected boolean isLeftAssociative() { return true; }
 
 }

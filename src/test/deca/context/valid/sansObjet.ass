@@ -1,0 +1,76 @@
+; Main Program
+	TSTO #4
+	BOV pile_pleine
+	ADDSP #4
+; start main program
+; Main program
+; Beginning of main instructions:
+	RINT
+	BOV erreur_lecture_int
+	LOAD R1, R3
+	STORE R3, 1(GB)
+	LOAD #1, R3
+	FLOAT R3, R3
+	STORE R3, 2(GB)
+	LOAD 1(GB), R3
+	PUSH R3
+	LOAD #0, R3
+	POP R2
+	CMP R3, R2
+	SGT R3
+	CMP #0, R3
+	BEQ bool_sc_0
+	LOAD 2(GB), R3
+	PUSH R3
+	LOAD #0x1.5p3, R3
+	POP R2
+	CMP R3, R2
+	SLT R3
+	BRA bool_end_0
+bool_sc_0:
+	LOAD #0, R3
+bool_end_0:
+	STORE R3, 3(GB)
+	LOAD 3(GB), R1
+	CMP #0, R1
+	BEQ else_1
+while_test_2:
+	LOAD 1(GB), R1
+	LOAD #0, R3
+	CMP R3, R1
+	SGT R1
+	CMP #0, R1
+	BEQ while_end_2
+	WSTR "Valeur : "
+	LOAD 1(GB), R1
+	WINT
+	WNL
+	LOAD 1(GB), R1
+	LOAD #1, R3
+	SUB R3, R1
+	BOV overflow_arith
+	STORE R1, 1(GB)
+	BRA while_test_2
+while_end_2:
+	BRA endif_1
+else_1:
+	WSTR "Hexa f : "
+	LOAD 2(GB), R1
+	WFLOAT
+	WNL
+endif_1:
+	HALT
+; Message d'erreurs
+pile_pleine:
+	WSTR "Erreur : debordement de pile"
+	WNL
+	ERROR
+overflow_arith:
+	WSTR "Erreur : overflow_arithmetique"
+	WNL
+	ERROR
+erreur_lecture_int:
+	WSTR "Erreur : lecture d'un entier invalide"
+	WNL
+	ERROR
+; end main program
