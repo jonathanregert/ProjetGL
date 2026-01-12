@@ -244,6 +244,7 @@ assign_expr returns [AbstractExpr tree]
       {
           $tree = $e.tree;
       }
+        )
     ;
 
 lvalue returns [AbstractLValue tree]
