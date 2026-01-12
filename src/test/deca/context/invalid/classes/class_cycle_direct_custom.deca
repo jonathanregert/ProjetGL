@@ -1,0 +1,9 @@
+// Description :
+// cycle direct dans l'héritage
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne 8 : Super-classe D non déclarée
+
+class D extends D { // doit échouer
+}

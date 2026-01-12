@@ -1,0 +1,12 @@
+// Description :
+//    Sélection de champ sur une expression de type int.
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne <No_de_ligne> : <message d'erreur de votre compilateur>
+
+{
+    int x = 3;
+    int y = x.z;
+}
+

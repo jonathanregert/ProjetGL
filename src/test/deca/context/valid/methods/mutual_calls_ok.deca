@@ -1,0 +1,24 @@
+// Description :
+//    Appels mutuels entre méthodes.
+//
+// Resultats :
+//    OK
+
+class A {
+    int f(int n) {
+        if (n == 0) {
+            return 0;
+        }
+        return g(n - 1);
+    }
+
+    int g(int n) {
+        return f(n);
+    }
+}
+
+{
+    A a = new A();
+    println(a.f(2));
+}
+

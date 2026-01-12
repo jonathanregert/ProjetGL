@@ -1,0 +1,12 @@
+// Description :
+//    Sélection de champ sur une expression de type string.
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne <No_de_ligne> : <message d'erreur de votre compilateur>
+
+{
+    string s = "abc";
+    int y = s.z;
+}
+

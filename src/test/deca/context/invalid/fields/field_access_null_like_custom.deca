@@ -1,0 +1,17 @@
+// Description :
+// accès à un champ sur une variable non initialisée
+//
+// Resultats :
+// Erreur contextuelle
+// Ligne 10 : variable non initialisée
+
+class D {
+    int x;
+}
+
+class E {
+    void test() {
+        D d;
+        int y = d.x; // invalide
+    }
+}

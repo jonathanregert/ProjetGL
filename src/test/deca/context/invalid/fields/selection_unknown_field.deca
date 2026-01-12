@@ -1,0 +1,16 @@
+// Description :
+//    Accès à un champ inexistant dans une classe.
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne <No_de_ligne> : <message d'erreur de votre compilateur>
+
+class A {
+    int x;
+}
+
+{
+    A a = new A();
+    int y = a.z;
+}
+

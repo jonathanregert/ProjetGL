@@ -1,0 +1,14 @@
+// Description :
+//    Déclaration d'un champ de type void.
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne 9 : Un champ ne peut pas être de type void
+
+class A {
+    void x;
+}
+
+{
+}
+

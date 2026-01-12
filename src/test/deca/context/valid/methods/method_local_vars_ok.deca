@@ -1,0 +1,20 @@
+// Description :
+//    Variables locales dans une méthode.
+//
+// Resultats :
+//    OK
+
+class A {
+    void m() {
+        int x = 1;
+        float y = 2.0;
+        println(x);
+        println(y);
+    }
+}
+
+{
+    A a = new A();
+    a.m();
+}
+

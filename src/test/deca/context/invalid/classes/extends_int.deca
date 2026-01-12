@@ -1,0 +1,9 @@
+// Description :
+//    extends avec nom de classe interdit
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne 8 : La super-classe void n'est pas une classe
+
+class A extends void {
+}

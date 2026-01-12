@@ -1,0 +1,13 @@
+// Description :
+//    Classe contenant un seul champ de type int.
+//
+// Resultats :
+//    OK
+
+class A {
+    int x;
+}
+
+{
+}
+

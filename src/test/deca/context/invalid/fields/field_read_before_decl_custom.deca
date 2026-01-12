@@ -1,0 +1,13 @@
+// Description :
+// lecture d'un champ avant sa déclaration
+//
+// Resultats :
+// Erreur contextuelle
+// Ligne 7 : champ inconnu
+
+class A {
+    void f() {
+        int x = value; // champ pas encore déclaré
+    }
+    int value;
+}
