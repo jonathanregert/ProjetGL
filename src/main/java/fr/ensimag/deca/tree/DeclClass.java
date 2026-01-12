@@ -210,11 +210,8 @@ public class DeclClass extends AbstractDeclClass {
         // case 0
         if (classDef.getSuperClass() == null){
             // classe racine = Object
-<<<<<<< HEAD
             compiler.addInstruction(new LOAD(new NullOperand(), Register.R0));
-=======
             // compiler.addInstruction(new LOAD(new ImmediateNull(), Register.R0));
->>>>>>> 888278c426dcbde3be35809c97bc826286b9ba86
             compiler.addInstruction(new STORE(Register.R0, base));
         } else {
             RegisterOffset superBase = classDef.getSuperClass().getAddrTable();
@@ -308,9 +305,5 @@ public class DeclClass extends AbstractDeclClass {
 
         compiler.setCurrentClassName(null);
     }
-<<<<<<< HEAD
-=======
-    
 
->>>>>>> 888278c426dcbde3be35809c97bc826286b9ba86
 }
