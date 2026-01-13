@@ -93,11 +93,17 @@ public abstract class AbstractExpr extends AbstractInst {
         conv.verifyExpr(compiler, localEnv, currentClass); // Décore le ConvFloat
         return conv;
         }
-        
-        if (!typeFound.sameType(expectedType)) {
-        throw new ContextualError("Type incompatible : attendu " + expectedType
-            + ", trouvé " + typeFound, getLocation());
+
+        // cas si subType (inclus le cas de sametype)
+        if (!typeFound.isSubtype(compiler.environmentType, expectedType)) {
+            throw new ContextualError("Type incompatible : attendu " + expectedType
+                + ", trouvé " + typeFound, getLocation());
         }
+        
+        // if (!typeFound.sameType(expectedType)) {
+        // throw new ContextualError("Type incompatible : attendu " + expectedType
+        //     + ", trouvé " + typeFound, getLocation());
+        // }
 
         return this;
     }
