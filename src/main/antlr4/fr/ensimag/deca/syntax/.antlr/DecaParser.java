@@ -2319,8 +2319,8 @@ public class DecaParser extends AbstractDecaParser {
 				{
 				setState(437);
 				((Primary_exprContext)_localctx).THIS = match(THIS);
-				 ((Primary_exprContext)_localctx).tree =  new This(); 
-				          setLocation(_localctx.tree, ((Primary_exprContext)_localctx).THIS); 
+				 //((Primary_exprContext)_localctx).tree =  new This(); 
+				          //setLocation(_localctx.tree, ((Primary_exprContext)_localctx).THIS); 
 				        
 				}
 				break;
@@ -2774,7 +2774,7 @@ public class DecaParser extends AbstractDecaParser {
 				{
 
 				        ((Class_extensionContext)_localctx).tree =  new Identifier(compiler.createSymbol("Object"));
-				        // no token then no setLocation 
+				        setLocation(_localctx.tree, _localctx.start);
 				        
 				}
 				break;
