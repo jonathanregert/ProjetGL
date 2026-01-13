@@ -5,7 +5,7 @@
 //    OK
 
 class A {
-    public int x;
+    int x;
 }
 
 {

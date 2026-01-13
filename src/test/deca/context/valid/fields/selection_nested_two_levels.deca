@@ -5,11 +5,11 @@
 //    OK
 
 class B {
-    public int y;
+    int y;
 }
 
 class A {
-    public B b;
+    B b;
 }
 
 {

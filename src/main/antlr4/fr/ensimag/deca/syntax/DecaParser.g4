@@ -426,6 +426,13 @@ primary_expr returns[AbstractExpr tree]
             $tree = new MethodCall($lv.tree, $m.tree, $args.tree);
             setLocation($tree, $lv.start);
         }
+    // appel à meth à partir de this pas défini explicitement
+    | m=ident OPARENT args=list_expr CPARENT {
+            $tree = new This();
+            setLocation($tree, $m.start);
+            $tree = new MethodCall($tree, $m.tree, $args.tree);
+            setLocation($tree, $m.start);
+        }
     | THIS
         { $tree = new This(); 
           setLocation($tree, $THIS); 

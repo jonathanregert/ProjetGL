@@ -12,6 +12,6 @@ class D {
 class E {
     void test() {
         D d;
-        int y = d.x; // invalide
+        int y = d.x;
     }
 }

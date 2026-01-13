@@ -5,15 +5,15 @@
 //    OK
 
 class C {
-    public int z;
+    int z;
 }
 
 class B {
-    public C c;
+    C c;
 }
 
 class A {
-    public B b;
+    B b;
 }
 
 {

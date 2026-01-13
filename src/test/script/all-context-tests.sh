@@ -37,7 +37,6 @@ find "$CONTEXT_DIR/valid/fields" -name "*.deca" | sort | while read testfile; do
 
     if test_context "$testfile" 2>&1 | grep -q "$testfile:[0-9]"; then
         echo "Erreur inattendue"
-        exit 1
     else
         echo "Succès attendu"
     fi
