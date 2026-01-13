@@ -42,9 +42,7 @@ public class DeclParam extends AbstractDeclParam {
             throw new ContextualError("Paramètre " + varName.getName().getName() + " deja definie", varName.getLocation());
         }
 
-        // deco
         varName.setDefinition(paramDef);
-        
     }
 
 

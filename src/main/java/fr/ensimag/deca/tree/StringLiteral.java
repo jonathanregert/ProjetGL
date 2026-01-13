@@ -84,6 +84,4 @@ public class StringLiteral extends AbstractStringLiteral {
             "StringLiteral n'est pas une expression évaluable en registre (utiliser codeGenPrint)."
         );
     }
-
-
 }

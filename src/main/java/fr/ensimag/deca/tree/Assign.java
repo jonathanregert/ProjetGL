@@ -98,7 +98,6 @@ public class Assign extends AbstractBinaryExpr {
         return true;
     }
 
-
     @Override
     protected void codeGenExpr(DecacCompiler compiler, GPRegister target) {
         getRightOperand().codeGenExpr(compiler, target);

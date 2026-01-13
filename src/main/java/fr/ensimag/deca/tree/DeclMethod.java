@@ -9,6 +9,8 @@ import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.ImmediateInteger;
 import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
 import fr.ensimag.ima.pseudocode.instructions.BOV;
 import fr.ensimag.ima.pseudocode.instructions.RTS;
 import fr.ensimag.ima.pseudocode.instructions.TSTO;
@@ -17,6 +19,8 @@ import net.bytebuddy.asm.MemberSubstitution.Current;
 import java.io.PrintStream;
 import fr.ensimag.deca.context.Signature;
 import fr.ensimag.deca.context.MethodDefinition;
+import fr.ensimag.deca.context.ParamDefinition;
+
 import org.apache.commons.lang.Validate;
 
 /**
@@ -83,6 +87,12 @@ public class DeclMethod extends AbstractDeclMethod {
             // Nouvelle méthode : nouvel index
             index = currentClass.incNumberOfMethods() - 1;
         }
+        System.err.println("[P2] Method " + currentClass.getType().getName().getName()
+            + "." + methodName.getName().getName()
+            + " index=" + index
+            + " super=" + (superMethod != null));
+
+    
 
         MethodDefinition methodDef = new MethodDefinition(t, getLocation(), sig, index);
 
@@ -175,14 +185,21 @@ public class DeclMethod extends AbstractDeclMethod {
 
         compiler.setCurrentMethodEndLabel(end);
 
-        // On bufferise juste pour insérer TSTO/BOV avant les instructions du corps
+        // Assigner les operands des paramètres (LB négatif)
+        // Convention poly: this = -2(LB), params explicites = -3(LB), -4(LB), ...
+        int k = 3;
+        // for (AbstractDeclParam p : params.getList()) { // adapte si ton API diffère
+        //     ParamDefinition pd = p.getParamName().getParamDefinition();
+        //     pd.setOperand(new RegisterOffset(-k, Register.LB));
+        //     k++;
+        // }
+
         compiler.beginBlock();
 
-        // Corps (à terme: utiliser addToBlock dans les inst, mais OK pour MVP)
+        // Corps
         body.getInsts().codeGenListInst(compiler);
 
-        // Saut fin (si on sort sans return, on tombe ici)
-        // (Poly: ERROR si non-void, on le fera après)
+        // Si on sort sans return : (void) OK => RTS direct
         compiler.addToBlock(new RTS());
 
         int d = compiler.getStackManager().getTSTOForLocals();
@@ -191,13 +208,14 @@ public class DeclMethod extends AbstractDeclMethod {
 
         compiler.endBlock();
 
-        // Label de fin après le bloc (pour que les return BRA end marchent)
+        // Label de fin pour les return
         compiler.addLabel(end);
         compiler.addInstruction(new RTS());
 
         compiler.setCurrentMethodEndLabel(null);
         compiler.getStackManager().exitBlock();
     }
+
     @Override
     public AbstractIdentifier getMethodName()
     {
