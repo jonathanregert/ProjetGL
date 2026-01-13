@@ -12,6 +12,7 @@ import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.instructions.BOV;
 import fr.ensimag.ima.pseudocode.instructions.RTS;
 import fr.ensimag.ima.pseudocode.instructions.TSTO;
+import net.bytebuddy.asm.MemberSubstitution.Current;
 
 import java.io.PrintStream;
 import fr.ensimag.deca.context.Signature;
@@ -127,6 +128,7 @@ public class DeclMethod extends AbstractDeclMethod {
     this.params.verifyListDeclParam(compiler, envExpParams);
     this.body.getVars().verifyListDeclVariable(compiler, envExpParams, currentClass);
     this.body.getInsts().verifyListInst(compiler, envExpParams, currentClass, returnType);
+
 }
 
     
@@ -155,7 +157,7 @@ public class DeclMethod extends AbstractDeclMethod {
         returnType.prettyPrint(s, prefix, false);
         methodName.prettyPrint(s, prefix, false);
         params.prettyPrint(s, prefix, false);
-        body.prettyPrintChildren(s, prefix);
+        body.prettyPrint(s, prefix, true);
     }
 
     @Override
