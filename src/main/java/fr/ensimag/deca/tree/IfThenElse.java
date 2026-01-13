@@ -78,6 +78,29 @@ public class IfThenElse extends AbstractInst {
     }
 
     @Override
+    protected void codeGenByte(DecacCompiler compiler) {
+        String elseLbl = compiler.getByteManager().newLabel();
+        String endLbl  = compiler.getByteManager().newLabel();
+
+        // condition
+        condition.codeGenByteExpr(compiler);
+        compiler.getByteManager().emitIfEq(elseLbl);
+
+        // then
+        thenBranch.codeGenListInstByte(compiler);
+        compiler.getByteManager().emitGoto(endLbl);
+
+        // else
+        compiler.getByteManager().emitLabel(elseLbl);
+        if (elseBranch != null) {
+            elseBranch.codeGenListInstByte(compiler);
+        }
+
+        compiler.getByteManager().emitLabel(endLbl);
+    }
+
+
+    @Override
     public void decompile(IndentPrintStream s) {
         s.print("if (");
         condition.decompile(s);

@@ -38,4 +38,9 @@ public class Multiply extends AbstractOpArith {
     @Override
     protected boolean isRightAssociative() { return true; }
 
+    @Override
+    protected void codeGenByteOperator(DecacCompiler compiler) {
+        compiler.getByteManager().emitIMUL();
+    }
+
 }

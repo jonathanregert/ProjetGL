@@ -91,4 +91,13 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
         
     }
     protected abstract void codeGenOperator(DecacCompiler compiler, GPRegister rRight, GPRegister rLeft);
+
+    @Override
+    protected void codeGenByteExpr(DecacCompiler compiler) {
+        getLeftOperand().codeGenByteExpr(compiler);
+        getRightOperand().codeGenByteExpr(compiler);
+        codeGenByteOperator(compiler);
+    }
+    protected abstract void codeGenByteOperator(DecacCompiler compiler);
+
 }

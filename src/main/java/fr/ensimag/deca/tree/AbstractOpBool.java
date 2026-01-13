@@ -67,4 +67,27 @@ public abstract class AbstractOpBool extends AbstractBinaryExpr {
 
     protected abstract int getShortCircuitValue();
 
+    @Override
+    protected void codeGenByteExpr(DecacCompiler compiler) {
+        String scLabel = compiler.getByteManager().newLabel();
+        String endLabel = compiler.getByteManager().newLabel();
+
+        // gauche
+        getLeftOperand().codeGenByteExpr(compiler);
+        emitShortCircuitBranch(compiler, scLabel);
+
+        // droite
+        getRightOperand().codeGenByteExpr(compiler);
+        compiler.getByteManager().emitGoto(endLabel);
+
+        // short-circuit
+        compiler.getByteManager().emitLabel(scLabel);
+        compiler.getByteManager().emitLDC(getShortCircuitValue());
+
+        compiler.getByteManager().emitLabel(endLabel);
+    }
+    protected abstract void emitShortCircuitBranch(
+        DecacCompiler compiler,
+        String shortCircuitLabel
+    );
 }

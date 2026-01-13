@@ -113,6 +113,12 @@ public class Selection extends AbstractLValue{
         field.decompile(s);
     }
 
+    @Override
+    protected void codeGenByteExpr(DecacCompiler compiler) {
+        throw new UnsupportedOperationException("Selection en bytecode non implémentée (objets requis).");
+    }
+
+
   
 
     // @Override

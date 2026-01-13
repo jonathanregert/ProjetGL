@@ -57,4 +57,10 @@ public class ReadFloat extends AbstractReadExpr {
             compiler.addInstruction(new LOAD(Register.R1, target));
         }
     }
+
+    @Override
+    protected void codeGenByteExpr(DecacCompiler compiler) {
+        compiler.getByteManager().emitReadFloat();
+    }
+
 }

@@ -60,6 +60,23 @@ public class While extends AbstractInst {
     }
 
     @Override
+    protected void codeGenByte(DecacCompiler compiler) {
+        String startLbl = compiler.getByteManager().newLabel();
+        String endLbl   = compiler.getByteManager().newLabel();
+
+        compiler.getByteManager().emitLabel(startLbl);
+
+        condition.codeGenByteExpr(compiler);
+        compiler.getByteManager().emitIfEq(endLbl);
+
+        body.codeGenListInstByte(compiler);
+        compiler.getByteManager().emitGoto(startLbl);
+
+        compiler.getByteManager().emitLabel(endLbl);
+    }
+
+
+    @Override
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass, Type returnType)
             throws ContextualError {

@@ -54,4 +54,8 @@ public class ReadInt extends AbstractReadExpr {
         }
     }
 
+    @Override
+    protected void codeGenByteExpr(DecacCompiler compiler) {
+        compiler.getByteManager().emitReadInt();
+    }
 }

@@ -50,4 +50,22 @@ public class Not extends AbstractUnaryExpr {
 
     @Override
     public int getPriorite() { return 90; }
+
+    @Override
+    protected void codeGenByteExpr(DecacCompiler compiler) {
+        String trueLbl = compiler.getByteManager().newLabel();
+        String endLbl  = compiler.getByteManager().newLabel();
+
+        getOperand().codeGenByteExpr(compiler);
+        compiler.getByteManager().emitIfEq(trueLbl);
+
+        compiler.getByteManager().emitLDC(0);
+        compiler.getByteManager().emitGoto(endLbl);
+
+        compiler.getByteManager().emitLabel(trueLbl);
+        compiler.getByteManager().emitLDC(1);
+
+        compiler.getByteManager().emitLabel(endLbl);
+    }
+
 }

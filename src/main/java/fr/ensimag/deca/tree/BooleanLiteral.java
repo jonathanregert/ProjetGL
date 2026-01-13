@@ -65,4 +65,10 @@ public class BooleanLiteral extends AbstractExpr {
         compiler.addInstruction(new LOAD(new ImmediateInteger(v), target));
     }
 
+    @Override
+    protected void codeGenByteExpr(DecacCompiler compiler) {
+        compiler.getByteManager().emitLDC(value ? 1 : 0);
+    }
+
+
 }

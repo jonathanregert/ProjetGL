@@ -40,7 +40,7 @@ public class ErrorManager {
         used.add(error);
         return labels.computeIfAbsent(error, e -> new Label(labelName(e)));
     }
-
+    
     private String labelName(RuntimeError error){
         switch(error){
             case STACK_OVERFLOW :    return "pile_pleine";

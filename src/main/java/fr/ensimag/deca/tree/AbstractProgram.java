@@ -14,5 +14,5 @@ import fr.ensimag.deca.context.EnvironmentType;
 public abstract class AbstractProgram extends Tree {
     public abstract void verifyProgram(DecacCompiler compiler) throws ContextualError;
     public abstract void codeGenProgram(DecacCompiler compiler) ;
-
+    public abstract void codeGenByte(DecacCompiler compiler);
 }

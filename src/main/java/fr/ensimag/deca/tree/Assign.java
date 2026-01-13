@@ -80,4 +80,11 @@ public class Assign extends AbstractBinaryExpr {
         DAddr addr = getLeftOperand().codeGenAddr(compiler);
         compiler.addInstruction(new STORE(target, addr));
     }
+
+    @Override
+    protected void codeGenByteExpr(DecacCompiler compiler) {
+        getRightOperand().codeGenByteExpr(compiler);
+        // TODO : store dans variable locale
+    }
+
 }

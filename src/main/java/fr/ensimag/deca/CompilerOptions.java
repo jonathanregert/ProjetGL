@@ -48,6 +48,10 @@ public class CompilerOptions {
         return Collections.unmodifiableList(sourceFiles);
     }
 
+    public boolean getByteOption() {
+        return byteOption;
+    }
+
     public int getRegisterCount() { 
         return registerCount; 
     }
@@ -59,6 +63,7 @@ public class CompilerOptions {
     private boolean verificationOption = false;
     private boolean noCheckOption = false;
     private int registerCount = 4; 
+    private boolean byteOption = false;
     private List<File> sourceFiles = new ArrayList<File>();
 
     
@@ -98,6 +103,9 @@ public class CompilerOptions {
             case "-n":
             case "--noCheck":
                 noCheckOption = true;
+                break;
+            case "--byte":
+                byteOption = true;
                 break;
             case "-r":
                 if (i + 1 >= args.length) {

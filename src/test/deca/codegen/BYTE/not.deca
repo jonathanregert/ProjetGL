@@ -1,0 +1,5 @@
+{
+    println(!true);
+    println(!false);
+    println(!(1 < 2));
+}

@@ -29,4 +29,17 @@ public class Equals extends AbstractOpExactCmp {
 
     @Override
     public int getPriorite() { return 50; }
+
+    @Override
+    protected void codeGenByteExpr(DecacCompiler compiler) {
+        getLeftOperand().codeGenByteExpr(compiler);
+        getRightOperand().codeGenByteExpr(compiler);
+        compiler.getByteManager().emitCmp("eq"); // laisse 0 ou 1
+    }
+
+    @Override
+    protected void emitIfCmpTrue(DecacCompiler compiler, String trueLabel) {
+        compiler.getByteManager().emitIfCmp("eq", trueLabel);
+    }
+
 }

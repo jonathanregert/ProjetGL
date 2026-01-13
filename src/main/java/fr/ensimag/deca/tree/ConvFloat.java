@@ -49,4 +49,11 @@ public class ConvFloat extends AbstractUnaryExpr {
 
     @Override
     public int getPriorite() { return 90; }
+
+    @Override
+    protected void codeGenByteExpr(DecacCompiler compiler) {
+        getOperand().codeGenByteExpr(compiler);
+        compiler.getByteManager().emitI2F();
+    }
+
 }

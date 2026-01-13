@@ -80,4 +80,11 @@ public abstract class AbstractPrint extends AbstractInst {
         arguments.prettyPrint(s, prefix, true);
     }
 
+    @Override
+    protected void codeGenByte(DecacCompiler compiler) {
+        for (AbstractExpr e : getArguments().getList()) {
+            e.codeGenByteExpr(compiler);
+            compiler.getByteManager().emitPrint(e.getType());
+        }
+    }
 }

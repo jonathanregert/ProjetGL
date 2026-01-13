@@ -29,6 +29,11 @@ public class Plus extends AbstractOpArith {
     }
 
     @Override
+    protected void codeGenByteOperator(DecacCompiler compiler) {
+        compiler.getByteManager().emitIADD();
+    }
+
+    @Override
     public int getPriorite() { return 70; }
 
     @Override

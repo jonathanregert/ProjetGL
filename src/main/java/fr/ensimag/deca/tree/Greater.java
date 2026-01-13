@@ -29,4 +29,10 @@ public class Greater extends AbstractOpIneq {
 
     @Override
     public int getPriorite() { return 60; }
+
+    @Override
+    protected void emitIfCmpTrue(DecacCompiler compiler, String trueLabel) {
+        compiler.getByteManager().emitIfCmp("gt", trueLabel);
+    }
+
 }

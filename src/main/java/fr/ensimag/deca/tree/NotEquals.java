@@ -30,4 +30,9 @@ public class NotEquals extends AbstractOpExactCmp {
     @Override
     public int getPriorite() { return 50; }
 
+    @Override
+    protected void emitIfCmpTrue(DecacCompiler compiler, String trueLabel) {
+        compiler.getByteManager().emitIfCmp("ne", trueLabel);
+    }
+
 }

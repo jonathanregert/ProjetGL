@@ -49,6 +49,16 @@ public class Main extends AbstractMain {
         declVariables.codeGenListDeclVar(compiler);
         insts.codeGenListInst(compiler);
     }
+
+    @Override
+    protected void codeGenMainByte(DecacCompiler compiler) {
+        compiler.getByteManager().getInstructions().add("; Beginning of main (byte)");
+
+        insts.codeGenListInstByte(compiler);
+
+        compiler.getByteManager().getInstructions().add("; End of main (byte)");
+    }
+
     
     @Override
     public void decompile(IndentPrintStream s) {

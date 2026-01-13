@@ -249,4 +249,9 @@ public class Identifier extends AbstractIdentifier {
         compiler.addInstruction(new LOAD(codeGenAddr(compiler), target));
     }
 
+    @Override
+    protected void codeGenByteExpr(DecacCompiler compiler) {
+        throw new UnsupportedOperationException("Unimplemented method 'codeGenByteExpr'");
+    }
+
 }

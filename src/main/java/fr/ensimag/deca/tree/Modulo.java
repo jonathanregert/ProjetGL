@@ -52,4 +52,10 @@ public class Modulo extends AbstractOpArith {
     protected boolean isLeftAssociative() {
         return true;
     }
+
+    @Override
+    protected void codeGenByteOperator(DecacCompiler compiler) {
+        compiler.getByteManager().emitIREM();
+    }
+
 }

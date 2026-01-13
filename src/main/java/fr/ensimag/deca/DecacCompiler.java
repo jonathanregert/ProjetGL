@@ -4,6 +4,7 @@ import fr.ensimag.deca.context.EnvironmentType;
 import fr.ensimag.deca.codegen.RegAllocator;
 import fr.ensimag.deca.codegen.StackManager;
 import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.deca.codegen.ByteManager;
 import fr.ensimag.deca.codegen.ErrorManager;
 import fr.ensimag.deca.syntax.DecaLexer;
 import fr.ensimag.deca.syntax.DecaParser;
@@ -52,6 +53,7 @@ public class DecacCompiler {
     private final RegAllocator regAllocator;
     private final StackManager stackManager = new StackManager();
     private final ErrorManager errorManager = new ErrorManager();
+    private final ByteManager byteManager = new ByteManager();
 
     public DecacCompiler(CompilerOptions compilerOptions, File source) {
         super();
@@ -72,6 +74,11 @@ public class DecacCompiler {
 
     public boolean getNoCheckOption() {
         return compilerOptions.getNoCheckOption();
+    }
+
+    public ByteManager getByteManager()
+    {
+        return byteManager;
     }
 
     /**
@@ -259,23 +266,36 @@ public class DecacCompiler {
         prog.verifyProgram(this);
         assert(prog.checkAllDecorations());
 
-        addComment("start main program");
-        prog.codeGenProgram(this);
-        addComment("end main program");
-        LOG.debug("Generated assembly code:" + nl + program.display());
-        LOG.info("Output file assembly file is: " + destName);
+        
+        if (compilerOptions.getByteOption()) {
+            prog.codeGenByte(this);
+            
+            try {
+                byteManager.dumpToFile(
+                    new File(sourceName.replace(".deca", ".byte"))
+                );
+            } catch (FileNotFoundException e) {
+                throw new DecacFatalError("Failed to open output file: " + e.getLocalizedMessage());
+            }
+        } else {
+            addComment("start main program");
+            prog.codeGenProgram(this);
+            addComment("end main program");
+            LOG.debug("Generated assembly code:" + nl + program.display());
+            LOG.info("Output file assembly file is: " + destName);
 
-        FileOutputStream fstream = null;
-        try {
-            fstream = new FileOutputStream(destName);
-        } catch (FileNotFoundException e) {
-            throw new DecacFatalError("Failed to open output file: " + e.getLocalizedMessage());
+            FileOutputStream fstream = null;
+            try {
+                fstream = new FileOutputStream(destName);
+            } catch (FileNotFoundException e) {
+                throw new DecacFatalError("Failed to open output file: " + e.getLocalizedMessage());
+            }
+
+            LOG.info("Writing assembler file ...");
+
+            program.display(new PrintStream(fstream));
+            LOG.info("Compilation of " + sourceName + " successful.");
         }
-
-        LOG.info("Writing assembler file ...");
-
-        program.display(new PrintStream(fstream));
-        LOG.info("Compilation of " + sourceName + " successful.");
         return false;
     }
 

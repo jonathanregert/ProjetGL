@@ -70,4 +70,9 @@ public class FloatLiteral extends AbstractExpr {
         compiler.addInstruction(new LOAD(new ImmediateFloat(value), target));
     }
 
+    @Override
+    protected void codeGenByteExpr(DecacCompiler compiler) {
+        compiler.getByteManager().emitLDC(value);
+    }
+
 }

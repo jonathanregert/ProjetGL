@@ -99,4 +99,16 @@ public class Program extends AbstractProgram {
         classes.prettyPrint(s, prefix, false);
         main.prettyPrint(s, prefix, true);
     }
+
+    @Override
+    public void codeGenByte(DecacCompiler compiler) {
+        compiler.getByteManager().getInstructions().add("; start program");
+
+        main.codeGenMainByte(compiler);
+
+        compiler.getByteManager().emitReturnVoid();
+        compiler.getByteManager().getInstructions().add("; end program");
+    }
+
+
 }

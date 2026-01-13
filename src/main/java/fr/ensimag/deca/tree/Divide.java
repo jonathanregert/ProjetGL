@@ -44,4 +44,10 @@ public class Divide extends AbstractOpArith {
     protected boolean isLeftAssociative() {
         return true;
     }
+
+    @Override
+    protected void codeGenByteOperator(DecacCompiler compiler) {
+        compiler.getByteManager().emitIDIV();
+    }
+
 }

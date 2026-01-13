@@ -47,4 +47,9 @@ public class New extends AbstractExpr {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
+    @Override
+    protected void codeGenByteExpr(DecacCompiler compiler) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
 }

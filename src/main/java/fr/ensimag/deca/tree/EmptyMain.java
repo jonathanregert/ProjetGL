@@ -65,4 +65,10 @@ public class EmptyMain extends AbstractMain {
     protected void prettyPrintChildren(PrintStream s, String prefix) {
        listInst.prettyPrint(s, prefix, true);
     }
+
+    @Override
+    protected void codeGenMainByte(DecacCompiler compiler) {
+        listInst.codeGenListInstByte(compiler);
+    }
+
 }

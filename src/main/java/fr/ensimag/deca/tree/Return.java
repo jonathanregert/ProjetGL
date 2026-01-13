@@ -76,4 +76,9 @@ public class Return extends AbstractInst {
         expr.prettyPrint(s, prefix, true);
     }
 
+    @Override
+    protected void codeGenByte(DecacCompiler compiler) {
+        compiler.getByteManager().emitReturnVoid();
+    }
+    
 }

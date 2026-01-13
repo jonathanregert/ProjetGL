@@ -85,6 +85,35 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
         codeGenSet(compiler, target);
     }
 
+    @Override
+    protected void codeGenByteExpr(DecacCompiler compiler) {
+        String trueLabel = compiler.getByteManager().newLabel();
+        String endLabel = compiler.getByteManager().newLabel();
+
+        // gauche et droite
+        getLeftOperand().codeGenByteExpr(compiler);
+        getRightOperand().codeGenByteExpr(compiler);
+
+        // branchement concret
+        emitIfCmpTrue(compiler, trueLabel);
+
+        // false
+        compiler.getByteManager().emitLDC(0);
+        compiler.getByteManager().emitGoto(endLabel);
+
+        // true
+        compiler.getByteManager().emitLabel(trueLabel);
+        compiler.getByteManager().emitLDC(1);
+
+        compiler.getByteManager().emitLabel(endLabel);
+    }
+
+    protected abstract void emitIfCmpTrue(
+        DecacCompiler compiler,
+        String trueLabel
+    );
+
+
     /**
      * Génère l'instruction qui transforme les flags en booléen dans target.
      * @param compiler

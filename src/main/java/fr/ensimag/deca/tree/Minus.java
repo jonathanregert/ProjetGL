@@ -32,4 +32,9 @@ public class Minus extends AbstractOpArith {
     @Override
     protected boolean isLeftAssociative() { return true; }
 
+    @Override
+    protected void codeGenByteOperator(DecacCompiler compiler) {
+        compiler.getByteManager().emitISUB();
+    }
+
 }

@@ -106,4 +106,16 @@ public class Cast extends AbstractExpr {
     @Override
     public int getPriorite() { return 90; }
 
+
+    @Override
+    protected void codeGenByteExpr(DecacCompiler compiler) {
+        expr.codeGenByteExpr(compiler);
+
+        if (getType().isFloat() && expr.getType().isInt()) {
+            compiler.getByteManager().emitI2F();
+        } else if (getType().isInt() && expr.getType().isFloat()) {
+            compiler.getByteManager().emitF2I(); // optionnel
+        }
+    }
+
 }

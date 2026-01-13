@@ -43,4 +43,10 @@ public class And extends AbstractOpBool {
     @Override
     protected boolean isRightAssociative() { return true; }
 
+   @Override
+    protected void emitShortCircuitBranch(DecacCompiler compiler, String label) {
+        compiler.getByteManager().emitIfEq(label);
+    }
+
+
 }

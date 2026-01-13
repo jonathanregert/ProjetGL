@@ -175,4 +175,11 @@ public abstract class AbstractExpr extends AbstractInst {
     }
 
     public int getPriorite() { return 100; }
+
+
+    protected abstract void codeGenByteExpr(DecacCompiler compiler);
+    @Override
+    protected void codeGenByte(DecacCompiler compiler) {
+        codeGenByteExpr(compiler);
+    }
 }

@@ -85,5 +85,9 @@ public class StringLiteral extends AbstractStringLiteral {
         );
     }
 
+    @Override
+    protected void codeGenByteExpr(DecacCompiler compiler) {
+        compiler.getByteManager().emitLDC(value);
+    }
 
 }
