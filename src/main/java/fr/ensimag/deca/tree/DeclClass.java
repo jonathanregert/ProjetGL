@@ -127,8 +127,8 @@ public class DeclClass extends AbstractDeclClass {
 
     ClassExtention.setDefinition(superClassDef);
 
-    ClassType newClassType = new ClassType(ClassName.getName(), ClassName.getLocation(), (fr.ensimag.deca.context.ClassDefinition) superClassDef);
-    ClassDefinition superClassDefinition = (ClassDefinition) superClassDef;
+    ClassType newClassType = new ClassType(ClassName.getName(), ClassName.getLocation(), superClassDef);
+    ClassDefinition superClassDefinition = superClassDef;
 
     this.classDefinition = new ClassDefinition(newClassType, getLocation(), superClassDefinition);
 

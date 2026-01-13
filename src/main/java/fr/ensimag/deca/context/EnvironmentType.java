@@ -85,6 +85,7 @@ public class EnvironmentType {
     //}
 
     public static class DoubleDefException extends Exception {
+        private static final long serialVersionUID = 1L; // eviter le warning :  has no definition of serialVersionUID
         public DoubleDefException(String message) {
             super(message);
         }

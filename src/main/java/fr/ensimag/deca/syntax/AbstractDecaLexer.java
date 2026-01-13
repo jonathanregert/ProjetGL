@@ -92,6 +92,7 @@ public abstract class AbstractDecaLexer extends Lexer {
     /**
      * Default constructor for the lexer.
      */
+    @SuppressWarnings("this-escape")
     public AbstractDecaLexer(CharStream input) {
         super(input);
         removeErrorListeners();

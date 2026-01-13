@@ -42,6 +42,7 @@ public class ClassType extends Type {
     /**
      * Standard creation of a type class.
      */
+    @SuppressWarnings("this-escape")
     public ClassType(Symbol className, Location location, ClassDefinition superClass) {
         super(className);
         this.definition = new ClassDefinition(this, location, superClass);
