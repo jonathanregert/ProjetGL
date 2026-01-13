@@ -22,6 +22,6 @@ mvn jacoco:restore-instrumented-classes -Djacoco.skip=false
 mvn jacoco:report -Djacoco.skip=false
 google-chrome target/site/jacoco/index.html
 
-mvn clean test-compile org.jacoco:jacoco-maven-plugin:prepare-agent exec:exec -Dexec.executable="./src/test/script/all-codegen-tests-sansObjet.sh" -Djacoco.skip=false
+mvn clean test-compile org.jacoco:jacoco-maven-plugin:prepare-agent exec:exec -Dexec.executable="./src/test/script/all-context-tests.sh" -Djacoco.skip=false
 mvn jacoco:restore-instrumented-classes -Djacoco.skip=false
 mvn jacoco:report -Djacoco.skip=false

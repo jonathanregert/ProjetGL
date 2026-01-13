@@ -8,6 +8,7 @@ import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.MethodDefinition;
 import fr.ensimag.deca.context.Signature;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.InlinePortion;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Line;
 import fr.ensimag.ima.pseudocode.instructions.RTS;
@@ -25,9 +26,9 @@ public class DeclMethodAsm extends AbstractDeclMethod {
     private final AbstractIdentifier type;
     private final AbstractIdentifier methodName;
     private final ListDeclParam params;
-    private final String code;
+    private final MethodAsmBody code;
 
-    public DeclMethodAsm(AbstractIdentifier type, AbstractIdentifier methodName, ListDeclParam params, String code) {
+    public DeclMethodAsm(AbstractIdentifier type, AbstractIdentifier methodName, ListDeclParam params, MethodAsmBody code) {
         Validate.notNull(type);
         Validate.notNull(methodName);
         Validate.notNull(params);
@@ -96,7 +97,7 @@ public class DeclMethodAsm extends AbstractDeclMethod {
         s.print("(");
         params.decompile(s);
         s.print(") asm(\"");
-        s.print(code);
+        code.decompile(s);
         s.print("\");");
     }
 
@@ -106,6 +107,7 @@ public class DeclMethodAsm extends AbstractDeclMethod {
         type.iter(f);
         methodName.iter(f);
         params.iter(f);
+        code.iter(f);
     }
     
     @Override
@@ -113,6 +115,7 @@ public class DeclMethodAsm extends AbstractDeclMethod {
         type.prettyPrint(s, prefix, false);
         methodName.prettyPrint(s, prefix, false);
         params.prettyPrint(s, prefix, true);
+        code.prettyPrint(s, prefix, true);
     }
 
     @Override
@@ -120,16 +123,16 @@ public class DeclMethodAsm extends AbstractDeclMethod {
         MethodDefinition md = methodName.getMethodDefinition();
         compiler.addLabel(md.getLabel());
         compiler.addComment("Méthode ASM " + md.getLabel());
-
-        String[] lines = code.split("\\R");
+        String rawAsm = code.getAsmText().getValue(); // on recup le text
+        String[] lines = rawAsm.split("\\R");
         for (String l : lines){
             String trimmed = l.trim();
             if (!trimmed.isEmpty()){
-                compiler.add(new Line(trimmed));
+                compiler.add(new InlinePortion(trimmed)); 
             }
         }
 
-        String codeTrim = code.trim().toUpperCase();
+        String codeTrim = rawAsm.trim().toUpperCase();
         if (!codeTrim.endsWith("RTS") && !codeTrim.contains("\nRTS") && !codeTrim.contains("\rRTS")){
             compiler.addInstruction(new RTS());
         }

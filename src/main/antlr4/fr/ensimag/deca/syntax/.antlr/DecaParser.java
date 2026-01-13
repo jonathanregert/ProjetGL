@@ -3256,8 +3256,12 @@ public class DecaParser extends AbstractDecaParser {
 				setState(569);
 				match(SEMI);
 
-				        ((Decl_methodContext)_localctx).tree =  new DeclMethodAsm( ((Decl_methodContext)_localctx).t.tree, ((Decl_methodContext)_localctx).id.tree, ((Decl_methodContext)_localctx).params.tree, ((Decl_methodContext)_localctx).code.text);
-				        setLocation(_localctx.tree, (((Decl_methodContext)_localctx).id!=null?(((Decl_methodContext)_localctx).id.start):null));
+				        StringLiteral sl = new StringLiteral(((Decl_methodContext)_localctx).code.text); // code return String
+				        sl.setLocation(((Decl_methodContext)_localctx).code.location);
+				        MethodAsmBody body = new MethodAsmBody(sl);
+				        body.setLocation(((Decl_methodContext)_localctx).code.location);
+				        ((Decl_methodContext)_localctx).tree =  new DeclMethodAsm(((Decl_methodContext)_localctx).t.tree, ((Decl_methodContext)_localctx).id.tree, ((Decl_methodContext)_localctx).params.tree, body);
+				        _localctx.tree.setLocation(tokenLocation((((Decl_methodContext)_localctx).t!=null?(((Decl_methodContext)_localctx).t.start):null)));
 				        
 				}
 				break;
