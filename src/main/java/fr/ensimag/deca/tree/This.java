@@ -55,7 +55,7 @@ public class This extends AbstractExpr {
     }
 
     @Override
-    protected void iterChildren(TreeFunction f) { 
+    protected void iterChildren(TreeFunction f) {
 
     }
 

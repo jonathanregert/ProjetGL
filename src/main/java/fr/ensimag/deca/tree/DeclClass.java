@@ -17,6 +17,7 @@ import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
 import fr.ensimag.ima.pseudocode.instructions.BOV;
+import fr.ensimag.ima.pseudocode.instructions.BSR;
 import fr.ensimag.ima.pseudocode.instructions.LEA;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.POP;
@@ -194,8 +195,6 @@ public class DeclClass extends AbstractDeclClass {
         int tailleTable = 1 + classDef.getNumberOfMethods();
 
         RegisterOffset base = compiler.getStackManager().allocGlobalBlock(tailleTable);
-
-        // On stocke l'adresse dans la ClassDefinition
         classDef.setAddrTable(base);
         
         compiler.addComment("Passe1 table de méthode : " + classDef.getType().getName()
@@ -205,47 +204,46 @@ public class DeclClass extends AbstractDeclClass {
     @Override
     public void codeGenBuildMTable(DecacCompiler compiler) {
         ClassDefinition classDef = this.classDefinition;
-        RegisterOffset base = classDef.getAddrTable(); // base de la table en GB
+        RegisterOffset base = classDef.getAddrTable();
+        if (base == null) {
+            throw new IllegalStateException("VTable non réservée pour " + classDef.getType());
+        }
 
-        // case 0
-        if (classDef.getSuperClass() == null){
-            // classe racine = Object
+        // Case 0 : pointeur vers vtable de la super-classe (ou null pour Object)
+        if (classDef.getSuperClass() == null) {
             compiler.addInstruction(new LOAD(new NullOperand(), Register.R0));
-            // compiler.addInstruction(new LOAD(new ImmediateNull(), Register.R0));
             compiler.addInstruction(new STORE(Register.R0, base));
         } else {
             RegisterOffset superBase = classDef.getSuperClass().getAddrTable();
+            if (superBase == null) {
+                throw new IllegalStateException(
+                        "La table de la super-classe est non initialisée: " + classDef.getSuperClass().getType());
+            }
             compiler.addInstruction(new LEA(superBase, Register.R0));
             compiler.addInstruction(new STORE(Register.R0, base));
-        }
 
-        // 1) Héritage : recopier les pointeurs de méthodes depuis la super-classe
-        // si super existe
-        if (classDef.getSuperClass() != null){
-            int n = classDef.getNumberOfMethods();
-            RegisterOffset superBase = classDef.getSuperClass().getAddrTable();
-
-            for (int i = 0; i < n; i++){
+            // Héritage : copier UNIQUEMENT les méthodes de la super-classe
+            int nSuper = classDef.getSuperClass().getNumberOfMethods();
+            for (int i = 0; i < nSuper; i++) {
                 RegisterOffset src = new RegisterOffset(superBase.getOffset() + 1 + i, Register.GB);
                 RegisterOffset dst = new RegisterOffset(base.getOffset() + 1 + i, Register.GB);
-
                 compiler.addInstruction(new LOAD(src, Register.R0));
                 compiler.addInstruction(new STORE(Register.R0, dst));
             }
         }
 
-        // 2) Redéfinition / ajout : on écrit les mthd déclarées dans la classe courante
-        for (AbstractDeclMethod m : classMethods.getList()){
-        MethodDefinition md = m.getMethodName().getMethodDefinition();
-        int index = md.getIndex();
-        Label label = md.getLabel();
+        // Écraser/ajouter les méthodes déclarées dans la classe courante
+        for (AbstractDeclMethod m : classMethods.getList()) {
+            MethodDefinition md = m.getMethodName().getMethodDefinition();
+            int index = md.getIndex(); // commence à 0
+            Label label = md.getLabel();
 
-        RegisterOffset cell = new RegisterOffset(base.getOffset() + 1 + index, Register.GB);
-        compiler.addInstruction(new LOAD(new LabelOperand(label), Register.R0));
-        compiler.addInstruction(new STORE(Register.R0, cell));
+            RegisterOffset cell = new RegisterOffset(base.getOffset() + 1 + index, Register.GB);
+            // On stocke l’adresse du code dans la vtable (via LabelOperand)
+            compiler.addInstruction(new LOAD(new LabelOperand(label), Register.R0));
+            compiler.addInstruction(new STORE(Register.R0, cell));
+        }
     }
-    }
-
     @Override
     public void codeGenInit(DecacCompiler compiler) {
         ClassDefinition classDef = this.classDefinition;
@@ -260,13 +258,11 @@ public class DeclClass extends AbstractDeclClass {
         compiler.getRegAllocator().reset();
         compiler.getStackManager().enterBlock();
 
-        // On bufferise le bloc pour pouvoir insérer TSTO/BOV au début après coup
         compiler.beginBlock();
 
         int first = 3;
         int last = compiler.getRegAllocator().getMaxReg();
 
-        // Sauvegarde pessimiste des registres temporaires
         for (int r = first; r <= last; r++) {
             compiler.addToBlock(new PUSH(Register.getR(r)));
             compiler.getStackManager().useTemp(1);
@@ -279,9 +275,19 @@ public class DeclClass extends AbstractDeclClass {
             compiler.getStackManager().releaseTemp(1);
         }
 
+        if (classDef.getSuperClass() != null) {
+            String sname = classDef.getSuperClass().getType().getName().getName();
+            compiler.addToBlock(new BSR(new Label("init." + sname)));
+        }
+
+        classFields.codeGenInitFields(compiler, classDef);
+        for (int r = last; r >= first; r--) {
+            compiler.addToBlock(new POP(Register.getR(r)));
+            compiler.getStackManager().releaseTemp(1);
+        }
+
         compiler.addToBlock(new RTS());
 
-        // Maintenant on connaît d (poly)
         int d = compiler.getStackManager().getTSTOForLocals();
         compiler.addFirstToBlock(new TSTO(new ImmediateInteger(d)));
         compiler.addFirstToBlock(new BOV(pilePleine));
@@ -293,7 +299,6 @@ public class DeclClass extends AbstractDeclClass {
     @Override
     public void codeGenMethods(DecacCompiler compiler) {
         String className = this.classDefinition.getType().getName().getName();
-
         compiler.addComment("Code des méthodes de la classe " + className);
 
         compiler.setCurrentClassName(className);
