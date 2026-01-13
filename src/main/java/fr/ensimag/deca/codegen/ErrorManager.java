@@ -30,7 +30,10 @@ public class ErrorManager {
 
         // entrée/sortie
         READ_INT_ERROR,
-        READ_FLOAT_ERROR
+        READ_FLOAT_ERROR,
+
+        // déréferencement null
+        NULL_DEREFERENCE
     }
 
     private final EnumSet<RuntimeError> used = EnumSet.noneOf(RuntimeError.class);
@@ -55,6 +58,8 @@ public class ErrorManager {
             case READ_INT_ERROR:     return "erreur_lecture_int";
             case READ_FLOAT_ERROR:   return "erreur_lecture_float";
 
+            case NULL_DEREFERENCE: return "dereferencement_null";
+
             default:                 return "runtime_error";
         }
     }
@@ -72,6 +77,9 @@ public class ErrorManager {
 
             case READ_INT_ERROR:    return "Erreur : lecture d'un entier invalide";
             case READ_FLOAT_ERROR:  return "Erreur : lecture d'un flottant invalide";
+
+            case NULL_DEREFERENCE: return "Erreur : dereferencement de null";
+
             default:                return "runtime_error";
         }
     }
@@ -118,6 +126,12 @@ public class ErrorManager {
     /** Après RFLOAT */
     public void genCheckReadFloat(DecacCompiler compiler) {
         compiler.addInstruction(new BOV(label(RuntimeError.READ_FLOAT_ERROR)));
+    }
+
+    public void genCheckNullDereference(DecacCompiler compiler, GPRegister objReg) {
+        if (compiler.getNoCheckOption()) return;
+        compiler.addInstruction(new CMP(new ImmediateInteger(0), objReg));
+        compiler.addInstruction(new BEQ(label(RuntimeError.NULL_DEREFERENCE)));
     }
 
     public void emitHandlers(DecacCompiler compiler){
