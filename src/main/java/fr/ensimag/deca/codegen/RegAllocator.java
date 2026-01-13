@@ -77,7 +77,7 @@ public class RegAllocator {
     public boolean isUsed(GPRegister r){
         if (r == null) return false;
         int i = r.getNumber();
-        if (i <= FIRST_ALLOC || i > maxReg) return false;
+        if (i < FIRST_ALLOC || i > maxReg) return false;
         return used[i];
     }
 

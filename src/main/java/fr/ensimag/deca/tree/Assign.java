@@ -103,6 +103,9 @@ public class Assign extends AbstractBinaryExpr {
     protected void codeGenExpr(DecacCompiler compiler, GPRegister target) {
         getRightOperand().codeGenExpr(compiler, target);
         DAddr addr = getLeftOperand().codeGenAddr(compiler);
+        if (addr == null){
+            throw new IllegalStateException("codeGenExpr a renvoyé null pour " + getLeftOperand());
+        }
         compiler.addInstruction(new STORE(target, addr));
     }
 }

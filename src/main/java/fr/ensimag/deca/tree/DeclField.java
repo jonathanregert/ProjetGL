@@ -139,32 +139,30 @@ public class DeclField extends AbstractDeclField {
             }
 
     @Override
-    protected void codeGenInitField(DecacCompiler compiler, ClassDefinition currentClass){
+    protected void codeGenInitField(DecacCompiler compiler, ClassDefinition currentClass) {
         FieldDefinition fd = fieldName.getFieldDefinition();
-        int index = fd.getIndex();
+        int fieldOffset = fd.getIndex(); // doit être l’offset dans l’objet (>=1)
         Type t = fd.getType();
 
-        // index avec this dans R1
-        RegisterOffset addrR1 = new RegisterOffset(index, Register.R1);
+        // R2 = this
+        compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB), Register.getR(2)));
 
-        // 1.Valeurs par défaut
-        if (t.isClass() || t.isString()){
+        // 1) valeur par défaut dans R0
+        if (t.isClass() || t.isString()) {
             compiler.addInstruction(new LOAD(new NullOperand(), Register.R0));
         } else {
             compiler.addInstruction(new LOAD(new ImmediateInteger(0), Register.R0));
         }
-        compiler.addInstruction(new STORE(Register.R0, addrR1));
+        compiler.addInstruction(new STORE(Register.R0, new RegisterOffset(fieldOffset, Register.getR(2))));
 
-        // 2.Si init explicite : écraser avec la valeur de l'initialisation
-        if (initialization instanceof Initialization){
-            // sauver this
-            compiler.addInstruction(new LOAD(Register.R1, Register.getR(2)));
-
-            // On écrit direct dans le champ en utilisant R2 comme base
-            RegisterOffset addrR2 = new RegisterOffset(index, Register.getR(2));
-            ((Initialization) initialization).codeGenInitialization(compiler, addrR2);
-            // On restaure this
-            compiler.addInstruction(new LOAD(Register.getR(2), Register.R1));
+        // 2) init explicite
+        if (initialization instanceof Initialization) {
+            // IMPORTANT: si codeGenInitialization évalue une expr, elle peut utiliser R1/R0
+            // On lui demande juste d’écrire dans l’adresse du champ :
+            ((Initialization) initialization).codeGenInitialization(
+                compiler,
+                new RegisterOffset(fieldOffset, Register.getR(2))
+            );
         }
     }
 }

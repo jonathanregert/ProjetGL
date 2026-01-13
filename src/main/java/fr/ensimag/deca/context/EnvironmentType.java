@@ -6,6 +6,7 @@ import java.util.Map;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import fr.ensimag.deca.tree.ListDeclField;
 import fr.ensimag.deca.tree.Location;
+import fr.ensimag.ima.pseudocode.Label;
 
 // A FAIRE: étendre cette classe pour traiter la partie "avec objet" de Déca
 /**
@@ -43,9 +44,34 @@ public class EnvironmentType {
         // Objet pour les classes
         Symbol objectSymb = compiler.createSymbol("Object");
         this.OBJECT = new ClassType(objectSymb, Location.BUILTIN, null);
-        ClassDefinition objectDef = this.OBJECT.getDefinition();
-        envTypes.put(objectSymb, objectDef);
         
+        ClassDefinition objectDef = new ClassDefinition(this.OBJECT, Location.BUILTIN, null);
+        this.OBJECT.setDefinition(objectDef);
+
+        envTypes.put(objectSymb, objectDef);
+
+        Symbol equalsSymb = compiler.createSymbol("equals");
+
+        // signature: equals(Object) : boolean
+        Signature sig = new Signature();
+        sig.add(OBJECT); // param explicite : Object
+
+        MethodDefinition equalsDef = new MethodDefinition(
+            BOOLEAN,                // type de retour
+            Location.BUILTIN,       // location
+            sig,                    // signature
+            0                       // index vtable = 0 (première méthode)
+        );
+        equalsDef.setLabel(new Label("code.Object.equals"));
+
+        try {
+            objectDef.getMembers().declare(equalsSymb, equalsDef);
+        } catch (EnvironmentExp.DoubleDefException e) {
+            throw new RuntimeException("Double définition de Object.equals", e);
+        }
+        objectDef.setNumberOfMethods(1);
+
+        objectDef.setNumberOfMethods(1);
     }
 
     private final Map<Symbol, TypeDefinition> envTypes;

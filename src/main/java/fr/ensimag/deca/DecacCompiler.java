@@ -88,21 +88,14 @@ public class DecacCompiler {
     public void endBlock() {
         if (blockBody == null) return;
 
-        // Sauvegarder les listes
         var prefix = blockPrefix;
         var body = blockBody;
 
-        // Désactiver le mode bloc AVANT d'ajouter au programme
         blockPrefix = null;
         blockBody = null;
 
-        // Réinjecter dans le programme dans l'ordre
-        for (var ins : prefix) {
-            program.addInstruction(ins);
-        }
-        for (var ins : body) {
-            program.addInstruction(ins);
-        }
+        for (var ins : prefix) program.addInstruction(ins);
+        for (var ins : body) program.addInstruction(ins);
     }
 
     public DecacCompiler(CompilerOptions compilerOptions, File source) {

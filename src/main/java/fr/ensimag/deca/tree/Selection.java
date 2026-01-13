@@ -13,6 +13,7 @@ import fr.ensimag.deca.context.MethodDefinition;
 import fr.ensimag.deca.context.ExpDefinition;
 import fr.ensimag.deca.context.VariableDefinition;
 import fr.ensimag.deca.context.TypeDefinition;
+import fr.ensimag.deca.codegen.ErrorManager;
 import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
@@ -22,8 +23,11 @@ import org.apache.log4j.Logger;
 import fr.ensimag.ima.pseudocode.DAddr;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.BEQ;
+import fr.ensimag.ima.pseudocode.instructions.CMP;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.GPRegister;
+import fr.ensimag.ima.pseudocode.NullOperand;
 
 
 
@@ -127,20 +131,18 @@ public class Selection extends AbstractLValue{
     }
 
     @Override
-    protected DAddr codeGenAddr(DecacCompiler compiler){
-        // 1. Évaluer l'objet
-        object.codeGenExpr(compiler, Register.R1);
-        // 2) (Optionnel) null-check : si R1 == 0 => erreur
-        // Si vous avez un handler "dereference null" dans ErrorManager, branche dessus ici.
-        // Exemple minimal: compare à 0 et branche vers label erreur.
-        // Label derefNull = compiler.getErrorManager().label(RuntimeError.DEREF_NULL);
-        // compiler.addInstruction(new CMP(new ImmediateInteger(0), Register.R1));
-        // compiler.addInstruction(new BEQ(derefNull));
+    public DAddr codeGenAddr(DecacCompiler compiler) {
+        // Évaluer l'objet dans R2 (adresse)
+        getObject().codeGenExpr(compiler, Register.getR(2));
 
-        FieldDefinition fieldDef = (FieldDefinition) field.getDefinition();
+        // Null check (si vous avez un label d'erreur deref null)
+        compiler.addInstruction(new CMP(new NullOperand(), Register.getR(2)));
+        compiler.addInstruction(new BEQ(
+            compiler.getErrorManager().label(ErrorManager.RuntimeError.NULL_DEREFERENCE)
+        ));
 
-        // Adresse du champ = index(R1)
-        return new RegisterOffset(fieldDef.getIndex(), Register.R1);
+        FieldDefinition fd = getField().getFieldDefinition();
+        return new RegisterOffset(fd.getIndex(), Register.getR(2));
     }
 
     @Override

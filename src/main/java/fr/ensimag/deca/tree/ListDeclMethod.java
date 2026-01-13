@@ -51,7 +51,7 @@ public class ListDeclMethod extends TreeList<AbstractDeclMethod> {
         }
     }
 
-    public void verifyListDeclMethodBody(DecacCompiler compiler, ClassDefinition currentClass) 
+    public void verifyListDeclMethodBody(DecacCompiler compiler, ClassDefinition currentClass)
             throws ContextualError {
         for (AbstractDeclMethod m : getList()) {
             // Type de retour stocké dans la définition (pass2)

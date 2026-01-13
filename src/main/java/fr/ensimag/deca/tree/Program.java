@@ -3,6 +3,7 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
+import fr.ensimag.deca.context.MethodDefinition;
 import fr.ensimag.deca.context.TypeDefinition;
 import fr.ensimag.deca.codegen.ErrorManager;
 import fr.ensimag.deca.codegen.*;
@@ -14,6 +15,7 @@ import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 import fr.ensimag.ima.pseudocode.ImmediateInteger;
 import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.LabelOperand;
 import fr.ensimag.ima.pseudocode.NullOperand;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
@@ -67,47 +69,52 @@ public class Program extends AbstractProgram {
         compiler.getStackManager().resetTemp();
         compiler.getStackManager().resetVars();
 
-        // --- Réserver la vtable de Object (builtin) ---
-        Symbol objectSymb = compiler.createSymbol("Object");
-        TypeDefinition tdObj = compiler.environmentType.get(objectSymb);
-        if (!(tdObj instanceof ClassDefinition)) {
-            throw new IllegalStateException("Object builtin n'est pas une ClassDefinition");
-        }
-        ClassDefinition objectDef = (ClassDefinition) tdObj;
+        // 0) Builtin: Object (vtable + equals)
+        ClassDefinition objectDef = compiler.environmentType.OBJECT.getDefinition();
 
-        int sizeObj = 1 + objectDef.getNumberOfMethods();
+        int sizeObj = 1 + objectDef.getNumberOfMethods();   // doit valoir 2 si equals est bien déclaré
         RegisterOffset baseObj = compiler.getStackManager().allocGlobalBlock(sizeObj);
         objectDef.setAddrTable(baseObj);
 
-        // --- Construction vtable Object : case 0 = null ---
+        // case 0 : parent = null
         compiler.addInstruction(new LOAD(new NullOperand(), Register.R0));
-        compiler.addInstruction(new STORE(Register.R0, objectDef.getAddrTable()));
+        compiler.addInstruction(new STORE(Register.R0, baseObj));
 
-        // (optionnel plus tard si Object a equals)
-        // compiler.addInstruction(new LOAD(new LabelOperand(new Label("code.Object.equals")), Register.R0));
-        // compiler.addInstruction(new STORE(Register.R0, new RegisterOffset(baseObj.getOffset() + 1, Register.GB)));
+        // case 1+index : equals
+        MethodDefinition eq;
+        try {
+            eq = objectDef.getMembers()
+                .get(compiler.createSymbol("equals"))
+                .asMethodDefinition("Object.equals doit être une méthode", Location.BUILTIN);
+        } catch (ContextualError e) {
+            throw new IllegalStateException("Builtin Object.equals mal défini", e);
+        }
 
-        // 1) Passe 1 : réserver la place des vtables des classes utilisateur
+        compiler.addInstruction(new LOAD(new LabelOperand(eq.getLabel()), Register.R0));
+        compiler.addInstruction(new STORE(
+                Register.R0,
+                new RegisterOffset(baseObj.getOffset() + 1 + eq.getIndex(), baseObj.getRegister())
+        ));
+
+        // 1) Passe 1 : réserver les vtables des classes utilisateur
         classes.codeGenMTable(compiler);
 
-        // 2) Construction des vtables des classes utilisateur
+        // 2) Construire les vtables des classes utilisateur
         classes.codeGenBuildMTable(compiler);
 
         // 3) Programme principal
         main.codeGenMain(compiler);
 
-        // 4) Prologue global (poly)
-        int addsp = compiler.getStackManager().getGlobalCount();          // vtables + variables globales
-        int tsto  = addsp + compiler.getStackManager().getMaxTemp();      // + temporaires max
+        // 4) Prologue global : TSTO ; BOV ; ADDSP (ordre comme dans le sujet)
+        int addsp = compiler.getStackManager().getGlobalCount();
+        int tsto  = addsp + compiler.getStackManager().getMaxTemp();
 
         compiler.addFirst(new ADDSP(new ImmediateInteger(addsp)));
-
         if (!compiler.getNoCheckOption()) {
             compiler.addFirst(new BOV(
                 compiler.getErrorManager().label(ErrorManager.RuntimeError.STACK_OVERFLOW)
             ));
         }
-
         compiler.addFirst(new TSTO(new ImmediateInteger(tsto)));
         compiler.addFirstComment("Main Program");
 
@@ -117,10 +124,14 @@ public class Program extends AbstractProgram {
         // 6) Handlers d'erreurs
         compiler.getErrorManager().emitHandlers(compiler);
 
-        // 7) Sous-programmes (après HALT)
+        // 7) Builtin code (après HALT) : Object.equals
+        emitObjectEquals(compiler);
+
+        // 8) Sous-programmes (après HALT)
         classes.codeGenInit(compiler);
         classes.codeGenMethods(compiler);
     }
+
 
 
     @Override
@@ -138,5 +149,30 @@ public class Program extends AbstractProgram {
     protected void prettyPrintChildren(PrintStream s, String prefix) {
         classes.prettyPrint(s, prefix, false);
         main.prettyPrint(s, prefix, true);
+    }
+
+    private void emitObjectEquals(DecacCompiler compiler) {
+        Label lTrue = new Label("Object.equals.true");
+        Label lEnd  = new Label("Object.equals.end");
+
+        compiler.addLabel(new Label("code.Object.equals"));
+
+        // R0 = this
+        compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB), Register.R0));
+        // compare to other
+        compiler.addInstruction(new CMP(new RegisterOffset(-3, Register.LB), Register.R0));
+        // if equal -> true
+        compiler.addInstruction(new BEQ(lTrue));
+
+        // false
+        compiler.addInstruction(new LOAD(new ImmediateInteger(0), Register.R0));
+        compiler.addInstruction(new BRA(lEnd));
+
+        // true
+        compiler.addLabel(lTrue);
+        compiler.addInstruction(new LOAD(new ImmediateInteger(1), Register.R0));
+
+        compiler.addLabel(lEnd);
+        compiler.addInstruction(new RTS());
     }
 }
