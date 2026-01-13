@@ -94,23 +94,22 @@ public class DeclClass extends AbstractDeclClass {
                 );
             }
 
-        // La classe elle meme n'existe pas déjà
-        if (compiler.environmentType.isDeclared(ClassName.getName())) {
-            // Si le nom de la classe est int, float, void, boolean ou string
-            if (ClassName.getName().getName().equals("int") ||
+        String className = ClassName.getName().getName();
+        if (ClassName.getName().getName().equals("int") ||
                 ClassName.getName().getName().equals("float") ||
                 ClassName.getName().getName().equals("void") ||
                 ClassName.getName().getName().equals("boolean") ||
                 ClassName.getName().getName().equals("string")) {
                 throw new ContextualError(
-                    "Le nom de la classe " + ClassName.getName() + " est interdit", 
-                    getLocation()
-                );
+                "Le nom '" + className + "' est un type prédéfini et ne peut pas être utilisé comme nom de classe.", getLocation());
+
             }
-            throw new ContextualError(
-                "Classe " + ClassName.getName() + " déjà déclarée", 
-                getLocation()
-            );
+
+        try {
+            compiler.environmentType.declare(ClassName.getName(), this.classDefinition);
+        } catch (EnvironmentType.DoubleDefException e) {
+            // non existe deja
+            throw new ContextualError("La classe " + className + " est déjà déclarée dans ce programme.", ClassName.getLocation());
         }
 
     TypeDefinition def = compiler.environmentType.get(ClassExtention.getName());
@@ -136,11 +135,6 @@ public class DeclClass extends AbstractDeclClass {
 
     newClassType.setDefinition(this.classDefinition); // pour selection fields
 
-    try {
-        compiler.environmentType.declare(ClassName.getName(), this.classDefinition);
-    } catch (EnvironmentType.DoubleDefException e) {
-        throw new ContextualError("Double définition de la classe " + ClassName.getName(), ClassName.getLocation());
-    }
 
     ClassName.setDefinition(this.classDefinition); // deco
     
