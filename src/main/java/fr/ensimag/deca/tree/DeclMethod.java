@@ -66,34 +66,23 @@ public class DeclMethod extends AbstractDeclMethod {
 
         int index;
         if (superMethod != null){
-            // Override = mêmes contraintes
-            if (!sig.equals(superMethod.getSignature())){
-                throw new ContextualError("Signature incompatible avec la méthode de la super-classe.", getLocation());
-            }
+            // Override = mêmes contraintes (2.7)
+            System.out.println("Override de la méthode " + methodName.getName());
             if (!t.sameType(superMethod.getType())){
                 throw new ContextualError("Type de retour incompatible avec la méthode de la super-classe.", getLocation());
+            }
+            System.out.println("Type de retour OK");
+            if (!sig.equals(superMethod.getSignature())){
+                // Debug
+                System.out.println("Sig actuelle : " + sig.toString());
+                System.out.println("Sig super : " + superMethod.getSignature().toString());
+                throw new ContextualError("Signature incompatible avec la méthode de la super-classe.", getLocation());
             }
             index = superMethod.getIndex();
         } else {
             // Nouvelle méthode : nouvel index
             index = currentClass.incNumberOfMethods() - 1;
         }
-
-        // les conditions :
-        // 2.7 cas du override :
-        // MethodDefinition superMethod = (MethodDefinition) currentClass.getSuperClass()
-        //                             .getMembers().get(methodName.getName());
-
-        // if (superMethod != null) { // il y a override
-        // // Vérifier que sig == sig2
-        // if (!sig.equals(superMethod.getSignature())) {
-        //     throw new ContextualError("Signature pas convenable en override avec la super classe", getLocation());
-        // }
-        // // Vérifier subtype(env_types, type, type2)
-        // if (!t.sameType(superMethod.getType())) {
-        //     throw new ContextualError("Return type incompatible avec la super méthode", getLocation());
-        // }
-        // }
 
         MethodDefinition methodDef = new MethodDefinition(t, getLocation(), sig, index);
 
