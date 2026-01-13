@@ -89,7 +89,7 @@ public class DeclMethod extends AbstractDeclMethod {
         String className = currentClass.getType().getName().getName();
         String methodeName = methodName.getName().getName();
         methodDef.setLabel(new Label("code." + className + "." + methodeName));
-
+        
         try {
             currentClass.getMembers().declare(methodName.getName(), methodDef);
         } catch (EnvironmentExp.DoubleDefException e) {
@@ -99,6 +99,7 @@ public class DeclMethod extends AbstractDeclMethod {
         
         // Décoration
         methodName.setDefinition(methodDef);
+        
         
     }
 
@@ -117,7 +118,11 @@ public class DeclMethod extends AbstractDeclMethod {
     this.params.verifyListDeclParam(compiler, envExpParams);
     this.body.getVars().verifyListDeclVariable(compiler, envExpParams, currentClass);
     this.body.getInsts().verifyListInst(compiler, envExpParams, currentClass, returnType);
-
+    if (!returnType.sameType(compiler.environmentType.VOID) && !body.getInsts().containsReturn()) {
+            throw new ContextualError("méthode non void sans instruction return",
+                getLocation()
+            );
+        }
 }
 
     

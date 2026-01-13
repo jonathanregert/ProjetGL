@@ -53,6 +53,10 @@ public  class MethodCall extends AbstractExpr {
         ClassDefinition classDef = ((ClassType) objType).getDefinition();
 
         Definition def = classDef.getMembers().get(method.getName());
+        if( def == null){throw new ContextualError(
+                    "méthode inconnue" + method.getName() ,
+                    method.getLocation());
+                }
         MethodDefinition mdef = def == null ? null
                 : def.asMethodDefinition(method.getName() + " n'est pas une méthode", method.getLocation());
         
@@ -62,7 +66,6 @@ public  class MethodCall extends AbstractExpr {
 
         Signature sig = mdef.getSignature();
 
-        // Vérifier nombre d'arguments
         if (arguments.size() != sig.size()) {
             throw new ContextualError(
                     "Nombre d'arguments incorrect pour " + method.getName()
@@ -71,7 +74,6 @@ public  class MethodCall extends AbstractExpr {
             );
         }
 
-        // Vérifier types (et convertir en RValue si nécessaire)
         List<AbstractExpr> args = arguments.getList();
         for (int i = 0; i < args.size(); i++) {
             Type expected = sig.paramNumber(i);
@@ -107,7 +109,6 @@ public  class MethodCall extends AbstractExpr {
         method.prettyPrint(s, prefix, false);
         arguments.prettyPrint(s, prefix, true);
     }
-
     @Override
     protected void codeGenExpr(DecacCompiler compiler, GPRegister target) {
 

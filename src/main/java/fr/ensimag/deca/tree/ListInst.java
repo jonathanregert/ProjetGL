@@ -45,4 +45,12 @@ public class ListInst extends TreeList<AbstractInst> {
             s.println();
         }
     }
+    public boolean containsReturn() {
+    for (AbstractInst inst : getList()) {
+        if (inst instanceof Return) {
+            return true;
+        }
+    }
+    return false;
+    }
 }
