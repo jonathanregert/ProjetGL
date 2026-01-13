@@ -118,6 +118,7 @@ public class DeclMethod extends AbstractDeclMethod {
     this.params.verifyListDeclParam(compiler, envExpParams);
     this.body.getVars().verifyListDeclVariable(compiler, envExpParams, currentClass);
     this.body.getInsts().verifyListInst(compiler, envExpParams, currentClass, returnType);
+    
     if (!returnType.sameType(compiler.environmentType.VOID) && !body.getInsts().containsReturn()) {
             throw new ContextualError("méthode non void sans instruction return",
                 getLocation()

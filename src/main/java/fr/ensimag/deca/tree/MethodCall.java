@@ -74,12 +74,14 @@ public  class MethodCall extends AbstractExpr {
             );
         }
 
-        List<AbstractExpr> args = arguments.getList();
-        for (int i = 0; i < args.size(); i++) {
-            Type expected = sig.paramNumber(i);
-            AbstractExpr checked = args.get(i).verifyRValue(compiler, localEnv, currentClass, expected);
-            args.set(i, checked);
+        int i = 0;
+        for (AbstractExpr arg : arguments.getList()) {
+        Type targetType = sig.paramNumber(i);
+        // on verifie chaque argument
+        AbstractExpr newArg = arg.verifyRValue(compiler, localEnv, currentClass, targetType);
+        i++; // au lieu de faire set : immuable
         }
+    
 
         method.setDefinition(mdef);
         setType(mdef.getType());

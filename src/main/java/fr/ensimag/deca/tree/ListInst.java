@@ -50,6 +50,14 @@ public class ListInst extends TreeList<AbstractInst> {
         if (inst instanceof Return) {
             return true;
         }
+        // gestion if blocks, while loops
+        if (inst instanceof IfThenElse) {
+            IfThenElse ifInst = (IfThenElse) inst;
+            if (ifInst.getThenBranch().containsReturn() && 
+                (ifInst.getElseBranch() != null && ifInst.getElseBranch().containsReturn())) {
+                return true;
+            }
+        } 
     }
     return false;
     }
