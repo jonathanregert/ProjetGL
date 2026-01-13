@@ -1,0 +1,14 @@
+// Description :
+// méthode non-void sans return
+//
+// Resultats :
+// Erreur contextuelle
+// Ligne 7 : return manquant
+
+class O {
+    int f() {
+        int x = 1;
+        x = x + 2;
+        // pas de return -> doit échouer
+    }
+}

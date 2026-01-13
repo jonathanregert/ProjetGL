@@ -1,0 +1,17 @@
+// Description :
+// accès à un champ via un objet d'un autre type
+//
+// Resultats :
+// Erreur contextuelle
+// Ligne 12 : champ inexistant pour ce type
+
+class B {
+    int a;
+}
+
+class C {
+    void test() {
+        String s;
+        s.a = 3; // invalide
+    }
+}

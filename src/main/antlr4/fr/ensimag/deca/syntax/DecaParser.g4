@@ -434,8 +434,8 @@ primary_expr returns[AbstractExpr tree]
             setLocation($tree, $m.start);
         }
     | THIS
-        { //$tree = new This(); 
-          //setLocation($tree, $THIS); 
+        { $tree = new This(); 
+          setLocation($tree, $THIS); 
         }
     | OPARENT expr CPARENT {
             assert($expr.tree != null);

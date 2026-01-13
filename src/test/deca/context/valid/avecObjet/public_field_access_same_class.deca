@@ -1,0 +1,21 @@
+// Description :
+//    Accès à un champ public depuis la même classe.
+//
+// Resultats :
+//    OK
+
+class A {
+    int x;
+
+    void set() {
+        x = 1;
+    }
+
+    int get() {
+        return x;
+    }
+}
+
+{
+}
+

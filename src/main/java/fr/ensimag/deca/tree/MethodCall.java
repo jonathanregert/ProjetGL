@@ -55,6 +55,10 @@ public  class MethodCall extends AbstractExpr {
         Definition def = classDef.getMembers().get(method.getName());
         MethodDefinition mdef = def == null ? null
                 : def.asMethodDefinition(method.getName() + " n'est pas une méthode", method.getLocation());
+        
+        if (mdef == null) {
+            throw new ContextualError("Méthode " + method.getName() + " non définie dans la classe " + classDef.getType().getName(), method.getLocation());
+        } // si methode nexiste pas
 
         Signature sig = mdef.getSignature();
 

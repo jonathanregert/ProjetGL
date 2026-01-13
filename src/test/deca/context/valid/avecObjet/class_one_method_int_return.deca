@@ -1,0 +1,15 @@
+// Description :
+//    Classe contenant une méthode retournant un int.
+//
+// Resultats :
+//    OK
+
+class A {
+    int f() {
+        return 1;
+    }
+}
+
+{
+}
+

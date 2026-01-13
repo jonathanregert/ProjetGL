@@ -1,0 +1,13 @@
+// Description :
+//    Classe contenant un champ de type string.
+//
+// Resultats :
+//    OK
+
+class A {
+    int s;
+}
+
+{
+}
+

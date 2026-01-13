@@ -1,0 +1,13 @@
+// Description :
+// Classe avec méthode utilisant un champ pour calcul
+//
+// Resultats :
+// ok
+
+class B {
+    int y;
+    int incrementY() {
+        y = y + 5;
+        return y;
+    }
+}

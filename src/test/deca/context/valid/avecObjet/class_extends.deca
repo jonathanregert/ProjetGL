@@ -1,0 +1,14 @@
+// Description :
+//    Déclaration d'une classe avec héritage (extends).
+//
+// Resultats :
+//    OK
+
+class A {
+}
+
+class B extends A {
+}
+
+{
+}

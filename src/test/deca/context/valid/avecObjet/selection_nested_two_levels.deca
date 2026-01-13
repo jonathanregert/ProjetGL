@@ -1,0 +1,21 @@
+// Description :
+//    Sélection de champ imbriquée sur deux niveaux.
+//
+// Resultats :
+//    OK
+
+class B {
+    int y;
+}
+
+class A {
+    B b;
+}
+
+{
+    A a = new A();
+    a.b = new B();
+    a.b.y = 9;
+    println(a.b.y);
+}
+
