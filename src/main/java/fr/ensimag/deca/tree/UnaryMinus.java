@@ -30,7 +30,6 @@ public class UnaryMinus extends AbstractUnaryExpr {
         return operandType;
     }
 
-
     @Override
     protected String getOperatorName() {
         return "-";
@@ -43,5 +42,7 @@ public class UnaryMinus extends AbstractUnaryExpr {
     }
 
     @Override
-    public int getPriorite() { return 90; }
+    public int getPriorite() {
+        return 90;
+    }
 }
