@@ -76,73 +76,74 @@ public class DeclClass extends AbstractDeclClass {
     @Override
     protected void verifyClass(DecacCompiler compiler) throws ContextualError {
 
-        // Super classe existence : condition donnée
+        // 1) Vérif super-classe existe
         if (!compiler.environmentType.isDeclared(ClassExtention.getName())) {
             throw new ContextualError(
-                "Super-classe " + ClassExtention.getName() + " non déclarée", 
+                "Super-classe " + ClassExtention.getName() + " non déclarée",
                 getLocation()
             );
         }
-        if (ClassName.getName().getName().equals("int") ||
-            ClassName.getName().getName().equals("float") ||
-            ClassName.getName().getName().equals("void") ||
-            ClassName.getName().getName().equals("boolean") ||
-            ClassName.getName().getName().equals("string")) {
+
+        // 2) Vérif nom interdit
+        String classNameStr = ClassName.getName().getName();
+        if (classNameStr.equals("int") || classNameStr.equals("float") || classNameStr.equals("void")
+            || classNameStr.equals("boolean") || classNameStr.equals("string")) {
             throw new ContextualError(
-                    "Le nom de la classe " + ClassName.getName() + " est interdit", 
-                    getLocation()
-                );
-            }
+                "Le nom '" + classNameStr + "' est un type prédéfini et ne peut pas être utilisé comme nom de classe.",
+                getLocation()
+            );
+        }
 
-        String className = ClassName.getName().getName();
-        if (ClassName.getName().getName().equals("int") ||
-                ClassName.getName().getName().equals("float") ||
-                ClassName.getName().getName().equals("void") ||
-                ClassName.getName().getName().equals("boolean") ||
-                ClassName.getName().getName().equals("string")) {
-                throw new ContextualError(
-                "Le nom '" + className + "' est un type prédéfini et ne peut pas être utilisé comme nom de classe.", getLocation());
+        // 3) Vérif classe pas déjà déclarée
+        if (compiler.environmentType.isDeclared(ClassName.getName())) {
+            throw new ContextualError(
+                "Classe " + ClassName.getName() + " déjà déclarée",
+                getLocation()
+            );
+        }
 
-            }
+        // 4) Récupérer et vérifier la super-classe
+        TypeDefinition def = compiler.environmentType.get(ClassExtention.getName());
+        if (def == null || !def.getType().isClass()) {
+            throw new ContextualError(
+                "La super-classe " + ClassExtention.getName() + " n'est pas une classe",
+                getLocation()
+            );
+        }
+        ClassDefinition superClassDef = (ClassDefinition) def;
+        ClassExtention.setDefinition(superClassDef);
 
+        // 5) Créer la définition de la nouvelle classe
+        ClassType newClassType = new ClassType(ClassName.getName(), ClassName.getLocation(), superClassDef);
+        this.classDefinition = new ClassDefinition(newClassType, getLocation(), superClassDef);
+        newClassType.setDefinition(this.classDefinition);
+
+        // 6) Déclarer dans l'env des types (MAINTENANT que classDefinition existe)
         try {
             compiler.environmentType.declare(ClassName.getName(), this.classDefinition);
         } catch (EnvironmentType.DoubleDefException e) {
-            // non existe deja
-            throw new ContextualError("La classe " + className + " est déjà déclarée dans ce programme.", ClassName.getLocation());
+            throw new ContextualError(
+                "Double définition de la classe " + ClassName.getName(),
+                ClassName.getLocation()
+            );
         }
 
-    TypeDefinition def = compiler.environmentType.get(ClassExtention.getName());
-
-    // TypeDefinition superClassDef = (ClassDefinition) compiler.environmentType.get(ClassExtention.getName());
-    if (def == null || !def.getType().isClass()) {
-        throw new ContextualError(
-            "La super-classe " + ClassExtention.getName() + " n'est pas une classe", 
-            getLocation()
-        );
-    }
-
-    // on cast apres le check
-    ClassDefinition superClassDef = (ClassDefinition) def;
-
-    ClassExtention.setDefinition(superClassDef);
-
-    ClassType newClassType = new ClassType(ClassName.getName(), ClassName.getLocation(), superClassDef);
-    ClassDefinition superClassDefinition = superClassDef;
-
-    this.classDefinition = new ClassDefinition(newClassType, getLocation(), superClassDefinition);
-
-
-    newClassType.setDefinition(this.classDefinition); // pour selection fields
-
-
-    ClassName.setDefinition(this.classDefinition); // deco
-    
+        // 7) Décorer le nom de classe
+        ClassName.setDefinition(this.classDefinition);
     }
 
     @Override
     protected void verifyClassMembers(DecacCompiler compiler)
             throws ContextualError {
+        // Hérite d'abord les champs de la super-classe
+        if (this.classDefinition.getSuperClass() != null) {
+            this.classDefinition.setNumberOfFields(
+                this.classDefinition.getSuperClass().getNumberOfFields()
+            );
+        } else {
+            this.classDefinition.setNumberOfFields(0);
+        }
+
         this.classFields.verifyListDeclField(compiler, this.classDefinition);
         // if (this.classDefinition.getSuperClass() != null) {
         //     this.classDefinition.setNumberOfMethods(
@@ -151,9 +152,20 @@ public class DeclClass extends AbstractDeclClass {
         // } else {
         //     this.classDefinition.setNumberOfMethods(0);
         // }
+        System.err.println("[P2] Class " + classDefinition.getType().getName().getName()
+        + " superMethods=" + (classDefinition.getSuperClass() == null ? -1 : classDefinition.getSuperClass().getNumberOfMethods())
+        + " before=" + classDefinition.getNumberOfMethods());
+        // Hérite d'abord les méthodes de la super-classe
+        if (this.classDefinition.getSuperClass() != null) {
+            this.classDefinition.setNumberOfMethods(
+                this.classDefinition.getSuperClass().getNumberOfMethods()
+            );
+        } else {
+            this.classDefinition.setNumberOfMethods(0);
+        }
         this.classMethods.verifyListDeclMethode(compiler, this.classDefinition);
-
-
+        System.err.println("[P2] Class " + classDefinition.getType().getName().getName()
+    + " after=" + classDefinition.getNumberOfMethods());
     }
 
     
@@ -173,7 +185,6 @@ public class DeclClass extends AbstractDeclClass {
         classFields.prettyPrint(s, prefix, true);
         classMethods.prettyPrint(s, prefix, true);
     }
-
 
     @Override
     public AbstractIdentifier getName() {
