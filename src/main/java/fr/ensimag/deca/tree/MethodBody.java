@@ -9,7 +9,7 @@ import java.io.PrintStream;
 /**
  * Represents the body of a method: variables + instructions.
  */
-public class MethodBody extends AbstractInst{
+public class MethodBody extends Tree{
     private final ListDeclVar vars;
     private final ListInst insts;
 
@@ -41,13 +41,14 @@ public class MethodBody extends AbstractInst{
         s.print("}");
     }
 
-    
-    public void codeGenInst(DecacCompiler compiler) {
-        insts.codeGenListInst(compiler);
-    }
-    @Override
-    protected void verifyInst(DecacCompiler compiler,
-                         EnvironmentExp localEnv,
-                         ClassDefinition currentClass,
-                         Type returnType) {}
+   // public void verifyMethodBody(DecacCompiler compiler,
+     //                        EnvironmentExp localEnv,
+       //                      ClassDefinition currentClass,
+         //                    Type returnType)
+       // throws ContextualError {
+
+    //vars.verifyListDeclVariable(compiler, localEnv, currentClass);
+    //insts.verifyListInst(compiler, localEnv, currentClass, returnType);
+//}
+
 }
