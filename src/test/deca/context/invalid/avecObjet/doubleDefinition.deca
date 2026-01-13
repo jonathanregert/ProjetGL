@@ -1,0 +1,11 @@
+// Description :
+//    Double définition : redéclaration d'un identificateur dans le même scope.
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne 10 : Variable x déjà définie
+
+{
+    int x;
+    float x;
+}

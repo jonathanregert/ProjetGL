@@ -1,0 +1,10 @@
+// Description :
+//    Déclaration puis affectation simple d'une variable entière.
+//
+// Resultats :
+// ok
+
+{
+    int a;
+    a = 5;
+}

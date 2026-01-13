@@ -45,6 +45,7 @@ public class Return extends AbstractInst {
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass, Type returnType)
             throws ContextualError {
+            
                 if (returnType == null) {
             throw new ContextualError(
                 "Instruction return hors d'une méthode",

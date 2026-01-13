@@ -1,0 +1,10 @@
+// Description :
+//    Type non déclaré utilisé dans une déclaration de variable.
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne 9 : type Inconnu non déclaré
+
+{
+    Inconnu x;
+}
