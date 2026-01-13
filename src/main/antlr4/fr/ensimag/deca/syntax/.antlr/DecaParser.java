@@ -1715,8 +1715,8 @@ public class DecaParser extends AbstractDecaParser {
 
 						                      assert(((Inequality_exprContext)_localctx).e1.tree != null);
 						                      assert(((Inequality_exprContext)_localctx).type.tree != null);
-						                      //((Inequality_exprContext)_localctx).tree =  new InstanceOf(((Inequality_exprContext)_localctx).e1.tree, ((Inequality_exprContext)_localctx).type.tree);
-						                      //setLocation(_localctx.tree, ((Inequality_exprContext)_localctx).INSTANCEOF);
+						                      ((Inequality_exprContext)_localctx).tree =  new InstanceOf(((Inequality_exprContext)_localctx).e1.tree, ((Inequality_exprContext)_localctx).type.tree);
+						                      setLocation(_localctx.tree, ((Inequality_exprContext)_localctx).INSTANCEOF);
 						                  
 						}
 						break;
@@ -2472,6 +2472,8 @@ public class DecaParser extends AbstractDecaParser {
 		public Token STRING;
 		public Token TRUE;
 		public Token FALSE;
+		public Token THIS;
+		public Token NULL;
 		public TerminalNode INT() { return getToken(DecaParser.INT, 0); }
 		public TerminalNode FLOAT() { return getToken(DecaParser.FLOAT, 0); }
 		public TerminalNode STRING() { return getToken(DecaParser.STRING, 0); }
@@ -2551,9 +2553,10 @@ public class DecaParser extends AbstractDecaParser {
 				enterOuterAlt(_localctx, 6);
 				{
 				setState(481);
-				match(THIS);
+				((LiteralContext)_localctx).THIS = match(THIS);
 
-
+				        ((LiteralContext)_localctx).tree =  new This();
+				        setLocation(_localctx.tree, ((LiteralContext)_localctx).THIS);
 				        
 				}
 				break;
@@ -2561,9 +2564,10 @@ public class DecaParser extends AbstractDecaParser {
 				enterOuterAlt(_localctx, 7);
 				{
 				setState(483);
-				match(NULL);
+				((LiteralContext)_localctx).NULL = match(NULL);
 
-
+				        ((LiteralContext)_localctx).tree =  new Null();
+				        setLocation(_localctx.tree, ((LiteralContext)_localctx).NULL);
 				        
 				}
 				break;

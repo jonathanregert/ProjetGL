@@ -334,8 +334,8 @@ inequality_expr returns[AbstractExpr tree]
     | e1=inequality_expr INSTANCEOF type {
             assert($e1.tree != null);
             assert($type.tree != null);
-            //$tree = new InstanceOf($e1.tree, $type.tree);
-            //setLocation($tree, $INSTANCEOF);
+            $tree = new InstanceOf($e1.tree, $type.tree);
+            setLocation($tree, $INSTANCEOF);
         }
     ;
 
@@ -484,10 +484,6 @@ literal returns[AbstractExpr tree]
         $tree = new StringLiteral($STRING.text);
         setLocation($tree, $STRING);
         }
-    // | INVALID_STRING {
-    //     throw new RuntimeException(
-    //         "Error: unterminated string at line " + $INVALID_STRING.getLine());
-    // }
     | TRUE {
         $tree = new BooleanLiteral(true);
         setLocation($tree, $TRUE);
@@ -497,10 +493,12 @@ literal returns[AbstractExpr tree]
         setLocation($tree, $FALSE);
         }
     | THIS {
-
+        $tree = new This();
+        setLocation($tree, $THIS);
         }
     | NULL {
-
+        $tree = new Null();
+        setLocation($tree, $NULL);
         }
     ;
 

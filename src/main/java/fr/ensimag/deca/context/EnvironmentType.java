@@ -41,6 +41,10 @@ public class EnvironmentType {
         STRING = new StringType(stringSymb);
         // not added to envTypes, it's not visible for the user.
 
+        // NULL
+        Symbol nullSymb = compiler.createSymbol("null");
+        NULL = new NullType(nullSymb);
+        
         // Objet pour les classes
         Symbol objectSymb = compiler.createSymbol("Object");
         this.OBJECT = new ClassType(objectSymb, Location.BUILTIN, null);
@@ -86,6 +90,7 @@ public class EnvironmentType {
     public final StringType  STRING;
     public final BooleanType BOOLEAN;
     public final ClassType OBJECT;
+    public final NullType  NULL;
 
     public boolean isDeclared(Symbol name) {
         return envTypes.containsKey(name);
