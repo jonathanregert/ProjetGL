@@ -94,6 +94,7 @@ public class DeclClass extends AbstractDeclClass {
             );
         }
 
+<<<<<<< HEAD
         // 3) Vérif classe pas déjà déclarée
         if (compiler.environmentType.isDeclared(ClassName.getName())) {
             throw new ContextualError(
@@ -130,6 +131,58 @@ public class DeclClass extends AbstractDeclClass {
 
         // 7) Décorer le nom de classe
         ClassName.setDefinition(this.classDefinition);
+=======
+        // La classe elle meme n'existe pas déjà
+        if (compiler.environmentType.isDeclared(ClassName.getName())) {
+            // Si le nom de la classe est int, float, void, boolean ou string
+            if (ClassName.getName().getName().equals("int") ||
+                ClassName.getName().getName().equals("float") ||
+                ClassName.getName().getName().equals("void") ||
+                ClassName.getName().getName().equals("boolean") ||
+                ClassName.getName().getName().equals("string")) {
+                throw new ContextualError(
+                    "Le nom de la classe " + ClassName.getName() + " est interdit", 
+                    getLocation()
+                );
+            }
+            throw new ContextualError(
+                "Classe " + ClassName.getName() + " déjà déclarée", 
+                getLocation()
+            );
+        }
+
+    TypeDefinition def = compiler.environmentType.get(ClassExtention.getName());
+
+    // TypeDefinition superClassDef = (ClassDefinition) compiler.environmentType.get(ClassExtention.getName());
+    if (def == null || !def.getType().isClass()) {
+        throw new ContextualError(
+            "La super-classe " + ClassExtention.getName() + " n'est pas une classe", 
+            getLocation()
+        );
+    }
+
+    // on cast apres le check
+    ClassDefinition superClassDef = (ClassDefinition) def;
+
+    ClassExtention.setDefinition(superClassDef);
+
+    ClassType newClassType = new ClassType(ClassName.getName(), ClassName.getLocation(), superClassDef);
+    ClassDefinition superClassDefinition = superClassDef;
+
+    this.classDefinition = new ClassDefinition(newClassType, getLocation(), superClassDefinition);
+
+
+    newClassType.setDefinition(this.classDefinition); // pour selection fields
+
+    try {
+        compiler.environmentType.declare(ClassName.getName(), this.classDefinition);
+    } catch (EnvironmentType.DoubleDefException e) {
+        throw new ContextualError("Double définition de la classe " + ClassName.getName(), ClassName.getLocation());
+    }
+
+    ClassName.setDefinition(this.classDefinition); // deco
+    
+>>>>>>> 40ee22c9efacef6854a36dddd7fcec2718f19c36
     }
 
     @Override
@@ -145,6 +198,7 @@ public class DeclClass extends AbstractDeclClass {
         }
 
         this.classFields.verifyListDeclField(compiler, this.classDefinition);
+<<<<<<< HEAD
         // if (this.classDefinition.getSuperClass() != null) {
         //     this.classDefinition.setNumberOfMethods(
         //         this.classDefinition.getSuperClass().getNumberOfMethods()
@@ -166,6 +220,9 @@ public class DeclClass extends AbstractDeclClass {
         this.classMethods.verifyListDeclMethode(compiler, this.classDefinition);
         System.err.println("[P2] Class " + classDefinition.getType().getName().getName()
     + " after=" + classDefinition.getNumberOfMethods());
+=======
+        this.classMethods.verifyListDeclMethode(compiler, this.classDefinition);
+>>>>>>> 40ee22c9efacef6854a36dddd7fcec2718f19c36
     }
 
     
@@ -201,13 +258,6 @@ public class DeclClass extends AbstractDeclClass {
     }
 
     // Gencode
-    private boolean hasAnyFieldsInHierarchy(ClassDefinition cd) {
-        while (cd != null) {
-            if (cd.getNumberOfFields() > 0) return true; // champs déclarés dans cette classe
-            cd = cd.getSuperClass();
-        }
-        return false;
-    }
 
     @Override
     public void codeGenMTable(DecacCompiler compiler){
@@ -265,7 +315,6 @@ public class DeclClass extends AbstractDeclClass {
             compiler.addInstruction(new STORE(Register.R0, cell));
         }
     }
-
     @Override
     public void codeGenInit(DecacCompiler compiler) {
         ClassDefinition classDef = this.classDefinition;
@@ -275,34 +324,14 @@ public class DeclClass extends AbstractDeclClass {
         Label pilePleine = compiler.getErrorManager().label(RuntimeError.STACK_OVERFLOW);
 
         compiler.addLabel(initLabel);
-        compiler.addComment("init." + className + " (this = -2(LB))");
+        compiler.addComment("init." + className + " (this dans R1)");
 
         compiler.getRegAllocator().reset();
         compiler.getStackManager().enterBlock();
 
-        // Champs locaux (déclarés dans la classe courante)
-        boolean hasLocalFields = !classFields.getList().isEmpty();
-
-        // Option A : appeler init.super seulement si la super-classe (ou ses ancêtres) a des champs
-        ClassDefinition superDef = classDef.getSuperClass();
-        boolean callSuperInit = false;
-        if (superDef != null) {
-            String sname = superDef.getType().getName().getName();
-            if (!"Object".equals(sname) && hasAnyFieldsInHierarchy(superDef)) {
-                callSuperInit = true;
-            }
-        }
-
-        // Si rien à faire : RTS direct, mais on doit sortir du block StackManager !
-        if (!hasLocalFields && !callSuperInit) {
-            compiler.addInstruction(new RTS());
-            compiler.getStackManager().exitBlock();
-            return;
-        }
-
         compiler.beginBlock();
 
-        int first = compiler.getRegAllocator().getFirstAlloc();
+        int first = 3;
         int last = compiler.getRegAllocator().getMaxReg();
 
         for (int r = first; r <= last; r++) {
@@ -310,21 +339,19 @@ public class DeclClass extends AbstractDeclClass {
             compiler.getStackManager().useTemp(1);
         }
 
-        if (callSuperInit) {
-            String sname = superDef.getType().getName().getName();
+        classFields.codeGenInitFields(compiler, classDef);
 
-            compiler.addToBlock(new LOAD(new RegisterOffset(-2, Register.LB), Register.R0));
-            compiler.addToBlock(new PUSH(Register.R0));
-            compiler.getStackManager().useTemp(1);
-
-            compiler.addToBlock(new BSR(new Label("init." + sname)));
-
-            compiler.addToBlock(new POP(Register.R0));
+        for (int r = last; r >= first; r--) {
+            compiler.addToBlock(new POP(Register.getR(r)));
             compiler.getStackManager().releaseTemp(1);
         }
 
-        classFields.codeGenInitFields(compiler, classDef);
+        if (classDef.getSuperClass() != null) {
+            String sname = classDef.getSuperClass().getType().getName().getName();
+            compiler.addToBlock(new BSR(new Label("init." + sname)));
+        }
 
+        classFields.codeGenInitFields(compiler, classDef);
         for (int r = last; r >= first; r--) {
             compiler.addToBlock(new POP(Register.getR(r)));
             compiler.getStackManager().releaseTemp(1);
@@ -339,8 +366,6 @@ public class DeclClass extends AbstractDeclClass {
         compiler.endBlock();
         compiler.getStackManager().exitBlock();
     }
-
-
 
     @Override
     public void codeGenMethods(DecacCompiler compiler) {
