@@ -17,6 +17,8 @@ import fr.ensimag.ima.pseudocode.instructions.BSR;
 import fr.ensimag.ima.pseudocode.instructions.CMP;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.PUSH;
+import fr.ensimag.ima.pseudocode.instructions.STORE;
+import fr.ensimag.ima.pseudocode.instructions.SUBSP;
 
 import org.apache.commons.lang.Validate;
 
@@ -114,38 +116,43 @@ public  class MethodCall extends AbstractExpr {
     @Override
     protected void codeGenExpr(DecacCompiler compiler, GPRegister target) {
 
-        object.codeGenExpr(compiler, Register.R1);
+        List<AbstractExpr> args = arguments.getList();
+        int nArgs = args.size();
+        int nTotal = 1 + nArgs; // this + args explicites
 
         Label nullDeref = compiler.getErrorManager().label(RuntimeError.NULL_DEREFERENCE);
-        compiler.addInstruction(new CMP(new ImmediateInteger(0), Register.R1));
-        compiler.addInstruction(new BEQ(nullDeref));
 
-        List<AbstractExpr> args = arguments.getList();
-        for (int i = args.size() - 1; i >= 0; i--) {
-            args.get(i).codeGenExpr(compiler, Register.R0);
-            compiler.addInstruction(new PUSH(Register.R0));
-            compiler.getStackManager().useTemp(1);
+        // 1) Réserver la place des paramètres (poly)
+        compiler.addInstruction(new ADDSP(new ImmediateInteger(nTotal)));
+        compiler.getStackManager().useTemp(nTotal);
+
+        // 2) Évaluer le param implicite (objet) et stocker en 0(SP)
+        object.codeGenExpr(compiler, Register.getR(2)); // R2 = objet
+        compiler.addInstruction(new STORE(Register.getR(2), new RegisterOffset(0, Register.SP)));
+
+        // 3) Évaluer les args explicites de gauche à droite et stocker en -1(SP), -2(SP), ...
+        for (int i = 0; i < nArgs; i++) {
+            args.get(i).codeGenExpr(compiler, Register.getR(2)); // R2 = arg_i
+            compiler.addInstruction(new STORE(Register.getR(2),
+                    new RegisterOffset(-1 - i, Register.SP)));
         }
 
-        compiler.addInstruction(new PUSH(Register.R1));
-        compiler.getStackManager().useTemp(1);
+        // 4) Récupérer this depuis 0(SP) et vérifier null
+        compiler.addInstruction(new LOAD(new RegisterOffset(0, Register.SP), Register.getR(2)));
+        compiler.addInstruction(new CMP(new NullOperand(), Register.getR(2)));
+        compiler.addInstruction(new BEQ(nullDeref));
 
+        // 5) Charger la vtable : R2 = *(this) = vtable
+        compiler.addInstruction(new LOAD(new RegisterOffset(0, Register.getR(2)), Register.getR(2)));
+
+        // 6) Appel virtuel : BSR (1 + index)(vtable)
         MethodDefinition mdef = method.getMethodDefinition();
-        int idx = mdef.getIndex();
-        int slot = 1 + idx;
+        int slot = 1 + mdef.getIndex();
+        compiler.addInstruction(new BSR(new RegisterOffset(slot, Register.getR(2))));
 
-        compiler.addInstruction(new LOAD(new RegisterOffset(0, Register.R1), Register.R0));
-
-        compiler.addInstruction(new LOAD(new RegisterOffset(slot, Register.R0), Register.R0));
-
-        compiler.getStackManager().useTemp(2);
-        compiler.addInstruction(new BSR(Register.R0));
-        compiler.getStackManager().releaseTemp(2);
-
-        // 7) Dépiler args + this
-        int toPop = args.size() + 1;
-        compiler.addInstruction(new ADDSP(new ImmediateInteger(toPop)));
-        compiler.getStackManager().releaseTemp(toPop);
+        // 7) Dépiler les paramètres (poly)
+        compiler.addInstruction(new SUBSP(new ImmediateInteger(nTotal)));
+        compiler.getStackManager().releaseTemp(nTotal);
 
         // 8) Résultat : R0 -> target
         if (target.getNumber() != Register.R0.getNumber()) {
