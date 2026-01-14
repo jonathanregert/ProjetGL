@@ -11,6 +11,9 @@ import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.WFLOAT;
 import fr.ensimag.ima.pseudocode.instructions.WINT;
+
+import static org.mockito.Mockito.*;
+
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
 
@@ -159,7 +162,7 @@ public abstract class AbstractExpr extends AbstractInst {
     
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        codeGenExpr(compiler);
+        codeGenExpr(compiler, Register.R1);
     }
     
 

@@ -155,7 +155,7 @@ public  class MethodCall extends AbstractExpr {
         compiler.getStackManager().releaseTemp(nTotal);
 
         // 8) Résultat : R0 -> target
-        if (target.getNumber() != Register.R0.getNumber()) {
+        if (!mdef.getType().isVoid() && target.getNumber() != Register.R0.getNumber()){
             compiler.addInstruction(new LOAD(Register.R0, target));
         }
     }

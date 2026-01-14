@@ -98,6 +98,15 @@ public class DecacCompiler {
         for (var ins : body) program.addInstruction(ins);
     }
 
+    public void addLabelToBlock(Label label) {
+        if (blockBody != null) {
+            blockBody.add(new Line(label));
+        } else {
+            program.addLabel(label);
+        }
+    }
+
+
     public DecacCompiler(CompilerOptions compilerOptions, File source) {
         super();
         this.compilerOptions = compilerOptions;
