@@ -250,6 +250,17 @@ public class DeclClass extends AbstractDeclClass {
             compiler.addInstruction(new STORE(Register.R0, cell));
         }
     }
+    // Helper: vrai si cd ou un de ses ancêtres (hors Object) a des champs
+    private boolean hasAnyFieldsInHierarchy(ClassDefinition cd) {
+        while (cd != null) {
+            String name = cd.getType().getName().getName();
+            if ("Object".equals(name)) return false;
+            if (cd.getNumberOfFields() > 0) return true;
+            cd = cd.getSuperClass();
+        }
+        return false;
+    }
+
     @Override
     public void codeGenInit(DecacCompiler compiler) {
         ClassDefinition classDef = this.classDefinition;
@@ -259,34 +270,61 @@ public class DeclClass extends AbstractDeclClass {
         Label pilePleine = compiler.getErrorManager().label(RuntimeError.STACK_OVERFLOW);
 
         compiler.addLabel(initLabel);
-        compiler.addComment("init." + className + " (this dans R1)");
+        compiler.addComment("init." + className + " (this = -2(LB))");
 
         compiler.getRegAllocator().reset();
         compiler.getStackManager().enterBlock();
 
+        // Champs déclarés localement dans la classe courante
+        boolean hasLocalFields = !classFields.getList().isEmpty();
+
+        // Option A : appeler init.super seulement si la hiérarchie de la super a des champs
+        ClassDefinition superDef = classDef.getSuperClass();
+        boolean callSuperInit = false;
+        if (superDef != null) {
+            String sname = superDef.getType().getName().getName();
+            if (!"Object".equals(sname) && hasAnyFieldsInHierarchy(superDef)) {
+                callSuperInit = true;
+            }
+        }
+
+        // Cas totalement trivial : RTS direct + exitBlock (important)
+        if (!hasLocalFields && !callSuperInit) {
+            compiler.addInstruction(new RTS());
+            compiler.getStackManager().exitBlock();
+            return;
+        }
+
         compiler.beginBlock();
 
-        int first = 3;
-        int last = compiler.getRegAllocator().getMaxReg();
+        int first = compiler.getRegAllocator().getFirstAlloc(); // 3
+        int last  = compiler.getRegAllocator().getMaxReg();
 
+        // Sauvegarde regs (safe)
         for (int r = first; r <= last; r++) {
             compiler.addToBlock(new PUSH(Register.getR(r)));
             compiler.getStackManager().useTemp(1);
         }
 
-        classFields.codeGenInitFields(compiler, classDef);
+        // Appel init.super(this) si nécessaire
+        if (callSuperInit) {
+            String sname = superDef.getType().getName().getName();
 
-        for (int r = last; r >= first; r--) {
-            compiler.addToBlock(new POP(Register.getR(r)));
+            // push this
+            compiler.addToBlock(new LOAD(new RegisterOffset(-2, Register.LB), Register.R0));
+            compiler.addToBlock(new PUSH(Register.R0));
+            compiler.getStackManager().useTemp(1);
+
+            compiler.addToBlock(new BSR(new Label("init." + sname)));
+
+            compiler.addToBlock(new POP(Register.R0));
             compiler.getStackManager().releaseTemp(1);
         }
 
-        if (classDef.getSuperClass() != null) {
-            String sname = classDef.getSuperClass().getType().getName().getName();
-            compiler.addToBlock(new BSR(new Label("init." + sname)));
-        }
-
+        // Init champs de la classe courante (UNE SEULE FOIS)
         classFields.codeGenInitFields(compiler, classDef);
+
+        // Restauration regs
         for (int r = last; r >= first; r--) {
             compiler.addToBlock(new POP(Register.getR(r)));
             compiler.getStackManager().releaseTemp(1);
@@ -301,6 +339,7 @@ public class DeclClass extends AbstractDeclClass {
         compiler.endBlock();
         compiler.getStackManager().exitBlock();
     }
+
 
     @Override
     public void codeGenMethods(DecacCompiler compiler) {
