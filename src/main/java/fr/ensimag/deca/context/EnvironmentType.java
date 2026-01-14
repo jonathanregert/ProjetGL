@@ -8,7 +8,6 @@ import fr.ensimag.deca.tree.ListDeclField;
 import fr.ensimag.deca.tree.Location;
 import fr.ensimag.ima.pseudocode.Label;
 
-// A FAIRE: étendre cette classe pour traiter la partie "avec objet" de Déca
 /**
  * Environment containing types. Initially contains predefined identifiers, more
  * classes can be added with declareClass().

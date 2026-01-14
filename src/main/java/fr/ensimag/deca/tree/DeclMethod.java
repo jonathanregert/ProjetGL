@@ -196,7 +196,9 @@ public class DeclMethod extends AbstractDeclMethod {
 
         compiler.beginBlock();
 
-        // Corps
+        body.getVars().codeGenListDeclVar(compiler);
+        body.getInsts().codeGenListInst(compiler);
+
         body.getInsts().codeGenListInst(compiler);
 
         if (md.getType().isVoid()) {
