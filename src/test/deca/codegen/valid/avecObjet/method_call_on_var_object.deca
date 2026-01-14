@@ -1,0 +1,17 @@
+// Description :
+//    Appel de méthode via une variable objet.
+//
+// Resultats :
+//    OK
+
+class A {
+    int f() {
+        return 2;
+    }
+}
+
+{
+    A a = new A();
+    println(a.f());
+}
+

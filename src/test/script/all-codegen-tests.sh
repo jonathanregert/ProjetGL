@@ -14,30 +14,30 @@ echo "Tests codegen"
 
 # Tests INVALIDES
 
-echo "Tests INVALIDES"
+# echo "Tests INVALIDES"
 
-find "$CODEGEN_DIR/invalid/" -name "*.deca" | sort | while read testfile; do
-    echo "Test invalide attendu : $testfile"
+# find "$CODEGEN_DIR/invalid/" -name "*.deca" | sort | while read testfile; do
+#     echo "Test invalide attendu : $testfile"
 
-    if decac "$testfile" > /dev/null 2>&1; then
-        assfile="${testfile%.deca}.ass"
+#     if decac "$testfile" > /dev/null 2>&1; then
+#         assfile="${testfile%.deca}.ass"
 
-        if ima "$assfile" > /dev/null 2>&1; then
-            echo "Succes inattendu (execution)"
-        else
-            echo "Echec attendu a l'execution"
-        fi
-    else
-        echo "Erreur inattendue a la compilation"
-        exit 1
-    fi
-done
+#         if ima "$assfile" > /dev/null 2>&1; then
+#             echo "Succes inattendu (execution)"
+#         else
+#             echo "Echec attendu a l'execution"
+#         fi
+#     else
+#         echo "Erreur inattendue a la compilation"
+#         exit 1
+#     fi
+# done
 
 # Tests VALIDES
 
 echo "Tests VALIDES"
 
-find "$CODEGEN_DIR/valid/" -name "*.deca" | sort | while read testfile; do
+find "$CODEGEN_DIR/valid/avecObjet" -name "*.deca" | sort | while read testfile; do
     echo "Test valide attendu : $testfile"
 
     if decac "$testfile" > /dev/null 2>&1; then

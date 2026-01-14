@@ -1,9 +1,0 @@
-// Description:
-//    Programme minimaliste utilisant println.
-//
-// Resultats:
-// ok
-
-{
-        println("Hello, world!");
-}

@@ -1,0 +1,16 @@
+// Description :
+//    Écriture puis lecture d'un champ.
+//
+// Resultats :
+//    OK
+
+class A {
+    int x;
+}
+
+{
+    A a = new A();
+    a.x = 11;
+    println(a.x);
+}
+
