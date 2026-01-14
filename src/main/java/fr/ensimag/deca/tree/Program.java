@@ -121,15 +121,15 @@ public class Program extends AbstractProgram {
         // 5) Fin partie principale
         compiler.addInstruction(new HALT());
 
-        // 6) Handlers d'erreurs
-        compiler.getErrorManager().emitHandlers(compiler);
-
-        // 7) Builtin code (après HALT) : Object.equals
+        // 6) Builtin code (après HALT) : Object.equals
         emitObjectEquals(compiler);
 
-        // 8) Sous-programmes (après HALT)
+        // 7) Sous-programmes (après HALT)
         classes.codeGenInit(compiler);
         classes.codeGenMethods(compiler);
+
+        // 8) Handlers d'erreurs
+        compiler.getErrorManager().emitHandlers(compiler);
     }
 
 
