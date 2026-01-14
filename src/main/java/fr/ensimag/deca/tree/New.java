@@ -64,6 +64,7 @@ public class New extends AbstractExpr {
         int taille = 1 + classDef.getNumberOfFields();
 
         compiler.addInstruction(new NEW(new ImmediateInteger(taille), target));
+        compiler.getErrorManager().genCheckHeapOverflow(compiler);
 
         RegisterOffset mTableBase = classDef.getAddrTable();
 

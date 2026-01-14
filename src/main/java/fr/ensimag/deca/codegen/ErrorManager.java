@@ -67,7 +67,7 @@ public class ErrorManager {
     private String message(RuntimeError error){
         switch (error){
             case STACK_OVERFLOW:    return "Erreur : debordement de pile";
-            case HEAP_OVERFLOW:     return "Erreur : debordement de tas";
+            case HEAP_OVERFLOW:     return "Erreur : allocation impossible, tas plein";
 
             case INT_DIV_BY_ZERO:   return "Erreur : divion entiere par zero";
             case INT_MOD_BY_ZERO:   return "Erreur : reste de la division entiere par zero";
