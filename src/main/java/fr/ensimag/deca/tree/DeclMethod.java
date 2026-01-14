@@ -178,14 +178,16 @@ public class DeclMethod extends AbstractDeclMethod {
 
         Label pilePleine = compiler.getErrorManager().label(RuntimeError.STACK_OVERFLOW);
 
+        // Label de début de méthode
         compiler.addLabel(start);
         compiler.addComment("Méthode " + className + "." + mName);
 
+        // Initialisation du contexte de la méthode
         compiler.getRegAllocator().reset();
         compiler.getStackManager().enterBlock();
-
         compiler.setCurrentMethodEndLabel(end);
 
+        // Configuration des opérandes pour les paramètres (LB)
         int k = 3; // this = -2(LB), params explicites = -3(LB), -4(LB), ...
         for (AbstractDeclParam p : params.getList()) {
             DeclParam dp = (DeclParam) p;
@@ -194,28 +196,26 @@ public class DeclMethod extends AbstractDeclMethod {
             k++;
         }
 
-        compiler.beginBlock();
+        int d = body.getVars().size(); 
+        compiler.addInstruction(new TSTO(new ImmediateInteger(d)));
+        compiler.addInstruction(new BOV(pilePleine));
 
         body.getVars().codeGenListDeclVar(compiler);
         body.getInsts().codeGenListInst(compiler);
 
         if (md.getType().isVoid()) {
-            compiler.addToBlock(new BRA(end));
+            compiler.addInstruction(new BRA(end));
         }
-
-        int d = compiler.getStackManager().getTSTOForLocals();
-        compiler.addFirstToBlock(new TSTO(new ImmediateInteger(d)));
-        compiler.addFirstToBlock(new BOV(pilePleine));
-
-        compiler.endBlock();
 
         // Label de fin pour les return
         compiler.addLabel(end);
         compiler.addInstruction(new RTS());
 
+        // Nettoyage du contexte
         compiler.setCurrentMethodEndLabel(null);
         compiler.getStackManager().exitBlock();
     }
+
 
     @Override
     public AbstractIdentifier getMethodName()

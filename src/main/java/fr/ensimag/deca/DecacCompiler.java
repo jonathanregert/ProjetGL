@@ -99,11 +99,7 @@ public class DecacCompiler {
     }
 
     public void addLabelToBlock(Label label) {
-        if (blockBody != null) {
-            blockBody.add(new Line(label));
-        } else {
-            program.addLabel(label);
-        }
+        program.addLabel(label);
     }
 
 
