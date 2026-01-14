@@ -1,3 +1,5 @@
+package fr.ensimag.deca.context;
+
 import static org.mockito.Mockito.*;
 import org.junit.jupiter.api.Test;
 import fr.ensimag.deca.context.*;

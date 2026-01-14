@@ -12,8 +12,11 @@ import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
 import fr.ensimag.ima.pseudocode.instructions.BSR;
+import fr.ensimag.ima.pseudocode.instructions.LEA;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.NEW;
+import fr.ensimag.ima.pseudocode.instructions.POP;
+import fr.ensimag.ima.pseudocode.instructions.PUSH;
 import fr.ensimag.ima.pseudocode.instructions.STORE;
 
 import java.io.PrintStream;
@@ -64,20 +67,15 @@ public class New extends AbstractExpr {
 
         RegisterOffset mTableBase = classDef.getAddrTable();
 
-        compiler.addInstruction(new LOAD(mTableBase, Register.R0));
+        compiler.addInstruction(new LEA(mTableBase, Register.R0));
         compiler.addInstruction(new STORE(Register.R0, new RegisterOffset(0, target)));
 
-        if (target.getNumber() != Register.R1.getNumber()){
-            compiler.addInstruction(new LOAD(target, Register.R1));
-        }
 
         String className = classDef.getType().getName().getName();
         Label initLabel = new Label("init." + className);
+        
+        compiler.addInstruction(new PUSH(target));
         compiler.addInstruction(new BSR(initLabel));
-
-        if (target.getNumber() != Register.R1.getNumber()){
-            compiler.addInstruction(new LOAD(Register.R1, target));
-        }
+        compiler.addInstruction(new POP(target));
     }
-
 }

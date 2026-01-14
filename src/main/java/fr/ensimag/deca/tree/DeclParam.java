@@ -27,6 +27,10 @@ public class DeclParam extends AbstractDeclParam {
         this.varName = varName;
     }
 
+    public AbstractIdentifier getVarName(){
+        return varName;
+    }
+
     @Override
     protected void verifyDeclParam(DecacCompiler compiler,
             EnvironmentExp localEnv)

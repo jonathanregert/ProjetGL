@@ -12,6 +12,7 @@ import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
 import fr.ensimag.ima.pseudocode.instructions.BOV;
+import fr.ensimag.ima.pseudocode.instructions.BRA;
 import fr.ensimag.ima.pseudocode.instructions.RTS;
 import fr.ensimag.ima.pseudocode.instructions.TSTO;
 import net.bytebuddy.asm.MemberSubstitution.Current;
@@ -185,22 +186,22 @@ public class DeclMethod extends AbstractDeclMethod {
 
         compiler.setCurrentMethodEndLabel(end);
 
-        // Assigner les operands des paramètres (LB négatif)
-        // Convention poly: this = -2(LB), params explicites = -3(LB), -4(LB), ...
-        int k = 3;
-        // for (AbstractDeclParam p : params.getList()) { // adapte si ton API diffère
-        //     ParamDefinition pd = p.getParamName().getParamDefinition();
-        //     pd.setOperand(new RegisterOffset(-k, Register.LB));
-        //     k++;
-        // }
+        int k = 3; // this = -2(LB), params explicites = -3(LB), -4(LB), ...
+        for (AbstractDeclParam p : params.getList()) {
+            DeclParam dp = (DeclParam) p;
+            ParamDefinition pd = (ParamDefinition) dp.getVarName().getDefinition();
+            pd.setOperand(new RegisterOffset(-k, Register.LB));
+            k++;
+        }
 
         compiler.beginBlock();
 
         // Corps
         body.getInsts().codeGenListInst(compiler);
 
-        // Si on sort sans return : (void) OK => RTS direct
-        compiler.addToBlock(new RTS());
+        if (md.getType().isVoid()) {
+            compiler.addToBlock(new BRA(end));
+        }
 
         int d = compiler.getStackManager().getTSTOForLocals();
         compiler.addFirstToBlock(new TSTO(new ImmediateInteger(d)));
