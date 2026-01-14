@@ -88,25 +88,24 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
     @Override
     protected void codeGenByteExpr(DecacCompiler compiler) {
         String trueLabel = compiler.getByteManager().newLabel();
+        String falseLabel = compiler.getByteManager().newLabel();
         String endLabel = compiler.getByteManager().newLabel();
 
-        // gauche et droite
-        getLeftOperand().codeGenByteExpr(compiler);
-        getRightOperand().codeGenByteExpr(compiler);
+        // produit uniquement des branchements (ne laisse rien sur la pile)
+        codeGenByteCond(compiler, trueLabel, falseLabel);
 
-        // branchement concret
-        emitIfCmpTrue(compiler, trueLabel);
-
-        // false
-        compiler.getByteManager().emitLDC(0);
-        compiler.getByteManager().emitGoto(endLabel);
-
-        // true
+        // true -> 1
         compiler.getByteManager().emitLabel(trueLabel);
         compiler.getByteManager().emitLDC(1);
+        compiler.getByteManager().emitGoto(endLabel);
+
+        // false -> 0
+        compiler.getByteManager().emitLabel(falseLabel);
+        compiler.getByteManager().emitLDC(0);
 
         compiler.getByteManager().emitLabel(endLabel);
     }
+
 
     protected abstract void emitIfCmpTrue(
         DecacCompiler compiler,
@@ -125,6 +124,28 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
     protected boolean needsParensForChild(AbstractExpr child) {
         return child instanceof AbstractOpCmp;
     }
+
+    @Override
+    protected void codeGenByteCond(DecacCompiler compiler, String trueLabel, String falseLabel) {
+        Type t = getLeftOperand().getType(); // après ConvFloat
+
+        getLeftOperand().codeGenByteExpr(compiler);
+        getRightOperand().codeGenByteExpr(compiler);
+
+        if (t.isInt() || t.isBoolean()) {
+            // int,int -> if_icmp*
+            emitIfCmpTrue(compiler, trueLabel);
+        } else if (t.isFloat()) {
+            // float,float -> fcmpl ; if<cond> (sur int)
+            compiler.getByteManager().emitFCMPL(); // (voir étape 3)
+            compiler.getByteManager().emitIfCmpFloatTrue(getOperatorName(), trueLabel);
+        } else {
+            throw new UnsupportedOperationException("Comparaison JVM non supportée pour " + t);
+        }
+
+        compiler.getByteManager().emitGoto(falseLabel);
+    }
+
 
     
 }

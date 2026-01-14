@@ -54,10 +54,15 @@ public class Main extends AbstractMain {
     protected void codeGenMainByte(DecacCompiler compiler) {
         compiler.getByteManager().getInstructions().add("; Beginning of main (byte)");
 
+        // déclarations
+        declVariables.codeGenListDeclVarByte(compiler);
+
+        // instructions
         insts.codeGenListInstByte(compiler);
 
         compiler.getByteManager().getInstructions().add("; End of main (byte)");
     }
+
 
     
     @Override

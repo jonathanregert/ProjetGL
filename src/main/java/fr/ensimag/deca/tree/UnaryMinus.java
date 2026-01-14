@@ -48,7 +48,17 @@ public class UnaryMinus extends AbstractUnaryExpr {
     @Override
     protected void codeGenByteExpr(DecacCompiler compiler) {
         getOperand().codeGenByteExpr(compiler);
-        compiler.getByteManager().emitINEG();
+
+        if (getType().isInt()) {
+            compiler.getByteManager().emitINEG();
+        } else if (getType().isFloat()) {
+            compiler.getByteManager().emitFNEG();
+        } else {
+            throw new UnsupportedOperationException(
+                "UnaryMinus JVM non supporté pour " + getType()
+            );
+        }
     }
+
 
 }

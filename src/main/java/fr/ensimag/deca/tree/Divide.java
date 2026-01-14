@@ -47,7 +47,15 @@ public class Divide extends AbstractOpArith {
 
     @Override
     protected void codeGenByteOperator(DecacCompiler compiler) {
-        compiler.getByteManager().emitIDIV();
+        if (getType().isInt()) {
+            compiler.getByteManager().emitIDIV();
+        } else if (getType().isFloat()) {
+            compiler.getByteManager().emitFDIV();
+        } else {
+            throw new UnsupportedOperationException(
+                "Divide non supporté pour " + getType()
+            );
+        }
     }
 
 }

@@ -48,5 +48,21 @@ public class And extends AbstractOpBool {
         compiler.getByteManager().emitIfEq(label);
     }
 
+    @Override
+    protected void codeGenByteCond(
+        DecacCompiler compiler,
+        String trueLabel,
+        String falseLabel
+    ) {
+        String mid = compiler.getByteManager().newLabel();
+
+        // si gauche == false → falseLabel
+        getLeftOperand().codeGenByteCond(compiler, mid, falseLabel);
+
+        compiler.getByteManager().emitLabel(mid);
+
+        // sinon évaluer droite
+        getRightOperand().codeGenByteCond(compiler, trueLabel, falseLabel);
+    }
 
 }

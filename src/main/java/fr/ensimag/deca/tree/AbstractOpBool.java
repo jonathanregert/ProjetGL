@@ -63,29 +63,31 @@ public abstract class AbstractOpBool extends AbstractBinaryExpr {
 
     }
 
+    @Override
+    protected void codeGenByteExpr(DecacCompiler compiler) {
+        String labelTrue = compiler.getByteManager().newLabel();
+        String labelFalse = compiler.getByteManager().newLabel();
+        String labelEnd = compiler.getByteManager().newLabel();
+
+        // Ne pousse RIEN
+        codeGenByteCond(compiler, labelTrue, labelFalse);
+
+        // true → 1
+        compiler.getByteManager().emitLabel(labelTrue);
+        compiler.getByteManager().emitLDC(1);
+        compiler.getByteManager().emitGoto(labelEnd);
+
+        // false → 0
+        compiler.getByteManager().emitLabel(labelFalse);
+        compiler.getByteManager().emitLDC(0);
+
+        compiler.getByteManager().emitLabel(labelEnd);
+    }
+
     protected abstract Instruction getChildBranch(Label shortCircuitLabel);
 
     protected abstract int getShortCircuitValue();
 
-    @Override
-    protected void codeGenByteExpr(DecacCompiler compiler) {
-        String scLabel = compiler.getByteManager().newLabel();
-        String endLabel = compiler.getByteManager().newLabel();
-
-        // gauche
-        getLeftOperand().codeGenByteExpr(compiler);
-        emitShortCircuitBranch(compiler, scLabel);
-
-        // droite
-        getRightOperand().codeGenByteExpr(compiler);
-        compiler.getByteManager().emitGoto(endLabel);
-
-        // short-circuit
-        compiler.getByteManager().emitLabel(scLabel);
-        compiler.getByteManager().emitLDC(getShortCircuitValue());
-
-        compiler.getByteManager().emitLabel(endLabel);
-    }
     protected abstract void emitShortCircuitBranch(
         DecacCompiler compiler,
         String shortCircuitLabel

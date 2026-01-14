@@ -30,8 +30,17 @@ public class Plus extends AbstractOpArith {
 
     @Override
     protected void codeGenByteOperator(DecacCompiler compiler) {
-        compiler.getByteManager().emitIADD();
+        if (getType().isInt()) {
+            compiler.getByteManager().emitIADD();
+        } else if (getType().isFloat()) {
+            compiler.getByteManager().emitFADD();
+        } else {
+            throw new UnsupportedOperationException(
+                "Plus non supporté pour " + getType()
+            );
+        }
     }
+
 
     @Override
     public int getPriorite() { return 70; }

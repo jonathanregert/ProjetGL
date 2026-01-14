@@ -67,6 +67,7 @@ public class BooleanLiteral extends AbstractExpr {
 
     @Override
     protected void codeGenByteExpr(DecacCompiler compiler) {
+        // System.out.println("codeGenByteExpr BooleanLiteral(" + value + ")");
         compiler.getByteManager().emitLDC(value ? 1 : 0);
     }
 

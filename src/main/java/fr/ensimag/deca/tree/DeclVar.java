@@ -96,6 +96,23 @@ public class DeclVar extends AbstractDeclVar {
     }
 
     @Override
+    protected void codeGenDeclVarByte(DecacCompiler compiler) {
+        VariableDefinition def = varName.getVariableDefinition();
+        int slot = compiler.allocLocalSlot(def);
+
+        if (initialization instanceof Initialization) {
+            AbstractExpr expr = ((Initialization) initialization).getExpression();
+            expr.codeGenByteExpr(compiler);
+
+            if (def.getType().isInt() || def.getType().isBoolean()) {
+                compiler.getByteManager().emitIStore(slot);
+            } else if (def.getType().isFloat()) {
+                compiler.getByteManager().emitFStore(slot);
+            }
+        }
+    }
+    
+    @Override
     public AbstractIdentifier getVarName()
     {
         return varName;

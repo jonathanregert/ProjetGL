@@ -40,7 +40,16 @@ public class Multiply extends AbstractOpArith {
 
     @Override
     protected void codeGenByteOperator(DecacCompiler compiler) {
-        compiler.getByteManager().emitIMUL();
+        if (getType().isInt()) {
+            compiler.getByteManager().emitIMUL();
+        } else if (getType().isFloat()) {
+            compiler.getByteManager().emitFMUL();
+        } else {
+            throw new UnsupportedOperationException(
+                "Multiply non supporté pour " + getType()
+            );
+        }
     }
+
 
 }

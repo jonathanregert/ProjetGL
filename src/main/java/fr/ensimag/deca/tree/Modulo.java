@@ -55,7 +55,14 @@ public class Modulo extends AbstractOpArith {
 
     @Override
     protected void codeGenByteOperator(DecacCompiler compiler) {
-        compiler.getByteManager().emitIREM();
+        if (getType().isInt()) {
+            compiler.getByteManager().emitIREM();
+        } else {
+            throw new UnsupportedOperationException(
+                "Modulo non supporté pour " + getType()
+            );
+        }
     }
+
 
 }

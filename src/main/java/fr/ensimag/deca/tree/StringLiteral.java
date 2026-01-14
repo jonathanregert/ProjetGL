@@ -87,7 +87,11 @@ public class StringLiteral extends AbstractStringLiteral {
 
     @Override
     protected void codeGenByteExpr(DecacCompiler compiler) {
-        compiler.getByteManager().emitLDC(value);
+        String raw = value;
+        if (raw.startsWith("\"") && raw.endsWith("\"")) {
+            raw = raw.substring(1, raw.length() - 1);
+        }
+        compiler.getByteManager().emitLDC(raw);
     }
 
 }

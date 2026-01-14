@@ -178,8 +178,20 @@ public abstract class AbstractExpr extends AbstractInst {
 
 
     protected abstract void codeGenByteExpr(DecacCompiler compiler);
+    
     @Override
     protected void codeGenByte(DecacCompiler compiler) {
         codeGenByteExpr(compiler);
     }
+        protected void codeGenByteCond(
+        DecacCompiler compiler,
+        String trueLabel,
+        String falseLabel
+    ) {
+        codeGenByteExpr(compiler);
+        compiler.getByteManager().emitIfNe(trueLabel);
+        compiler.getByteManager().emitGoto(falseLabel);
+    }
+
+
 }

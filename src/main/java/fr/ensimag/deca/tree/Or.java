@@ -50,4 +50,21 @@ public class Or extends AbstractOpBool {
         compiler.getByteManager().emitIfNe(label);
     }
 
+    @Override
+    protected void codeGenByteCond(
+        DecacCompiler compiler,
+        String trueLabel,
+        String falseLabel
+    ) {
+        String mid = compiler.getByteManager().newLabel();
+
+        // si gauche == true → trueLabel
+        getLeftOperand().codeGenByteCond(compiler, trueLabel, mid);
+
+        compiler.getByteManager().emitLabel(mid);
+
+        // sinon évaluer droite
+        getRightOperand().codeGenByteCond(compiler, trueLabel, falseLabel);
+    }
+
 }

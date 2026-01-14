@@ -1,6 +1,7 @@
 package fr.ensimag.deca;
 
 import fr.ensimag.deca.context.EnvironmentType;
+import fr.ensimag.deca.context.VariableDefinition;
 import fr.ensimag.deca.codegen.RegAllocator;
 import fr.ensimag.deca.codegen.StackManager;
 import fr.ensimag.deca.context.EnvironmentExp;
@@ -54,6 +55,29 @@ public class DecacCompiler {
     private final StackManager stackManager = new StackManager();
     private final ErrorManager errorManager = new ErrorManager();
     private final ByteManager byteManager = new ByteManager();
+
+    // JVM locals (pour --byte)
+    private int nextLocalSlot = 1; // 0 est pour String[] args
+    private final java.util.Map<VariableDefinition, Integer> localSlots = new java.util.HashMap<>();
+
+    public int allocLocalSlot(VariableDefinition def) {
+        int slot = nextLocalSlot++;
+        localSlots.put(def, slot);
+        return slot;
+    }
+
+    public int getLocalSlot(VariableDefinition def) {
+        Integer slot = localSlots.get(def);
+        if (slot == null) {
+            throw new DecacInternalError("No JVM slot for variable " + def);
+        }
+        return slot;
+    }
+
+    public int getNextLocalSlot() {
+        return nextLocalSlot;
+    }
+    // 
 
     public DecacCompiler(CompilerOptions compilerOptions, File source) {
         super();
@@ -272,7 +296,7 @@ public class DecacCompiler {
             
             try {
                 byteManager.dumpToFile(
-                    new File(sourceName.replace(".deca", ".byte"))
+                    new File(sourceName.replace(".deca", ".j"))
                 );
             } catch (FileNotFoundException e) {
                 throw new DecacFatalError("Failed to open output file: " + e.getLocalizedMessage());

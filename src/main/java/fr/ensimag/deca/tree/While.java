@@ -61,19 +61,22 @@ public class While extends AbstractInst {
 
     @Override
     protected void codeGenByte(DecacCompiler compiler) {
-        String startLbl = compiler.getByteManager().newLabel();
-        String endLbl   = compiler.getByteManager().newLabel();
+        String testLbl = compiler.getByteManager().newLabel();
+        String bodyLbl = compiler.getByteManager().newLabel();
+        String endLbl  = compiler.getByteManager().newLabel();
 
-        compiler.getByteManager().emitLabel(startLbl);
+        compiler.getByteManager().emitLabel(testLbl);
 
-        condition.codeGenByteExpr(compiler);
-        compiler.getByteManager().emitIfEq(endLbl);
+        // ✅ CONDITION = BRANCHEMENTS UNIQUEMENT
+        condition.codeGenByteCond(compiler, bodyLbl, endLbl);
 
+        compiler.getByteManager().emitLabel(bodyLbl);
         body.codeGenListInstByte(compiler);
-        compiler.getByteManager().emitGoto(startLbl);
+        compiler.getByteManager().emitGoto(testLbl);
 
         compiler.getByteManager().emitLabel(endLbl);
     }
+
 
 
     @Override

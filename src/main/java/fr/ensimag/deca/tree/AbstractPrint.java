@@ -83,8 +83,35 @@ public abstract class AbstractPrint extends AbstractInst {
     @Override
     protected void codeGenByte(DecacCompiler compiler) {
         for (AbstractExpr e : getArguments().getList()) {
-            e.codeGenByteExpr(compiler);
-            compiler.getByteManager().emitPrint(e.getType());
+
+            if (e.getType().isBoolean()) {
+                // System.out.println("Print BOOLEAN");
+                String t = compiler.getByteManager().newLabel();
+                String f = compiler.getByteManager().newLabel();
+                String end = compiler.getByteManager().newLabel();
+
+                e.codeGenByteCond(compiler, t, f);
+
+                compiler.getByteManager().emitLabel(t);
+                compiler.getByteManager().emitLDC(1);
+                compiler.getByteManager().emitGoto(end);
+
+                compiler.getByteManager().emitLabel(f);
+                compiler.getByteManager().emitLDC(0);
+
+                compiler.getByteManager().emitLabel(end);
+            } else {
+                // System.out.println("Print NON-BOOLEAN");
+                e.codeGenByteExpr(compiler);
+            }
+
+            if ("ln".equals(getSuffix())) {
+                compiler.getByteManager().emitPrintln(e.getType());
+            } else {
+                compiler.getByteManager().emitPrint(e.getType());
+            }
+
         }
     }
+
 }

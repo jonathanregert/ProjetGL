@@ -1,6 +1,7 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.Type;
+import fr.ensimag.deca.context.VariableDefinition;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.DAddr;
 import fr.ensimag.ima.pseudocode.GPRegister;
@@ -84,7 +85,37 @@ public class Assign extends AbstractBinaryExpr {
     @Override
     protected void codeGenByteExpr(DecacCompiler compiler) {
         getRightOperand().codeGenByteExpr(compiler);
-        // TODO : store dans variable locale
+
+        AbstractLValue lv = getLeftOperand();
+        VariableDefinition def =
+            ((Identifier) lv).getVariableDefinition();
+
+        int slot = compiler.getLocalSlot(def);
+
+        // garder la valeur pour l’expression (= est une expression)
+        compiler.getByteManager().emitDUP();
+
+        if (getType().isInt() || getType().isBoolean()) {
+            compiler.getByteManager().emitIStore(slot);
+        } else if (getType().isFloat()) {
+            compiler.getByteManager().emitFStore(slot);
+        }
+    }
+
+    @Override
+    protected void codeGenByte(DecacCompiler compiler) {
+        getRightOperand().codeGenByteExpr(compiler);
+
+        VariableDefinition def =
+            ((Identifier) getLeftOperand()).getVariableDefinition();
+
+        int slot = compiler.getLocalSlot(def);
+
+        if (getType().isInt() || getType().isBoolean()) {
+            compiler.getByteManager().emitIStore(slot);
+        } else if (getType().isFloat()) {
+            compiler.getByteManager().emitFStore(slot);
+        }
     }
 
 }

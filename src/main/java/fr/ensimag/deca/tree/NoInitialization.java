@@ -53,4 +53,16 @@ public class NoInitialization extends AbstractInitialization {
         // Rien a generer
     }
 
+    // @Override
+    // protected void codeGenInitializationByte(DecacCompiler compiler, Type type) {
+    //     if (type.isFloat()) {
+    //         compiler.getByteManager().emitLDC(0.0f);
+    //     } else {
+    //         // int ou boolean
+    //         compiler.getByteManager().emitLDC(0);
+    //     }
+    // }
+
+
+
 }

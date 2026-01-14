@@ -53,19 +53,32 @@ public class Not extends AbstractUnaryExpr {
 
     @Override
     protected void codeGenByteExpr(DecacCompiler compiler) {
-        String trueLbl = compiler.getByteManager().newLabel();
-        String endLbl  = compiler.getByteManager().newLabel();
+        String t = compiler.getByteManager().newLabel();
+        String f = compiler.getByteManager().newLabel();
+        String end = compiler.getByteManager().newLabel();
 
-        getOperand().codeGenByteExpr(compiler);
-        compiler.getByteManager().emitIfEq(trueLbl);
+        codeGenByteCond(compiler, t, f);
 
-        compiler.getByteManager().emitLDC(0);
-        compiler.getByteManager().emitGoto(endLbl);
-
-        compiler.getByteManager().emitLabel(trueLbl);
+        compiler.getByteManager().emitLabel(t);
         compiler.getByteManager().emitLDC(1);
+        compiler.getByteManager().emitGoto(end);
 
-        compiler.getByteManager().emitLabel(endLbl);
+        compiler.getByteManager().emitLabel(f);
+        compiler.getByteManager().emitLDC(0);
+
+        compiler.getByteManager().emitLabel(end);
     }
+
+
+    @Override
+    protected void codeGenByteCond(
+        DecacCompiler compiler,
+        String trueLabel,
+        String falseLabel
+    ) {
+        // inversion logique
+        getOperand().codeGenByteCond(compiler, falseLabel, trueLabel);
+    }
+
 
 }

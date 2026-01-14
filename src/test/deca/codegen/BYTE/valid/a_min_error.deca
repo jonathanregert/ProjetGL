@@ -1,0 +1,13 @@
+{
+    int a = 3, b = 7, c = 5;
+    int i = 0, j, acc = 0;
+    int k;
+    float f = 2.5, g, h;
+    boolean ok = true, flag = false;
+    boolean cond;
+
+
+    while (f < 5.0) {
+        f = f + 1.0;
+    }
+}

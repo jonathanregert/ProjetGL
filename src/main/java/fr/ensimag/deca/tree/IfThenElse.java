@@ -79,14 +79,15 @@ public class IfThenElse extends AbstractInst {
 
     @Override
     protected void codeGenByte(DecacCompiler compiler) {
+        String thenLbl = compiler.getByteManager().newLabel();
         String elseLbl = compiler.getByteManager().newLabel();
         String endLbl  = compiler.getByteManager().newLabel();
 
-        // condition
-        condition.codeGenByteExpr(compiler);
-        compiler.getByteManager().emitIfEq(elseLbl);
+        // ✅ CONDITION = BRANCHEMENTS UNIQUEMENT
+        condition.codeGenByteCond(compiler, thenLbl, elseLbl);
 
         // then
+        compiler.getByteManager().emitLabel(thenLbl);
         thenBranch.codeGenListInstByte(compiler);
         compiler.getByteManager().emitGoto(endLbl);
 

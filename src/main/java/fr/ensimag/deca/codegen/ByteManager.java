@@ -54,6 +54,12 @@ public class ByteManager {
         instructions.add("fdiv");
     }
 
+    public void emitFADD() { instructions.add("fadd"); }
+    public void emitFSUB() { instructions.add("fsub"); }
+    public void emitFMUL() { instructions.add("fmul"); }
+    public void emitFNEG() { instructions.add("fneg"); }
+
+
     // Comparaisons / booléens
 
     public void emitICMP_EQ() {
@@ -80,27 +86,62 @@ public class ByteManager {
         instructions.add("if_icmpge");
     }
 
-    // Entrées / sorties
-
-    public void emitPrint(Type type) {
-        if (type.isInt() || type.isBoolean()) {
-            instructions.add(
-                "invokestatic java/io/PrintStream.println(I)V"
-            );
-        } else if (type.isFloat()) {
-            instructions.add(
-                "invokestatic java/io/PrintStream.println(F)V"
-            );
-        } else {
-            throw new UnsupportedOperationException(
-                "print JVM non supporté pour " + type
-            );
+    public void emitIfCmpFloatTrue(String op, String label) {
+        switch (op) {
+            case "<":  instructions.add("iflt " + label); break;
+            case "<=": instructions.add("ifle " + label); break;
+            case ">":  instructions.add("ifgt " + label); break;
+            case ">=": instructions.add("ifge " + label); break;
+            case "==": instructions.add("ifeq " + label); break;
+            case "!=": instructions.add("ifne " + label); break;
+            default:
+                throw new IllegalArgumentException("op float inconnu: " + op);
         }
     }
 
-    public void emitNewline() {
-        instructions.add("println");
+
+    public void emitFCMPL() {
+        instructions.add("fcmpl");
     }
+
+
+
+    // Entrées / sorties
+
+    public void emitPrint(Type type) {
+        instructions.add("getstatic java/lang/System/out Ljava/io/PrintStream;");
+        instructions.add("swap");
+        if (type.isInt() || type.isBoolean()) {
+            instructions.add("invokevirtual java/io/PrintStream/print(I)V");
+        } else if (type.isFloat()) {
+            instructions.add("invokevirtual java/io/PrintStream/print(F)V");
+        } else if (type.isString()) {
+            instructions.add("invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V");
+        } else {
+            throw new UnsupportedOperationException("print JVM non supporté pour " + type);
+        }
+    }
+
+    public void emitPrintln(Type type) {
+        instructions.add("getstatic java/lang/System/out Ljava/io/PrintStream;");
+        instructions.add("swap");
+        if (type.isInt() || type.isBoolean()) {
+            instructions.add("invokevirtual java/io/PrintStream/println(I)V");
+        } else if (type.isFloat()) {
+            instructions.add("invokevirtual java/io/PrintStream/println(F)V");
+        } else if (type.isString()) {
+            instructions.add("invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V");
+        } else {
+            throw new UnsupportedOperationException("println JVM non supporté pour " + type);
+        }
+    }
+
+
+    public void emitNewline() {
+        instructions.add("getstatic java/lang/System/out Ljava/io/PrintStream;");
+        instructions.add("invokevirtual java/io/PrintStream/println()V");
+    }
+
 
     public void emitReadInt() {
         instructions.add(
@@ -198,6 +239,28 @@ public class ByteManager {
     }
     public void emitFReturn() {
         instructions.add("freturn");
+    }
+
+    // locals
+    public void emitILoad(int slot) {
+        instructions.add("iload " + slot);
+    }
+
+    public void emitIStore(int slot) {
+        instructions.add("istore " + slot);
+    }
+
+    public void emitFLoad(int slot) {
+        instructions.add("fload " + slot);
+    }
+
+    public void emitFStore(int slot) {
+        instructions.add("fstore " + slot);
+    }
+
+    // stack
+    public void emitDUP() {
+        instructions.add("dup");
     }
 
 }

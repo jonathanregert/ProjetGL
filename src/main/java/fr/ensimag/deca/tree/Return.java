@@ -78,7 +78,16 @@ public class Return extends AbstractInst {
 
     @Override
     protected void codeGenByte(DecacCompiler compiler) {
-        compiler.getByteManager().emitReturnVoid();
+        expr.codeGenByteExpr(compiler);
+
+        if (expr.getType().isInt() || expr.getType().isBoolean()) {
+            compiler.getByteManager().emitIReturn();
+        } else if (expr.getType().isFloat()) {
+            compiler.getByteManager().emitFReturn();
+        } else {
+            compiler.getByteManager().emitReturnVoid();
+        }
     }
+
     
 }

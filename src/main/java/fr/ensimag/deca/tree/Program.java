@@ -102,13 +102,45 @@ public class Program extends AbstractProgram {
 
     @Override
     public void codeGenByte(DecacCompiler compiler) {
-        compiler.getByteManager().getInstructions().add("; start program");
 
+        // En-tête du .class
+        compiler.getByteManager().getInstructions().add(
+            ".class public Main"
+        );
+        compiler.getByteManager().getInstructions().add(
+            ".super java/lang/Object"
+        );
+        compiler.getByteManager().getInstructions().add("");
+
+        // Méthode main
+        compiler.getByteManager().getInstructions().add(
+            ".method public static main([Ljava/lang/String;)V"
+        );
+
+        // Limites JVM (larges pour le projet GL)
+        compiler.getByteManager().getInstructions().add(
+            ".limit stack 50"
+        );
+
+        // D'abord il faut appeler main.codeGenMainByte
+        // int locals = Math.max(1, compiler.getNextLocalSlot());
+        // compiler.getByteManager().getInstructions().add(".limit locals " + locals);
+
+
+        compiler.getByteManager().getInstructions().add(
+            ".limit locals 50"
+        );
+
+        // Corps du main
         main.codeGenMainByte(compiler);
 
+        // return + fin de méthode
         compiler.getByteManager().emitReturnVoid();
-        compiler.getByteManager().getInstructions().add("; end program");
+        compiler.getByteManager().getInstructions().add(
+            ".end method"
+        );
     }
+
 
 
 }

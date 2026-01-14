@@ -251,7 +251,20 @@ public class Identifier extends AbstractIdentifier {
 
     @Override
     protected void codeGenByteExpr(DecacCompiler compiler) {
-        throw new UnsupportedOperationException("Unimplemented method 'codeGenByteExpr'");
+        VariableDefinition def = getVariableDefinition();
+        int slot = compiler.getLocalSlot(def);
+
+        if (getType().isInt() || getType().isBoolean()) {
+            compiler.getByteManager().emitILoad(slot);
+        } else if (getType().isFloat()) {
+            compiler.getByteManager().emitFLoad(slot);
+        } else {
+            throw new UnsupportedOperationException(
+                "JVM load non supporté pour " + getType()
+            );
+        }
     }
+
+
 
 }
