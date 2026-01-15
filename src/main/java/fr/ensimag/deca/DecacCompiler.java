@@ -387,4 +387,14 @@ public class DecacCompiler {
         return parser.parseProgramAndManageErrors(err);
     }
 
+    public Line addFirstToBlockAndReturnLine(Instruction ins, String comment) {
+        Line l = new Line(null, ins, comment);
+        addLineToPrefix(l);
+        return l;
+    }
+    public Line addFirstToBlockAndReturnLine(Instruction ins) {
+        Line l = new Line(ins);
+        addLineToPrefix(l);
+        return l;
+    }
 }

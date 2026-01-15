@@ -16,6 +16,7 @@ import org.apache.log4j.Logger;
 import fr.ensimag.ima.pseudocode.ImmediateInteger;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.LabelOperand;
+import fr.ensimag.ima.pseudocode.Line;
 import fr.ensimag.ima.pseudocode.NullOperand;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
@@ -71,18 +72,23 @@ public class Program extends AbstractProgram {
         compiler.beginBlock();
 
         // -----------------------------
-        // A) Prologue global (poly)
+        // A) Prologue global (placeholders)
         // -----------------------------
-        int addsp = compiler.getStackManager().getGlobalCount();
-        int tsto  = addsp + compiler.getStackManager().getMaxTemp();
+        Line lTsto = compiler.addFirstToBlockAndReturnLine(
+            new TSTO(new ImmediateInteger(0)),
+            "Main Program"
+        );
 
-        compiler.addFirstToBlock(new TSTO(new ImmediateInteger(tsto)), "Main Program");
+        Line lBov = null;
         if (!compiler.getNoCheckOption()) {
-            compiler.addFirstToBlock(new BOV(
-                compiler.getErrorManager().label(ErrorManager.RuntimeError.STACK_OVERFLOW)
-            ));
+            lBov = compiler.addFirstToBlockAndReturnLine(
+                new BOV(compiler.getErrorManager().label(ErrorManager.RuntimeError.STACK_OVERFLOW))
+            );
         }
-        compiler.addFirstToBlock(new ADDSP(new ImmediateInteger(addsp)));
+
+        Line lAddsp = compiler.addFirstToBlockAndReturnLine(
+            new ADDSP(new ImmediateInteger(0))
+        );
 
         // -----------------------------
         // B) Construction des tables de méthodes
@@ -130,6 +136,12 @@ public class Program extends AbstractProgram {
         compiler.addCommentToBlock("--------------------------------------------------");
 
         main.codeGenMain(compiler);
+
+        int addsp = compiler.getStackManager().getADDSPForMain(); // = getGlobalCount()
+        int tsto  = compiler.getStackManager().getTSTOForMain();  // = global + maxTemp
+
+        lAddsp.setInstruction(new ADDSP(new ImmediateInteger(addsp)));
+        lTsto.setInstruction(new TSTO(new ImmediateInteger(tsto)));
 
         // Fin main
         compiler.addInstruction(new HALT());
