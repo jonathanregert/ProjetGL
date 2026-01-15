@@ -14,6 +14,7 @@ import fr.ensimag.deca.tree.AbstractProgram;
 import fr.ensimag.deca.tree.LocationException;
 import fr.ensimag.ima.pseudocode.AbstractLine;
 import fr.ensimag.ima.pseudocode.IMAProgram;
+import fr.ensimag.ima.pseudocode.InlinePortion;
 import fr.ensimag.ima.pseudocode.Instruction;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Line;
@@ -22,6 +23,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.ArrayList;
+
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.apache.log4j.Logger;
@@ -52,8 +55,8 @@ public class DecacCompiler {
     private final RegAllocator regAllocator;
     private final StackManager stackManager = new StackManager();
     private final ErrorManager errorManager = new ErrorManager();
-    private java.util.ArrayList<fr.ensimag.ima.pseudocode.Instruction> blockPrefix = null;
-    private java.util.ArrayList<fr.ensimag.ima.pseudocode.Instruction> blockBody = null;
+    private ArrayList<Line> blockPrefix = null;
+    private ArrayList<Line> blockBody = null;
     private Label currentMethodEndLabel;
     private String currentClassName;
 
@@ -64,44 +67,87 @@ public class DecacCompiler {
     public void setCurrentMethodEndLabel(Label l) { currentMethodEndLabel = l; }
     public Label getCurrentMethodEndLabel() { return currentMethodEndLabel; }
 
+    public void addInline(String asm) {
+        program.add(new InlinePortion(asm));
+    }
+    
     public void beginBlock() {
-    blockPrefix = new java.util.ArrayList<>();
-    blockBody = new java.util.ArrayList<>();
+        if (blockBody != null || blockPrefix != null) {
+            throw new IllegalStateException("Bloc déjà ouvert");
+        }
+        blockPrefix = new ArrayList<>();
+        blockBody = new ArrayList<>();
     }
 
-    public void addToBlock(fr.ensimag.ima.pseudocode.Instruction i) {
-        if (blockBody == null) {
-            addInstruction(i);
-        } else {
-            blockBody.add(i);
-        }
+    public void addToBlock(Line l) {
+        if (blockBody == null) program.add(l);
+        else blockBody.add(l);
     }
 
-    public void addFirstToBlock(fr.ensimag.ima.pseudocode.Instruction i) {
-        if (blockPrefix == null) {
-            addFirst(i); // fallback, mais idéalement jamais utilisé ici
-        } else {
-            blockPrefix.add(i);
-        }
+
+    // Prefix: sans commentaire
+    public void addFirstToBlock(Instruction ins) {
+        addLineToPrefix(new Line(ins));
     }
+
+    // Prefix: avec commentaire (tu l'as déjà, je la remets pour cohérence)
+    public void addFirstToBlock(Instruction ins, String comment) {
+        addLineToPrefix(new Line(null, ins, comment));
+    }
+
+    // Optionnel: prefix commentaire seul
+    public void addFirstCommentToBlock(String comment) {
+        addLineToPrefix(new Line(comment));
+    }
+
 
     public void endBlock() {
-        if (blockBody == null) return;
+        if (blockBody == null || blockPrefix == null) {
+            throw new IllegalStateException("Aucun bloc ouvert");
+        }
 
-        var prefix = blockPrefix;
-        var body = blockBody;
+        // 1) prefix d'abord (TSTO/BOV/...)
+        for (Line l : blockPrefix) {
+            program.add(l);
+        }
+
+        // 2) corps ensuite (labels + instructions + comments dans l'ordre)
+        for (Line l : blockBody) {
+            program.add(l);
+        }
 
         blockPrefix = null;
         blockBody = null;
-
-        for (var ins : prefix) program.addInstruction(ins);
-        for (var ins : body) program.addInstruction(ins);
     }
 
-    public void addLabelToBlock(Label label) {
-        program.addLabel(label);
+
+    public void addCommentToBlock(String comment) {
+        addLineToBody(new Line(comment));
     }
 
+
+
+    public void addLabelToBlock(Label lab) {
+        addLineToBody(new Line(lab));
+    }
+
+    //Helpers internes
+    private void addLineToBody(Line l) {
+        if (blockBody != null) {
+            blockBody.add(l);
+        } else {
+            program.add(l);
+        }
+    }
+
+    private void addLineToPrefix(Line l) {
+        if (blockPrefix != null) {
+            blockPrefix.add(l);
+        } else {
+            // Pas de bloc ouvert => on veut vraiment "au tout début" du programme
+            program.addFirst(l); // IMAProgram.addFirst(Line)
+        }
+    }
 
     public DecacCompiler(CompilerOptions compilerOptions, File source) {
         super();
@@ -131,16 +177,8 @@ public class DecacCompiler {
         return errorManager;
     }
 
-    public void addFirst(Instruction i) {
-    program.addFirst(i);
-    }
-
     public void addFirst(Instruction i, String comment) {
         program.addFirst(i, comment);
-    }
-
-    public void addFirst(Label l) {
-        program.addFirst(new Line(l));
     }
 
     public void addFirstComment(String s) {
@@ -196,27 +234,14 @@ public class DecacCompiler {
      * @see
      * fr.ensimag.ima.pseudocode.IMAProgram#addInstruction(fr.ensimag.ima.pseudocode.Instruction)
      */
-    public void addInstruction(Instruction instruction) {
-        if (blockBody != null){
-            blockBody.add(instruction);
-        } else {
-            program.addInstruction(instruction);
-        }
+    public void addInstruction(Instruction ins) {
+        addLineToBody(new Line(ins));
     }
 
-    /**
-     * @see
-     * fr.ensimag.ima.pseudocode.IMAProgram#addInstruction(fr.ensimag.ima.pseudocode.Instruction,
-     * java.lang.String)
-     */
-    public void addInstruction(Instruction instruction, String comment) {
-        if (blockBody != null){
-            blockBody.add(instruction);
-        } else {
-            program.addInstruction(instruction, comment);
-        }
+    public void addInstruction(Instruction ins, String comment) {
+        addLineToBody(new Line(null, ins, comment));
     }
-    
+
     /**
      * @see 
      * fr.ensimag.ima.pseudocode.IMAProgram#display()
@@ -282,7 +307,6 @@ public class DecacCompiler {
             return true;
         }
     }
-
     /**
      * Internal function that does the job of compiling (i.e. calling lexer,
      * verification and code generation).
