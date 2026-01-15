@@ -78,11 +78,11 @@ public class IfThenElse extends AbstractInst {
         thenBranch.codeGenListInst(compiler);
         compiler.addInstruction(new BRA(labelEnd));
 
-        compiler.addLabel(labelElse);
+        compiler.addLabelToBlock(labelElse);
         if (elseBranch != null){
             elseBranch.codeGenListInst(compiler);
         }
-        compiler.addLabel(labelEnd);
+        compiler.addLabelToBlock(labelEnd);
     }
 
     @Override

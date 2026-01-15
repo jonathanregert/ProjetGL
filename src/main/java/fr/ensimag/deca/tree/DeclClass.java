@@ -28,6 +28,7 @@ import fr.ensimag.ima.pseudocode.instructions.TSTO;
 import fr.ensimag.ima.pseudocode.ImmediateInteger;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.LabelOperand;
+import fr.ensimag.ima.pseudocode.Line;
 import fr.ensimag.ima.pseudocode.NullOperand;
 
 import static org.mockito.ArgumentMatchers.*;
@@ -293,19 +294,20 @@ public class DeclClass extends AbstractDeclClass {
             return;
         }
 
-        int d = compiler.getStackManager().getTSTOForLocals();
-        compiler.addInstruction(new TSTO(new ImmediateInteger(d)));
+        Line tstoLine = new Line(new TSTO(new ImmediateInteger(0)));
+        compiler.add(tstoLine);
         compiler.addInstruction(new BOV(pilePleine));
 
         int first = compiler.getRegAllocator().getFirstAlloc();
         int last  = compiler.getRegAllocator().getMaxReg();
 
+        // Sauvegarde regs
         for (int r = first; r <= last; r++) {
             compiler.addInstruction(new PUSH(Register.getR(r)));
             compiler.getStackManager().useTemp(1);
         }
 
-        // init.super(this)
+        // init.super(this) si nécessaire
         if (callSuperInit) {
             String sname = superDef.getType().getName().getName();
 
@@ -330,8 +332,12 @@ public class DeclClass extends AbstractDeclClass {
 
         compiler.addInstruction(new RTS());
 
+        int d = compiler.getStackManager().getTSTOForLocals();
+        tstoLine.setInstruction(new TSTO(new ImmediateInteger(d)));
+
         compiler.getStackManager().exitBlock();
     }
+
     @Override
     public void codeGenMethods(DecacCompiler compiler) {
         String className = this.classDefinition.getType().getName().getName();

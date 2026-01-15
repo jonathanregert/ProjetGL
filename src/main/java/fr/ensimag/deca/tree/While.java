@@ -47,7 +47,7 @@ public class While extends AbstractInst {
         Label labelTest = new Label("while_test_" + id);
         Label labelEnd  = new Label("while_end_" + id);
 
-        compiler.addLabel(labelTest);
+        compiler.addLabelToBlock(labelTest);
         condition.codeGenExpr(compiler, Register.R1);
 
         compiler.addInstruction(new CMP(new ImmediateInteger(0), Register.R1));
@@ -55,7 +55,7 @@ public class While extends AbstractInst {
     
         body.codeGenListInst(compiler);
         compiler.addInstruction(new BRA(labelTest));
-        compiler.addLabel(labelEnd);
+        compiler.addLabelToBlock(labelEnd);
     }
 
     @Override
