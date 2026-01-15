@@ -19,6 +19,6 @@ class A {
 
 {
     A a = new A();
-    //println(a.f());
+    println(a.f());
 }
 
