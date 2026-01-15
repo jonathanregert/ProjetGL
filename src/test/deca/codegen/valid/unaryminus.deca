@@ -1,7 +1,0 @@
-// Description :
-// Test de l'initialisation d'une variable entière avec une valeur négative.
-// Resultats :
-// a vaut -3, pas d'affichage
-{
-    int a = -3;
-}

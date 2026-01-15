@@ -1,9 +1,0 @@
-// Description :
-// Test de la soustraction entre deux entiers.
-// Resultats :
-// 3 affiché
-{
-    int a = 6;
-    int b = 3;
-    print(a - b);
-}

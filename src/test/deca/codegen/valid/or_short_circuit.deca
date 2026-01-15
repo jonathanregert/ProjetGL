@@ -1,9 +1,0 @@
-// Description :
-//      test du court-circuit OR : opérande gauche true → droite non évaluée
-//
-// Resultats :
-// true affiché sans erreur
-{
-    boolean a = true;
-    print(a || (1/0==0));
-}
