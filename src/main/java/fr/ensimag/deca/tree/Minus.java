@@ -34,7 +34,15 @@ public class Minus extends AbstractOpArith {
 
     @Override
     protected void codeGenByteOperator(DecacCompiler compiler) {
-        compiler.getByteManager().emitISUB();
+        if (getType().isInt()) {
+            compiler.getByteManager().emitISUB();
+        } else if (getType().isFloat()) {
+            compiler.getByteManager().emitFSUB();
+        } else {
+            throw new UnsupportedOperationException(
+                "Plus non supporté pour " + getType()
+            );
+        }
     }
 
 }

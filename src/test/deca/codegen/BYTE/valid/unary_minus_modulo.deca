@@ -1,0 +1,11 @@
+// Description :
+// test UnaryMinus et modulo
+//
+// Resultats :
+// -3, 1 affichés
+{
+    int a = -3;
+    int b = 10 % 3;
+    print(a);
+    print(b);
+}

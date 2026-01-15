@@ -1,0 +1,12 @@
+// Description :
+// test variables déclarées puis assignées après
+//
+// Resultats :
+// 5 affiché
+{
+    int a;
+    int b;
+    a = 3;
+    b = a + 2;
+    print(b);
+}

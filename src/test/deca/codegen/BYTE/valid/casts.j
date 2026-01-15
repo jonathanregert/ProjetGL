@@ -160,7 +160,7 @@ iload 5
 i2f
 ldc 2.0
 fdiv
-isub
+fsub
 ldc 7.9
 f2i
 i2f
@@ -169,7 +169,7 @@ ldc 3
 i2f
 f2i
 i2f
-isub
+fsub
 fstore 12
 fload 12
 ldc 18.5

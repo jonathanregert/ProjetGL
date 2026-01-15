@@ -1,0 +1,15 @@
+// Description :
+// Test d'une expression arithmétique complexe combinant addition, multiplication, division et modulo.
+// Resultats :
+// i vaut 6, pas d'affichage
+{
+    int x = 3;
+    int y = 2;
+    int z = 7;
+    int w = 1;
+    int j = 9;
+    int k = 12;
+    int l = 0;
+    int i;
+    i = x + (3 * (z / (w + (j % (k + l)))));
+}
