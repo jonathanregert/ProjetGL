@@ -8,15 +8,18 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
+
 import fr.ensimag.ima.pseudocode.ImmediateInteger;
 import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.Line;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
 import fr.ensimag.ima.pseudocode.instructions.BOV;
 import fr.ensimag.ima.pseudocode.instructions.BRA;
+import fr.ensimag.ima.pseudocode.instructions.POP;
+import fr.ensimag.ima.pseudocode.instructions.PUSH;
 import fr.ensimag.ima.pseudocode.instructions.RTS;
 import fr.ensimag.ima.pseudocode.instructions.TSTO;
-import net.bytebuddy.asm.MemberSubstitution.Current;
 
 import java.io.PrintStream;
 import fr.ensimag.deca.context.Signature;
@@ -111,8 +114,6 @@ public class DeclMethod extends AbstractDeclMethod {
         
         // Décoration
         methodName.setDefinition(methodDef);
-        
-        
     }
 
     @Override
@@ -122,20 +123,6 @@ public class DeclMethod extends AbstractDeclMethod {
             Type returnType) throws ContextualError {
 
         EnvironmentExp envExpParams = new EnvironmentExp(envExp);
-
-        if (currentClass != null) {
-            for (AbstractDeclParam p : params.getList()) {
-                DeclParam dp = (DeclParam) p;
-                Symbol pname = dp.getVarName().getName();
-
-                if (currentClass.getMembers().get(pname) != null) {
-                    throw new ContextualError(
-                        "Paramètre '" + pname.getName() + "' en conflit avec un champ/membre de la classe",
-                        dp.getVarName().getLocation()
-                    );
-                }
-            }
-        }
 
         // Déclarer les paramètres dans l'environnement local de la méthode
         this.params.verifyListDeclParam(compiler, envExpParams);
@@ -198,7 +185,7 @@ public class DeclMethod extends AbstractDeclMethod {
         compiler.getStackManager().enterBlock();
         compiler.setCurrentMethodEndLabel(end);
 
-        // Paramètres: this = -2(LB), params = -3(LB), -4(LB), ...
+        // Offsets params (this = -2(LB), params à partir de -3(LB))
         int k = 3;
         for (AbstractDeclParam p : params.getList()) {
             DeclParam dp = (DeclParam) p;
@@ -207,28 +194,46 @@ public class DeclMethod extends AbstractDeclMethod {
             k++;
         }
 
-        int d = compiler.getStackManager().getTSTOForLocals();
-        compiler.addInstruction(new TSTO(new ImmediateInteger(d)));
+        // Prologue placeholders (direct, pas beginBlock)
+        Line tstoLine = new Line(new TSTO(new ImmediateInteger(0)));
+        compiler.add(tstoLine);
         compiler.addInstruction(new BOV(pilePleine));
 
-        // Déclarations locales
-        body.getVars().codeGenListDeclVar(compiler);
+        // Sauvegarde regs allocables (poly-like)
+        int first = compiler.getRegAllocator().getFirstAlloc(); // ex: 2 ou 3
+        int last  = compiler.getRegAllocator().getMaxReg();
+        for (int r = first; r <= last; r++) {
+            compiler.addInstruction(new PUSH(Register.getR(r)));
+            compiler.getStackManager().useTemp(1);
+        }
 
-        // Corps
+        // Vars locales + corps
+        body.getVars().codeGenListDeclVar(compiler);
         body.getInsts().codeGenListInst(compiler);
 
-        // Si void et pas de return explicite
         if (md.getType().isVoid()) {
             compiler.addInstruction(new BRA(end));
         }
 
-        // Étiquette de fin commune
+        // Fin commune
         compiler.addLabel(end);
+
+        // Restauration regs
+        for (int r = last; r >= first; r--) {
+            compiler.addInstruction(new POP(Register.getR(r)));
+            compiler.getStackManager().releaseTemp(1);
+        }
+
         compiler.addInstruction(new RTS());
+
+        // Patch TSTO après comptage locals/temp
+        int d = compiler.getStackManager().getTSTOForLocals();
+        tstoLine.setInstruction(new TSTO(new ImmediateInteger(d)));
 
         compiler.setCurrentMethodEndLabel(null);
         compiler.getStackManager().exitBlock();
     }
+
     @Override
     public AbstractIdentifier getMethodName()
     {

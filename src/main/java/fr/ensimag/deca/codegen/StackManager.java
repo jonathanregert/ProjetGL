@@ -134,8 +134,9 @@ public class StackManager {
         return getGlobalCount();
     }
 
+    // À revoir le + 2
     public int getTSTOForMain() {
-        return getGlobalCount() + getMaxTemp();
+        return getGlobalCount() + getMaxTemp() + 2;
     }
 
     public int getADDSPForLocals() {
