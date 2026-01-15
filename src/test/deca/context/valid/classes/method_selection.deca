@@ -4,10 +4,9 @@
 //    OK
 
 class A { int f() { return 1; } }
-A a = new A();
-int y = a.f();
-
 
 {
+    A a = new A();
+    int y = a.f();
 }
 

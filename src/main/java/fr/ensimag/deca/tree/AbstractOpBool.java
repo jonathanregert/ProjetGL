@@ -56,10 +56,10 @@ public abstract class AbstractOpBool extends AbstractBinaryExpr {
         getRightOperand().codeGenExpr(compiler, target);
         compiler.addInstruction(new BRA(endLabel));
 
-        compiler.addLabel(shortCircuitLabel);
+        compiler.addLabelToBlock(shortCircuitLabel);
         compiler.addInstruction(new LOAD(new ImmediateInteger(getShortCircuitValue()), target));
 
-        compiler.addLabel(endLabel);
+        compiler.addLabelToBlock(endLabel);
 
     }
 
