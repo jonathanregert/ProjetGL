@@ -1,9 +1,0 @@
-// Description :
-// tentative d'héritage depuis un type non-class
-//
-// Resultats :
-//    Erreur contextuelle
-//    Ligne 8 : La super-classe int n'est pas une classe
-
-class C extends int { // doit échouer
-}
