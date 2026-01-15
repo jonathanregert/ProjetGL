@@ -231,8 +231,8 @@ public class DeclClass extends AbstractDeclClass {
             // Héritage : copier UNIQUEMENT les méthodes de la super-classe
             int nSuper = classDef.getSuperClass().getNumberOfMethods();
             for (int i = 0; i < nSuper; i++) {
-                RegisterOffset src = new RegisterOffset(superBase.getOffset() + 1 + i, Register.GB);
-                RegisterOffset dst = new RegisterOffset(base.getOffset() + 1 + i, Register.GB);
+                RegisterOffset src = new RegisterOffset(superBase.getOffset() + 1 + i, superBase.getRegister());
+                RegisterOffset dst = new RegisterOffset(base.getOffset() + 1 + i, base.getRegister());
                 compiler.addInstruction(new LOAD(src, Register.R0));
                 compiler.addInstruction(new STORE(Register.R0, dst));
             }
@@ -275,10 +275,8 @@ public class DeclClass extends AbstractDeclClass {
         compiler.getRegAllocator().reset();
         compiler.getStackManager().enterBlock();
 
-        // Champs déclarés localement dans la classe courante
         boolean hasLocalFields = !classFields.getList().isEmpty();
 
-        // Option A : appeler init.super seulement si la hiérarchie de la super a des champs
         ClassDefinition superDef = classDef.getSuperClass();
         boolean callSuperInit = false;
         if (superDef != null) {
@@ -288,59 +286,52 @@ public class DeclClass extends AbstractDeclClass {
             }
         }
 
-        // Cas totalement trivial : RTS direct + exitBlock (important)
+        // Cas trivial
         if (!hasLocalFields && !callSuperInit) {
             compiler.addInstruction(new RTS());
             compiler.getStackManager().exitBlock();
             return;
         }
 
-        compiler.beginBlock();
+        int d = compiler.getStackManager().getTSTOForLocals();
+        compiler.addInstruction(new TSTO(new ImmediateInteger(d)));
+        compiler.addInstruction(new BOV(pilePleine));
 
-        int first = compiler.getRegAllocator().getFirstAlloc(); // 3
+        int first = compiler.getRegAllocator().getFirstAlloc();
         int last  = compiler.getRegAllocator().getMaxReg();
 
-        // Sauvegarde regs (safe)
         for (int r = first; r <= last; r++) {
-            compiler.addToBlock(new PUSH(Register.getR(r)));
+            compiler.addInstruction(new PUSH(Register.getR(r)));
             compiler.getStackManager().useTemp(1);
         }
 
-        // Appel init.super(this) si nécessaire
+        // init.super(this)
         if (callSuperInit) {
             String sname = superDef.getType().getName().getName();
 
-            // push this
-            compiler.addToBlock(new LOAD(new RegisterOffset(-2, Register.LB), Register.R0));
-            compiler.addToBlock(new PUSH(Register.R0));
+            compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB), Register.R0));
+            compiler.addInstruction(new PUSH(Register.R0));
             compiler.getStackManager().useTemp(1);
 
-            compiler.addToBlock(new BSR(new Label("init." + sname)));
+            compiler.addInstruction(new BSR(new Label("init." + sname)));
 
-            compiler.addToBlock(new POP(Register.R0));
+            compiler.addInstruction(new POP(Register.R0));
             compiler.getStackManager().releaseTemp(1);
         }
 
-        // Init champs de la classe courante (UNE SEULE FOIS)
+        // Init champs courants
         classFields.codeGenInitFields(compiler, classDef);
 
-        // Restauration regs
+        // Restore regs
         for (int r = last; r >= first; r--) {
-            compiler.addToBlock(new POP(Register.getR(r)));
+            compiler.addInstruction(new POP(Register.getR(r)));
             compiler.getStackManager().releaseTemp(1);
         }
 
-        compiler.addToBlock(new RTS());
+        compiler.addInstruction(new RTS());
 
-        int d = compiler.getStackManager().getTSTOForLocals();
-        compiler.addFirstToBlock(new TSTO(new ImmediateInteger(d)));
-        compiler.addFirstToBlock(new BOV(pilePleine));
-
-        compiler.endBlock();
         compiler.getStackManager().exitBlock();
     }
-
-
     @Override
     public void codeGenMethods(DecacCompiler compiler) {
         String className = this.classDefinition.getType().getName().getName();

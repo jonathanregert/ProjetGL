@@ -63,24 +63,46 @@ public class Program extends AbstractProgram {
     @Override
     public void codeGenProgram(DecacCompiler compiler) {
 
-        compiler.addComment("Main program");
-
         compiler.getRegAllocator().reset();
         compiler.getStackManager().resetTemp();
         compiler.getStackManager().resetVars();
 
-        // 0) Builtin: Object (vtable + equals)
+        // On démarre un bloc global : permet d'insérer le prologue (TSTO/BOV/ADDSP) AVANT tout
+        compiler.beginBlock();
+
+        // -----------------------------
+        // A) Prologue global (poly)
+        // -----------------------------
+        int addsp = compiler.getStackManager().getGlobalCount();
+        int tsto  = addsp + compiler.getStackManager().getMaxTemp();
+
+        compiler.addFirstToBlock(new TSTO(new ImmediateInteger(tsto)), "Main Program");
+        if (!compiler.getNoCheckOption()) {
+            compiler.addFirstToBlock(new BOV(
+                compiler.getErrorManager().label(ErrorManager.RuntimeError.STACK_OVERFLOW)
+            ));
+        }
+        compiler.addFirstToBlock(new ADDSP(new ImmediateInteger(addsp)));
+
+        // -----------------------------
+        // B) Construction des tables de méthodes
+        // -----------------------------
+        compiler.addCommentToBlock("--------------------------------------------------");
+        compiler.addCommentToBlock("Construction des tables des methodes");
+        compiler.addCommentToBlock("--------------------------------------------------");
+
+        // Builtin: Object (vtable + equals)
         ClassDefinition objectDef = compiler.environmentType.OBJECT.getDefinition();
 
-        int sizeObj = 1 + objectDef.getNumberOfMethods();   // doit valoir 2 si equals est bien déclaré
+        int sizeObj = 1 + objectDef.getNumberOfMethods();
         RegisterOffset baseObj = compiler.getStackManager().allocGlobalBlock(sizeObj);
         objectDef.setAddrTable(baseObj);
 
-        // case 0 : parent = null
+        // parent = null
         compiler.addInstruction(new LOAD(new NullOperand(), Register.R0));
         compiler.addInstruction(new STORE(Register.R0, baseObj));
 
-        // case 1+index : equals
+        // equals
         MethodDefinition eq;
         try {
             eq = objectDef.getMembers()
@@ -92,47 +114,39 @@ public class Program extends AbstractProgram {
 
         compiler.addInstruction(new LOAD(new LabelOperand(eq.getLabel()), Register.R0));
         compiler.addInstruction(new STORE(
-                Register.R0,
-                new RegisterOffset(baseObj.getOffset() + 1 + eq.getIndex(), baseObj.getRegister())
+            Register.R0,
+            new RegisterOffset(baseObj.getOffset() + 1 + eq.getIndex(), baseObj.getRegister())
         ));
 
-        // 1) Passe 1 : réserver les vtables des classes utilisateur
+        // Classes utilisateur : réserver + remplir vtables
         classes.codeGenMTable(compiler);
-
-        // 2) Construire les vtables des classes utilisateur
         classes.codeGenBuildMTable(compiler);
 
-        // 3) Programme principal
+        // -----------------------------
+        // C) Programme principal
+        // -----------------------------
+        compiler.addCommentToBlock("--------------------------------------------------");
+        compiler.addCommentToBlock("Code du programme principal");
+        compiler.addCommentToBlock("--------------------------------------------------");
+
         main.codeGenMain(compiler);
 
-        // 4) Prologue global : TSTO ; BOV ; ADDSP (ordre comme dans le sujet)
-        int addsp = compiler.getStackManager().getGlobalCount();
-        int tsto  = addsp + compiler.getStackManager().getMaxTemp();
-
-        compiler.addFirst(new ADDSP(new ImmediateInteger(addsp)));
-        if (!compiler.getNoCheckOption()) {
-            compiler.addFirst(new BOV(
-                compiler.getErrorManager().label(ErrorManager.RuntimeError.STACK_OVERFLOW)
-            ));
-        }
-        compiler.addFirst(new TSTO(new ImmediateInteger(tsto)));
-        compiler.addFirstComment("Main Program");
-
-        // 5) Fin partie principale
+        // Fin main
         compiler.addInstruction(new HALT());
 
-        // 6) Builtin code (après HALT) : Object.equals
-        emitObjectEquals(compiler);
+        // Fin du bloc global (flush prefix + body dans le programme)
+        compiler.endBlock();
 
-        // 7) Sous-programmes (après HALT)
+        // -----------------------------
+        // D) Builtins / sous-programmes (après HALT)
+        // -----------------------------
+        emitObjectEquals(compiler);
         classes.codeGenInit(compiler);
         classes.codeGenMethods(compiler);
 
-        // 8) Handlers d'erreurs
+        // Handlers d'erreurs (après tout)
         compiler.getErrorManager().emitHandlers(compiler);
     }
-
-
 
     @Override
     public void decompile(IndentPrintStream s) {

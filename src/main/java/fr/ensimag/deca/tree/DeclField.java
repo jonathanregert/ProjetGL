@@ -8,11 +8,14 @@ import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import fr.ensimag.deca.tree.TreeFunction;
+import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.ImmediateInteger;
 import fr.ensimag.ima.pseudocode.NullOperand;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.POP;
+import fr.ensimag.ima.pseudocode.instructions.PUSH;
 import fr.ensimag.ima.pseudocode.instructions.REM;
 import fr.ensimag.ima.pseudocode.instructions.STORE;
 import fr.ensimag.deca.context.FieldDefinition;
@@ -141,28 +144,48 @@ public class DeclField extends AbstractDeclField {
     @Override
     protected void codeGenInitField(DecacCompiler compiler, ClassDefinition currentClass) {
         FieldDefinition fd = fieldName.getFieldDefinition();
-        int fieldOffset = fd.getIndex(); // doit être l’offset dans l’objet (>=1)
+        int fieldOffset = fd.getIndex();
         Type t = fd.getType();
 
-        // R2 = this
+        // --- init explicite ---
+        if (initialization instanceof Initialization) {
+            // this -> R2, puis sauvegarde
+            compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB), Register.getR(2)));
+            compiler.addInstruction(new PUSH(Register.getR(2)));
+            compiler.getStackManager().useTemp(1);
+
+            // registre où calculer la valeur
+            GPRegister r = compiler.getRegAllocator().alloc();
+            if (r == null) {
+                // fallback minimal : choisir un GPRegister "scratch" autorisé (souvent R1)
+                r = Register.getR(1);
+            }
+
+            // calcule la valeur (peut écraser R2)
+            ((Initialization) initialization).codeGenValue(compiler, r);
+
+            // restaure this
+            compiler.addInstruction(new POP(Register.getR(2)));
+            compiler.getStackManager().releaseTemp(1);
+
+            // store dans le champ
+            compiler.addInstruction(new STORE(r, new RegisterOffset(fieldOffset, Register.getR(2))));
+
+            // libérer si alloué
+            if (r != Register.getR(1)) { // ou mieux: si tu sais distinguer "alloué" vs "fallback"
+                compiler.getRegAllocator().free(r);
+            }
+            return;
+        }
+
+        // --- valeur par défaut ---
         compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB), Register.getR(2)));
 
-        // 1) valeur par défaut dans R0
-        if (t.isClass() || t.isString()) {
+        if (t.isClass()) {
             compiler.addInstruction(new LOAD(new NullOperand(), Register.R0));
         } else {
             compiler.addInstruction(new LOAD(new ImmediateInteger(0), Register.R0));
         }
         compiler.addInstruction(new STORE(Register.R0, new RegisterOffset(fieldOffset, Register.getR(2))));
-
-        // 2) init explicite
-        if (initialization instanceof Initialization) {
-            // IMPORTANT: si codeGenInitialization évalue une expr, elle peut utiliser R1/R0
-            // On lui demande juste d’écrire dans l’adresse du champ :
-            ((Initialization) initialization).codeGenInitialization(
-                compiler,
-                new RegisterOffset(fieldOffset, Register.getR(2))
-            );
-        }
     }
 }

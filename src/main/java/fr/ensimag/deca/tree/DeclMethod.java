@@ -7,6 +7,7 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import fr.ensimag.ima.pseudocode.ImmediateInteger;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Register;
@@ -115,29 +116,41 @@ public class DeclMethod extends AbstractDeclMethod {
     }
 
     @Override
-    protected void verifyMethodBody(DecacCompiler compiler, 
-        EnvironmentExp envExp,
-        ClassDefinition currentClass, 
-        Type returnType) throws ContextualError {
+    protected void verifyMethodBody(DecacCompiler compiler,
+            EnvironmentExp envExp,
+            ClassDefinition currentClass,
+            Type returnType) throws ContextualError {
 
-    // 3.12
+        EnvironmentExp envExpParams = new EnvironmentExp(envExp);
 
-    EnvironmentExp envExpParams = new EnvironmentExp(envExp);
-    // Debug
-    // System.out.println("Env exp avant params méthode " + methodName.getName() + " :\n" + envExp.toString());
+        if (currentClass != null) {
+            for (AbstractDeclParam p : params.getList()) {
+                DeclParam dp = (DeclParam) p;
+                Symbol pname = dp.getVarName().getName();
 
-    this.params.verifyListDeclParam(compiler, envExpParams);
-    this.body.getVars().verifyListDeclVariable(compiler, envExpParams, currentClass);
-    this.body.getInsts().verifyListInst(compiler, envExpParams, currentClass, returnType);
-    
-    if (!returnType.sameType(compiler.environmentType.VOID) && !body.getInsts().containsReturn()) {
-            throw new ContextualError("méthode non void sans instruction return",
-                getLocation()
-            );
+                if (currentClass.getMembers().get(pname) != null) {
+                    throw new ContextualError(
+                        "Paramètre '" + pname.getName() + "' en conflit avec un champ/membre de la classe",
+                        dp.getVarName().getLocation()
+                    );
+                }
+            }
         }
-}
 
-    
+        // Déclarer les paramètres dans l'environnement local de la méthode
+        this.params.verifyListDeclParam(compiler, envExpParams);
+
+        // Variables locales (tu feras aussi le même check local↔champ dans verifyListDeclVariable)
+        this.body.getVars().verifyListDeclVariable(compiler, envExpParams, currentClass);
+
+        // Instructions
+        this.body.getInsts().verifyListInst(compiler, envExpParams, currentClass, returnType);
+
+        // Non-void doit contenir un return
+        if (!returnType.sameType(compiler.environmentType.VOID) && !body.getInsts().containsReturn()) {
+            throw new ContextualError("méthode non void sans instruction return", getLocation());
+        }
+    }
     @Override
     public void decompile(IndentPrintStream s) {
         returnType.decompile(s);
@@ -183,10 +196,10 @@ public class DeclMethod extends AbstractDeclMethod {
 
         compiler.getRegAllocator().reset();
         compiler.getStackManager().enterBlock();
-
         compiler.setCurrentMethodEndLabel(end);
 
-        int k = 3; // this = -2(LB), params explicites = -3(LB), -4(LB), ...
+        // Paramètres: this = -2(LB), params = -3(LB), -4(LB), ...
+        int k = 3;
         for (AbstractDeclParam p : params.getList()) {
             DeclParam dp = (DeclParam) p;
             ParamDefinition pd = (ParamDefinition) dp.getVarName().getDefinition();
@@ -194,34 +207,31 @@ public class DeclMethod extends AbstractDeclMethod {
             k++;
         }
 
-        compiler.beginBlock();
+        int d = compiler.getStackManager().getTSTOForLocals();
+        compiler.addInstruction(new TSTO(new ImmediateInteger(d)));
+        compiler.addInstruction(new BOV(pilePleine));
 
+        // Déclarations locales
         body.getVars().codeGenListDeclVar(compiler);
+
+        // Corps
         body.getInsts().codeGenListInst(compiler);
 
+        // Si void et pas de return explicite
         if (md.getType().isVoid()) {
-            compiler.addToBlock(new BRA(end));
+            compiler.addInstruction(new BRA(end));
         }
 
-        int d = compiler.getStackManager().getTSTOForLocals();
-        compiler.addFirstToBlock(new TSTO(new ImmediateInteger(d)));
-        compiler.addFirstToBlock(new BOV(pilePleine));
-
-        compiler.endBlock();
-
-        // Label de fin pour les return
+        // Étiquette de fin commune
         compiler.addLabel(end);
         compiler.addInstruction(new RTS());
 
         compiler.setCurrentMethodEndLabel(null);
         compiler.getStackManager().exitBlock();
     }
-
     @Override
     public AbstractIdentifier getMethodName()
     {
         return methodName;
     }
-
-
 }

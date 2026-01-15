@@ -43,7 +43,7 @@ public class DeclParam extends AbstractDeclParam {
         try {
             localEnv.declare(varName.getName(), paramDef);
         } catch (EnvironmentExp.DoubleDefException e) {
-            throw new ContextualError("Paramètre " + varName.getName().getName() + " deja definie", varName.getLocation());
+            throw new ContextualError("Paramètre '" + varName.getName().getName() + "' déjà défini", varName.getLocation());
         }
 
         varName.setDefinition(paramDef);

@@ -121,21 +121,36 @@ public class DeclMethodAsm extends AbstractDeclMethod {
     @Override
     public void codeGenDeclMethod(DecacCompiler compiler) {
         MethodDefinition md = methodName.getMethodDefinition();
+
         compiler.addLabel(md.getLabel());
         compiler.addComment("Méthode ASM " + md.getLabel());
-        String rawAsm = code.getAsmText().getValue(); // on recup le text
+
+        String rawAsm = code.getAsmText().getValue();
         String[] lines = rawAsm.split("\\R");
-        for (String l : lines){
+
+        for (String l : lines) {
             String trimmed = l.trim();
-            if (!trimmed.isEmpty()){
-                compiler.add(new InlinePortion(trimmed)); 
+            if (!trimmed.isEmpty()) {
+                compiler.addInline(trimmed); // méthode wrapper dans DecacCompiler
             }
         }
 
-        String codeTrim = rawAsm.trim().toUpperCase();
-        if (!codeTrim.endsWith("RTS") && !codeTrim.contains("\nRTS") && !codeTrim.contains("\rRTS")){
+        if (!containsRTS(rawAsm)) {
             compiler.addInstruction(new RTS());
         }
+    }
+
+    // helper local
+    private boolean containsRTS(String rawAsm) {
+        String[] lines = rawAsm.split("\\R");
+        for (String l : lines) {
+            String s = l.trim().toUpperCase();
+            if (s.isEmpty()) continue;
+            int semicolon = s.indexOf(';');
+            if (semicolon >= 0) s = s.substring(0, semicolon).trim();
+            if (s.equals("RTS")) return true;
+        }
+        return false;
     }
 
     @Override
