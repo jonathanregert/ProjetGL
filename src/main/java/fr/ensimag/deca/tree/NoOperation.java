@@ -6,7 +6,6 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.Label;
 import java.io.PrintStream;
 
 /**
@@ -42,5 +41,4 @@ public class NoOperation extends AbstractInst {
     protected void prettyPrintChildren(PrintStream s, String prefix) {
         // leaf node => nothing to do
     }
-
 }

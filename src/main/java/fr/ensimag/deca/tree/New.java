@@ -13,7 +13,6 @@ import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
 import fr.ensimag.ima.pseudocode.instructions.BSR;
 import fr.ensimag.ima.pseudocode.instructions.LEA;
-import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.NEW;
 import fr.ensimag.ima.pseudocode.instructions.POP;
 import fr.ensimag.ima.pseudocode.instructions.PUSH;
@@ -50,8 +49,7 @@ public class New extends AbstractExpr {
             ClassDefinition currentClass) throws ContextualError {
         Type t = className.verifyType(compiler);
         if (!t.isClass()) {
-        throw new ContextualError("L'opérateur 'new' ne s'applique qu'aux classes.", 
-                                   className.getLocation());
+        throw new ContextualError("L'opérateur 'new' ne s'applique qu'aux classes.", className.getLocation());
         }
         this.setType(t);
         return t;

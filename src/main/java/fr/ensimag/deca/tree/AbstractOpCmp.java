@@ -4,15 +4,8 @@ import fr.ensimag.deca.context.Type;
 import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.CMP;
-import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.POP;
 import fr.ensimag.ima.pseudocode.instructions.PUSH;
-import fr.ensimag.ima.pseudocode.instructions.SEQ;
-import fr.ensimag.ima.pseudocode.instructions.SGE;
-import fr.ensimag.ima.pseudocode.instructions.SGT;
-import fr.ensimag.ima.pseudocode.instructions.SLE;
-import fr.ensimag.ima.pseudocode.instructions.SLT;
-import fr.ensimag.ima.pseudocode.instructions.SNE;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
@@ -47,7 +40,7 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
             getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
         }
         else if (!typeGauche.sameType(typeDroite)) {
-            throw new ContextualError("Types incompatibles pour comparaison: " 
+            throw new ContextualError("Types incompatibles pour comparaison: "
                     + typeGauche.getName().getName() + " et "
                     + typeDroite.getName().getName(),
                     this.getLocation());
