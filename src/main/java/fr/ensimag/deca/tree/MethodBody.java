@@ -41,14 +41,5 @@ public class MethodBody extends Tree{
         s.print("}");
     }
 
-   // public void verifyMethodBody(DecacCompiler compiler,
-     //                        EnvironmentExp localEnv,
-       //                      ClassDefinition currentClass,
-         //                    Type returnType)
-       // throws ContextualError {
-
-    //vars.verifyListDeclVariable(compiler, localEnv, currentClass);
-    //insts.verifyListInst(compiler, localEnv, currentClass, returnType);
-//}
 
 }

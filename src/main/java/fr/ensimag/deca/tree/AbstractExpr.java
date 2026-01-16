@@ -102,11 +102,6 @@ public abstract class AbstractExpr extends AbstractInst {
             throw new ContextualError("Type incompatible : attendu " + expectedType
                 + ", trouvé " + typeFound, getLocation());
         }
-        
-        // if (!typeFound.sameType(expectedType)) {
-        // throw new ContextualError("Type incompatible : attendu " + expectedType
-        //     + ", trouvé " + typeFound, getLocation());
-        // }
 
         return this;
     }

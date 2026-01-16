@@ -54,150 +54,92 @@ public class Cast extends AbstractExpr {
         return expr;
     }
 
-    // @Override
-    // public Type verifyExpr(DecacCompiler compiler,
-    //                        EnvironmentExp localEnv,
-    //                        ClassDefinition currentClass)
-    //         throws ContextualError {
-
-
-    //     // t1 casté, t2 cible
-    //     Type t1 = expr.verifyExpr(compiler, localEnv, currentClass); // Type source
-    //     Type t2 = typeIdent.verifyType(compiler);
-
-    //     if (t1.isVoid()) {
-    //         throw new ContextualError("Cast impossible : l'expression source est de type void.", getLocation());    
-    //     }
-
-    //     // Cas autorisés en SANS OBJET :
-    //     // Conforme à la sémantique paragramhe 9
-    //     // int <-> float uniquement
-    //     if ((t1.isInt() || t1.isFloat()) && (t2.isInt() || t2.isFloat())) {
-    //         setType(t2);
-    //         return t2;
-    //     }
-
-    //     // Cas autorisés AVEC OBJET  :
-    //     // if (exprType.isClassOrNull() && targetType.isClass()) {
-    //     //     // 4.a : Cast de 'null' vers une Classe -> Toujours valide
-    //     //     if (exprType.isNull()) {
-    //     //         setType(targetType);
-    //     //         return targetType;
-    //     // }
-
-    //    // Verif de cast_compatible(env, T1, T2) = assign_compatible(env, T1, T2) OU assign_compatible(env, T2, T1)
-    //    boolean assignCompatible1 = false; // assign_compatible(env, T1, T2) => On peut mettre T2 dans T1
-    //    boolean assignCompatible2 = false; // assign_compatible(env, T2, T1) => On peut mettre T1 dans T2
-
-    //     if (t1.isFloat() && t2.isInt()) {
-    //         assignCompatible1 = true; // on peut faire int = (float)
-    //     }
-    //     // subtype(env, T2, T1)
-    //     else {
-    //         if (t2.sameType(t1)) { // Réflexivité : T est sous-type de T
-    //             assignCompatible1 = true;
-    //         } else if (t2.isNull() && t1.isClass()) { // null est sous-type de toute classe
-    //             assignCompatible1 = true;
-    //         } else if (t2.isClass() && t1.isClass()) { // Sous-typage classes
-    //             if (((ClassType) t2).isSubClassOf((ClassType) t1)) {
-    //                 assignCompatible1 = true;
-    //             }
-    //         }
-    //     }
-
-    //     // verif de assign compatible(env, T2, T1)
-    //     if (t2.isFloat() && t1.isInt()) {
-    //         assignCompatible2 = true; // on peut faire float = (int)
-    //     } else {
-    //         if (t1.sameType(t2)) { // Réflexivité
-    //             assignCompatible2 = true;
-    //         } else if (t1.isNull() && t2.isClass()) { // null est sous-type de toute classe
-    //             assignCompatible2 = true;
-    //         } else if (t1.isClass() && t2.isClass()) { // Sous-typage classes
-    //             if (((ClassType) t1).isSubClassOf((ClassType) t2)) {
-    //                 assignCompatible2 = true;
-    //             }
-    //         }
-    //     }
-
-    //     if (assignCompatible1 || assignCompatible2) {
-    //         setType(t2);
-    //         return t2;
-    //     }
-
-    //     throw new ContextualError("Cast impossible de " + t1 + " vers " + t2 + ".", getLocation());
-
-    // }
-
     @Override
     public Type verifyExpr(DecacCompiler compiler,
-                        EnvironmentExp localEnv,
-                        ClassDefinition currentClass)
+                           EnvironmentExp localEnv,
+                           ClassDefinition currentClass)
             throws ContextualError {
-
-        Type t1 = expr.verifyExpr(compiler, localEnv, currentClass); // source
-        Type t2 = typeIdent.verifyType(compiler);                    // cible
 
         needRuntimeCheck = false;
 
+        // t1 casté, t2 cible
+        Type t1 = expr.verifyExpr(compiler, localEnv, currentClass); // Type source
+        Type t2 = typeIdent.verifyType(compiler);
+
         if (t1.isVoid()) {
-            throw new ContextualError(
-                "Cast impossible : l'expression source est de type void.",
-                getLocation()
-            );
+            throw new ContextualError("Cast impossible : l'expression source est de type void.", getLocation());    
         }
 
-        // --- SANS OBJET (parag 9) : float -> int uniquement ---
-        if (t2.isInt() && t1.isFloat()) {
+        // Cas autorisés en SANS OBJET :
+        // Conforme à la sémantique paragramhe 9
+        // int <-> float uniquement
+        if ((t1.isInt() || t1.isFloat()) && (t2.isInt() || t2.isFloat())) {
             setType(t2);
             return t2;
         }
 
-        // --- AVEC OBJET : (UneClasse)(v) ---
-        if (t2.isClass()) {
+        // Cas avec Objet
 
-            // null -> classe : toujours OK
-            if (t1.isNull()) {
-                setType(t2);
-                return t2;
+       // Verif de cast_compatible(env, T1, T2) = assign_compatible(env, T1, T2) OU assign_compatible(env, T2, T1)
+       boolean assignCompatible1 = false; // assign_compatible(env, T1, T2) => On peut mettre T2 dans T1
+       boolean assignCompatible2 = false; // assign_compatible(env, T2, T1) => On peut mettre T1 dans T2
+
+        if (t1.isFloat() && t2.isInt()) {
+            assignCompatible1 = true; // on peut faire int = (float)
+        }
+        // subtype(env, T2, T1)
+        else {
+            if (t2.sameType(t1)) { // Réflexivité : T est sous-type de T
+                assignCompatible1 = true;
+            } else if (t2.isNull() && t1.isClass()) { // null est sous-type de toute classe
+                assignCompatible1 = true;
+            } else if (t2.isClass() && t1.isClass()) { // Sous-typage classes
+                if (((ClassType) t2).isSubClassOf((ClassType) t1)) {
+                    assignCompatible1 = true;
+                }
             }
-
-            // source doit être classe
-            if (!t1.isClass()) {
-                throw new ContextualError(
-                    "Cast invalide : " + t1 + " vers " + t2,
-                    getLocation()
-                );
-            }
-
-            ClassType src = (ClassType) t1;
-            ClassType dst = (ClassType) t2;
-
-            // Cast trivial : src <= dst
-            if (src.isSubClassOf(dst)) {
-                needRuntimeCheck = false;
-                setType(t2);
-                return t2;
-            }
-
-            // Downcast possible : dst <= src => runtime check requis
-            if (dst.isSubClassOf(src)) {
-                needRuntimeCheck = true;
-                setType(t2);
-                return t2;
-            }
-
-            throw new ContextualError(
-                "Cast invalide : classes incompatibles (" + t1 + " vers " + t2 + ")",
-                getLocation()
-            );
         }
 
-        // Tout le reste interdit
-        throw new ContextualError(
-            "Cast impossible de " + t1 + " vers " + t2 + ".",
-            getLocation()
-        );
+        // verif de assign compatible(env, T2, T1)
+        if (t2.isFloat() && t1.isInt()) {
+            assignCompatible2 = true; // on peut faire float = (int)
+        } else {
+            if (t1.sameType(t2)) { // Réflexivité
+                assignCompatible2 = true;
+            } else if (t1.isNull() && t2.isClass()) { // null est sous-type de toute classe
+                assignCompatible2 = true;
+            } else if (t1.isClass() && t2.isClass()) { // Sous-typage classes
+                if (((ClassType) t1).isSubClassOf((ClassType) t2)) {
+                    assignCompatible2 = true;
+                }
+            }
+        }
+
+        if (assignCompatible1 || assignCompatible2) {
+            setType(t2);
+            return t2;
+        }
+
+        ClassType src = (ClassType) t1;
+        ClassType dst = (ClassType) t2;
+
+        // Cast trivial : src <= dst
+        if (src.isSubClassOf(dst)) {
+            needRuntimeCheck = false;
+            setType(t2);
+            return t2;
+        }
+
+        // Downcast possible : dst <= src => runtime check requis
+        if (dst.isSubClassOf(src)) {
+            needRuntimeCheck = true;
+            setType(t2);
+            return t2;
+        }
+
+
+        throw new ContextualError("Cast impossible de " + t1 + " vers " + t2 + ".", getLocation());
+
     }
 
     @Override

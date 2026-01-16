@@ -75,12 +75,6 @@ public class DeclField extends AbstractDeclField {
     FieldDefinition fieldDef = new FieldDefinition(t, fieldName.getLocation(), 
                                                    visibility, currentClass, index, this.isFinal);
 
-
-    // Debug
-    // System.out.println("Test champ: " + name + " dans " + currentClass.getType());
-    // System.out.println("Existe déjà localement ? " + (currentClass.getMembers().get(name) != null));
-    // System.out.println("DEBUG PASSE 2: Déclaration de " + name);
-    // System.out.println("DEBUG PASSE 3: Init de " + name);
     
     // + environnement des membres de la classe
     try {
