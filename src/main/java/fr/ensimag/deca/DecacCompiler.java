@@ -46,6 +46,15 @@ import org.apache.log4j.Logger;
  */
 public class DecacCompiler {
     private static final Logger LOG = Logger.getLogger(DecacCompiler.class);
+    private boolean printHex = false;
+
+    public void setPrintHex(boolean printHex) {
+        this.printHex = printHex;
+    }
+
+    public boolean isPrintHex() {
+        return printHex;
+    }
     
     /**
      * Portable newline character.

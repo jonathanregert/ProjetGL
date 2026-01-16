@@ -1,0 +1,26 @@
+// Description :
+//    Test de l'affichage hexadécimal (printx) et des casts.
+//
+// Resultats :
+//    Normal: 3.50000e+00
+//    Hex: 0x1.cp+1
+//    Entier en printx: 42
+//    Cast int vers float en hex: 0x1.4p+2
+//    Retour au normal: 1.20000e+00
+
+{
+    float f = 3.5;
+    int i = 5;
+
+    // 1. Affichage normal
+    print("Normal: ", f);
+    println();
+
+    // 2. Affichage hexadécimal (doit utiliser WFLOATX en IMA)
+    printx("Hex: ", f);
+    printlnx();
+
+    // 5. Vérification du retour au mode normal
+    f = 1.2;
+    println("Retour au normal: ", f);
+}

@@ -11,6 +11,7 @@ import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.WFLOAT;
 import fr.ensimag.ima.pseudocode.instructions.WINT;
+import fr.ensimag.ima.pseudocode.instructions.WFLOATX;
 
 import static org.mockito.Mockito.*;
 
@@ -144,6 +145,7 @@ public abstract class AbstractExpr extends AbstractInst {
         codeGenExpr(compiler);
         Type t = getType();
         if (t.isInt() || t.isBoolean()) compiler.addInstruction(new WINT());
+        else if (t.isFloat() && compiler.isPrintHex()) compiler.addInstruction(new WFLOATX());
         else if (t.isFloat()) compiler.addInstruction(new WFLOAT());
         else throw new UnsupportedOperationException("print non supporté pour " + t);
     }
