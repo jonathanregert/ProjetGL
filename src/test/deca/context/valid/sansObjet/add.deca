@@ -2,7 +2,7 @@
 //    Test de l'opérateur + appliqué à int.
 //
 // Resultats :
-// ok
+//    ok
 
 {
     int a = 5;

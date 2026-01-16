@@ -1,8 +1,8 @@
 // Description :
-//    Appel polymorphique via une référence de type base.
+//    Appel d'une méthode surchargée via une référence de type base (polymorphisme).
 //
 // Resultats :
-//    OK
+//    Affiche : 2
 
 class A {
     int f() {

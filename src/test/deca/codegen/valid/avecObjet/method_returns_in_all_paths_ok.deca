@@ -1,8 +1,8 @@
 // Description :
-//    Retour présent dans tous les chemins d'exécution.
+//    Retour présent dans tous les chemins d'exécution d'une méthode.
 //
 // Resultats :
-//    OK
+//    Affiche : 1
 
 class A {
     int f(boolean b) {

@@ -1,8 +1,8 @@
 // Description :
-//    Sélection de champ imbriquée sur deux niveaux.
+//    Sélection imbriquée de champ sur deux niveaux d'objets (a.b.y).
 //
 // Resultats :
-//    OK
+//    Affiche : 9
 
 class B {
     int y;

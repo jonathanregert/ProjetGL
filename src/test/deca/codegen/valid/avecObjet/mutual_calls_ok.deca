@@ -1,8 +1,8 @@
 // Description :
-//    Appels mutuels entre méthodes.
+//    Appels mutuels entre deux méthodes (récursivité croisée).
 //
 // Resultats :
-//    OK
+//    Affiche : 0
 
 class A {
     int f(int n) {

@@ -2,7 +2,7 @@
 //    Appel de méthode via une variable objet.
 //
 // Resultats :
-//    OK
+//    2
 
 class A {
     int f() {

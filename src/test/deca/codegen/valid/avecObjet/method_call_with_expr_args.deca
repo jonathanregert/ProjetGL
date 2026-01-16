@@ -1,8 +1,8 @@
 // Description :
-//    Appel de méthode avec des arguments expressions.
+//    Appel de méthode avec des arguments qui sont des expressions arithmétiques.
 //
 // Resultats :
-//    OK
+//    Affiche : 10
 
 class A {
     int f(int x, int y) {

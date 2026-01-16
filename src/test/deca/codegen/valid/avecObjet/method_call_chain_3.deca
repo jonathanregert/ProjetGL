@@ -1,8 +1,8 @@
 // Description :
-//    Chaîne d'appels de méthodes sur trois niveaux.
+//    Chaîne d'appels de méthodes sur trois niveaux (a.getB().getC().h()).
 //
 // Resultats :
-//    OK
+//    Affiche : 4
 
 class C {
     int h() {

@@ -2,7 +2,7 @@
 //    Conditionnelle simple: if avec assignation et affichage.
 //
 // Resultats :
-// ok
+//    ok
 
 {
     int a = 3;

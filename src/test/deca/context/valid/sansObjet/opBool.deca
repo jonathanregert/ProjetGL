@@ -1,8 +1,8 @@
 // Description :
-//    Evaluation de differents expressions boolean
+//    Evaluation de différentes expressions booléennes et logique combinée.
 //
 // Resultats :
-// ok
+//    ok
 
 {
     int i = 10;

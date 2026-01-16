@@ -1,8 +1,8 @@
 // Description :
-//    Méthode récursive simple.
+//    Test d'une méthode récursive simple qui termine correctement.
 //
 // Resultats :
-//    OK
+//    Affiche : 0
 
 class A {
     int f(int n) {
