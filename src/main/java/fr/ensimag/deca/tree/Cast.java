@@ -2,6 +2,7 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
+import fr.ensimag.deca.context.ClassType;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.Type;
@@ -43,30 +44,73 @@ public class Cast extends AbstractExpr {
                            ClassDefinition currentClass)
             throws ContextualError {
 
-        // Type de l'expression castée
-        Type exprType = expr.verifyExpr(compiler, localEnv, currentClass);
 
-        // Type cible
-        Type targetType = typeIdent.verifyType(compiler);
+        // t1 casté, t2 cible
+        Type t1 = expr.verifyExpr(compiler, localEnv, currentClass); // Type source
+        Type t2 = typeIdent.verifyType(compiler);
+
+        if (t1.isVoid()) {
+            throw new ContextualError("Cast impossible : l'expression source est de type void.", getLocation());    
+        }
 
         // Cas autorisés en SANS OBJET :
         // Conforme à la sémantique paragramhe 9
         // int <-> float uniquement
-        if (targetType.isFloat() && exprType.isInt()) {
-            setType(targetType);
-            return targetType;
+        if ((t1.isInt() || t1.isFloat()) && (t2.isInt() || t2.isFloat())) {
+            setType(t2);
+            return t2;
         }
 
-        if (targetType.isInt() && exprType.isFloat()) {
-            setType(targetType);
-            return targetType;
+        // Cas autorisés AVEC OBJET  :
+        // if (exprType.isClassOrNull() && targetType.isClass()) {
+        //     // 4.a : Cast de 'null' vers une Classe -> Toujours valide
+        //     if (exprType.isNull()) {
+        //         setType(targetType);
+        //         return targetType;
+        // }
+
+       // Verif de cast_compatible(env, T1, T2) = assign_compatible(env, T1, T2) OU assign_compatible(env, T2, T1)
+       boolean assignCompatible1 = false; // assign_compatible(env, T1, T2) => On peut mettre T2 dans T1
+       boolean assignCompatible2 = false; // assign_compatible(env, T2, T1) => On peut mettre T1 dans T2
+
+       if (t1.isFloat() && t2.isInt()) {
+            assignCompatible1 = true; // on peut faire int = (float)
+        }
+        // subtype(env, T2, T1)
+        else {
+            if (t2.sameType(t1)) { // Réflexivité : T est sous-type de T
+                assignCompatible1 = true;
+            } else if (t2.isNull() && t1.isClass()) { // null est sous-type de toute classe
+                assignCompatible1 = true;
+            } else if (t2.isClass() && t1.isClass()) { // Sous-typage classes
+                if (((ClassType) t2).isSubClassOf((ClassType) t1)) {
+                    assignCompatible1 = true;
+                }
+            }
         }
 
-        // Tous les autres casts sont interdits
-        throw new ContextualError(
-            "Cast invalide de " + exprType + " vers " + targetType,
-            getLocation()
-        );
+        // verif de assign compatible(env, T2, T1)
+        if (t2.isFloat() && t1.isInt()) {
+            assignCompatible2 = true; // on peut faire float = (int)
+        } else {
+            if (t1.sameType(t2)) { // Réflexivité
+                assignCompatible2 = true;
+            } else if (t1.isNull() && t2.isClass()) { // null est sous-type de toute classe
+                assignCompatible2 = true;
+            } else if (t1.isClass() && t2.isClass()) { // Sous-typage classes
+                if (((ClassType) t1).isSubClassOf((ClassType) t2)) {
+                    assignCompatible2 = true;
+                }
+            }
+        }
+
+        if (assignCompatible1 || assignCompatible2) {
+            setType(t2);
+            return t2;
+        }
+
+        throw new ContextualError("Cast impossible de " + t1 + " vers " + t2 + ".", getLocation());
+
     }
 
     @Override

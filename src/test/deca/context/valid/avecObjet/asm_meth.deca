@@ -1,7 +1,0 @@
-class A {
-    void printHello() asm(
-        "WSTR \"Hello World!\"
-         WNL
-         RTS"
-    );
-}
