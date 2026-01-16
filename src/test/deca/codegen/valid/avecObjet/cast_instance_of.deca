@@ -1,8 +1,7 @@
-// Description:
-//    Test des casts d'objets valides et de instanceof.
+// Description :
+//    Test des casts d'objets valides et de l'opérateur instanceof.
 //
-// Resultats:
-//    A
+// Resultats :
 //    B
 //    C'est un B
 //    null cast ok

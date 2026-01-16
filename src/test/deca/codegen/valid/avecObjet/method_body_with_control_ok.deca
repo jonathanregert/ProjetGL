@@ -2,7 +2,7 @@
 //    Corps de méthode contenant if et while.
 //
 // Resultats :
-//    OK
+//    2
 
 class A {
     int f() {

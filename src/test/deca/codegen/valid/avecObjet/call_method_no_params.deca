@@ -2,7 +2,7 @@
 //    Appel d'une méthode sans paramètre.
 //
 // Resultats :
-//    OK
+//    ok
 
 class A {
     void m() {
