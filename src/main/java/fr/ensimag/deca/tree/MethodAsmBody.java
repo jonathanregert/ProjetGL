@@ -23,6 +23,10 @@ public class MethodAsmBody extends Tree{
     public void iterChildren(TreeFunction f) {
         asmText.iter(f);
     }
+
+    public void verifyMethodAsmBody(DecacCompiler compiler, EnvironmentExp envExp, ClassDefinition currentClass) throws ContextualError {
+        asmText.verifyExpr(compiler, envExp, currentClass);
+    }
     
     protected void prettyPrintChildren(PrintStream s, String prefix) {
         asmText.prettyPrint(s, prefix, false);

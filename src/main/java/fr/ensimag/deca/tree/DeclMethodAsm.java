@@ -87,7 +87,17 @@ public class DeclMethodAsm extends AbstractDeclMethod {
         methodName.setDefinition(methodDef);
     }
 
-
+    @Override
+    protected void verifyMethodBody(DecacCompiler compiler,
+                                    EnvironmentExp envExp,
+                                    ClassDefinition currentClass,
+                                    Type returnType)
+            throws ContextualError {
+        
+        EnvironmentExp envExpParams = new EnvironmentExp(envExp);
+        this.params.verifyListDeclParam(compiler, envExpParams);
+        code.verifyMethodAsmBody(compiler, envExp, currentClass);
+    }
     
     @Override
     public void decompile(IndentPrintStream s) {
@@ -128,6 +138,10 @@ public class DeclMethodAsm extends AbstractDeclMethod {
         String rawAsm = code.getAsmText().getValue();
         String[] lines = rawAsm.split("\\R");
 
+        if (rawAsm.startsWith("\"") && rawAsm.endsWith("\"")) {
+            rawAsm = rawAsm.substring(1, rawAsm.length() - 1);
+        }
+
         for (String l : lines) {
             String trimmed = l.trim();
             if (!trimmed.isEmpty()) {
@@ -159,10 +173,5 @@ public class DeclMethodAsm extends AbstractDeclMethod {
         return methodName;
     }
 
-    @Override
-    protected  void verifyMethodBody(DecacCompiler compiler,
-        EnvironmentExp envExp, // L'environnement global
-        ClassDefinition currentClass,
-        Type returnType)
-            throws ContextualError{};
+
 }
