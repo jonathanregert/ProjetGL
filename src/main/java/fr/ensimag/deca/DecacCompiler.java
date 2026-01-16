@@ -59,11 +59,19 @@ public class DecacCompiler {
     // JVM locals (pour --byte)
     private int nextLocalSlot = 1; // 0 est pour String[] args
     private final java.util.Map<VariableDefinition, Integer> localSlots = new java.util.HashMap<>();
+    private int maxLocalSlot = 1;
+
+
 
     public int allocLocalSlot(VariableDefinition def) {
         int slot = nextLocalSlot++;
         localSlots.put(def, slot);
+        maxLocalSlot = Math.max(maxLocalSlot, nextLocalSlot);
         return slot;
+    }
+
+    public int getMaxLocalSlot() {
+        return maxLocalSlot;
     }
 
     public int getLocalSlot(VariableDefinition def) {

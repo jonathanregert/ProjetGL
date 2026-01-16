@@ -2,8 +2,8 @@
 .super java/lang/Object
 
 .method public static main([Ljava/lang/String;)V
-.limit stack 50
-.limit locals 50
+.limit stack 2
+.limit locals 3
 ; Beginning of main (byte)
 ldc 6
 istore 1

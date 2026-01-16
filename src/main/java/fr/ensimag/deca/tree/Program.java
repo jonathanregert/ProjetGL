@@ -117,18 +117,12 @@ public class Program extends AbstractProgram {
             ".method public static main([Ljava/lang/String;)V"
         );
 
-        // Limites JVM (larges pour le projet GL)
+        // on réserve temporairement la place dans la liste des intructions
         compiler.getByteManager().getInstructions().add(
-            ".limit stack 50"
+            ".limit stack 0"
         );
-
-        // D'abord il faut appeler main.codeGenMainByte
-        // int locals = Math.max(1, compiler.getNextLocalSlot());
-        // compiler.getByteManager().getInstructions().add(".limit locals " + locals);
-
-
         compiler.getByteManager().getInstructions().add(
-            ".limit locals 50"
+            ".limit locals 0"
         );
 
         // Corps du main
@@ -136,6 +130,14 @@ public class Program extends AbstractProgram {
 
         // return + fin de méthode
         compiler.getByteManager().emitReturnVoid();
+
+        // On corrige après passage de tout l'arbre
+        int stack = compiler.getByteManager().getMaxStack();
+        int locals = compiler.getMaxLocalSlot();
+
+        compiler.getByteManager().getInstructions().set(4, ".limit stack " + stack);
+        compiler.getByteManager().getInstructions().set(5, ".limit locals " + locals);
+
         compiler.getByteManager().getInstructions().add(
             ".end method"
         );

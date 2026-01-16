@@ -15,48 +15,79 @@ import java.util.List;
  * @author gl42
  */
 public class ByteManager {
+    private int currentStack = 0;
+    private int maxStack = 0;
 
     private final List<String> instructions = new ArrayList<>();
+
+    private void updateStack(int delta) {
+        currentStack += delta;
+        maxStack = Math.max(maxStack, currentStack);
+    }
+
+    public int getMaxStack() {
+        return maxStack;
+    }
 
     // Gestion de la pile
 
     public void emitLDC(int value) {
         instructions.add("ldc " + value);
+        updateStack(+1);
     }
 
     public void emitLDC(float value) {
         instructions.add("ldc " + value);
+        updateStack(+1);
     }
 
     public void emitLDC(String value) {
         instructions.add("ldc \"" + value + "\"");
+        updateStack(+1);
     }
 
     // Arithmétique
 
     public void emitIADD() {
         instructions.add("iadd");
+        updateStack(-1);
     }
 
     public void emitISUB() {
         instructions.add("isub");
+        updateStack(-1);
     }
 
     public void emitIMUL() {
         instructions.add("imul");
+        updateStack(-1);
     }
 
     public void emitIDIV() {
         instructions.add("idiv");
+        updateStack(-1);
     }
 
     public void emitFDIV() {
         instructions.add("fdiv");
+        updateStack(-1);
     }
 
-    public void emitFADD() { instructions.add("fadd"); }
-    public void emitFSUB() { instructions.add("fsub"); }
-    public void emitFMUL() { instructions.add("fmul"); }
+    public void emitFADD() 
+    { 
+        instructions.add("fadd"); 
+        updateStack(-1);
+    }
+    public void emitFSUB() 
+    { 
+        instructions.add("fsub");
+        updateStack(-1);
+    }
+    public void emitFMUL() 
+    { 
+        instructions.add("fmul");
+        updateStack(-1);
+    }
     public void emitFNEG() { instructions.add("fneg"); }
 
 
@@ -97,11 +128,13 @@ public class ByteManager {
             default:
                 throw new IllegalArgumentException("op float inconnu: " + op);
         }
+        updateStack(-1);
     }
 
 
     public void emitFCMPL() {
         instructions.add("fcmpl");
+        updateStack(-1);
     }
 
 
@@ -110,7 +143,10 @@ public class ByteManager {
 
     public void emitPrint(Type type) {
         instructions.add("getstatic java/lang/System/out Ljava/io/PrintStream;");
-        instructions.add("swap");
+        updateStack(+1); // out pousse 1 ref
+
+        instructions.add("swap"); // ne change pas la hauteur
+
         if (type.isInt() || type.isBoolean()) {
             instructions.add("invokevirtual java/io/PrintStream/print(I)V");
         } else if (type.isFloat()) {
@@ -120,11 +156,16 @@ public class ByteManager {
         } else {
             throw new UnsupportedOperationException("print JVM non supporté pour " + type);
         }
+
+        updateStack(-2); // consomme (out, value), retourne void
     }
 
     public void emitPrintln(Type type) {
         instructions.add("getstatic java/lang/System/out Ljava/io/PrintStream;");
+        updateStack(+1);
+
         instructions.add("swap");
+
         if (type.isInt() || type.isBoolean()) {
             instructions.add("invokevirtual java/io/PrintStream/println(I)V");
         } else if (type.isFloat()) {
@@ -134,19 +175,27 @@ public class ByteManager {
         } else {
             throw new UnsupportedOperationException("println JVM non supporté pour " + type);
         }
+
+        updateStack(-2);
     }
+
 
 
     public void emitNewline() {
         instructions.add("getstatic java/lang/System/out Ljava/io/PrintStream;");
+        updateStack(+1);
+
         instructions.add("invokevirtual java/io/PrintStream/println()V");
+        updateStack(-1);
     }
+
 
 
     public void emitReadInt() {
         instructions.add(
             "invokestatic java/util/Scanner.nextInt()I"
         );
+        updateStack(+1);
     }
 
     // Contrôle
@@ -179,10 +228,12 @@ public class ByteManager {
     // sauts
     public void emitIfEq(String label) {
         instructions.add("ifeq " + label);
+        updateStack(-1);
     }
 
     public void emitIfNe(String label) {
         instructions.add("ifne " + label);
+        updateStack(-1);
     }
 
     // conversions
@@ -218,6 +269,7 @@ public class ByteManager {
 
     public void emitIfCmp(String op, String label) {
         instructions.add("if_icmp" + op + " " + label);
+        updateStack(-2);
     }
 
     // Unaires
@@ -230,37 +282,46 @@ public class ByteManager {
 
     public void emitReadFloat() {
         instructions.add("invokestatic java/util/Scanner.nextFloat()F");
+        updateStack(+1);
     }
     public void emitReturnVoid() {
         instructions.add("return");
+        currentStack = 0;
     }
     public void emitIReturn() {
         instructions.add("ireturn");
+        currentStack = 0;
     }
     public void emitFReturn() {
         instructions.add("freturn");
+        currentStack = 0;
     }
 
     // locals
     public void emitILoad(int slot) {
         instructions.add("iload " + slot);
+        updateStack(+1);
     }
 
     public void emitIStore(int slot) {
         instructions.add("istore " + slot);
+        updateStack(-1);
     }
 
     public void emitFLoad(int slot) {
         instructions.add("fload " + slot);
+        updateStack(+1);
     }
 
     public void emitFStore(int slot) {
         instructions.add("fstore " + slot);
+        updateStack(-1);
     }
 
     // stack
     public void emitDUP() {
         instructions.add("dup");
+        updateStack(+1);
     }
 
 }
