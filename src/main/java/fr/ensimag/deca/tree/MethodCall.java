@@ -155,8 +155,18 @@ public  class MethodCall extends AbstractExpr {
         compiler.getStackManager().releaseTemp(nTotal);
 
         // 8) Résultat : R0 -> target
-        if (!mdef.getType().isVoid() && target.getNumber() != Register.R0.getNumber()){
-            compiler.addInstruction(new LOAD(Register.R0, target));
+        if (mdef.getType().isVoid()) {
+        // appel void : aucun résultat, on ne touche pas target
+        return;
+        }
+
+        // résultat non-void : il est en R0 après BSR
+        // ta convention veut le résultat final en R1
+        compiler.addInstruction(new LOAD(Register.R0, Register.R1));
+
+        // si le caller demande autre chose que R1, on copie
+        if (target.getNumber() != Register.R1.getNumber()) {
+            compiler.addInstruction(new LOAD(Register.R1, target));
         }
     }
 }

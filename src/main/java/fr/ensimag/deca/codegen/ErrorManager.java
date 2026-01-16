@@ -33,7 +33,10 @@ public class ErrorManager {
         READ_FLOAT_ERROR,
 
         // déréferencement null
-        NULL_DEREFERENCE
+        NULL_DEREFERENCE,
+
+        // cast
+        INVALID_CAST
     }
 
     private final EnumSet<RuntimeError> used = EnumSet.noneOf(RuntimeError.class);
@@ -60,6 +63,8 @@ public class ErrorManager {
 
             case NULL_DEREFERENCE: return "dereferencement_null";
 
+            case INVALID_CAST: return "cast_invalide";
+
             default:                 return "runtime_error";
         }
     }
@@ -79,6 +84,8 @@ public class ErrorManager {
             case READ_FLOAT_ERROR:  return "Erreur : lecture d'un flottant invalide";
 
             case NULL_DEREFERENCE: return "Erreur : dereferencement de null";
+
+            case INVALID_CAST:     return "Erreur : cast invalide";
 
             default:                return "runtime_error";
         }
