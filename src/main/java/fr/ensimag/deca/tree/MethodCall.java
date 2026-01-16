@@ -122,22 +122,21 @@ public  class MethodCall extends AbstractExpr {
 
         Label nullDeref = compiler.getErrorManager().label(RuntimeError.NULL_DEREFERENCE);
 
-        // 1) Réserver la place des paramètres (poly)
+        // 1) Réserver la place des paramètres
         compiler.addInstruction(new ADDSP(new ImmediateInteger(nTotal)));
         compiler.getStackManager().useTemp(nTotal);
 
-        // 2) Évaluer le param implicite (objet) et stocker en 0(SP)
-        object.codeGenExpr(compiler, Register.getR(2)); // R2 = objet
-        compiler.addInstruction(new STORE(Register.getR(2), new RegisterOffset(0, Register.SP)));
+        // 2) Évaluer l'objet (this) en R1 puis stocker en 0(SP)
+        object.codeGenExpr(compiler, Register.R1);
+        compiler.addInstruction(new STORE(Register.R1, new RegisterOffset(0, Register.SP)));
 
-        // 3) Évaluer les args explicites de gauche à droite et stocker en -1(SP), -2(SP), ...
+        // 3) Évaluer les arguments de gauche à droite en R1 puis stocker en -1(SP), -2(SP), ...
         for (int i = 0; i < nArgs; i++) {
-            args.get(i).codeGenExpr(compiler, Register.getR(2)); // R2 = arg_i
-            compiler.addInstruction(new STORE(Register.getR(2),
-                    new RegisterOffset(-1 - i, Register.SP)));
+            args.get(i).codeGenExpr(compiler, Register.R1);
+            compiler.addInstruction(new STORE(Register.R1, new RegisterOffset(-1 - i, Register.SP)));
         }
 
-        // 4) Récupérer this depuis 0(SP) et vérifier null
+        // 4) Charger this depuis 0(SP) dans R2 et vérifier null
         compiler.addInstruction(new LOAD(new RegisterOffset(0, Register.SP), Register.getR(2)));
         compiler.addInstruction(new CMP(new NullOperand(), Register.getR(2)));
         compiler.addInstruction(new BEQ(nullDeref));
@@ -150,21 +149,16 @@ public  class MethodCall extends AbstractExpr {
         int slot = 1 + mdef.getIndex();
         compiler.addInstruction(new BSR(new RegisterOffset(slot, Register.getR(2))));
 
-        // 7) Dépiler les paramètres (poly)
+        // 7) Dépiler les paramètres
         compiler.addInstruction(new SUBSP(new ImmediateInteger(nTotal)));
         compiler.getStackManager().releaseTemp(nTotal);
 
-        // 8) Résultat : R0 -> target
+        // 8) Résultat : R0 -> (R1 puis target si besoin)
         if (mdef.getType().isVoid()) {
-        // appel void : aucun résultat, on ne touche pas target
-        return;
+            return;
         }
 
-        // résultat non-void : il est en R0 après BSR
-        // ta convention veut le résultat final en R1
         compiler.addInstruction(new LOAD(Register.R0, Register.R1));
-
-        // si le caller demande autre chose que R1, on copie
         if (target.getNumber() != Register.R1.getNumber()) {
             compiler.addInstruction(new LOAD(Register.R1, target));
         }

@@ -299,6 +299,7 @@ public class Cast extends AbstractExpr {
     }
 
     @Override
-    public int getPriorite() { return 90; }
-
+    public int getPriorite() {
+        return 90;
+    }
 }
