@@ -1,6 +1,7 @@
 package fr.ensimag.deca.tree;
 
-
+import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
 
@@ -38,4 +39,6 @@ public class MethodBody extends Tree{
         insts.decompile(s);
         s.print("}");
     }
+
+
 }

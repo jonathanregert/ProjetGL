@@ -12,6 +12,8 @@ import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.WFLOAT;
 import fr.ensimag.ima.pseudocode.instructions.WINT;
 
+import static org.mockito.Mockito.*;
+
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
 
@@ -91,14 +93,16 @@ public abstract class AbstractExpr extends AbstractInst {
 
         if (expectedType.isFloat() && typeFound.isInt()) {
         ConvFloat conv = new ConvFloat(this);
-        conv.verifyExpr(compiler, localEnv, currentClass);
+        conv.verifyExpr(compiler, localEnv, currentClass); // Décore le ConvFloat
         return conv;
         }
 
+        // cas si subType (inclus le cas de sametype)
         if (!typeFound.isSubtype(compiler.environmentType, expectedType)) {
             throw new ContextualError("Type incompatible : attendu " + expectedType
                 + ", trouvé " + typeFound, getLocation());
         }
+
         return this;
     }
     

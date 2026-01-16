@@ -1,8 +1,8 @@
 // Description :
-//    Accès à un champ public via un autre objet.
+//    Accès et affichage d'un champ public via un autre objet.
 //
 // Resultats :
-//    OK
+//    Affiche : 2
 
 class A {
     int x;

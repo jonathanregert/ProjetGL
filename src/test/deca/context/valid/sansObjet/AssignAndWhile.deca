@@ -2,7 +2,7 @@
 //    Boucle while simple affichant des entiers.
 //
 // Resultats :
-// ok
+//    ok
 
 {
     int i = 0;

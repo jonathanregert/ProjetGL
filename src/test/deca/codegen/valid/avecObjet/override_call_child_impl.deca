@@ -1,8 +1,8 @@
 // Description :
-//    Appel d'une méthode redéfinie dans une sous-classe.
+//    Appel d'une méthode redéfinie dans une sous-classe (override).
 //
 // Resultats :
-//    OK
+//    Affiche : 2
 
 class A {
     int f() {

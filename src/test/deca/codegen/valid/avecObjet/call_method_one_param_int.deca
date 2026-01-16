@@ -2,7 +2,7 @@
 //    Appel d'une méthode avec un paramètre int.
 //
 // Resultats :
-//    OK
+//    1
 
 class A {
     void m(int x) {

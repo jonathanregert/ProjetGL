@@ -1,8 +1,10 @@
 // Description :
-//    Variables locales dans une méthode.
+//    Test de déclaration et affichage de variables locales dans une méthode.
 //
 // Resultats :
-//    OK
+//    Affiche :
+//    1
+//    2.0
 
 class A {
     void m() {

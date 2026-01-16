@@ -1,8 +1,8 @@
 // Description :
-//    Unary Minus avec ConvFloat
+//    Test du moins unaire et conversion implicite en float.
 //
 // Resultats :
-// ok
+//    ok
 
 {
     float y;

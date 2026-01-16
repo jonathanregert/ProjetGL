@@ -1,8 +1,8 @@
 // Description :
-//    Appels de méthodes imbriqués.
+//    Appels de méthodes imbriqués (une méthode en appelle une autre).
 //
 // Resultats :
-//    OK
+//    Affiche : 2
 
 class A {
     int f() {

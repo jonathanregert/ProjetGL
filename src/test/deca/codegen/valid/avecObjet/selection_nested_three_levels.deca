@@ -1,8 +1,8 @@
 // Description :
-//    Sélection de champ imbriquée sur trois niveaux.
+//    Sélection imbriquée de champ sur trois niveaux d'objets (a.b.c.z).
 //
 // Resultats :
-//    OK
+//    Affiche : 7
 
 class C {
     int z;

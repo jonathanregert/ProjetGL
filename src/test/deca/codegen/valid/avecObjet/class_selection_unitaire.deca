@@ -2,7 +2,7 @@
 //    Test unitaire : Selection.
 //
 // Resultats :
-//    OK
+//    a.x = 42
 
 class A {
     int x;

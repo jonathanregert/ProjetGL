@@ -1,10 +1,8 @@
 // Description :
-//    Variable locale en conflit illégal avec un champ.
+//    Variable locale avec un champ.
 //
 // Resultats :
-//    Erreur contextuelle
-//    Ligne <No_de_ligne> : <message d'erreur de votre compilateur>
-
+//  OK
 class A {
     int x;
     int f() {

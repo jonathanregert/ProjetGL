@@ -2,7 +2,7 @@
 //    Appel de méthode sur un objet créé avec new.
 //
 // Resultats :
-//    OK
+//    1
 
 class A {
     int f() {

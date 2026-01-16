@@ -2,7 +2,7 @@
 //    Appel d'une méthode retournant un int.
 //
 // Resultats :
-//    OK
+//    3
 
 class A {
     int get() {

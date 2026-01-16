@@ -2,7 +2,7 @@
 //    Appel d'une méthode avec un paramètre float.
 //
 // Resultats :
-//    OK
+//    1.5
 
 class A {
     void m(float f) {

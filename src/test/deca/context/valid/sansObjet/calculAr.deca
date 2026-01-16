@@ -2,7 +2,7 @@
 //    Calculs arithmétiques et boucle while avec affichages.
 //
 // Resultats :
-// ok
+//    ok
 
 {
     int a = 3;
@@ -13,7 +13,6 @@
     print(c);
     println(c);
 
-    
     while (i < 5) {
         print(i);
         i = i + 1;

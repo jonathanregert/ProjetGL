@@ -1,8 +1,8 @@
 // Description :
-//    Sélection de champ sur un objet créé avec new.
+//    Sélection et affichage d'un champ sur un objet créé dynamiquement avec new.
 //
 // Resultats :
-//    OK
+//    Affiche : 0
 
 class A {
     int x;

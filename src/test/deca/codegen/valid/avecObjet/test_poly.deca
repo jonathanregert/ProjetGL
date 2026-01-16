@@ -1,3 +1,9 @@
+// Description :
+//    Test d'accès et modification d'un champ via méthodes d'une classe (get/set).
+//
+// Resultats :
+//    Affiche : a.getX() = 1
+
 class A {
     protected int x ;
     int getX(){

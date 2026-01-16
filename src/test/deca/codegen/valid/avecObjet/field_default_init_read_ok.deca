@@ -2,7 +2,7 @@
 //    Lecture d'un champ non initialisé explicitement.
 //
 // Resultats :
-//    OK
+//    0
 
 class A {
     int x;

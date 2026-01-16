@@ -2,7 +2,7 @@
 //    Écriture puis lecture d'un champ.
 //
 // Resultats :
-//    OK
+//    11
 
 class A {
     int x;
