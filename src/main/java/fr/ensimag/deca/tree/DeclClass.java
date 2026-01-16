@@ -5,15 +5,10 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.codegen.ErrorManager.RuntimeError;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.EnvironmentExp;
-import fr.ensimag.deca.context.EnvironmentExp.DoubleDefException;
 import fr.ensimag.deca.context.EnvironmentType;
 import fr.ensimag.deca.context.MethodDefinition;
 import fr.ensimag.deca.context.TypeDefinition;
-import fr.ensimag.deca.codegen.StackManager;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.deca.tools.SymbolTable;
-import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
 import fr.ensimag.ima.pseudocode.instructions.BOV;
@@ -30,8 +25,6 @@ import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.LabelOperand;
 import fr.ensimag.ima.pseudocode.Line;
 import fr.ensimag.ima.pseudocode.NullOperand;
-
-import static org.mockito.ArgumentMatchers.*;
 
 import java.io.PrintStream;
 // import java.lang.instrument.ClassDefinition;
@@ -134,10 +127,9 @@ public class DeclClass extends AbstractDeclClass {
     }
 
 
-   @Override
+    @Override
     protected void verifyClassMembers(DecacCompiler compiler) throws ContextualError {
 
-        // Héritage champs
         if (this.classDefinition.getSuperClass() != null) {
             this.classDefinition.setNumberOfFields(
                 this.classDefinition.getSuperClass().getNumberOfFields()
@@ -146,10 +138,8 @@ public class DeclClass extends AbstractDeclClass {
             this.classDefinition.setNumberOfFields(0);
         }
 
-        // Déclaration champs
         this.classFields.verifyListDeclField(compiler, this.classDefinition);
 
-        // Héritage méthodes
         if (this.classDefinition.getSuperClass() != null) {
             this.classDefinition.setNumberOfMethods(
                 this.classDefinition.getSuperClass().getNumberOfMethods()
@@ -158,7 +148,6 @@ public class DeclClass extends AbstractDeclClass {
             this.classDefinition.setNumberOfMethods(0);
         }
 
-        // Déclaration méthodes
         this.classMethods.verifyListDeclMethode(compiler, this.classDefinition);
     }
 
@@ -192,9 +181,6 @@ public class DeclClass extends AbstractDeclClass {
         classFields.iter(f);
         classMethods.iter(f);
     }
-
-    // Gencode
-
     @Override
     public void codeGenMTable(DecacCompiler compiler){
         ClassDefinition classDef = this.classDefinition;
@@ -215,8 +201,6 @@ public class DeclClass extends AbstractDeclClass {
         if (base == null) {
             throw new IllegalStateException("VTable non réservée pour " + classDef.getType());
         }
-
-        // Case 0 : pointeur vers vtable de la super-classe (ou null pour Object)
         if (classDef.getSuperClass() == null) {
             compiler.addInstruction(new LOAD(new NullOperand(), Register.R0));
             compiler.addInstruction(new STORE(Register.R0, base));
@@ -229,7 +213,6 @@ public class DeclClass extends AbstractDeclClass {
             compiler.addInstruction(new LEA(superBase, Register.R0));
             compiler.addInstruction(new STORE(Register.R0, base));
 
-            // Héritage : copier UNIQUEMENT les méthodes de la super-classe
             int nSuper = classDef.getSuperClass().getNumberOfMethods();
             for (int i = 0; i < nSuper; i++) {
                 RegisterOffset src = new RegisterOffset(superBase.getOffset() + 1 + i, superBase.getRegister());
@@ -239,7 +222,6 @@ public class DeclClass extends AbstractDeclClass {
             }
         }
 
-        // Écraser/ajouter les méthodes déclarées dans la classe courante
         for (AbstractDeclMethod m : classMethods.getList()) {
             MethodDefinition md = m.getMethodName().getMethodDefinition();
             int index = md.getIndex(); // commence à 0
@@ -251,7 +233,6 @@ public class DeclClass extends AbstractDeclClass {
             compiler.addInstruction(new STORE(Register.R0, cell));
         }
     }
-    // Helper: vrai si cd ou un de ses ancêtres (hors Object) a des champs
     private boolean hasAnyFieldsInHierarchy(ClassDefinition cd) {
         while (cd != null) {
             String name = cd.getType().getName().getName();
@@ -287,7 +268,6 @@ public class DeclClass extends AbstractDeclClass {
             }
         }
 
-        // Cas trivial
         if (!hasLocalFields && !callSuperInit) {
             compiler.addInstruction(new RTS());
             compiler.getStackManager().exitBlock();
@@ -301,13 +281,11 @@ public class DeclClass extends AbstractDeclClass {
         int first = compiler.getRegAllocator().getFirstAlloc();
         int last  = compiler.getRegAllocator().getMaxReg();
 
-        // Sauvegarde regs
         for (int r = first; r <= last; r++) {
             compiler.addInstruction(new PUSH(Register.getR(r)));
             compiler.getStackManager().useTemp(1);
         }
 
-        // init.super(this) si nécessaire
         if (callSuperInit) {
             String sname = superDef.getType().getName().getName();
 
@@ -321,10 +299,8 @@ public class DeclClass extends AbstractDeclClass {
             compiler.getStackManager().releaseTemp(1);
         }
 
-        // Init champs courants
         classFields.codeGenInitFields(compiler, classDef);
 
-        // Restore regs
         for (int r = last; r >= first; r--) {
             compiler.addInstruction(new POP(Register.getR(r)));
             compiler.getStackManager().releaseTemp(1);
@@ -351,5 +327,4 @@ public class DeclClass extends AbstractDeclClass {
 
         compiler.setCurrentClassName(null);
     }
-
 }

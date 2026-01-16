@@ -1,11 +1,8 @@
 package fr.ensimag.deca.tree;
 
-import org.apache.log4j.Logger;
-
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
 
@@ -16,8 +13,6 @@ import fr.ensimag.deca.tools.IndentPrintStream;
  * @date 01/01/2026
  */
 public class ListDeclMethod extends TreeList<AbstractDeclMethod> {
-    private static final Logger LOG = Logger.getLogger(ListDeclMethod.class);
-
     @Override
     public void decompile(IndentPrintStream s) {
         for (AbstractDeclMethod decl : getList()) {
@@ -45,12 +40,6 @@ public class ListDeclMethod extends TreeList<AbstractDeclMethod> {
             }
         }
 
-    protected void codeGenListDeclVar(DecacCompiler compiler) {
-        for (AbstractDeclMethod decl : getList()) {
-            decl.codeGenDeclMethod(compiler);
-        }
-    }
-
     public void verifyListDeclMethodBody(DecacCompiler compiler, ClassDefinition currentClass)
             throws ContextualError {
         for (AbstractDeclMethod m : getList()) {
@@ -60,6 +49,9 @@ public class ListDeclMethod extends TreeList<AbstractDeclMethod> {
             m.verifyMethodBody(compiler, currentClass.getMembers(), currentClass, returnType);
         }
     }
-
-
+    protected void codeGenListDeclVar(DecacCompiler compiler) {
+        for (AbstractDeclMethod decl : getList()) {
+            decl.codeGenDeclMethod(compiler);
+        }
+    }
 }

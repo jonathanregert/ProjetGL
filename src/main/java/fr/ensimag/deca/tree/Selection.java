@@ -1,25 +1,18 @@
 package fr.ensimag.deca.tree;
-import fr.ensimag.deca.tree.AbstractLValue;
 
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.context.ClassType;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.Definition;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.FieldDefinition;
-import fr.ensimag.deca.context.MethodDefinition;
 import fr.ensimag.deca.context.ExpDefinition;
-import fr.ensimag.deca.context.VariableDefinition;
-import fr.ensimag.deca.context.TypeDefinition;
 import fr.ensimag.deca.codegen.ErrorManager;
-import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
-import org.apache.log4j.Logger;
 import fr.ensimag.ima.pseudocode.DAddr;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
@@ -96,26 +89,12 @@ public class Selection extends AbstractLValue{
 
         return getType();
     }
-    /**
-     * Implements non-terminal "type" of [SyntaxeContextuelle] in the 3 passes
-     * @param compiler contains "env_types" attribute
-     */
-   
-    
-
 
     @Override
     protected void iterChildren(TreeFunction f) {
         object.iter(f);
         field.iter(f);
     }
-
-    // @Override
-    // protected DAddr codeGenAddr(DecacCompiler compiler) {
-    //     object.codeGenInst(compiler);
-    //     FieldDefinition fieldDef = (FieldDefinition) field.getDefinition();
-    //     return new RegisterOffset(fieldDef.getIndex(), Register.R1);
-    // }
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
@@ -132,10 +111,8 @@ public class Selection extends AbstractLValue{
 
     @Override
     public DAddr codeGenAddr(DecacCompiler compiler) {
-        // Évaluer l'objet dans R2 (adresse)
         getObject().codeGenExpr(compiler, Register.getR(2));
 
-        // Null check (si vous avez un label d'erreur deref null)
         compiler.addInstruction(new CMP(new NullOperand(), Register.getR(2)));
         compiler.addInstruction(new BEQ(
             compiler.getErrorManager().label(ErrorManager.RuntimeError.NULL_DEREFERENCE)

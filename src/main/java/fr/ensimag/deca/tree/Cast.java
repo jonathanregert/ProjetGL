@@ -6,11 +6,9 @@ import fr.ensimag.deca.context.ClassType;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.Type;
-import fr.ensimag.deca.codegen.ErrorManager;
 import fr.ensimag.deca.codegen.ErrorManager.RuntimeError;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.GPRegister;
-import fr.ensimag.ima.pseudocode.ImmediateInteger;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.NullOperand;
 import fr.ensimag.ima.pseudocode.Register;
@@ -18,7 +16,6 @@ import fr.ensimag.ima.pseudocode.RegisterOffset;
 import fr.ensimag.ima.pseudocode.instructions.BEQ;
 import fr.ensimag.ima.pseudocode.instructions.BRA;
 import fr.ensimag.ima.pseudocode.instructions.CMP;
-import fr.ensimag.ima.pseudocode.instructions.FLOAT;
 import fr.ensimag.ima.pseudocode.instructions.INT;
 import fr.ensimag.ima.pseudocode.instructions.LEA;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
@@ -202,16 +199,13 @@ public class Cast extends AbstractExpr {
 
     @Override
     protected void codeGenExpr(DecacCompiler compiler, GPRegister target) {
-        // 1) Résultat de expr dans target (souvent R1)
         expr.codeGenExpr(compiler, target);
 
-        // 2) Cast primitif autorisé : float -> int
         if (getType().isInt() && expr.getType().isFloat()) {
             compiler.addInstruction(new INT(target, target));
             return;
         }
 
-        // 3) Cast objet : vérif dynamique si nécessaire
         if (getType().isClass() && needRuntimeCheck && !compiler.getNoCheckOption()) {
 
             int id = compiler.getLabelId();
@@ -219,58 +213,46 @@ public class Cast extends AbstractExpr {
             Label loop = new Label("cast_loop_" + id);
             Label fail = compiler.getErrorManager().label(RuntimeError.INVALID_CAST);
 
-            // if (target == null) => ok
             compiler.addInstruction(new CMP(new NullOperand(), target));
             compiler.addInstruction(new BEQ(ok));
 
-            // R0 = vtable dynamique = obj[0]
             compiler.addInstruction(new LOAD(new RegisterOffset(0, target), Register.R0));
 
-            // On veut un registre pour la vtable cible SANS casser target.
             GPRegister tmp = compiler.getRegAllocator().alloc();
             boolean tmpFromAllocator = (tmp != null);
             boolean pushedTarget = false;
 
-            // Si pas de registre dispo, on tente R1
             if (tmp == null) {
                 tmp = Register.R1;
             }
 
-            // Si tmp risque d'écraser target (tmp == target), on sauvegarde target
             if (tmp == target) {
                 compiler.addInstruction(new PUSH(target));
                 compiler.getStackManager().useTemp(1);
                 pushedTarget = true;
             }
 
-            // tmp = adresse vtable cible
             ClassType dst = (ClassType) getType();
             compiler.addInstruction(new LEA(dst.getDefinition().getAddrTable(), tmp));
 
-            // boucle
             compiler.addLabelToBlock(loop);
 
-            // if (R0 == tmp) ok
             compiler.addInstruction(new CMP(tmp, Register.R0));
             compiler.addInstruction(new BEQ(ok));
 
-            // if (R0 == 0) fail
             compiler.addInstruction(new CMP(new NullOperand(), Register.R0));
             compiler.addInstruction(new BEQ(fail));
 
-            // R0 = superVtable = vtable[0]
             compiler.addInstruction(new LOAD(new RegisterOffset(0, Register.R0), Register.R0));
             compiler.addInstruction(new BRA(loop));
 
             compiler.addLabelToBlock(ok);
 
-            // restore target si on l'a push
             if (pushedTarget) {
                 compiler.addInstruction(new POP(target));
                 compiler.getStackManager().releaseTemp(1);
             }
 
-            // free tmp si on l'a obtenu via l'allocateur
             if (tmpFromAllocator) {
                 compiler.getRegAllocator().free(tmp);
             }

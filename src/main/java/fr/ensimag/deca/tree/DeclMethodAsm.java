@@ -8,9 +8,7 @@ import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.MethodDefinition;
 import fr.ensimag.deca.context.Signature;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.InlinePortion;
 import fr.ensimag.ima.pseudocode.Label;
-import fr.ensimag.ima.pseudocode.Line;
 import fr.ensimag.ima.pseudocode.instructions.RTS;
 
 import java.io.PrintStream;
@@ -145,7 +143,7 @@ public class DeclMethodAsm extends AbstractDeclMethod {
         for (String l : lines) {
             String trimmed = l.trim();
             if (!trimmed.isEmpty()) {
-                compiler.addInline(trimmed); // méthode wrapper dans DecacCompiler
+                compiler.addInline(trimmed);
             }
         }
 
@@ -172,6 +170,4 @@ public class DeclMethodAsm extends AbstractDeclMethod {
     {
         return methodName;
     }
-
-
 }

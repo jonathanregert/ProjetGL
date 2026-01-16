@@ -3,7 +3,6 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.codegen.ErrorManager.RuntimeError;
-import fr.ensimag.deca.codegen.RegAllocator;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.ImmediateInteger;
@@ -16,13 +15,10 @@ import fr.ensimag.ima.pseudocode.instructions.BEQ;
 import fr.ensimag.ima.pseudocode.instructions.BSR;
 import fr.ensimag.ima.pseudocode.instructions.CMP;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
-import fr.ensimag.ima.pseudocode.instructions.PUSH;
 import fr.ensimag.ima.pseudocode.instructions.STORE;
 import fr.ensimag.ima.pseudocode.instructions.SUBSP;
 
 import org.apache.commons.lang.Validate;
-
-import static org.mockito.ArgumentMatchers.*;
 
 import java.io.PrintStream;
 import java.util.List;
@@ -79,9 +75,8 @@ public  class MethodCall extends AbstractExpr {
         int i = 0;
         for (AbstractExpr arg : arguments.getList()) {
         Type targetType = sig.paramNumber(i);
-        // on verifie chaque argument
         AbstractExpr newArg = arg.verifyRValue(compiler, localEnv, currentClass, targetType);
-        i++; // au lieu de faire set : immuable
+        i++;
         }
     
 
@@ -118,42 +113,34 @@ public  class MethodCall extends AbstractExpr {
 
         List<AbstractExpr> args = arguments.getList();
         int nArgs = args.size();
-        int nTotal = 1 + nArgs; // this + args explicites
+        int nTotal = 1 + nArgs;
 
         Label nullDeref = compiler.getErrorManager().label(RuntimeError.NULL_DEREFERENCE);
 
-        // 1) Réserver la place des paramètres
         compiler.addInstruction(new ADDSP(new ImmediateInteger(nTotal)));
         compiler.getStackManager().useTemp(nTotal);
 
-        // 2) Évaluer l'objet (this) en R1 puis stocker en 0(SP)
         object.codeGenExpr(compiler, Register.R1);
         compiler.addInstruction(new STORE(Register.R1, new RegisterOffset(0, Register.SP)));
 
-        // 3) Évaluer les arguments de gauche à droite en R1 puis stocker en -1(SP), -2(SP), ...
         for (int i = 0; i < nArgs; i++) {
             args.get(i).codeGenExpr(compiler, Register.R1);
             compiler.addInstruction(new STORE(Register.R1, new RegisterOffset(-1 - i, Register.SP)));
         }
 
-        // 4) Charger this depuis 0(SP) dans R2 et vérifier null
         compiler.addInstruction(new LOAD(new RegisterOffset(0, Register.SP), Register.getR(2)));
         compiler.addInstruction(new CMP(new NullOperand(), Register.getR(2)));
         compiler.addInstruction(new BEQ(nullDeref));
 
-        // 5) Charger la vtable : R2 = *(this) = vtable
         compiler.addInstruction(new LOAD(new RegisterOffset(0, Register.getR(2)), Register.getR(2)));
 
-        // 6) Appel virtuel : BSR (1 + index)(vtable)
         MethodDefinition mdef = method.getMethodDefinition();
         int slot = 1 + mdef.getIndex();
         compiler.addInstruction(new BSR(new RegisterOffset(slot, Register.getR(2))));
 
-        // 7) Dépiler les paramètres
         compiler.addInstruction(new SUBSP(new ImmediateInteger(nTotal)));
         compiler.getStackManager().releaseTemp(nTotal);
 
-        // 8) Résultat : R0 -> (R1 puis target si besoin)
         if (mdef.getType().isVoid()) {
             return;
         }

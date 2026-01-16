@@ -1,7 +1,6 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.Type;
-import fr.ensimag.deca.context.ClassType;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
@@ -83,8 +82,6 @@ public abstract class AbstractIdentifier extends AbstractLValue {
     public abstract VariableDefinition getVariableDefinition();
 
     public abstract void setDefinition(Definition definition);
-
-
 
     /**
      * Implements non-terminal "type" of [SyntaxeContextuelle] in the 3 passes

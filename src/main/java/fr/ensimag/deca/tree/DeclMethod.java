@@ -7,8 +7,6 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.deca.tools.SymbolTable.Symbol;
-
 import fr.ensimag.ima.pseudocode.ImmediateInteger;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Line;
@@ -185,7 +183,6 @@ public class DeclMethod extends AbstractDeclMethod {
         compiler.getStackManager().enterBlock();
         compiler.setCurrentMethodEndLabel(end);
 
-        // Offsets params (this = -2(LB), params à partir de -3(LB))
         int k = 3;
         for (AbstractDeclParam p : params.getList()) {
             DeclParam dp = (DeclParam) p;
@@ -194,20 +191,17 @@ public class DeclMethod extends AbstractDeclMethod {
             k++;
         }
 
-        // Prologue placeholders (direct, pas beginBlock)
         Line tstoLine = new Line(new TSTO(new ImmediateInteger(0)));
         compiler.add(tstoLine);
         compiler.addInstruction(new BOV(pilePleine));
 
-        // Sauvegarde regs allocables (poly-like)
-        int first = compiler.getRegAllocator().getFirstAlloc(); // ex: 2 ou 3
+        int first = compiler.getRegAllocator().getFirstAlloc();
         int last  = compiler.getRegAllocator().getMaxReg();
         for (int r = first; r <= last; r++) {
             compiler.addInstruction(new PUSH(Register.getR(r)));
             compiler.getStackManager().useTemp(1);
         }
 
-        // Vars locales + corps
         body.getVars().codeGenListDeclVar(compiler);
         body.getInsts().codeGenListInst(compiler);
 
@@ -215,10 +209,8 @@ public class DeclMethod extends AbstractDeclMethod {
             compiler.addInstruction(new BRA(end));
         }
 
-        // Fin commune
         compiler.addLabel(end);
 
-        // Restauration regs
         for (int r = last; r >= first; r--) {
             compiler.addInstruction(new POP(Register.getR(r)));
             compiler.getStackManager().releaseTemp(1);
@@ -226,7 +218,6 @@ public class DeclMethod extends AbstractDeclMethod {
 
         compiler.addInstruction(new RTS());
 
-        // Patch TSTO après comptage locals/temp
         int d = compiler.getStackManager().getTSTOForLocals();
         tstoLine.setInstruction(new TSTO(new ImmediateInteger(d)));
 

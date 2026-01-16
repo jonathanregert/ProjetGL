@@ -1,6 +1,4 @@
 package fr.ensimag.deca.tree;
-
-
 /**
  *
  * @author gl42
