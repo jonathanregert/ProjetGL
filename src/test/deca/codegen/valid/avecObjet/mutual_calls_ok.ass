@@ -1,0 +1,141 @@
+; start main program
+; Passe1 table de méthode : A base=3(GB) taille=4
+; Beginning of main instructions:
+	TSTO #9	; Main Program
+	BOV pile_pleine
+	ADDSP #7
+; --------------------------------------------------
+; Construction des tables des methodes
+; --------------------------------------------------
+	LOAD #null, R0
+	STORE R0, 1(GB)
+	LOAD code.Object.equals, R0
+	STORE R0, 2(GB)
+	LEA 1(GB), R0
+	STORE R0, 3(GB)
+	LOAD 2(GB), R0
+	STORE R0, 4(GB)
+	LOAD code.A.f, R0
+	STORE R0, 5(GB)
+	LOAD code.A.g, R0
+	STORE R0, 6(GB)
+; --------------------------------------------------
+; Code du programme principal
+; --------------------------------------------------
+	NEW #1, R3
+	BOV tas_plein
+	LEA 3(GB), R0
+	STORE R0, 0(R3)
+	PUSH R3
+	BSR init.A
+	POP R3
+	STORE R3, 7(GB)
+	ADDSP #2
+	LOAD 7(GB), R1
+	STORE R1, 0(SP)
+	LOAD #2, R1
+	STORE R1, -1(SP)
+	LOAD 0(SP), R2
+	CMP #null, R2
+	BEQ dereferencement_null
+	LOAD 0(R2), R2
+	BSR 2(R2)
+	SUBSP #2
+	LOAD R0, R1
+	WINT
+	WNL
+	HALT
+code.Object.equals:
+	LOAD -2(LB), R0
+	CMP -3(LB), R0
+	BEQ Object.equals.true
+	LOAD #0, R0
+	BRA Object.equals.end
+Object.equals.true:
+	LOAD #1, R0
+Object.equals.end:
+	RTS
+init.A:
+; init.A (this = -2(LB))
+	RTS
+; Code des méthodes de la classe A
+code.A.f:
+; Méthode A.f
+	TSTO #4
+	BOV pile_pleine
+	PUSH R3
+	LOAD -3(LB), R1
+	LOAD #0, R3
+	CMP R3, R1
+	SEQ R1
+	CMP #0, R1
+	BEQ else_0
+	LOAD #0, R1
+	LOAD R1, R0
+	BRA fin.A.f
+	BRA endif_0
+else_0:
+endif_0:
+	ADDSP #2
+	LOAD -2(LB), R1
+	STORE R1, 0(SP)
+	LOAD -3(LB), R1
+	PUSH R1
+	LOAD #1, R3
+	POP R2
+	SUB R3, R2
+	BOV overflow_arith
+	LOAD R2, R1
+	STORE R1, -1(SP)
+	LOAD 0(SP), R2
+	CMP #null, R2
+	BEQ dereferencement_null
+	LOAD 0(R2), R2
+	BSR 3(R2)
+	SUBSP #2
+	LOAD R0, R1
+	LOAD R1, R0
+	BRA fin.A.f
+fin.A.f:
+	POP R3
+	RTS
+code.A.g:
+; Méthode A.g
+	TSTO #3
+	BOV pile_pleine
+	PUSH R3
+	ADDSP #2
+	LOAD -2(LB), R1
+	STORE R1, 0(SP)
+	LOAD -3(LB), R1
+	STORE R1, -1(SP)
+	LOAD 0(SP), R2
+	CMP #null, R2
+	BEQ dereferencement_null
+	LOAD 0(R2), R2
+	BSR 2(R2)
+	SUBSP #2
+	LOAD R0, R1
+	LOAD R1, R0
+	BRA fin.A.g
+fin.A.g:
+	POP R3
+	RTS
+; Message d'erreurs
+pile_pleine:
+	WSTR "Erreur : debordement de pile"
+	WNL
+	ERROR
+tas_plein:
+	WSTR "Erreur : allocation impossible, tas plein"
+	WNL
+	ERROR
+overflow_arith:
+	WSTR "Erreur : overflow_arithmetique"
+	WNL
+	ERROR
+dereferencement_null:
+	WSTR "Erreur : dereferencement de null"
+	WNL
+	ERROR
+; end main program

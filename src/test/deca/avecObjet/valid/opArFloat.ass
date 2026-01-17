@@ -1,0 +1,49 @@
+; start main program
+; Beginning of main instructions:
+	TSTO #6	; Main Program
+	BOV pile_pleine
+	ADDSP #5
+; --------------------------------------------------
+; Construction des tables des methodes
+; --------------------------------------------------
+	LOAD #null, R0
+	STORE R0, 1(GB)
+	LOAD code.Object.equals, R0
+	STORE R0, 2(GB)
+; --------------------------------------------------
+; Code du programme principal
+; --------------------------------------------------
+	LOAD #0x1.0p-1, R3
+	STORE R3, 3(GB)
+	LOAD #5, R3
+	FLOAT R3, R3
+	STORE R3, 4(GB)
+	LOAD 3(GB), R1
+	PUSH R1
+	LOAD 4(GB), R3
+	POP R2
+	ADD R3, R2
+	BOV overflow_arith
+	LOAD R2, R1
+	STORE R1, 5(GB)
+	HALT
+code.Object.equals:
+	LOAD -2(LB), R0
+	CMP -3(LB), R0
+	BEQ Object.equals.true
+	LOAD #0, R0
+	BRA Object.equals.end
+Object.equals.true:
+	LOAD #1, R0
+Object.equals.end:
+	RTS
+; Message d'erreurs
+pile_pleine:
+	WSTR "Erreur : debordement de pile"
+	WNL
+	ERROR
+overflow_arith:
+	WSTR "Erreur : overflow_arithmetique"
+	WNL
+	ERROR
+; end main program

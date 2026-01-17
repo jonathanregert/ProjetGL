@@ -1,0 +1,20 @@
+// Description :
+//    Affectation d'un champ protected depuis une classe étrangère.
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne 14 : La classe actuelle B n'a pas accès au champ protégé de A
+
+class A {
+protected int x;
+}
+
+class B {
+    void f(A a) {
+        a.x = 3;
+    }
+}
+
+{
+}
+

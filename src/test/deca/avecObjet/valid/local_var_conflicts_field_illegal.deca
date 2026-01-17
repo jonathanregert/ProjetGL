@@ -1,0 +1,17 @@
+// Description :
+//    Variable locale en conflit avec un champ. autorisé 2.4, 2.6 3.10
+//
+// Resultats :
+//    ok
+
+class A {
+    int x;
+    int f() {
+        int x = 3;
+        return x;
+    }
+}
+
+{
+}
+

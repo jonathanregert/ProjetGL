@@ -1,0 +1,86 @@
+; start main program
+; Passe1 table de méthode : Tools base=3(GB) taille=3
+; Beginning of main instructions:
+	TSTO #9	; Main Program
+	BOV pile_pleine
+	ADDSP #6
+; --------------------------------------------------
+; Construction des tables des methodes
+; --------------------------------------------------
+	LOAD #null, R0
+	STORE R0, 1(GB)
+	LOAD code.Object.equals, R0
+	STORE R0, 2(GB)
+	LEA 1(GB), R0
+	STORE R0, 3(GB)
+	LOAD 2(GB), R0
+	STORE R0, 4(GB)
+	LOAD code.Tools.max, R0
+	STORE R0, 5(GB)
+; --------------------------------------------------
+; Code du programme principal
+; --------------------------------------------------
+	NEW #1, R3
+	BOV tas_plein
+	LEA 3(GB), R0
+	STORE R0, 0(R3)
+	PUSH R3
+	BSR init.Tools
+	POP R3
+	STORE R3, 6(GB)
+	WSTR "Max is "
+	ADDSP #3
+	LOAD 6(GB), R1
+	STORE R1, 0(SP)
+	LOAD #10, R1
+	STORE R1, -1(SP)
+	LOAD #20, R1
+	STORE R1, -2(SP)
+	LOAD 0(SP), R2
+	CMP #null, R2
+	BEQ dereferencement_null
+	LOAD 0(R2), R2
+	BSR 2(R2)
+	SUBSP #3
+	LOAD R0, R1
+	WINT
+	WNL
+	HALT
+code.Object.equals:
+	LOAD -2(LB), R0
+	CMP -3(LB), R0
+	BEQ Object.equals.true
+	LOAD #0, R0
+	BRA Object.equals.end
+Object.equals.true:
+	LOAD #1, R0
+Object.equals.end:
+	RTS
+init.Tools:
+; init.Tools (this = -2(LB))
+	RTS
+; Code des méthodes de la classe Tools
+code.Tools.max:
+; Méthode ASM code.Tools.max
+"
+LOAD -3(LB), R0   ; R0 = a
+LOAD -4(LB), R1   ; R1 = b
+CMP R1, R0        ; Compare a ? b
+BGE end_max       ; Si a >= b, on a fini (R0 contient a)
+LOAD R1, R0       ; Sinon R0 = b
+end_max:
+RTS"
+; Message d'erreurs
+pile_pleine:
+	WSTR "Erreur : debordement de pile"
+	WNL
+	ERROR
+tas_plein:
+	WSTR "Erreur : allocation impossible, tas plein"
+	WNL
+	ERROR
+dereferencement_null:
+	WSTR "Erreur : dereferencement de null"
+	WNL
+	ERROR
+; end main program

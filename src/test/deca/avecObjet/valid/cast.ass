@@ -1,0 +1,37 @@
+; start main program
+; Beginning of main instructions:
+	TSTO #4	; Main Program
+	BOV pile_pleine
+	ADDSP #4
+; --------------------------------------------------
+; Construction des tables des methodes
+; --------------------------------------------------
+	LOAD #null, R0
+	STORE R0, 1(GB)
+	LOAD code.Object.equals, R0
+	STORE R0, 2(GB)
+; --------------------------------------------------
+; Code du programme principal
+; --------------------------------------------------
+	LOAD #0x1.666666p2, R1
+	STORE R1, 4(GB)
+	LOAD 4(GB), R1
+	INT R1, R1
+	STORE R1, 3(GB)
+	HALT
+code.Object.equals:
+	LOAD -2(LB), R0
+	CMP -3(LB), R0
+	BEQ Object.equals.true
+	LOAD #0, R0
+	BRA Object.equals.end
+Object.equals.true:
+	LOAD #1, R0
+Object.equals.end:
+	RTS
+; Message d'erreurs
+pile_pleine:
+	WSTR "Erreur : debordement de pile"
+	WNL
+	ERROR
+; end main program

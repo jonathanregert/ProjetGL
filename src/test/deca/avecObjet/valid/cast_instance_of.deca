@@ -1,0 +1,35 @@
+// Description :
+//    Test des casts d'objets valides et de l'opérateur instanceof.
+//
+// Resultats :
+//    B
+//    C'est un B
+//    null cast ok
+
+class A {
+    void printName() { println("A"); }
+}
+
+class B extends A {
+    void printName() { println("B"); }
+    void specifiqueB() { println("C'est un B"); }
+}
+
+{
+    A a = new A();
+    B b = new B();
+    A a2;
+    B b2;
+
+    a2 = (A)(b); 
+    a2.printName();
+
+    if (a2 instanceof B) {
+        b2 = (B)(a2);
+        b2.specifiqueB();
+    }
+
+    a = null;
+    b = (B)(a);
+    println("null cast ok");
+}

@@ -1,0 +1,14 @@
+// Description :
+//    Addition de deux paramètres via ASM.
+//
+// Resultats :
+//    15
+
+class Math {
+    int add(int x, int y) asm("LOAD -3(LB), R0 \n ADD -4(LB), R0 \n RTS");
+}
+
+{
+    Math m = new Math();
+    println(m.add(10, 5));
+}

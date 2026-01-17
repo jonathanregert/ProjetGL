@@ -1,0 +1,10 @@
+// Description :
+//    Déclaration invalide : tentative de déclarer une variable de type void.
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne 9 : La variable "x" ne peut pas être de type "void"
+
+{
+    void x;
+}

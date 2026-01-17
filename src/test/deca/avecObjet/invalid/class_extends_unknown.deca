@@ -1,0 +1,14 @@
+// Description :
+//    Classe héritant d'une classe inexistante.
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne 8 : Super-classe UnknownClass non déclarée
+
+class A extends UnknownClass {
+    int x;
+}
+
+{
+}
+

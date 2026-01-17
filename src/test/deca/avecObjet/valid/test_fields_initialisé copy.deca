@@ -1,0 +1,14 @@
+// Description :
+//    Test unitaire pour Déclaration de champs non initialisés
+//
+// Resultats :
+//    OK
+
+
+class A {
+    protected int x = 1;
+    float y = 5;
+}
+
+{
+}

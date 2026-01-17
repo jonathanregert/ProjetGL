@@ -1,0 +1,16 @@
+// Description :
+//    Retour d'un float dans une méthode retournant int.
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne <No_de_ligne> : <message d'erreur de votre compilateur>
+
+class A {
+    int f() {
+        return 1.2;
+    }
+}
+
+{
+}
+

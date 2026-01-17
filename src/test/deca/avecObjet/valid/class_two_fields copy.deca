@@ -1,0 +1,14 @@
+// Description :
+//    Classe contenant deux champs de types différents.
+//
+// Resultats :
+//    OK
+
+class A {
+    int x;
+    float y;
+}
+
+{
+}
+

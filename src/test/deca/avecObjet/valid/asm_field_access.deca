@@ -1,0 +1,21 @@
+// Description :
+//    Accès à un champ de l'objet via ASM.
+//
+// Resultats :
+//    Val: 99
+
+class Box {
+    int val;
+
+    void setVal(int v) {
+        this.val = v;
+    }
+
+    int getValAsm() asm("LOAD -2(LB), R1 \n LOAD 1(R1), R0 \n RTS");
+}
+
+{
+    Box b = new Box();
+    b.setVal(99);
+    println("Val: ", b.getValAsm());
+}

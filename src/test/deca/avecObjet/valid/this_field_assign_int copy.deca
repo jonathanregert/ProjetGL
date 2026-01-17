@@ -1,0 +1,17 @@
+// Description :
+//    Affectation d'un entier à un champ via this.
+//
+// Resultats :
+//    OK
+
+class A {
+    int x;
+
+    void set() {
+        this.x = 6;
+    }
+}
+
+{
+}
+

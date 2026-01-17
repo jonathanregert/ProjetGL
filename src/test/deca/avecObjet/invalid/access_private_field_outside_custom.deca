@@ -1,0 +1,17 @@
+// Description :
+// accès à un champ private depuis une autre classe
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne 15 : La classe actuelle L n'a pas accès au champ protégé de K
+
+class K {
+    protected int secret;
+}
+
+class L {
+    void reveal() {
+        K k = new K();
+        int x = k.secret; // doit échouer
+    }
+}

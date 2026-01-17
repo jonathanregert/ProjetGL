@@ -1,0 +1,13 @@
+// Description :
+//    Opérations arithmétiques mixtes entre int et float.
+//
+// Resultats :
+// ok
+
+{
+    int i = 5;
+    float j;
+    j = i - 1.5;
+    i = i + 15;
+    println(j + i);
+}

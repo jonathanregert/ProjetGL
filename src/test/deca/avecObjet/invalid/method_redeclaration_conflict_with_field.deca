@@ -1,0 +1,17 @@
+// Description :
+//    Déclaration d'une méthode ayant le même nom qu'un champ.
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne 12 : Méthode f déjà définie
+
+class A {
+    int f() {
+        return 1;
+    }
+    int f;
+}
+
+{
+}
+

@@ -1,0 +1,11 @@
+// Description :
+//    Cast de boolean vers int impossible
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne 10 : Cast invalide de boolean vers int
+
+{
+    int a;
+    a = (int)(true);
+}

@@ -1,0 +1,97 @@
+; start main program
+; Beginning of main instructions:
+	TSTO #6	; Main Program
+	BOV pile_pleine
+	ADDSP #5
+; --------------------------------------------------
+; Construction des tables des methodes
+; --------------------------------------------------
+	LOAD #null, R0
+	STORE R0, 1(GB)
+	LOAD code.Object.equals, R0
+	STORE R0, 2(GB)
+; --------------------------------------------------
+; Code du programme principal
+; --------------------------------------------------
+	RINT
+	BOV erreur_lecture_int
+	LOAD R1, R3
+	STORE R3, 3(GB)
+	LOAD #1, R3
+	FLOAT R3, R3
+	STORE R3, 4(GB)
+	LOAD 3(GB), R3
+	PUSH R3
+	LOAD #0, R3
+	POP R2
+	CMP R3, R2
+	SGT R3
+	CMP #0, R3
+	BEQ bool_sc_0
+	LOAD 4(GB), R3
+	PUSH R3
+	LOAD #0x1.5p3, R3
+	POP R2
+	CMP R3, R2
+	SLT R3
+	BRA bool_end_0
+bool_sc_0:
+	LOAD #0, R3
+bool_end_0:
+	STORE R3, 5(GB)
+	LOAD 5(GB), R1
+	CMP #0, R1
+	BEQ else_1
+while_test_2:
+	LOAD 3(GB), R1
+	LOAD #0, R3
+	CMP R3, R1
+	SGT R1
+	CMP #0, R1
+	BEQ while_end_2
+	WSTR "Valeur : "
+	LOAD 3(GB), R1
+	WINT
+	WNL
+	LOAD 3(GB), R1
+	PUSH R1
+	LOAD #1, R3
+	POP R2
+	SUB R3, R2
+	BOV overflow_arith
+	LOAD R2, R1
+	STORE R1, 3(GB)
+	BRA while_test_2
+while_end_2:
+	BRA endif_1
+else_1:
+	WSTR "Hexa f : "
+	LOAD 4(GB), R1
+	WFLOATX
+	WNL
+endif_1:
+	HALT
+code.Object.equals:
+	LOAD -2(LB), R0
+	CMP -3(LB), R0
+	BEQ Object.equals.true
+	LOAD #0, R0
+	BRA Object.equals.end
+Object.equals.true:
+	LOAD #1, R0
+Object.equals.end:
+	RTS
+; Message d'erreurs
+pile_pleine:
+	WSTR "Erreur : debordement de pile"
+	WNL
+	ERROR
+overflow_arith:
+	WSTR "Erreur : overflow_arithmetique"
+	WNL
+	ERROR
+erreur_lecture_int:
+	WSTR "Erreur : lecture d'un entier invalide"
+	WNL
+	ERROR
+; end main program
