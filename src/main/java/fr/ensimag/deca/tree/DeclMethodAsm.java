@@ -8,9 +8,7 @@ import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.MethodDefinition;
 import fr.ensimag.deca.context.Signature;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.InlinePortion;
 import fr.ensimag.ima.pseudocode.Label;
-import fr.ensimag.ima.pseudocode.Line;
 import fr.ensimag.ima.pseudocode.instructions.RTS;
 
 import java.io.PrintStream;
@@ -87,7 +85,17 @@ public class DeclMethodAsm extends AbstractDeclMethod {
         methodName.setDefinition(methodDef);
     }
 
-
+    @Override
+    protected void verifyMethodBody(DecacCompiler compiler,
+                                    EnvironmentExp envExp,
+                                    ClassDefinition currentClass,
+                                    Type returnType)
+            throws ContextualError {
+        
+        EnvironmentExp envExpParams = new EnvironmentExp(envExp);
+        this.params.verifyListDeclParam(compiler, envExpParams);
+        code.verifyMethodAsmBody(compiler, envExp, currentClass);
+    }
     
     @Override
     public void decompile(IndentPrintStream s) {
@@ -96,9 +104,9 @@ public class DeclMethodAsm extends AbstractDeclMethod {
         methodName.decompile(s);
         s.print("(");
         params.decompile(s);
-        s.print(") asm(\"");
+        s.print(") asm("); 
         code.decompile(s);
-        s.print("\");");
+        s.print(");");
     }
 
     @Override
@@ -126,19 +134,62 @@ public class DeclMethodAsm extends AbstractDeclMethod {
         compiler.addComment("Méthode ASM " + md.getLabel());
 
         String rawAsm = code.getAsmText().getValue();
-        String[] lines = rawAsm.split("\\R");
+
+        if (rawAsm.startsWith("\"") && rawAsm.endsWith("\"") && rawAsm.length() >= 2) {
+            rawAsm = rawAsm.substring(1, rawAsm.length() - 1);
+        }
+
+        rawAsm = unescapeAsm(rawAsm);
+
+        rawAsm = rawAsm.replace("\r\n", "\n").replace("\r", "\n");
+
+        String[] lines = rawAsm.split("\n", -1);
+
 
         for (String l : lines) {
             String trimmed = l.trim();
             if (!trimmed.isEmpty()) {
-                compiler.addInline(trimmed); // méthode wrapper dans DecacCompiler
+                compiler.addInline(trimmed);
             }
         }
-
         if (!containsRTS(rawAsm)) {
             compiler.addInstruction(new RTS());
         }
     }
+
+    private static String unescapeAsm(String s) {
+        StringBuilder out = new StringBuilder();
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+
+            // Cas IMPORTANT: "\\n" (deux backslashes puis n) => newline
+            if (c == '\\' && i + 2 < s.length() && s.charAt(i + 1) == '\\') {
+                char x = s.charAt(i + 2);
+                if (x == 'n') { out.append('\n'); i += 2; continue; }
+                if (x == 'r') { out.append('\r'); i += 2; continue; }
+                if (x == 't') { out.append('\t'); i += 2; continue; }
+            }
+
+            // Cas normal: "\n", "\r", "\t", "\"", "\\"
+            if (c == '\\' && i + 1 < s.length()) {
+                char n = s.charAt(i + 1);
+                switch (n) {
+                    case 'n': out.append('\n'); i++; continue;
+                    case 'r': out.append('\r'); i++; continue;
+                    case 't': out.append('\t'); i++; continue;
+                    case '"': out.append('"');  i++; continue;
+                    case '\\': out.append('\\'); i++; continue;
+                    default:
+                        out.append('\\');
+                        continue;
+                }
+            }
+
+            out.append(c);
+        }
+        return out.toString();
+    }
+
 
     // helper local
     private boolean containsRTS(String rawAsm) {
@@ -158,11 +209,4 @@ public class DeclMethodAsm extends AbstractDeclMethod {
     {
         return methodName;
     }
-
-    @Override
-    protected  void verifyMethodBody(DecacCompiler compiler,
-        EnvironmentExp envExp, // L'environnement global
-        ClassDefinition currentClass,
-        Type returnType)
-            throws ContextualError{};
 }

@@ -1,0 +1,5 @@
+{
+    String s;
+    s = "hello";
+    println(s);
+}

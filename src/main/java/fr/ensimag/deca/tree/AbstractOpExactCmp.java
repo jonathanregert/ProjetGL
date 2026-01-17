@@ -44,6 +44,5 @@ public abstract class AbstractOpExactCmp extends AbstractOpCmp {
         }
 
         throw new ContextualError("Types incompatibles pour la comparaison : " + typeGauche + " et " + typeDroite, getLocation());
-}
-
+    }
 }

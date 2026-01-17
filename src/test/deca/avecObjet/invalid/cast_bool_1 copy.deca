@@ -1,0 +1,11 @@
+// Description :
+//    Cast de boolean vers boolean impossible
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne 10 : Cast invalide de boolean vers boolean
+
+{
+    boolean b;
+    b = (boolean)(1 > 0);
+}

@@ -1,0 +1,15 @@
+// Description :
+//    Comparaison invalide : utilisation de l'opérateur de comparaison sur des boolean.
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne 12 : Les comparaisons d'inégalité ne sont possibles qu'entre nombres.
+
+{
+    boolean a = true;
+    boolean b = false;
+    
+    if (a < b) {
+        print("Erreur non detectee");
+    }
+}

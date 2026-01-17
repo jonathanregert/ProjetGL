@@ -1,0 +1,8 @@
+class A {
+  void m() { println("ok"); }
+}
+{
+  A a = new A();
+  a.m();          // ton code fait : LOAD R0, R1 après l'appel
+  println(123);   // si ton println(int) part du principe que R1 est déjà correct ou n'est pas réécrit
+}

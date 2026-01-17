@@ -1,0 +1,10 @@
+// Description :
+//    Affectation incompatible : tentative d'assigner une valeur de type boolean à une variable de type int.
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne 9 : Type incompatible : attendu int, trouvé boolean
+
+{
+    int x = true;
+}

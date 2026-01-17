@@ -1,7 +1,6 @@
 package fr.ensimag.deca;
 
 import java.io.File;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -48,8 +47,8 @@ public class CompilerOptions {
         return Collections.unmodifiableList(sourceFiles);
     }
 
-    public int getRegisterCount() { 
-        return registerCount; 
+    public int getRegisterCount() {
+        return registerCount;
     }
 
     private int debug = 0;
@@ -58,7 +57,7 @@ public class CompilerOptions {
     private boolean parseOption = false;
     private boolean verificationOption = false;
     private boolean noCheckOption = false;
-    private int registerCount = 4; 
+    private int registerCount = 4;
     private List<File> sourceFiles = new ArrayList<File>();
 
     
@@ -164,7 +163,6 @@ public class CompilerOptions {
         if (sourceFiles.isEmpty() && !printBanner) {
             throw new CLIException("Aucun fichier source fourni");
         }
-        // throw new UnsupportedOperationException("not yet implemented");
     }
     
     protected void displayUsage() {

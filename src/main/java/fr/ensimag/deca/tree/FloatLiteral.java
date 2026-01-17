@@ -8,7 +8,6 @@ import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.ImmediateFloat;
-import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 
 import java.io.PrintStream;
@@ -41,7 +40,7 @@ public class FloatLiteral extends AbstractExpr {
             ClassDefinition currentClass) throws ContextualError {
             Type type = compiler.environmentType.FLOAT;
             setType(type);
-            return type;      
+            return type;
     }
 
 
@@ -69,5 +68,4 @@ public class FloatLiteral extends AbstractExpr {
     protected void codeGenExpr(DecacCompiler compiler, GPRegister target) {
         compiler.addInstruction(new LOAD(new ImmediateFloat(value), target));
     }
-
 }

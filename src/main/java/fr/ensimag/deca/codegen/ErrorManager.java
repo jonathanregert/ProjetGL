@@ -4,7 +4,6 @@ import java.util.EnumMap;
 import java.util.EnumSet;
 
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.DecacFatalError;
 import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.ImmediateFloat;
 import fr.ensimag.ima.pseudocode.ImmediateInteger;
@@ -17,6 +16,8 @@ import fr.ensimag.ima.pseudocode.instructions.WNL;
 import fr.ensimag.ima.pseudocode.instructions.WSTR;
 
 public class ErrorManager {
+    private final EnumSet<RuntimeError> used = EnumSet.noneOf(RuntimeError.class);
+    private final EnumMap<RuntimeError, Label> labels = new EnumMap<>(RuntimeError.class);
 
     public enum RuntimeError{
         STACK_OVERFLOW,
@@ -33,11 +34,11 @@ public class ErrorManager {
         READ_FLOAT_ERROR,
 
         // déréferencement null
-        NULL_DEREFERENCE
-    }
+        NULL_DEREFERENCE,
 
-    private final EnumSet<RuntimeError> used = EnumSet.noneOf(RuntimeError.class);
-    private final EnumMap<RuntimeError, Label> labels = new EnumMap<>(RuntimeError.class);
+        // cast
+        INVALID_CAST
+    }
 
     public Label label(RuntimeError error){
         used.add(error);
@@ -60,6 +61,8 @@ public class ErrorManager {
 
             case NULL_DEREFERENCE: return "dereferencement_null";
 
+            case INVALID_CAST: return "cast_invalide";
+
             default:                 return "runtime_error";
         }
     }
@@ -79,6 +82,8 @@ public class ErrorManager {
             case READ_FLOAT_ERROR:  return "Erreur : lecture d'un flottant invalide";
 
             case NULL_DEREFERENCE: return "Erreur : dereferencement de null";
+
+            case INVALID_CAST:     return "Erreur : cast invalide";
 
             default:                return "runtime_error";
         }
@@ -111,19 +116,13 @@ public class ErrorManager {
         compiler.addInstruction(new CMP(new ImmediateInteger(0), divisor));
         compiler.addInstruction(new BEQ(label(RuntimeError.INT_MOD_BY_ZERO)));
     }
-
-    /** Overflow arithmétique (si vous décidez de le gérer maintenant). */
     public void genCheckOverflow(DecacCompiler compiler) {
         if (compiler.getNoCheckOption()) return;
         compiler.addInstruction(new BOV(label(RuntimeError.ARITH_OVERFLOW)));
     }
-
-    /** Après RINT */
     public void genCheckReadInt(DecacCompiler compiler) {
         compiler.addInstruction(new BOV(label(RuntimeError.READ_INT_ERROR)));
     }
-
-    /** Après RFLOAT */
     public void genCheckReadFloat(DecacCompiler compiler) {
         compiler.addInstruction(new BOV(label(RuntimeError.READ_FLOAT_ERROR)));
     }

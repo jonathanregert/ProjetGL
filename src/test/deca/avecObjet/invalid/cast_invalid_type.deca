@@ -1,0 +1,11 @@
+// Description :
+//    Cast de type invalid
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne 9 : Type bool non déclaré
+
+{
+    int a;
+    a = (boolean)(1);
+}

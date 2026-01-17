@@ -1,0 +1,10 @@
+// Description :
+//    Utilisation d'une variable non déclarée.
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne 9 : Variable x non déclarée
+
+{
+	x = 5;
+}

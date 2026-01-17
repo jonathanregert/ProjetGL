@@ -1,9 +1,6 @@
 package fr.ensimag.deca.tree;
 
-import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import org.apache.commons.lang.Validate;
 import java.io.PrintStream;
 
 /**
@@ -40,15 +37,4 @@ public class MethodBody extends Tree{
         insts.decompile(s);
         s.print("}");
     }
-
-   // public void verifyMethodBody(DecacCompiler compiler,
-     //                        EnvironmentExp localEnv,
-       //                      ClassDefinition currentClass,
-         //                    Type returnType)
-       // throws ContextualError {
-
-    //vars.verifyListDeclVariable(compiler, localEnv, currentClass);
-    //insts.verifyListInst(compiler, localEnv, currentClass, returnType);
-//}
-
 }

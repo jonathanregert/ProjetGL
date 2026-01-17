@@ -1,0 +1,9 @@
+class A {
+  void m() {}
+  void n(int x) { println(x); }
+}
+{
+  A a = new A();
+  a.m();      // LOAD R0, R1 parasite
+  a.n(42);    // si ton évaluation des args réutilise R1 d'une façon fragile
+}

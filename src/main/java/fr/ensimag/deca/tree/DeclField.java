@@ -7,7 +7,6 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
-import fr.ensimag.deca.tree.TreeFunction;
 import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.ImmediateInteger;
 import fr.ensimag.ima.pseudocode.NullOperand;
@@ -16,7 +15,6 @@ import fr.ensimag.ima.pseudocode.RegisterOffset;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.POP;
 import fr.ensimag.ima.pseudocode.instructions.PUSH;
-import fr.ensimag.ima.pseudocode.instructions.REM;
 import fr.ensimag.ima.pseudocode.instructions.STORE;
 import fr.ensimag.deca.context.FieldDefinition;
 
@@ -72,25 +70,15 @@ public class DeclField extends AbstractDeclField {
     }
 
     // fieldDef : type, nom, visibilité, classe courante, index
-    FieldDefinition fieldDef = new FieldDefinition(t, fieldName.getLocation(), 
-                                                   visibility, currentClass, index, this.isFinal);
+    FieldDefinition fieldDef = new FieldDefinition(t, fieldName.getLocation(), visibility, currentClass, index, this.isFinal);
 
-
-    // Debug
-    // System.out.println("Test champ: " + name + " dans " + currentClass.getType());
-    // System.out.println("Existe déjà localement ? " + (currentClass.getMembers().get(name) != null));
-    // System.out.println("DEBUG PASSE 2: Déclaration de " + name);
-    // System.out.println("DEBUG PASSE 3: Init de " + name);
     
     // + environnement des membres de la classe
     try {
         currentClass.getMembers().declare(name, fieldDef);
     } catch (EnvironmentExp.DoubleDefException e) {
-        // jamais arrivé ici, mais pour sécuriser
         throw new ContextualError("Double définition du champ " + name, fieldName.getLocation());
     }
-
-    // deco de l'identifier
     this.fieldName.setDefinition(fieldDef);
 
     }
@@ -104,7 +92,7 @@ public class DeclField extends AbstractDeclField {
         s.print(" ");
         fieldName.decompile(s);
         initialization.decompile(s);
-        s.println(";");    
+        s.println(";");
     }
 
     @Override
@@ -147,38 +135,29 @@ public class DeclField extends AbstractDeclField {
         int fieldOffset = fd.getIndex();
         Type t = fd.getType();
 
-        // --- init explicite ---
         if (initialization instanceof Initialization) {
-            // this -> R2, puis sauvegarde
             compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB), Register.getR(2)));
             compiler.addInstruction(new PUSH(Register.getR(2)));
             compiler.getStackManager().useTemp(1);
 
-            // registre où calculer la valeur
             GPRegister r = compiler.getRegAllocator().alloc();
             if (r == null) {
-                // fallback minimal : choisir un GPRegister "scratch" autorisé (souvent R1)
                 r = Register.getR(1);
             }
 
-            // calcule la valeur (peut écraser R2)
             ((Initialization) initialization).codeGenValue(compiler, r);
 
-            // restaure this
             compiler.addInstruction(new POP(Register.getR(2)));
             compiler.getStackManager().releaseTemp(1);
 
-            // store dans le champ
             compiler.addInstruction(new STORE(r, new RegisterOffset(fieldOffset, Register.getR(2))));
 
-            // libérer si alloué
-            if (r != Register.getR(1)) { // ou mieux: si tu sais distinguer "alloué" vs "fallback"
+            if (r != Register.getR(1)) {
                 compiler.getRegAllocator().free(r);
             }
             return;
         }
 
-        // --- valeur par défaut ---
         compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB), Register.getR(2)));
 
         if (t.isClass()) {

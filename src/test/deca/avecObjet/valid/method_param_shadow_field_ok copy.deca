@@ -1,0 +1,19 @@
+// Description :
+//    Paramètre de méthode masquant un champ.
+//
+// Resultats :
+//    OK
+
+class A {
+    int x;
+
+    void set(int x) {
+        println(x);
+    }
+}
+
+{
+    A a = new A();
+    a.set(3);
+}
+

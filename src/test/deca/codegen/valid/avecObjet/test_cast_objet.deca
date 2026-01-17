@@ -1,0 +1,19 @@
+class A {
+    void m() { println("A"); }
+}
+
+class B extends A {
+    void m() { println("B"); }
+}
+
+{
+    A a = new B();
+
+    // downcast valide : doit afficher "B"
+    ((B)(a)).m();
+
+    // l'objet a doit rester correct : doit encore afficher "B"
+    a.m();
+
+    println("ok");
+}

@@ -64,31 +64,57 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
                     this.getLocation());
         }
     }
+
     @Override
     protected void codeGenExpr(DecacCompiler compiler, GPRegister target) {
-        // gauche dans target
         getLeftOperand().codeGenExpr(compiler, target);
-        //droite dans un nouveau registre
+
         GPRegister rRight = compiler.getRegAllocator().alloc();
-        if (rRight != null){
+        if (rRight != null) {
+
+            boolean savedLeft = false;
+
+            if (target.getNumber() == Register.R1.getNumber()) {
+                compiler.addInstruction(new PUSH(target));
+                if (compiler.getStackManager() != null) {
+                    compiler.getStackManager().useTemp(1);
+                }
+                savedLeft = true;
+            }
+
             getRightOperand().codeGenExpr(compiler, rRight);
-            codeGenOperator(compiler, rRight, target);
+
+            GPRegister leftForOp = target;
+            if (savedLeft) {
+                compiler.addInstruction(new POP(Register.getR(2)));
+                if (compiler.getStackManager() != null) {
+                    compiler.getStackManager().releaseTemp(1);
+                }
+                leftForOp = Register.getR(2);
+            }
+            codeGenOperator(compiler, rRight, leftForOp);
+            if (savedLeft) {
+                compiler.addInstruction(new LOAD(Register.getR(2), target));
+            }
+
             compiler.getRegAllocator().free(rRight);
             return;
         }
         compiler.addInstruction(new PUSH(target));
-        if (compiler.getStackManager() != null){
+        if (compiler.getStackManager() != null) {
             compiler.getStackManager().useTemp(1);
         }
-        // droite dans target
+
         getRightOperand().codeGenExpr(compiler, target);
+
         compiler.addInstruction(new POP(Register.getR(2)));
-        if (compiler.getStackManager() != null){
+        if (compiler.getStackManager() != null) {
             compiler.getStackManager().releaseTemp(1);
         }
+
         codeGenOperator(compiler, target, Register.getR(2));
         compiler.addInstruction(new LOAD(Register.getR(2), target));
-        
     }
+
     protected abstract void codeGenOperator(DecacCompiler compiler, GPRegister rRight, GPRegister rLeft);
 }

@@ -1,0 +1,13 @@
+// Description :
+//    Test unitaire : Classe vide et définition new d'un objet.
+//
+// Resultats :
+//    OK
+
+class A {
+}
+
+{
+    A a = new A();
+}
+

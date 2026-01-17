@@ -1,0 +1,16 @@
+// Description :
+//    Accès champ + null-check
+//
+// Resultats :
+//    7
+
+class Box {
+  int v;
+  int getNoCheck() asm("LOAD -2(LB), R1 \\n LOAD 1(R1), R0");
+}
+
+{
+  Box b = new Box();
+  b.v = 7;
+  println(b.getNoCheck());
+}

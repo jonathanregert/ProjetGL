@@ -1,0 +1,9 @@
+class A {
+  void m() { }
+}
+{
+  int x = 1;
+  A a = new A();
+  a.m();
+  println(x);
+}

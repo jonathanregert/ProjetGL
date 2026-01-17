@@ -38,7 +38,6 @@ public abstract class AbstractUnaryExpr extends AbstractExpr {
         }
     }
 
-
     @Override
     protected void iterChildren(TreeFunction f) {
         operand.iter(f);
@@ -48,5 +47,4 @@ public abstract class AbstractUnaryExpr extends AbstractExpr {
     protected void prettyPrintChildren(PrintStream s, String prefix) {
         operand.prettyPrint(s, prefix, true);
     }
-
 }

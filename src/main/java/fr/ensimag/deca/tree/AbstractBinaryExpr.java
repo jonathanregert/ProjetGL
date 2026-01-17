@@ -97,6 +97,4 @@ public abstract class AbstractBinaryExpr extends AbstractExpr {
     protected boolean needsParensForChild(AbstractExpr child) {
         return false;
     }
-
-
 }

@@ -1,0 +1,7 @@
+class A {}
+
+{
+    A a = null;
+    println(a instanceof A);
+    println(null instanceof A);
+}

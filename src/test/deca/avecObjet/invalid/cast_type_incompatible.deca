@@ -1,0 +1,14 @@
+// Description:
+//    Test de cast entre un type de base (boolean) et une classe.
+//
+// Resultats:
+//    Ligne 11 : Cast impossible de boolean vers A.
+
+class A {}
+
+{
+    boolean b = true;
+    A a;
+    
+    a = (A)(b);
+}

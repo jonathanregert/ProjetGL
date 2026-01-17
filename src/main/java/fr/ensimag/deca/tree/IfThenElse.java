@@ -8,8 +8,6 @@ import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
-
-import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.ImmediateInteger;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Register;
@@ -26,7 +24,7 @@ import fr.ensimag.ima.pseudocode.instructions.CMP;
  */
 public class IfThenElse extends AbstractInst {
     
-    private final AbstractExpr condition; 
+    private final AbstractExpr condition;
     private final ListInst thenBranch;
     private ListInst elseBranch;
 

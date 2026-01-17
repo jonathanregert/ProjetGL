@@ -1,0 +1,17 @@
+// Description :
+//    Commentaires ASM + RTS absent
+//
+// Resultats :
+//    Hello
+//    done
+
+class A {
+  void t() asm(" ; commentaire seul
+WSTR \"Hello\" ; commentaire apres instruction
+WNL");
+}
+
+{
+  new A().t();
+  println("done");
+}

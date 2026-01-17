@@ -1,0 +1,18 @@
+// Description :
+//    Redéclaration illégale d'un champ hérité.
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne 13 : Le champ x est déjà défini dans cette classe ou hérité
+
+class A {
+    int x;
+}
+
+class B extends A {
+    int x;
+}
+
+{
+}
+

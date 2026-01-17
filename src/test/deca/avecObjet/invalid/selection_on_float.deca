@@ -1,0 +1,12 @@
+// Description :
+//    Sélection de champ sur une expression de type float.
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne 10 : Sélection impossible sur un type non-objet
+
+{
+    float x = 1.0;
+    int y = x.z;
+}
+

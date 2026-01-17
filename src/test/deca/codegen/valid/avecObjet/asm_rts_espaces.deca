@@ -1,0 +1,12 @@
+// Description :
+//    RTS présent mais avec espaces / commentaires
+//
+// Resultats :
+//    before
+class A {
+  void t() asm("WSTR \"before\" \\n WNL \\n RTS ; fin methode");
+}
+
+{
+  new A().t();
+}
