@@ -74,11 +74,9 @@ public class DeclMethod extends AbstractDeclMethod {
         int index;
         if (superMethod != null){
             // Override = mêmes contraintes (2.7)
-            System.out.println("Override de la méthode " + methodName.getName());
             if (!t.sameType(superMethod.getType())){
                 throw new ContextualError("Type de retour incompatible avec la méthode de la super-classe.", getLocation());
             }
-            System.out.println("Type de retour OK");
             if (!sig.equals(superMethod.getSignature())){
                 // Debug
                 System.out.println("Sig actuelle : " + sig.toString());

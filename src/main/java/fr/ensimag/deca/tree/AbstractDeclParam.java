@@ -31,6 +31,5 @@ public abstract class AbstractDeclParam extends Tree {
 
     protected abstract Type verifyDeclParamType(DecacCompiler compiler) throws ContextualError;
     
-    protected abstract void codeGenDeclParam(DecacCompiler compiler);
 }
 

@@ -78,8 +78,5 @@ public class DeclParam extends AbstractDeclParam {
         varName.prettyPrint(s, prefix, false);
     }
 
-    @Override
-    public void codeGenDeclParam(DecacCompiler compiler) {
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
+
 }
