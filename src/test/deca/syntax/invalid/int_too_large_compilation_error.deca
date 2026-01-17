@@ -1,0 +1,9 @@
+// Description :
+// Test d’un dépassement de capacité sur un entier.
+//
+// Resultats :
+// Une erreur de compilation est levée
+
+{
+    int x = 2147483648;
+}
