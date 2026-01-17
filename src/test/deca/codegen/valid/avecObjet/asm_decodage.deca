@@ -1,0 +1,12 @@
+// Description :
+//    Guillemets + backslash dans WSTR
+//
+// Resultats :
+//    Quote: " and backslash: \
+class A {
+  void t() asm("WSTR \"Quote: \\\" and backslash: \\\\\" \\n WNL");
+}
+
+{
+  new A().t();
+}

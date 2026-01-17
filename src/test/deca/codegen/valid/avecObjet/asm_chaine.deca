@@ -1,0 +1,13 @@
+// Description :
+//    Chaîne avec \t (tab) et espaces
+//
+// Resultats :
+//    space
+
+class A {
+  void t() asm("   WSTR \"space\" \\n\tWNL");
+}
+
+{
+  new A().t();
+}
