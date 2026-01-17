@@ -31,7 +31,6 @@ READFLOAT   : 'readFloat';
 
 CLASS       : 'class';
 EXTENDS     : 'extends';
-FINAL      : 'final';
 PROTECTED   : 'protected';
 NEW         : 'new';
 INSTANCEOF  : 'instanceof';
