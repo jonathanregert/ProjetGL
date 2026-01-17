@@ -6,7 +6,6 @@ import fr.ensimag.ima.pseudocode.Register;
 public class RegAllocator {
     private final int maxReg;
     private final boolean[] used;
-
     private static final int FIRST_ALLOC = 3;
 
     public RegAllocator(int maxReg){
@@ -65,7 +64,7 @@ public class RegAllocator {
     }
 
     /**
-     * @return highest allocatable register number (R1..Rmax).
+     * @return highest allocatable register number (R3..Rmax).
      */
     public int getMaxReg(){
         return maxReg;

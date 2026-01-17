@@ -1,0 +1,14 @@
+// Description :
+//    Utilisation de registres + return value en R0
+//
+// Resultats :
+//    42
+
+class A {
+  int fortyTwo() asm("LOAD #42, R0");
+}
+
+{
+  A a = new A();
+  println(a.fortyTwo());
+}

@@ -23,6 +23,12 @@ public class StackManager {
     private int currentTemp = 0;
     private int maxTemp = 0;
 
+    // --- Allocation variables ---
+    private int nextGB = 1;
+    private int nextLB = 1;
+
+
+
     public void useTemp(int n) {
         if (n <= 0) return;
         currentTemp += n;
@@ -48,10 +54,6 @@ public class StackManager {
         maxTemp = 0;
     }
 
-    // --- Allocation variables ---
-    private int nextGB = 1;
-    private int nextLB = 1;
-
     public RegisterOffset allocGlobal() {
         RegisterOffset addr = new RegisterOffset(nextGB, Register.GB);
         nextGB++;
@@ -72,8 +74,6 @@ public class StackManager {
         nextLB++;
         return addr;
     }
-
-    /** Alloue une variable selon le contexte : LB si dans une frame, sinon GB. */
     public RegisterOffset allocVar() {
         return inBlock() ? allocLocal() : allocGlobal();
     }
@@ -114,8 +114,8 @@ public class StackManager {
     /** Entrée dans une frame (méthode/init). */
     public void enterBlock() {
         blockStack.push(new BlockContext(nextLB, currentTemp, maxTemp));
-        nextLB = 1;     // locales à partir de 1(LB)
-        resetTemp();    // temporaires comptés par frame
+        nextLB = 1;
+        resetTemp();
     }
 
     /** Sortie de la frame courante. */
@@ -133,8 +133,6 @@ public class StackManager {
     public int getADDSPForMain() {
         return getGlobalCount();
     }
-
-    // À revoir le + 2
     public int getTSTOForMain() {
         return getGlobalCount() + getMaxTemp();
     }

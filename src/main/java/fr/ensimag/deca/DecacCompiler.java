@@ -3,7 +3,6 @@ package fr.ensimag.deca;
 import fr.ensimag.deca.context.EnvironmentType;
 import fr.ensimag.deca.codegen.RegAllocator;
 import fr.ensimag.deca.codegen.StackManager;
-import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.codegen.ErrorManager;
 import fr.ensimag.deca.syntax.DecaLexer;
 import fr.ensimag.deca.syntax.DecaParser;
@@ -60,7 +59,7 @@ public class DecacCompiler {
      * Portable newline character.
      */
     private static final String nl = System.getProperty("line.separator", "\n");
-    private int labelId = 0; // pour generation de code et pouvoir jump au bon label : label_labelId
+    private int labelId = 0;
     private final RegAllocator regAllocator;
     private final StackManager stackManager = new StackManager();
     private final ErrorManager errorManager = new ErrorManager();
@@ -94,17 +93,14 @@ public class DecacCompiler {
     }
 
 
-    // Prefix: sans commentaire
     public void addFirstToBlock(Instruction ins) {
         addLineToPrefix(new Line(ins));
     }
 
-    // Prefix: avec commentaire (tu l'as déjà, je la remets pour cohérence)
     public void addFirstToBlock(Instruction ins, String comment) {
         addLineToPrefix(new Line(null, ins, comment));
     }
 
-    // Optionnel: prefix commentaire seul
     public void addFirstCommentToBlock(String comment) {
         addLineToPrefix(new Line(comment));
     }
@@ -115,12 +111,10 @@ public class DecacCompiler {
             throw new IllegalStateException("Aucun bloc ouvert");
         }
 
-        // 1) prefix d'abord (TSTO/BOV/...)
         for (Line l : blockPrefix) {
             program.add(l);
         }
 
-        // 2) corps ensuite (labels + instructions + comments dans l'ordre)
         for (Line l : blockBody) {
             program.add(l);
         }
@@ -153,8 +147,7 @@ public class DecacCompiler {
         if (blockPrefix != null) {
             blockPrefix.add(l);
         } else {
-            // Pas de bloc ouvert => on veut vraiment "au tout début" du programme
-            program.addFirst(l); // IMAProgram.addFirst(Line)
+            program.addFirst(l);
         }
     }
 
@@ -276,7 +269,6 @@ public class DecacCompiler {
         return symbolTable.create(name);
     }
 
-    // Avoir les EnvType :
     public EnvironmentType getEnvTypes() {
         return environmentType;
     }

@@ -134,11 +134,17 @@ public class DeclMethodAsm extends AbstractDeclMethod {
         compiler.addComment("Méthode ASM " + md.getLabel());
 
         String rawAsm = code.getAsmText().getValue();
-        String[] lines = rawAsm.split("\\R");
 
-        if (rawAsm.startsWith("\"") && rawAsm.endsWith("\"")) {
+        if (rawAsm.startsWith("\"") && rawAsm.endsWith("\"") && rawAsm.length() >= 2) {
             rawAsm = rawAsm.substring(1, rawAsm.length() - 1);
         }
+
+        rawAsm = unescapeAsm(rawAsm);
+
+        rawAsm = rawAsm.replace("\r\n", "\n").replace("\r", "\n");
+
+        String[] lines = rawAsm.split("\n", -1);
+
 
         for (String l : lines) {
             String trimmed = l.trim();
@@ -146,11 +152,44 @@ public class DeclMethodAsm extends AbstractDeclMethod {
                 compiler.addInline(trimmed);
             }
         }
-
         if (!containsRTS(rawAsm)) {
             compiler.addInstruction(new RTS());
         }
     }
+
+    private static String unescapeAsm(String s) {
+        StringBuilder out = new StringBuilder();
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+
+            // Cas IMPORTANT: "\\n" (deux backslashes puis n) => newline
+            if (c == '\\' && i + 2 < s.length() && s.charAt(i + 1) == '\\') {
+                char x = s.charAt(i + 2);
+                if (x == 'n') { out.append('\n'); i += 2; continue; }
+                if (x == 'r') { out.append('\r'); i += 2; continue; }
+                if (x == 't') { out.append('\t'); i += 2; continue; }
+            }
+
+            // Cas normal: "\n", "\r", "\t", "\"", "\\"
+            if (c == '\\' && i + 1 < s.length()) {
+                char n = s.charAt(i + 1);
+                switch (n) {
+                    case 'n': out.append('\n'); i++; continue;
+                    case 'r': out.append('\r'); i++; continue;
+                    case 't': out.append('\t'); i++; continue;
+                    case '"': out.append('"');  i++; continue;
+                    case '\\': out.append('\\'); i++; continue;
+                    default:
+                        out.append('\\');
+                        continue;
+                }
+            }
+
+            out.append(c);
+        }
+        return out.toString();
+    }
+
 
     // helper local
     private boolean containsRTS(String rawAsm) {
