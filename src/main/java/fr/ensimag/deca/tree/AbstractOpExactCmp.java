@@ -43,6 +43,12 @@ public abstract class AbstractOpExactCmp extends AbstractOpCmp {
             return boolType;
         }
 
-        throw new ContextualError("Types incompatibles pour la comparaison : " + typeGauche + " et " + typeDroite, getLocation());
+        if ((typeGauche.isClass() || typeGauche.isNull()) && (typeDroite.isClass() || typeDroite.isNull())) {
+            this.setType(boolType);
+            return boolType;
+        }
+
+        throw new ContextualError("Types incompatibles pour la comparaison : " + typeGauche + " et " + typeDroite,
+                getLocation());
     }
 }
