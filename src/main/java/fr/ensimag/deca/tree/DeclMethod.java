@@ -88,10 +88,10 @@ public class DeclMethod extends AbstractDeclMethod {
             // Nouvelle méthode : nouvel index
             index = currentClass.incNumberOfMethods() - 1;
         }
-        System.err.println("[P2] Method " + currentClass.getType().getName().getName()
-            + "." + methodName.getName().getName()
-            + " index=" + index
-            + " super=" + (superMethod != null));
+        // System.err.println("[P2] Method " + currentClass.getType().getName().getName()
+        //     + "." + methodName.getName().getName()
+        //     + " index=" + index
+        //     + " super=" + (superMethod != null));
 
     
 
