@@ -1,0 +1,11 @@
+// Description :
+// Utilisation de final comme identifier
+//
+// Resultats :
+// ok
+
+{
+    int final;
+    final = 1;
+    println(final);
+}
