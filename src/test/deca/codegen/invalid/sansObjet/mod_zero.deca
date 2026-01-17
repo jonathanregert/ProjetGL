@@ -1,3 +1,10 @@
+// Description :
+//    Modulo par 0 
+//
+// Resultats :
+//    Erreur : reste de la division entiere par zero
+
+
 {
     int a = 10;
     int b = 0;

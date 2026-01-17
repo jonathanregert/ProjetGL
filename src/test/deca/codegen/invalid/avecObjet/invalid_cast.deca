@@ -2,7 +2,7 @@
 //    Tentative de cast invalide à l'exécution.
 //
 // Resultats:
-//    Erreur : Cast invalide (ou message similaire défini dans ton Cast.java)
+//    Erreur : Cast invalide
 
 class A {}
 class B extends A {}

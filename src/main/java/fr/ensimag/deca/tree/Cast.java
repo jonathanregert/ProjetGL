@@ -21,6 +21,7 @@ import fr.ensimag.ima.pseudocode.instructions.LEA;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.POP;
 import fr.ensimag.ima.pseudocode.instructions.PUSH;
+import fr.ensimag.ima.pseudocode.instructions.FLOAT;
 
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
@@ -145,8 +146,8 @@ public class Cast extends AbstractExpr {
             return;
         }
 
-        if (getType().isInt() && expr.getType().isFloat()) {
-            compiler.addInstruction(new INT(target, target));
+        if (getType().isFloat() && expr.getType().isInt()) {
+            compiler.addInstruction(new FLOAT(target, target));
             return;
         }
 

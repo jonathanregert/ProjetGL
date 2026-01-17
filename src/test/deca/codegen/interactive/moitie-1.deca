@@ -2,6 +2,7 @@
 // Test de la lecture d'un entier et calcul d'une expression avec float.
 // Resultats :
 // Affiche 0.5 * x^2 selon la valeur entrée
+
 {
     int x;
     x = readInt();

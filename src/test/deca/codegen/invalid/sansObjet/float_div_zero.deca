@@ -1,3 +1,9 @@
+// Description :
+//    Division par 0 float
+//
+// Resultats :
+//    Erreur : division par 0.0
+
 {
     float x = 3.14;
     float y = 0.0;

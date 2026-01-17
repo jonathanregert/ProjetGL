@@ -1,3 +1,10 @@
+// Description :
+//    Division par 0 entier
+//
+// Resultats :
+//    Erreur : divion entiere par zero
+
+
 {
     int x = 1;
     int y = 0;

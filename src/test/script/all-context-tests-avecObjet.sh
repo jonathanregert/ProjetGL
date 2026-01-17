@@ -9,7 +9,7 @@ cd "$(dirname "$0")"/../../.. || exit 1
 
 PATH=./src/test/script/launchers:"$PATH"
 
-CONTEXT_DIR="src/test/deca/aFaire"
+CONTEXT_DIR="src/test/deca/context"
 
 echo "Tests contextuels"
 
@@ -17,7 +17,7 @@ echo "Tests contextuels"
 
 echo "Tests INVALIDES"
 
-find "$CONTEXT_DIR/invalid/" -name "*.deca" | sort | while read testfile; do
+find "$CONTEXT_DIR/invalid/avecObjet/" -name "*.deca" | sort | while read testfile; do
     echo "Test invalide attendu : $testfile"
 
     if test_context "$testfile" 2>&1 | grep -q "$testfile:[0-9]"; then
@@ -32,7 +32,7 @@ Tests VALIDES
 
 echo "Tests VALIDES"
 
-find "$CONTEXT_DIR/valid/" -name "*.deca" | sort | while read testfile; do
+find "$CONTEXT_DIR/valid/avecObjet" -name "*.deca" | sort | while read testfile; do
     echo "Test valide attendu : $testfile"
 
     if test_context "$testfile" 2>&1 | grep -q "$testfile:[0-9]"; then
