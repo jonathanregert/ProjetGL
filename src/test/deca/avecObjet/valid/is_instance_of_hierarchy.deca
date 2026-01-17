@@ -1,0 +1,7 @@
+class A {}
+class C {}
+
+{
+    A a = new A();
+    println(a instanceof C);
+}

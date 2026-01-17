@@ -1,0 +1,16 @@
+// Description :
+//    Sélection et affichage d'un champ d'objet via une variable de type classe.
+//
+// Resultats :
+//    Affiche : 8
+
+class A {
+    int x;
+}
+
+{
+    A a = new A();
+    a.x = 8;
+    println(a.x);
+}
+

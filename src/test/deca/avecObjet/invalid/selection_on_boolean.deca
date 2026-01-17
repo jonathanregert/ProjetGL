@@ -1,0 +1,12 @@
+// Description :
+//    Sélection de champ sur une expression de type boolean.
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne 10 : Sélection impossible sur un type non-objet
+
+{
+    boolean b = true;
+    int y = b.z;
+}
+

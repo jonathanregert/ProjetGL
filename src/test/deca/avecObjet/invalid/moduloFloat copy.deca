@@ -1,0 +1,13 @@
+// Description :
+//    Opérateur modulo invalide : utilisation de '%' avec des opérandes non-entiers.
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne 12 : L'opérateur modulo ne s'applique qu'aux entiers.
+
+{
+    float f = 1.0;
+    int i = 2;
+    int res;
+    res = f % i; 
+}

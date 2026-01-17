@@ -1,0 +1,13 @@
+// Description :
+//    Boucle while simple affichant des entiers.
+//
+// Resultats :
+//    ok
+
+{
+    int i = 0;
+    while (i < 5) {
+        print(i);
+        i = i + 1;
+    }
+}

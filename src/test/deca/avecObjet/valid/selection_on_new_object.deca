@@ -1,0 +1,14 @@
+// Description :
+//    Sélection et affichage d'un champ sur un objet créé dynamiquement avec new.
+//
+// Resultats :
+//    Affiche : 0
+
+class A {
+    int x;
+}
+
+{
+    println((new A()).x);
+}
+

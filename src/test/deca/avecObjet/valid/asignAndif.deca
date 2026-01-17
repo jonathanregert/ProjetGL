@@ -1,0 +1,16 @@
+// Description :
+//    Conditionnelle simple: if avec assignation et affichage.
+//
+// Resultats :
+//    ok
+
+{
+    int a = 3;
+    if (a < 5) {
+        a = 12;
+        print(a);
+    }
+    else {
+        print("faux");
+    }
+}

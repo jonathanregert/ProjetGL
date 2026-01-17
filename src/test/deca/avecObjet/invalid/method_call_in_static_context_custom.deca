@@ -1,0 +1,13 @@
+// Description :
+// appel de méthode non statique depuis main
+//
+// Resultats :
+// Erreur contextuelle
+// Ligne 9 : appel invalide
+
+class M {
+    void foo() {}
+    public static void main() {
+        foo(); // invalide
+    }
+}

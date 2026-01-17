@@ -1,0 +1,17 @@
+// Description :
+//    Appel de méthode avec un argument non rvalue valide.
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne <No_de_ligne> : <message d'erreur de votre compilateur>
+
+class A {
+    void f(int x) {
+    }
+}
+
+{
+    A a = new A();
+    a.f(void);
+}
+

@@ -1,0 +1,23 @@
+// Description :
+//    Appel polymorphique via une référence de type base.
+//
+// Resultats :
+//    OK
+
+class A {
+    int f() {
+        return 1;
+    }
+}
+
+class B extends A {
+    int f() {
+        return 2;
+    }
+}
+
+{
+    A a = new B();
+    println(a.f());
+}
+

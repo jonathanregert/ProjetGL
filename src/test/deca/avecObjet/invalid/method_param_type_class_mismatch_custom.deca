@@ -1,0 +1,16 @@
+// Description :
+// passage d'un objet de type incorrect en paramètre
+//
+// Resultats :
+// Erreur contextuelle
+// Ligne 13 : type d'argument incompatible
+
+class H {}
+
+class I {
+    void f(H h) {}
+    void test() {
+        I i = new I();
+        f(i); // invalide
+    }
+}

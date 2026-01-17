@@ -1,0 +1,13 @@
+// Description :
+// Affectation d’un champ avec le retour d’une méthode
+//
+// Resultats :
+// ok
+
+class S {
+    int a;
+    int f() { return 5; }
+    void test() { 
+        a = f(); 
+    }
+}

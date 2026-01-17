@@ -1,0 +1,16 @@
+// Description :
+//    Appel de méthode sur un objet créé avec new.
+//
+// Resultats :
+//    OK
+
+class A {
+    int f() {
+        return 1;
+    }
+}
+
+{
+    println((new A()).f());
+}
+

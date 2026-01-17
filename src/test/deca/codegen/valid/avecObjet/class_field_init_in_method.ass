@@ -1,0 +1,62 @@
+; start main program
+; Passe1 table de méthode : A base=3(GB) taille=3
+; Beginning of main instructions:
+	TSTO #5	; Main Program
+	BOV pile_pleine
+	ADDSP #5
+; --------------------------------------------------
+; Construction des tables des methodes
+; --------------------------------------------------
+	LOAD #null, R0
+	STORE R0, 1(GB)
+	LOAD code.Object.equals, R0
+	STORE R0, 2(GB)
+	LEA 1(GB), R0
+	STORE R0, 3(GB)
+	LOAD 2(GB), R0
+	STORE R0, 4(GB)
+	LOAD code.A.init, R0
+	STORE R0, 5(GB)
+; --------------------------------------------------
+; Code du programme principal
+; --------------------------------------------------
+	HALT
+code.Object.equals:
+	LOAD -2(LB), R0
+	CMP -3(LB), R0
+	BEQ Object.equals.true
+	LOAD #0, R0
+	BRA Object.equals.end
+Object.equals.true:
+	LOAD #1, R0
+Object.equals.end:
+	RTS
+init.A:
+; init.A (this = -2(LB))
+	TSTO #1
+	BOV pile_pleine
+	PUSH R3
+	LOAD -2(LB), R2
+	LOAD #0, R0
+	STORE R0, 1(R2)
+	POP R3
+	RTS
+; Code des méthodes de la classe A
+code.A.init:
+; Méthode A.init
+	TSTO #1
+	BOV pile_pleine
+	PUSH R3
+	LOAD #42, R1
+	LOAD -2(LB), R2
+	STORE R1, 1(R2)
+	BRA fin.A.init
+fin.A.init:
+	POP R3
+	RTS
+; Message d'erreurs
+pile_pleine:
+	WSTR "Erreur : debordement de pile"
+	WNL
+	ERROR
+; end main program

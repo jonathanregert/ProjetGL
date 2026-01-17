@@ -1,0 +1,8 @@
+class A {}
+
+{
+    A a = new A();
+    if (a instanceof boolean) { // ERREUR
+        println("erreur");
+    }
+}

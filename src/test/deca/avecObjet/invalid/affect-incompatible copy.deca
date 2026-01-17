@@ -1,0 +1,14 @@
+// Description :
+//    Affectation incompatible : tentative d'assigner une valeur de type boolean à une variable de type int.
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne 6 : Incompatible types: impossible assign boolean à int
+
+{
+   int a;
+   boolean b;
+
+   // Doit etre refuse.
+   a = b;
+}

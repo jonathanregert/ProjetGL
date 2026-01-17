@@ -1,0 +1,21 @@
+// Description :
+//    Fonction max(a,b) en assembleur pur.
+//
+// Resultats :
+//    Max is 20
+
+class Tools {
+    int max(int a, int b) asm("
+        LOAD -3(LB), R0   ; R0 = a
+        LOAD -4(LB), R1   ; R1 = b
+        CMP R1, R0        ; Compare a ? b
+        BGE end_max       ; Si a >= b, on a fini (R0 contient a)
+        LOAD R1, R0       ; Sinon R0 = b
+    end_max:
+        RTS");
+}
+
+{
+    Tools t = new Tools();
+    println("Max is ", t.max(10, 20));
+}

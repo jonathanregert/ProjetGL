@@ -117,6 +117,7 @@ public class Cast extends AbstractExpr {
             return t2;
         }
 
+        if (t1.isClass() && t2.isClass()) {
         ClassType src = (ClassType) t1;
         ClassType dst = (ClassType) t2;
 
@@ -133,7 +134,7 @@ public class Cast extends AbstractExpr {
             setType(t2);
             return t2;
         }
-
+    }
 
         throw new ContextualError("Cast impossible de " + t1 + " vers " + t2 + ".", getLocation());
 
