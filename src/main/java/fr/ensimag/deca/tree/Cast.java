@@ -148,6 +148,16 @@ public class Cast extends AbstractExpr {
             return;
         }
 
+        if (getType().isInt() && expr.getType().isFloat()) {
+            compiler.addInstruction(new INT(target, target));
+            return;
+        }
+
+        if ((getType().isInt() && expr.getType().isInt()) ||
+            (getType().isFloat() && expr.getType().isFloat())) {
+            return;
+        }
+
         if (getType().isClass() && needRuntimeCheck && !compiler.getNoCheckOption()) {
 
             int id = compiler.getLabelId();

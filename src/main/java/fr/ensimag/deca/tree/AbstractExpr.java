@@ -10,6 +10,7 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.WFLOAT;
+import fr.ensimag.ima.pseudocode.instructions.WFLOATX;
 import fr.ensimag.ima.pseudocode.instructions.WINT;
 
 import static org.mockito.Mockito.*;
@@ -102,7 +103,6 @@ public abstract class AbstractExpr extends AbstractInst {
             throw new ContextualError("Type incompatible : attendu " + expectedType
                 + ", trouvé " + typeFound, getLocation());
         }
-
         return this;
     }
     
@@ -144,7 +144,9 @@ public abstract class AbstractExpr extends AbstractInst {
         codeGenExpr(compiler);
         Type t = getType();
         if (t.isInt() || t.isBoolean()) compiler.addInstruction(new WINT());
-        else if (t.isFloat()) compiler.addInstruction(new WFLOAT());
+        else if (t.isFloat()){
+            compiler.addInstruction(new WFLOAT());
+        }
         else throw new UnsupportedOperationException("print non supporté pour " + t);
     }
 

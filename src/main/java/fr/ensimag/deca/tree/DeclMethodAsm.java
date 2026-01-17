@@ -134,11 +134,20 @@ public class DeclMethodAsm extends AbstractDeclMethod {
         compiler.addComment("Méthode ASM " + md.getLabel());
 
         String rawAsm = code.getAsmText().getValue();
-        String[] lines = rawAsm.split("\\R");
 
-        if (rawAsm.startsWith("\"") && rawAsm.endsWith("\"")) {
+        if (rawAsm.startsWith("\"") && rawAsm.endsWith("\"") && rawAsm.length() >= 2) {
             rawAsm = rawAsm.substring(1, rawAsm.length() - 1);
         }
+
+        rawAsm = rawAsm.replace("\\n", "\n");
+
+        rawAsm = rawAsm.replace("\\r", "\r");
+
+        rawAsm = rawAsm.replace("\\\"", "\"");
+
+        rawAsm = rawAsm.replace("\\\\", "\\");
+
+        String[] lines = rawAsm.split("\\R");
 
         for (String l : lines) {
             String trimmed = l.trim();
@@ -146,11 +155,11 @@ public class DeclMethodAsm extends AbstractDeclMethod {
                 compiler.addInline(trimmed);
             }
         }
-
         if (!containsRTS(rawAsm)) {
             compiler.addInstruction(new RTS());
         }
     }
+
 
     // helper local
     private boolean containsRTS(String rawAsm) {

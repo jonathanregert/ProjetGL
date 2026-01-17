@@ -16,6 +16,8 @@ import fr.ensimag.ima.pseudocode.instructions.WNL;
 import fr.ensimag.ima.pseudocode.instructions.WSTR;
 
 public class ErrorManager {
+    private final EnumSet<RuntimeError> used = EnumSet.noneOf(RuntimeError.class);
+    private final EnumMap<RuntimeError, Label> labels = new EnumMap<>(RuntimeError.class);
 
     public enum RuntimeError{
         STACK_OVERFLOW,
@@ -37,9 +39,6 @@ public class ErrorManager {
         // cast
         INVALID_CAST
     }
-
-    private final EnumSet<RuntimeError> used = EnumSet.noneOf(RuntimeError.class);
-    private final EnumMap<RuntimeError, Label> labels = new EnumMap<>(RuntimeError.class);
 
     public Label label(RuntimeError error){
         used.add(error);
@@ -117,19 +116,13 @@ public class ErrorManager {
         compiler.addInstruction(new CMP(new ImmediateInteger(0), divisor));
         compiler.addInstruction(new BEQ(label(RuntimeError.INT_MOD_BY_ZERO)));
     }
-
-    /** Overflow arithmétique (si vous décidez de le gérer maintenant). */
     public void genCheckOverflow(DecacCompiler compiler) {
         if (compiler.getNoCheckOption()) return;
         compiler.addInstruction(new BOV(label(RuntimeError.ARITH_OVERFLOW)));
     }
-
-    /** Après RINT */
     public void genCheckReadInt(DecacCompiler compiler) {
         compiler.addInstruction(new BOV(label(RuntimeError.READ_INT_ERROR)));
     }
-
-    /** Après RFLOAT */
     public void genCheckReadFloat(DecacCompiler compiler) {
         compiler.addInstruction(new BOV(label(RuntimeError.READ_FLOAT_ERROR)));
     }
