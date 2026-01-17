@@ -49,7 +49,7 @@ public class InstanceOf extends AbstractExpr {
     @Override
     protected void codeGenExpr(DecacCompiler compiler, GPRegister target) {
         GPRegister robj = target;
-        GPRegister rvt  = Register.getR(1);
+        GPRegister rvt  = Register.R1;
 
         int id = compiler.getLabelId();
         Label lFalse = new Label("instanceof_false_" + id);
@@ -66,13 +66,14 @@ public class InstanceOf extends AbstractExpr {
 
         ClassDefinition targetDef = typeName.getClassDefinition();
         RegisterOffset targetVTableAddr = targetDef.getAddrTable();
+        compiler.addInstruction(new LEA(targetVTableAddr, Register.R0));
 
         compiler.addLabelToBlock(lLoop);
 
         compiler.addInstruction(new CMP(new NullOperand(), rvt));
         compiler.addInstruction(new BEQ(lFalse));
 
-        compiler.addInstruction(new CMP(targetVTableAddr, rvt));
+        compiler.addInstruction(new CMP(Register.R0, rvt));
         compiler.addInstruction(new BEQ(lTrue));
 
         compiler.addInstruction(new LOAD(new RegisterOffset(0, rvt), rvt));
@@ -87,7 +88,6 @@ public class InstanceOf extends AbstractExpr {
 
         compiler.addLabelToBlock(lEnd);
     }
-
 
     @Override
     public void decompile(IndentPrintStream s) {
