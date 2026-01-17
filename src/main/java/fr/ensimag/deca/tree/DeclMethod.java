@@ -74,13 +74,13 @@ public class DeclMethod extends AbstractDeclMethod {
         int index;
         if (superMethod != null){
             // Override = mêmes contraintes (2.7)
-            if (!t.sameType(superMethod.getType())){
+            if (!t.isSubtype(compiler.environmentType, superMethod.getType())){
                 throw new ContextualError("Type de retour incompatible avec la méthode de la super-classe.", getLocation());
             }
             if (!sig.equals(superMethod.getSignature())){
                 // Debug
-                System.out.println("Sig actuelle : " + sig.toString());
-                System.out.println("Sig super : " + superMethod.getSignature().toString());
+                // System.out.println("Sig actuelle : " + sig.toString());
+                // System.out.println("Sig super : " + superMethod.getSignature().toString());
                 throw new ContextualError("Signature incompatible avec la méthode de la super-classe.", getLocation());
             }
             index = superMethod.getIndex();
