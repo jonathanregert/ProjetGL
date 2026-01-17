@@ -113,28 +113,24 @@ public class Cast extends AbstractExpr {
         }
 
         if (assignCompatible1 || assignCompatible2) {
+
+            if (t1.isClass() && t2.isClass()) {
+            ClassType src = (ClassType) t1;
+            ClassType dst = (ClassType) t2;
+            if (src.isSubClassOf(dst)) {
+                needRuntimeCheck = false;
+            } else if (dst.isSubClassOf(src)) {
+                // Downcast
+                needRuntimeCheck = true;
+            }
+            } else {
+                needRuntimeCheck = false;
+            }
+
             setType(t2);
             return t2;
         }
 
-        if (t1.isClass() && t2.isClass()) {
-        ClassType src = (ClassType) t1;
-        ClassType dst = (ClassType) t2;
-
-        // Cast trivial : src <= dst
-        if (src.isSubClassOf(dst)) {
-            needRuntimeCheck = false;
-            setType(t2);
-            return t2;
-        }
-
-        // Downcast possible : dst <= src => runtime check requis
-        if (dst.isSubClassOf(src)) {
-            needRuntimeCheck = true;
-            setType(t2);
-            return t2;
-        }
-    }
 
         throw new ContextualError("Cast impossible de " + t1 + " vers " + t2 + ".", getLocation());
 

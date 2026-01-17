@@ -97,13 +97,6 @@ public class DeclClass extends AbstractDeclClass {
             );
         }
 
-        // 3) Classe déjà déclarée ?
-        if (compiler.environmentType.isDeclared(ClassName.getName())) {
-            throw new ContextualError(
-                "Classe " + ClassName.getName() + " déjà déclarée",
-                getLocation()
-            );
-        }
 
         // 4) Récupérer la super-classe et vérifier que c'est une classe
         TypeDefinition def = compiler.environmentType.get(ClassExtention.getName());
