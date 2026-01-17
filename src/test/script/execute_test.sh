@@ -4,7 +4,7 @@
 
 cd "$(dirname "$0")"/../../.. || exit 1
 
-TEST_DIR="src/test/deca/codegen/valid/sansObjet"
+TEST_DIR="src/test/deca/codegen/valid/avecObjet"
 
 echo "---------------------------------------------"
 echo "    EXÉCUTION DES TESTS DECA"

@@ -1,0 +1,8 @@
+class A {}
+class B extends A {}
+{
+  A a = new B();
+  println(a instanceof A); // true
+  println(a instanceof B); // true
+  println(null instanceof A); // false
+}

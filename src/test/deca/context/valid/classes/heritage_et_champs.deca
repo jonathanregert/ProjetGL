@@ -1,0 +1,22 @@
+// Héritage + champs : vérifier offsets dans l'objet
+
+class A {
+    int x;
+    void setX() {
+        x = 1;
+    }
+}
+
+class B extends A {
+    int y;
+    void setY() {
+        y = 2;
+    }
+    void setBoth() {
+        x = x + 10;
+        y = y + 20;
+    }
+}
+
+{
+}

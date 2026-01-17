@@ -1,0 +1,6 @@
+class A { void m() {} }
+{
+  A a = new A();
+  a.m();                 // LOAD R0, R1
+  if (1 == 1) {println(1);} // si ton codegen de comparaison passe par CMP sur R1 sans le recharger
+}

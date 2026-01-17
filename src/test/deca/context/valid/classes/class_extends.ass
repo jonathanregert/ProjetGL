@@ -1,21 +1,23 @@
 ; Main Program
-	TSTO #4
+	TSTO #6
 	BOV pile_pleine
-	ADDSP #4
+	ADDSP #6
 ; start main program
 ; Main program
 	LOAD #null, R0
 	STORE R0, 1(GB)
 	LOAD code.Object.equals, R0
 	STORE R0, 2(GB)
-; Passe1 table de méthode : A base=3(GB) taille=1
-; Passe1 table de méthode : B base=4(GB) taille=1
+; Passe1 table de méthode : A base=3(GB) taille=2
+; Passe1 table de méthode : B base=5(GB) taille=2
 	LEA 1(GB), R0
 	STORE R0, 3(GB)
 	LOAD 2(GB), R0
 	STORE R0, 4(GB)
 	LEA 3(GB), R0
-	STORE R0, 4(GB)
+	STORE R0, 5(GB)
+	LOAD 4(GB), R0
+	STORE R0, 6(GB)
 ; Beginning of main instructions:
 	HALT
 ; Message d'erreurs
@@ -34,22 +36,10 @@ Object.equals.true:
 Object.equals.end:
 	RTS
 init.A:
-; init.A (this dans R1)
-	TSTO #1
-	BOV pile_pleine
-	PUSH R3
-	POP R3
-	BSR init.Object
-	POP R3
+; init.A (this = -2(LB))
 	RTS
 init.B:
-; init.B (this dans R1)
-	TSTO #1
-	BOV pile_pleine
-	PUSH R3
-	POP R3
-	BSR init.A
-	POP R3
+; init.B (this = -2(LB))
 	RTS
 ; Code des méthodes de la classe A
 ; Code des méthodes de la classe B

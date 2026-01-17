@@ -1,0 +1,10 @@
+{
+    float f1 = 3.9;
+    float f2 = -3.9;
+
+    int a = (int)(f1);
+    int b = (int)(f2);
+
+    println(a);   // attendu: 3
+    println(b);   // attendu: -3
+}

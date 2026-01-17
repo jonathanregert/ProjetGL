@@ -1,0 +1,34 @@
+// Résultat attendu
+class A {
+    int x;
+
+    void setX(int v){
+        this.x = v;
+    }
+
+    int getX(){
+        return this.x;
+    }
+}
+
+class B extends A {
+    int y;
+
+    void setY(int v){
+        this.y = v;
+    }
+
+    int sum(){
+        return this.getX() + this.y;
+    }
+}
+
+{
+    A a = new A();
+    B b = new B();
+    a.setX(10);
+    println("x = ", a.getX());
+    b.setX(5);
+    b.setY(10);
+    println("y = ", b.sum());
+}
