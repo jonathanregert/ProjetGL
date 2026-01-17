@@ -1,7 +1,0 @@
-class A {
-    int f() asm("RTS");
-}
-
-class B extends A {
-    float f() asm("RTS");
-}

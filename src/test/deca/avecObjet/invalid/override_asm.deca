@@ -1,7 +1,0 @@
-class A {
-    void f(int a) asm("RTS");
-}
-
-class B extends A {
-    void f() asm("RTS");
-}

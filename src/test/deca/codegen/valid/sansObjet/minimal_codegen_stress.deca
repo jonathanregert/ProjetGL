@@ -1,0 +1,13 @@
+// Description :
+// Test d'une expression booléenne combinant && et des comparaisons arithmétiques.
+// Resultats :
+// true affiché
+{
+    int a = 1;
+    int b = 2;
+    int c = 3;
+    boolean r;
+
+    r = (a + b > c) && (c - b == a);
+    println(r);
+}

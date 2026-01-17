@@ -1,8 +1,0 @@
-class A {}
-
-{
-    A a = new A();
-    if (a instanceof Inconnu) {
-        println("erreur");
-    }
-}

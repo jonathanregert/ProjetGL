@@ -1,0 +1,15 @@
+// Description:
+//    tests conditionnelle
+//
+// Resultats:
+//    ok
+
+
+{
+   if (1 >= 0) {
+      println("ok"); 
+   } else { 
+      println("erreur");
+   }
+}
+

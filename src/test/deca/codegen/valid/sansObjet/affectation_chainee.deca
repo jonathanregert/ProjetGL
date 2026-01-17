@@ -1,0 +1,6 @@
+{
+    int a; int b;
+    a = b = 5;
+    println(a);
+    println(b);
+}

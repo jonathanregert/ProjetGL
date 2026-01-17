@@ -1,6 +1,0 @@
-class A {
-    int geta(){
-        int a;
-        return a;
-    }
-}

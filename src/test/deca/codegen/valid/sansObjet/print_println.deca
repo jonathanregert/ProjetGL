@@ -1,0 +1,14 @@
+// Description:
+//    ecriture de chaines
+//
+// Resultats:
+//    ok
+
+
+{
+   println("ok") ; 
+   print("ok") ; 
+   println() ; 
+}
+
+

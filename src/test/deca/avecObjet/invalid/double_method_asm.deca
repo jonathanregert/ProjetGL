@@ -1,4 +1,0 @@
-class A {
-    void f() asm("RTS");
-    int f() asm("RTS");
-}
