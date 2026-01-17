@@ -1,4 +1,4 @@
-// Generated from /home/hiba/gl42/src/main/antlr4/fr/ensimag/deca/syntax/DecaParser.g4 by ANTLR 4.13.1
+// Generated from /Users/jonathanregert/Documents/Ensimag/Semestre8/ProjetGL/git/final/gl42/src/main/antlr4/fr/ensimag/deca/syntax/DecaParser.g4 by ANTLR 4.13.1
 
     import fr.ensimag.deca.tree.*;
     import fr.ensimag.deca.DecacCompiler;
@@ -2500,9 +2500,18 @@ public class DecaParser extends AbstractDecaParser {
 				setState(471);
 				((LiteralContext)_localctx).INT = match(INT);
 
-				        ((LiteralContext)_localctx).tree =  new IntLiteral(Integer.parseInt((((LiteralContext)_localctx).INT!=null?((LiteralContext)_localctx).INT.getText():null)));
-				        setLocation(_localctx.tree, ((LiteralContext)_localctx).INT);
-				        
+				        try {
+				            ((LiteralContext)_localctx).tree =  new IntLiteral(Integer.parseInt((((LiteralContext)_localctx).INT!=null?((LiteralContext)_localctx).INT.getText():null)));
+				            setLocation(_localctx.tree, ((LiteralContext)_localctx).INT);
+				        } catch (NumberFormatException e) {
+				            notifyErrorListeners(
+				                ((LiteralContext)_localctx).INT,
+				                "entier hors limites (entier positif sur 32 bits attendu)",
+				                null
+				            );
+				            throw new ParseCancellationException();
+				        }
+				    
 				}
 				break;
 			case FLOAT:

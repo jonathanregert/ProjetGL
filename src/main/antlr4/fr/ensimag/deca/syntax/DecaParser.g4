@@ -473,9 +473,18 @@ type returns[AbstractIdentifier tree]
 
 literal returns[AbstractExpr tree]
     : INT {
-        $tree = new IntLiteral(Integer.parseInt($INT.text));
-        setLocation($tree, $INT);
+        try {
+            $tree = new IntLiteral(Integer.parseInt($INT.text));
+            setLocation($tree, $INT);
+        } catch (NumberFormatException e) {
+            notifyErrorListeners(
+                $INT,
+                "entier hors limites (entier positif sur 32 bits attendu)",
+                null
+            );
+            throw new ParseCancellationException();
         }
+    }
     | fd=FLOAT {
         $tree = new FloatLiteral(Float.parseFloat($fd.text));
         setLocation($tree, $fd);

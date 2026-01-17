@@ -1,4 +1,4 @@
-// Generated from /Users/jonathanregert/Documents/Ensimag/Semestre8/ProjetGL/git/tests/gl42/src/main/antlr4/fr/ensimag/deca/syntax/DecaParser.g4 by ANTLR 4.13.1
+// Generated from /Users/jonathanregert/Documents/Ensimag/Semestre8/ProjetGL/git/final/gl42/src/main/antlr4/fr/ensimag/deca/syntax/DecaParser.g4 by ANTLR 4.13.1
 
     import fr.ensimag.deca.tree.*;
     import fr.ensimag.deca.DecacCompiler;
@@ -321,6 +321,16 @@ public interface DecaParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitDecl_field_set(DecaParser.Decl_field_setContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link DecaParser#is_final}.
+	 * @param ctx the parse tree
+	 */
+	void enterIs_final(DecaParser.Is_finalContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link DecaParser#is_final}.
+	 * @param ctx the parse tree
+	 */
+	void exitIs_final(DecaParser.Is_finalContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link DecaParser#visibility}.
 	 * @param ctx the parse tree

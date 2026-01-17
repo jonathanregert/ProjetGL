@@ -1,4 +1,4 @@
-// Generated from /Users/jonathanregert/Documents/Ensimag/Semestre8/ProjetGL/git/tests/gl42/src/main/antlr4/fr/ensimag/deca/syntax/DecaParser.g4 by ANTLR 4.13.1
+// Generated from /Users/jonathanregert/Documents/Ensimag/Semestre8/ProjetGL/git/final/gl42/src/main/antlr4/fr/ensimag/deca/syntax/DecaParser.g4 by ANTLR 4.13.1
 
     import fr.ensimag.deca.tree.*;
     import fr.ensimag.deca.DecacCompiler;
@@ -388,6 +388,18 @@ public class DecaParserBaseListener implements DecaParserListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitDecl_field_set(DecaParser.Decl_field_setContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterIs_final(DecaParser.Is_finalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIs_final(DecaParser.Is_finalContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
