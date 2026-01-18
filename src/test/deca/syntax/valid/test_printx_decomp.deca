@@ -1,0 +1,10 @@
+// Description :
+// Test pour vérifier le bon fonctionnement print hex et decompile
+//
+// Resultats :
+// ok
+
+{
+    printx(1.5);
+    printlnx(2.5, 3.5);
+}
