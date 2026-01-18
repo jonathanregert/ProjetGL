@@ -1,3 +1,9 @@
+// Description :
+//    assign_compatible(env, T1, T2).
+//
+// Resultats :
+//    OK
+
 class A {
     float f() {
         return 1;
