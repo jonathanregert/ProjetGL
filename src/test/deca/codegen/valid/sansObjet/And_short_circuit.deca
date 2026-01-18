@@ -1,8 +1,9 @@
 // Description :
-//      test du court-circuit AND : opérande gauche false → droite non évaluée
+//    Test du court-circuit AND : opérande gauche false, droite non évaluée.
 //
 // Resultats :
-// false affiché sans erreur
+//    Affiche : 0
+
 {
     boolean a = false;
     print(a && (1/0==0));

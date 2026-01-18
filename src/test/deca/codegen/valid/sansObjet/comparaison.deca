@@ -2,7 +2,12 @@
 //    Comparaisons d'entiers et structure conditionnelle (if/else) dans une boucle.
 //
 // Resultats :
-// ok
+// Affiche :
+// 0
+// 1
+// C'est deux
+// 3
+// 4
 
 {
    int x = 0;

@@ -2,7 +2,7 @@
 //    Sélection imbriquée de champ sur trois niveaux d'objets (a.b.c.z).
 //
 // Resultats :
-//    Affiche : 7
+//    Affiche : 10
 
 class C {
     int z;

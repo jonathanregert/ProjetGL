@@ -2,7 +2,7 @@
 // Appel de méthode avec expressions comme arguments
 //
 // Resultats :
-// ok
+//
 
 class Y {
     int f(int a, int b) { return a + b; }

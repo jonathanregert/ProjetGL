@@ -27,8 +27,6 @@
             } else {
                 z = z - (j - i);
             }
-
-            // bloc interne + assign tardif
             
             tmp = (z + i) - (j * base);
             if (tmp < 0) {

@@ -2,7 +2,7 @@
 //    Programme minimaliste utilisant println.
 //
 // Resultats:
-// ok
+//    Hello, world!
 
 {
         println("Hello, world!");

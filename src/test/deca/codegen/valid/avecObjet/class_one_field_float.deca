@@ -2,7 +2,7 @@
 //    Classe contenant un seul champ de type float.
 //
 // Resultats :
-//    OK
+//
 
 class A {
     float y;

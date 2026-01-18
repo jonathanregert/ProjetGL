@@ -2,7 +2,9 @@
 //    Calculs arithmétiques et boucle while avec affichages.
 //
 // Resultats :
-// ok
+//    Affiche :
+//    1414
+//    01234
 
 {
     int a = 3;

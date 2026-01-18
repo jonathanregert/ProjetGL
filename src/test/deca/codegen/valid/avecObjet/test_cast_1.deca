@@ -1,3 +1,11 @@
+// Description :
+//    Test du transtypage float vers int avec valeurs positive et négative.
+//    Vérifie la troncature vers 0.
+//
+// Resultats :
+//    OK
+//    3
+//    -3
 {
     float f1 = 3.9;
     float f2 = -3.9;
@@ -5,6 +13,6 @@
     int a = (int)(f1);
     int b = (int)(f2);
 
-    println(a);   // attendu: 3
-    println(b);   // attendu: -3
+    println(a);
+    println(b);
 }

@@ -3,7 +3,7 @@
 // ConvFloat implicite + UnaryMinus + Modulo
 //
 // Resultats :
-// 11 affiché
+// 7... affiché
 
 {
     int a = 30;
@@ -12,7 +12,7 @@
     int d = 2;
     float r;
 
-    float x = a / (b + d);   // ConvFloat implicite
+    float x = a / (b + d);
 
     r = x + ((-c) % b) + (c - d);
     println(r);

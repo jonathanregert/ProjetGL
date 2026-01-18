@@ -2,7 +2,8 @@
 //    Accès à un champ protected sur un objet de la sous-classe.
 //
 // Resultats :
-//    OK
+//    (aucune sortie)
+
 
 class A {
     protected int x;

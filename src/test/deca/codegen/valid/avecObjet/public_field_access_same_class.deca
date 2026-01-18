@@ -1,9 +1,8 @@
 // Description :
-//    Accès à un champ public depuis la même classe.
+//    Accès à un champ public depuis la même classe (vérification contextuelle).
 //
 // Resultats :
-//    OK
-
+//    (aucune sortie)
 class A {
     int x;
 

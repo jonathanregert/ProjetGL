@@ -1,26 +1,12 @@
 // Description :
-// Programme de test des conversions de type (casts) en Deca SANS OBJET.
-// Étape C — génération de code + exécution.
-// Ce test couvre de façon exhaustive :
-// - conversions implicites int -> float
-// - conversions explicites int -> float
-// - conversions explicites float -> int
-// - casts imbriqués
-// - casts dans expressions arithmétiques complexes
-// - casts dans conditions booléennes
-// - casts dans affectations simples et chaînées
-// - pression sur registres via expressions longues
-//
-// Aucun cast invalide (boolean, types inconnus) n’est utilisé.
-// Le programme est auto-validant : il affiche uniquement "OK" si tout est correct.
+//    Programme de test des conversions de type (casts) en Deca sans objets.
+//    Vérifie conversions implicites et explicites int/float, casts imbriqués
+//    et leur utilisation dans des expressions arithmétiques et booléennes.
 //
 // Resultats :
-// OK
+//    Affiche : OK
 
 {
-    // -------------------------------
-    // Déclarations
-    // -------------------------------
     int a = 1;
     int b = 2;
     int c = 3;
@@ -32,9 +18,6 @@
 
     boolean ok = true;
 
-    // -------------------------------
-    // Casts implicites int -> float
-    // -------------------------------
     f1 = a;
     f2 = b + c;
     f3 = d * e;
@@ -43,9 +26,6 @@
         ok = false;
     }
 
-    // -------------------------------
-    // Casts explicites int -> float
-    // -------------------------------
     f4 = (float)(a);
     f5 = (float)(b + c * d);
 
@@ -53,9 +33,6 @@
         ok = false;
     }
 
-    // -------------------------------
-    // Casts explicites float -> int
-    // -------------------------------
     i1 = (int)(3.7);
     i2 = (int)(-3.7);
     i3 = (int)(f5);
@@ -64,9 +41,6 @@
         ok = false;
     }
 
-    // -------------------------------
-    // Casts imbriqués
-    // -------------------------------
     i4 = (int)((float)(a + b + c) * 2.5);
     f1 = (float)((int)(9.9)) + 0.5;
 
@@ -74,9 +48,6 @@
         ok = false;
     }
 
-    // -------------------------------
-    // Casts dans expressions longues (pression registres)
-    // -------------------------------
     f2 =
         (float)(a) +
         (float)(b) * 2.0 +
@@ -85,15 +56,10 @@
         (float)((int)(7.9)) -
         (float)((int)((float)(3)));
 
-    // Calcul attendu :
-    // 1 + 4 + 12 - 2.5 + 7 - 3 = 18.5
     if (f2 != 18.5) {
         ok = false;
     }
 
-    // -------------------------------
-    // Casts dans conditions
-    // -------------------------------
     if ((int)(f2) != 18) {
         ok = false;
     }
@@ -102,25 +68,16 @@
         ok = false;
     }
 
-    // -------------------------------
-    // Casts dans affectations chaînées
-    // -------------------------------
     i5 = i4 = (int)((float)(e) * 3.0);
 
     if (i4 != 15 || i5 != 15) {
         ok = false;
     }
 
-    // -------------------------------
-    // Casts combinés arithmétique + comparaison
-    // -------------------------------
     if (!((float)(i5) / 3.0 == 5.0)) {
         ok = false;
     }
 
-    // -------------------------------
-    // Oracle final
-    // -------------------------------
     if (ok) {
         println("OK");
     } else {

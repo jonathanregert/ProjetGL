@@ -2,7 +2,7 @@
 //    Accès à un champ protected via this dans une sous-classe.
 //
 // Resultats :
-//    OK
+//    (aucune sortie)
 
 class A {
     protected int x;

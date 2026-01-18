@@ -8,6 +8,6 @@
     int b = 2;
     int c = 3;
 
-    print(a + (b + c)); 
+    print(a + (b + c));
 }
 

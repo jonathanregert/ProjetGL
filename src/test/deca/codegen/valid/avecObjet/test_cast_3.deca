@@ -1,3 +1,10 @@
+// Description :
+//    Test d'un transtypage de descente invalide (B casté en C).
+//    Doit provoquer une erreur à l'exécution.
+//
+// Resultats :
+//    Erreur d'exécution (cast invalide)
+//    ("unreachable" ne doit pas être affiché)
 class A { }
 class B extends A { }
 class C extends A { }
@@ -5,9 +12,7 @@ class C extends A { }
 {
     A a = new B();
 
-    // downcast impossible dynamiquement: a est un B, pas un C
     C c = (C)(a);
 
-    // ne doit jamais s'afficher
     println("unreachable");
 }

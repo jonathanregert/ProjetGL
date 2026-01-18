@@ -2,7 +2,7 @@
 //    Classe contenant une méthode void sans paramètre.
 //
 // Resultats :
-//    OK
+//
 
 class A {
     void f() {

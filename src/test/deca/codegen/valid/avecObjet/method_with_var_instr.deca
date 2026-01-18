@@ -2,7 +2,7 @@
 //    Méthode avec déclaration de variable locale et retour de cette variable.
 //
 // Resultats :
-//    Ok
+//
 
 class A {
     int geta(){

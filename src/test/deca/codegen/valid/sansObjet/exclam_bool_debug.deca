@@ -1,3 +1,8 @@
+// Description :
+//    Test de l'opérateur logique NOT appliqué à une variable booléenne.
+//
+// Resultats :
+//    Affiche : false
 {
     boolean b = true;
     println(!b);

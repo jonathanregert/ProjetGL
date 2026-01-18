@@ -7,7 +7,6 @@
 // Affiche des lignes cohérentes et termine sans erreur
 
 {
-    // DeclVar + Initialization + NoInitialization
     int a = 3;
     int b = 7;
     int c;
@@ -19,10 +18,8 @@
     int j;
     int acc = 0;
 
-    // Assign + UnaryMinus + OpArith
     c = -a + (b * (a + 2)) - (b / (a + 1));
 
-    // ConvFloat implicite (int -> float)
     g = c + f * 2.0;
 
     print("c=");
@@ -30,7 +27,6 @@
     print("g=");
     println(g);
 
-    // IfThenElse + OpCmp + OpBool + Not
     flag = (c > 0) && !(a > b) || (g >= 0.0);
     if (flag) {
         println("branch:T");
@@ -39,8 +35,6 @@
         println("branch:F");
         ok = false;
     }
-
-    // While imbriqué + dépendances
     
 
     while (i > 0 && ok) {

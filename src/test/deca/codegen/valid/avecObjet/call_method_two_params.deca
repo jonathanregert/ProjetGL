@@ -3,7 +3,7 @@
 //
 // Resultats :
 //    1
-//    2.5
+//    2.5...
 
 class A {
     void m(int x, float y) {

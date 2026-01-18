@@ -2,7 +2,7 @@
 //    Test unitaire pour Déclaration de champs non initialisés
 //
 // Resultats :
-//    OK
+//
 
 
 class A {

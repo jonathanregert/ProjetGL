@@ -2,7 +2,7 @@
 //    Accès à un champ protected dans une chaîne d'héritage.
 //
 // Resultats :
-//    OK
+//    (aucune sortie)
 
 class A {
     protected int x;

@@ -1,0 +1,11 @@
+// Description :
+//    Lecture et affichage d'une variable locale non initialisée.
+//
+// Resultats :
+//    Erreur d'exécution : registre utilisé non défini.
+//    ** IMA ** ERREUR ** Ligne <n> :
+//        WINT avec R1 indefini
+{
+    int x;
+    println(x);
+}

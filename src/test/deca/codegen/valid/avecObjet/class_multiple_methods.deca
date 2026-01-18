@@ -2,7 +2,7 @@
 // Classe avec plusieurs méthodes indépendantes
 //
 // Resultats :
-// ok
+//
 
 class C {
     int f() { return 1; }

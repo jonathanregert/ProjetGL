@@ -2,7 +2,7 @@
 //    Variable locale masquant un champ (shadowing autorisé).
 //
 // Resultats :
-//    OK
+//
 
 class A {
     int x;

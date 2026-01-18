@@ -2,7 +2,7 @@
 // Classe avec un champ initialisé et une méthode utilisant ce champ
 //
 // Resultats :
-// ok
+//
 
 class A {
     int x = 10;

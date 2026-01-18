@@ -1,3 +1,12 @@
+// Description :
+//    Test du transtypage explicite et du polymorphisme.
+//    Vérifie la liaison dynamique des méthodes.
+//
+// Resultats :
+//    OK
+//    B
+//    B
+//    ok
 class A {
     void m() { println("A"); }
 }
@@ -9,10 +18,8 @@ class B extends A {
 {
     A a = new B();
 
-    // downcast valide : doit afficher "B"
     ((B)(a)).m();
 
-    // l'objet a doit rester correct : doit encore afficher "B"
     a.m();
 
     println("ok");

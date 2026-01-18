@@ -11,8 +11,8 @@
     int c = 7;
     int d = 2;
 
-    float x = a + b;      // ConvFloat implicite
-    float y = c - d;      // ConvFloat implicite
+    float x = a + b;
+    float y = c - d;
 
     boolean r;
 

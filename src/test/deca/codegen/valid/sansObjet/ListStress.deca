@@ -17,13 +17,11 @@
     boolean t;
 
     
-    // Print avec ListExpr (plusieurs arguments)
     print("sum=");
     println(a + b + c + d + e);
 
     
 
-    // Arbre équilibré
     r1 = ((a + b) * (c + d)) - (e * (a + c));
     // Arbre droite
     r2 = a + (b + (c + (d + e)));

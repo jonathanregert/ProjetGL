@@ -2,7 +2,7 @@
 //    Déclaration d'une variable sans initialisation.
 //
 // Resultats :
-// ok
+//
 
 {
     int a;

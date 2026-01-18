@@ -9,7 +9,7 @@ class A {
 }
 
 {
-    A a = new A();       
-    a.x = 42;            
+    A a = new A();
+    a.x = 42;
     println("a.x = ", a.x);
 }

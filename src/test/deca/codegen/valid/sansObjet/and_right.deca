@@ -1,8 +1,9 @@
 // Description :
-//  test AND complet : gauche true → droite évaluée
+//    Test du AND logique complet : opérande gauche true, opérande droite évaluée.
 //
 // Resultats :
-// true affiché
+//    Affiche : 1
+
 {
     boolean a = true;
     boolean b = true;

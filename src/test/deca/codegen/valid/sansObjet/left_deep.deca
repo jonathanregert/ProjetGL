@@ -12,7 +12,7 @@
     int d = 2;
     int e = 1;
 
-    float x = a - b;    // ConvFloat implicite
+    float x = a - b;
 
     boolean r;
 

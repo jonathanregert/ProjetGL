@@ -2,7 +2,7 @@
 // Classe avec méthode utilisant un champ pour calcul
 //
 // Resultats :
-// ok
+//
 
 class B {
     int y;

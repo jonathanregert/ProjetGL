@@ -1,8 +1,8 @@
 // Description :
-//    Test unitaire : this 
+//    Test unitaire : this
 //
 // Resultats :
-//    OK
+//
 
 class A {
     int x;

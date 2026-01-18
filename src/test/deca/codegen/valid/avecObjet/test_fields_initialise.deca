@@ -1,8 +1,8 @@
 // Description :
-//    Test unitaire pour Déclaration de champs non initialisés
+//    Test unitaire pour Déclaration de champs initialisés
 //
 // Resultats :
-//    OK
+//
 
 
 class A {

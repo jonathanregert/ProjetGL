@@ -2,7 +2,7 @@
 // Appels imbriqués de méthodes
 //
 // Resultats :
-// ok
+//
 
 class AA {
     int f() { return 1; }

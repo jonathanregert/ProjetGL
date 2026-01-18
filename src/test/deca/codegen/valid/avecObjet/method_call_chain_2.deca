@@ -2,7 +2,7 @@
 //    Chaîne d'appels de méthodes sur deux niveaux.
 //
 // Resultats :
-//    2
+//    3
 
 class B {
     int g() {

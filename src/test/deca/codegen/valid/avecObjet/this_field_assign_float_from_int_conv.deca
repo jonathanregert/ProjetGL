@@ -2,7 +2,7 @@
 //    Affectation d'un int dans un champ float via this (ConvFloat).
 //
 // Resultats :
-//    OK
+//
 
 class A {
     float f;

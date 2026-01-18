@@ -20,9 +20,6 @@
 // Le programme affiche des valeurs cohérentes et se termine sans erreur.
 
 {
-    // --------------------------------
-    // Déclarations
-    // --------------------------------
     int a = 3, b = 7, c;
     int i = 0, j, acc = 0;
     int k;
@@ -30,9 +27,6 @@
     boolean ok = true, flag = false;
     boolean cond;
 
-    // --------------------------------
-    // Affectations complexes + casts
-    // --------------------------------
     c = -a + (b * (a + 2)) - (b / (a + 1));
 
     g = (float)(c) + (float)(a + b) * 2.0;
@@ -45,9 +39,6 @@
     print("h = ");
     println(h);
 
-    // --------------------------------
-    // Cast float -> int
-    // --------------------------------
     k = (int)(g);
     j = (int)(h + 3.7);
 
@@ -56,25 +47,16 @@
     print("j = ");
     println(j);
 
-    // --------------------------------
-    // Cast imbriqués
-    // --------------------------------
     k = (int)((float)(a + b) * 1.5);
 
     print("k (nested cast) = ");
     println(k);
 
-    // --------------------------------
-    // Booléens, comparaisons et casts
-    // --------------------------------
     cond = !((int)(g) < (int)(h)) || ((int)(f) == 2 && b != 0);
 
     print("cond = ");
     println(cond);
 
-    // --------------------------------
-    // if / else if / else
-    // --------------------------------
     if ((int)(g) > (int)(h)) {
         println("g > h");
     } else if ((int)(g) == (int)(h)) {
@@ -83,9 +65,6 @@
         println("g < h");
     }
 
-    // --------------------------------
-    // while avec cast dans la condition
-    // --------------------------------
     while ((int)(f) < 5) {
         acc = acc + (int)(f);
         f = f + 1.0;
@@ -94,9 +73,6 @@
     print("acc = ");
     println(acc);
 
-    // --------------------------------
-    // Affectations imbriquées avec cast
-    // --------------------------------
     j = a = (int)((float)(b) * 1.0);
 
     print("a = ");
@@ -106,9 +82,6 @@
     print("j = ");
     println(j);
 
-    // --------------------------------
-    // Listes d'expressions avec casts
-    // --------------------------------
     print("values: ");
     print(
         (int)(g), ", ",
@@ -117,15 +90,9 @@
     );
     println();
 
-    // --------------------------------
-    // printx / printlnx
-    // --------------------------------
     printx("acc (hex) = ");
     printlnx(acc);
 
-    // --------------------------------
-    // Expressions booléennes finales
-    // --------------------------------
     flag = false;
     ok = !flag && ((int)(f) >= 5) || false;
 
