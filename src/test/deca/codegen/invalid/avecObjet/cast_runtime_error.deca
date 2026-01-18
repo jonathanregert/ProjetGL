@@ -1,0 +1,14 @@
+// Description:
+//    Test de cast invalide à l'exécution (downcast incorrect).
+//
+// Resultats:
+//    Erreur execution (ClassCastException)
+
+class A {}
+class B extends A {}
+
+{
+    A a = new A();
+    B b;
+    b = (B)(a);
+}

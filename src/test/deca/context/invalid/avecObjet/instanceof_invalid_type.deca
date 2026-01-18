@@ -1,0 +1,14 @@
+// Description:
+//    Test d'instanceof invalide.
+//
+// Resultats:
+//    Ligne 7 : Le deuxième argument d'instanceof doit être une classe
+
+class A {}
+
+{
+    A a = new A();
+    boolean res;
+    
+    res = a instanceof int;
+}

@@ -1,0 +1,31 @@
+// Description:
+//    Test de validité de l'opérateur instanceof : cas vrais, cas faux et cas null.
+//
+// Resultats:
+//    ok
+
+class A {}
+class B extends A {}
+
+{
+    A a = new A();
+    B b = new B();
+    A a_b = new B();
+    A null_a = null;
+
+    if (a instanceof A) { println("A is A"); }
+    if (b instanceof A) { println("B is A"); }
+    if (a_b instanceof B) { println("A(B) is B"); }
+    
+    if (a instanceof B) { 
+        println("Error: A is B"); 
+    } else {
+        println("A is not B");
+    }
+
+    if (null_a instanceof A) {
+        println("Error: null is A");
+    } else {
+        println("null is not A");
+    }
+}
