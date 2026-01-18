@@ -50,14 +50,15 @@ public class Return extends AbstractInst {
             );
         }
         // Vérification de la condition
-        Type exprType = expr.verifyExpr(compiler, localEnv, currentClass);
-        if (!exprType.equals(returnType)) {
-    throw new ContextualError(
-        "Type retourné " + exprType +
-        " incompatible avec le type de retour " + returnType,
-        expr.getLocation()
-    );
-        }
+    //     Type exprType = expr.verifyExpr(compiler, localEnv, currentClass);
+    //     if (!exprType.equals(returnType)) {
+    // throw new ContextualError(
+    //     "Type retourné " + exprType +
+    //     " incompatible avec le type de retour " + returnType,
+    //     expr.getLocation()
+    // );
+    //     }
+        this.expr = this.expr.verifyRValue(compiler, localEnv, currentClass, returnType);
     }
 
     @Override

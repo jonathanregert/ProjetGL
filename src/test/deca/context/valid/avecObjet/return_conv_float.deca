@@ -1,0 +1,9 @@
+class A {
+    float f() {
+        return 1;
+    }
+}
+{
+    A a = new A();
+    println(a.f());
+}
