@@ -7,7 +7,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -45,12 +47,15 @@ public class DecacMain {
             ExecutorService executorService = Executors.newFixedThreadPool(nbThreads);
             List<Future<Boolean>> futureList = new ArrayList<>();
 
+            Set<File> processedFiles = new HashSet<>();
             for (File sourceFile : options.getSourceFiles()) {
-                Future<Boolean> future = executorService.submit(() -> {
-                    DecacCompiler decaCompiler = new DecacCompiler(options, sourceFile);
-                    return decaCompiler.compile();
-                });
-                futureList.add(future);
+                if (processedFiles.add(sourceFile.getAbsoluteFile())) {
+                    Future<Boolean> future = executorService.submit(() -> {
+                        DecacCompiler decaCompiler = new DecacCompiler(options, sourceFile);
+                        return decaCompiler.compile();
+                    });
+                    futureList.add(future);
+                }
             }
 
             for (Future<Boolean> future : futureList) {
@@ -66,10 +71,13 @@ public class DecacMain {
 
             executorService.shutdown();
         } else {
+            Set<File> processedFiles = new HashSet<>();
             for (File source : options.getSourceFiles()) {
-                DecacCompiler compiler = new DecacCompiler(options, source);
-                if (compiler.compile()) {
-                    error = true;
+                if (processedFiles.add(source.getAbsoluteFile())) {
+                    DecacCompiler compiler = new DecacCompiler(options, source);
+                    if (compiler.compile()) {
+                        error = true;
+                    }
                 }
             }
         }
