@@ -1,27 +1,46 @@
-# Projet Génie Logiciel, Ensimag.
-gl42, 01/01/2026.
+---
+title: "Compilateur DECAC"
+author: "Équipe GL42"
+date: "Janvier 2026"
+---
 
-mvn clean
-mvn test -Djacoco.skip=false -Dexec.executable="./src/test/script/all-context-tests.sh"
-mvn jacoco:restore-instrumented-classes -Djacoco.skip=false
-mvn jacoco:report -Djacoco.skip=false
-google-chrome target/site/jacoco/index.html
+# Compilateur DECAC - Équipe GL42 (Ensimag)
 
-mvn verify -DskipTests -Dexec.executable="./src/test/script/all-context-tests.sh"
+## Présentation du projet
+Ce projet consiste en la réalisation d'un compilateur complet pour le langage **Deca**, un langage objet simplifié inspiré de Java. Le compilateur, nommé `decac`, traduit le code source Deca en langage assembleur pour la machine abstraite **IMA** (Interactive Machine Architecture)
 
-Actualiser :
-Lancez la commande Maven standard : mvn test -Djacoco.skip=false.
-./src/test/script/jacoco-report.sh
-google-chrome target/site/jacoco/index.html
+L'outil gère les concepts fondamentaux de la programmation orientée objet : encapsulation, héritage simple et polymorphisme via une table des méthodes virtuelles (VTable).
 
+## Architecture du compilateur
+Le processus de compilation est divisé en quatre phases principales[cite: 24]:
 
+1. **Analyse Lexicale (Lexer)** : Découpage du texte source en lexèmes avec la bibliothèque ANTLR
+2. **Analyse Syntaxique (Parser)** : Vérification de la structure grammaticale et construction de l'Arbre Syntaxique Abstrait (AST)[cite: 26].
+3. **Analyse Contextuelle (Verify)** : Vérification des types, gestion des portées et décoration de l'arbre.
+4. **Génération de Code (CodeGen)** : Gestion de la mémoire (pile et tas) et traduction en instructions assembleur IMA.
 
-Instructions qui marchent pour tests deca:
-mvn clean verify -Djacoco.skip=false -DskipTests -Dexec.executable="./src/test/script/all-codegen-tests-sansObjet.sh"
-mvn jacoco:restore-instrumented-classes -Djacoco.skip=false
-mvn jacoco:report -Djacoco.skip=false
-google-chrome target/site/jacoco/index.html
+## 🚀 Installation et Configuration
 
-mvn clean test-compile org.jacoco:jacoco-maven-plugin:prepare-agent exec:exec -Dexec.executable="./src/test/script/all-context-tests.sh" -Djacoco.skip=false
-mvn jacoco:restore-instrumented-classes -Djacoco.skip=false
-mvn jacoco:report -Djacoco.skip=false
+### Pré-requis
+* **Java** : JDK version 17 ou supérieure (testé sous JDK 23).
+* **Maven** : Version 3.6 ou supérieure pour la gestion des dépendances.
+* **IMA** : L'interpréteur de la machine abstraite doit être installé et accessible dans le `PATH`.
+
+### Compilation
+Pour générer l'exécutable, lancez la commande suivante à la racine du projet
+
+```bash
+mvn clean install
+```
+
+### Guide d'Utilisation
+La syntaxe générale est : decac [options] <fichier_source.deca>.
+
+#### Options principales
+
+-b : Affiche la bannière de l'équipe.
+-p : Arrête le compilateur après l'analyse syntaxique et affiche la décompilation.
+-v : Arrête le compilateur après l'analyse contextuelle (vérification des types).
+-n : Désactive les tests de débordement à l'exécution pour un code plus rapide.
+-r X : Limite le nombre de registres banalisés utilisables entre 4 et 16.
+-P : Active la compilation parallèle pour traiter plusieurs fichiers simultanément.
