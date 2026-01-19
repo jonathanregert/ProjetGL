@@ -6,10 +6,10 @@ Ce projet consiste en la réalisation d'un compilateur complet pour le langage *
 L'outil gère les concepts fondamentaux de la programmation orientée objet : encapsulation, héritage simple et polymorphisme via une table des méthodes virtuelles (VTable).
 
 ## Architecture du compilateur
-Le processus de compilation est divisé en quatre phases principales[cite: 24]:
+Le processus de compilation est divisé en quatre phases principales
 
 1. **Analyse Lexicale (Lexer)** : Découpage du texte source en lexèmes avec la bibliothèque ANTLR
-2. **Analyse Syntaxique (Parser)** : Vérification de la structure grammaticale et construction de l'Arbre Syntaxique Abstrait (AST)[cite: 26].
+2. **Analyse Syntaxique (Parser)** : Vérification de la structure grammaticale et construction de l'Arbre Syntaxique Abstrait (AST)
 3. **Analyse Contextuelle (Verify)** : Vérification des types, gestion des portées et décoration de l'arbre.
 4. **Génération de Code (CodeGen)** : Gestion de la mémoire (pile et tas) et traduction en instructions assembleur IMA.
 
