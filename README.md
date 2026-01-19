@@ -1,9 +1,3 @@
----
-title: "Compilateur DECAC"
-author: "Équipe GL42"
-date: "Janvier 2026"
----
-
 # Compilateur DECAC - Équipe GL42 (Ensimag)
 
 ## Présentation du projet
@@ -19,7 +13,7 @@ Le processus de compilation est divisé en quatre phases principales[cite: 24]:
 3. **Analyse Contextuelle (Verify)** : Vérification des types, gestion des portées et décoration de l'arbre.
 4. **Génération de Code (CodeGen)** : Gestion de la mémoire (pile et tas) et traduction en instructions assembleur IMA.
 
-## 🚀 Installation et Configuration
+## Installation et Configuration
 
 ### Pré-requis
 * **Java** : JDK version 17 ou supérieure (testé sous JDK 23).
@@ -39,8 +33,13 @@ La syntaxe générale est : decac [options] <fichier_source.deca>.
 #### Options principales
 
 -b : Affiche la bannière de l'équipe.
+
 -p : Arrête le compilateur après l'analyse syntaxique et affiche la décompilation.
+
 -v : Arrête le compilateur après l'analyse contextuelle (vérification des types).
+
 -n : Désactive les tests de débordement à l'exécution pour un code plus rapide.
--r X : Limite le nombre de registres banalisés utilisables entre 4 et 16.
+
+-r X : Limite le nombre de registres banalisés utilisables entre 4 et 16. 
+
 -P : Active la compilation parallèle pour traiter plusieurs fichiers simultanément.
