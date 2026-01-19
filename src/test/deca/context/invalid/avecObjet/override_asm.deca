@@ -1,3 +1,10 @@
+// Description :
+//    Override d'une methode asm incorrect
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne 13 : Signature incompatible avec la méthode de la super-classe
+
 class A {
     void f(int a) asm("RTS");
 }

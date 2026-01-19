@@ -1,3 +1,10 @@
+// Description :
+//    instruction return dans le main
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne 9 : Type incompatible : attendu void, trouvé int
+
 {
-    return;
+    return 0;
 }

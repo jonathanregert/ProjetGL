@@ -1,3 +1,10 @@
+// Description :
+//    Définition de méthode methode asm avec int
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne 10 : Méthode f déjà définie
+
 class A {
     void f() asm("RTS");
     int f() asm("RTS");

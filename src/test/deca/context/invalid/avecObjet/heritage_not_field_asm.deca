@@ -1,3 +1,10 @@
+// Description :
+//    Geritage avec nom de champ et nom de methode asm pareil
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne 13 : Le membre x n'est pas une méthode
+
 class A {
     int x;
 }

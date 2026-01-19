@@ -1,3 +1,10 @@
+// Description :
+//    opérateur instanceof avec rvalue de type inconnu
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne 12 : Type Inconnu non déclaré
+
 class A {}
 
 {

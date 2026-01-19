@@ -1,3 +1,9 @@
+// Description :
+//    Redéfinition de méthode dans une sous classe.
+//
+// Resultats :
+//    Ok
+
 class A {
     A self() { return this; }
 }

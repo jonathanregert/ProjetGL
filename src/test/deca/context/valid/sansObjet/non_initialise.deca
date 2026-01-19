@@ -1,3 +1,9 @@
+// Description :
+//    Accès à une variable non initialisée
+//
+// Resultats :
+//    Ok
+
 {
     int a;
     print(a);

@@ -1,3 +1,9 @@
+// Description :
+//    Test de l'opérateur instanceof entre deux objets
+//
+// Resultats :
+//    Ok
+
 class A {}
 class B extends A {}
 

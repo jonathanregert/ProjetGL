@@ -1,3 +1,9 @@
+// Description :
+//    Définition de méthode avec declaration de variable et instruction return
+//
+// Resultats :
+//    Ok
+
 class A {
     int geta(){
         int a;

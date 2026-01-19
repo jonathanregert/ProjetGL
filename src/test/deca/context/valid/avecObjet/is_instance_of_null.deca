@@ -1,3 +1,9 @@
+// Description :
+//    is instanceof null
+//
+// Resultats :
+//    OK
+
 class A {}
 
 {
