@@ -1,7 +1,6 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.Type;
-import fr.ensimag.deca.context.ClassType;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
@@ -17,10 +16,10 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
-import org.apache.log4j.Logger;
 import fr.ensimag.ima.pseudocode.DAddr;
 import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 
 
@@ -239,14 +238,50 @@ public class Identifier extends AbstractIdentifier {
     }
     
     @Override
-    protected DAddr codeGenAddr(DecacCompiler compiler) {
-        return getExpDefinition().getOperand();
+    public DAddr codeGenAddr(DecacCompiler compiler) {
+        Definition def = getDefinition();
+
+        if (def instanceof FieldDefinition) {
+            FieldDefinition fd = (FieldDefinition) def;
+
+            compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB), Register.getR(2)));
+
+            return new RegisterOffset(fd.getIndex(), Register.getR(2));
+        }
+
+        if (def instanceof fr.ensimag.deca.context.ExpDefinition) {
+            DAddr addr = ((fr.ensimag.deca.context.ExpDefinition) def).getOperand();
+            if (addr == null) {
+                throw new IllegalStateException("Operand null pour identifiant " + getName());
+            }
+            return addr;
+        }
+
+        throw new IllegalStateException("Identifiant non adressable: " + getName());
     }
+
 
     @Override
     protected void codeGenExpr(DecacCompiler compiler, GPRegister target) {
-        // Charger la valeur de la variable dans target
-        compiler.addInstruction(new LOAD(codeGenAddr(compiler), target));
+
+        Definition def = getDefinition();
+
+        if (def instanceof FieldDefinition) {
+            FieldDefinition fd = (FieldDefinition) def;
+
+            compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB), Register.getR(2)));
+
+            int off = fd.getIndex();
+            compiler.addInstruction(new LOAD(new RegisterOffset(off, Register.getR(2)), target));
+            return;
+        }
+        ExpDefinition ed = (ExpDefinition) def;
+        DAddr addr = ed.getOperand();
+        if (addr == null) {
+            throw new IllegalStateException("Operand null pour l'identifiant " + getName()
+                + " (" + def.getClass().getSimpleName() + ")");
+        }
+        compiler.addInstruction(new LOAD(addr, target));
     }
 
     @Override

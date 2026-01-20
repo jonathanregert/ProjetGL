@@ -84,14 +84,10 @@ public class DeclVar extends AbstractDeclVar {
     @Override
     protected void codeGenDeclVar(DecacCompiler compiler) {
 
-        // 1) réserver une adresse globale
-        RegisterOffset addr = compiler.getStackManager().allocGlobal();
-        // ex: new RegisterOffset(offset, Register.GB)
+        RegisterOffset addr = compiler.getStackManager().allocVar();
 
-        // 2) l'attacher à la variable
         varName.getExpDefinition().setOperand(addr);
 
-        // 3) générer init (fait STORE vers addr)
         initialization.codeGenInitialization(compiler, addr);
     }
 

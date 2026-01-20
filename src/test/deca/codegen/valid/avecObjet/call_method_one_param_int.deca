@@ -1,0 +1,17 @@
+// Description :
+//    Appel d'une méthode avec un paramètre int.
+//
+// Resultats :
+//    1
+
+class A {
+    void m(int x) {
+        println(x);
+    }
+}
+
+{
+    A a = new A();
+    a.m(1);
+}
+

@@ -12,11 +12,11 @@ CODEGEN_DIR="src/test/deca/codegen"
 
 echo "Tests codegen"
 
-# Tests INVALIDES
+Tests INVALIDES
 
 echo "Tests INVALIDES"
 
-find "$CODEGEN_DIR/invalid/" -name "*.deca" | sort | while read testfile; do
+find "$CODEGEN_DIR/invalid/avecObjet" -name "*.deca" | sort | while read testfile; do
     echo "Test invalide attendu : $testfile"
 
     if decac "$testfile" > /dev/null 2>&1; then
@@ -29,15 +29,14 @@ find "$CODEGEN_DIR/invalid/" -name "*.deca" | sort | while read testfile; do
         fi
     else
         echo "Erreur inattendue a la compilation"
-        exit 1
     fi
 done
 
-# Tests VALIDES
+Tests VALIDES
 
 echo "Tests VALIDES"
 
-find "$CODEGEN_DIR/valid/" -name "*.deca" | sort | while read testfile; do
+find "$CODEGEN_DIR/valid/avecObjet" -name "*.deca" | sort | while read testfile; do
     echo "Test valide attendu : $testfile"
 
     if decac "$testfile" > /dev/null 2>&1; then

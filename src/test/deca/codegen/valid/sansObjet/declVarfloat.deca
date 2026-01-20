@@ -1,0 +1,9 @@
+// Description :
+//    Déclaration d'une variable float avec initialisation.
+//
+// Resultats :
+//
+
+{
+    float a = 5.8;
+}

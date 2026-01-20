@@ -1,0 +1,8 @@
+// Description :
+//    Sous-classe accède à un champ protected de la super-classe.
+//
+// Resultats :
+//    (aucune sortie)
+
+class T { protected int x = 1; }
+class U extends T { void incr() { x = x + 1; } }

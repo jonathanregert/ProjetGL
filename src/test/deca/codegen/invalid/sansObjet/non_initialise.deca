@@ -1,0 +1,10 @@
+// Description :
+//    print une variable non initialisée
+//
+// Resultats :
+//    Erreur : WINT avec R1 indefini
+
+{
+    int a;
+    print(a);
+}

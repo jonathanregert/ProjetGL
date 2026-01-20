@@ -1,0 +1,17 @@
+// Description :
+//    Deux classes indépendantes sans héritage.
+//
+// Resultats :
+//
+
+class A {
+    int x;
+}
+
+class B {
+    float y;
+}
+
+{
+}
+

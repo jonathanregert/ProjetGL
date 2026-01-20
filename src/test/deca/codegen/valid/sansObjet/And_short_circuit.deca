@@ -1,0 +1,10 @@
+// Description :
+//    Test du court-circuit AND : opérande gauche false, droite non évaluée.
+//
+// Resultats :
+//    Affiche : 0
+
+{
+    boolean a = false;
+    print(a && (1/0==0));
+}

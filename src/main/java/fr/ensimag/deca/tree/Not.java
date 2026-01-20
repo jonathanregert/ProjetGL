@@ -1,7 +1,6 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.Type;
-import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.ImmediateInteger;
 import fr.ensimag.ima.pseudocode.instructions.CMP;
@@ -43,13 +42,14 @@ public class Not extends AbstractUnaryExpr {
     @Override
     protected void codeGenExpr(DecacCompiler compiler, GPRegister target) {
         getOperand().codeGenExpr(compiler, target);
-        // target = (target == 0)
         compiler.addInstruction(new CMP(new ImmediateInteger(0), target));
         compiler.addInstruction(new SEQ(target));
     }
 
     @Override
-    public int getPriorite() { return 90; }
+    public int getPriorite() {
+        return 90;
+    }
 
     @Override
     protected void codeGenByteExpr(DecacCompiler compiler) {

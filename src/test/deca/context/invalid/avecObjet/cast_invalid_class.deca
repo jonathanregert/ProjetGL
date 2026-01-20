@@ -1,0 +1,14 @@
+// Description:
+//    Test de cast invalide entre classes non liées.
+//
+// Resultats:
+//    Ligne 7 : Cast impossible de B vers A.
+
+class A {}
+class B {}
+
+{
+    A a = new A();
+    B b = new B();
+    a = (A)(b);
+}

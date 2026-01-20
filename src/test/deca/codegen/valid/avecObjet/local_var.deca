@@ -1,0 +1,15 @@
+// Description :
+//    Variable locale avec un champ.
+//
+// Resultats :
+//
+class A {
+    int x;
+    int f() {
+        int x = 3;
+        return x;
+    }
+}
+
+{
+}

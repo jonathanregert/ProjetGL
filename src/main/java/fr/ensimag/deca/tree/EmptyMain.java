@@ -28,7 +28,7 @@ public class EmptyMain extends AbstractMain {
 
     @Override
     protected void verifyMain(DecacCompiler compiler) throws ContextualError {
-       getListInst().verifyListInst(compiler, null, null, null);
+        getListInst().verifyListInst(compiler, null, null, null);
     }
 
     @Override
@@ -58,12 +58,12 @@ public class EmptyMain extends AbstractMain {
 
     @Override
     protected void iterChildren(TreeFunction f) {
-         listInst.iter(f);
+        listInst.iter(f);
     }
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
-       listInst.prettyPrint(s, prefix, true);
+        listInst.prettyPrint(s, prefix, true);
     }
 
     @Override

@@ -5,9 +5,6 @@ import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.ImmediateInteger;
 import fr.ensimag.ima.pseudocode.Instruction;
 import fr.ensimag.ima.pseudocode.Label;
-import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.instructions.BEQ;
-import fr.ensimag.ima.pseudocode.instructions.BNE;
 import fr.ensimag.ima.pseudocode.instructions.BRA;
 import fr.ensimag.ima.pseudocode.instructions.CMP;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
@@ -56,11 +53,32 @@ public abstract class AbstractOpBool extends AbstractBinaryExpr {
         getRightOperand().codeGenExpr(compiler, target);
         compiler.addInstruction(new BRA(endLabel));
 
-        compiler.addLabel(shortCircuitLabel);
+        compiler.addLabelToBlock(shortCircuitLabel);
         compiler.addInstruction(new LOAD(new ImmediateInteger(getShortCircuitValue()), target));
 
-        compiler.addLabel(endLabel);
+        compiler.addLabelToBlock(endLabel);
 
+    }
+
+    @Override
+    protected void codeGenByteExpr(DecacCompiler compiler) {
+        String labelTrue = compiler.getByteManager().newLabel();
+        String labelFalse = compiler.getByteManager().newLabel();
+        String labelEnd = compiler.getByteManager().newLabel();
+
+        // Ne pousse RIEN
+        codeGenByteCond(compiler, labelTrue, labelFalse);
+
+        // true → 1
+        compiler.getByteManager().emitLabel(labelTrue);
+        compiler.getByteManager().emitLDC(1);
+        compiler.getByteManager().emitGoto(labelEnd);
+
+        // false → 0
+        compiler.getByteManager().emitLabel(labelFalse);
+        compiler.getByteManager().emitLDC(0);
+
+        compiler.getByteManager().emitLabel(labelEnd);
     }
 
     @Override

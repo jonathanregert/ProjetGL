@@ -1,0 +1,22 @@
+// Description :
+//    Accès à un champ protected dans une chaîne d'héritage.
+//
+// Resultats :
+//    (aucune sortie)
+
+class A {
+    protected int x;
+}
+
+class B extends A {
+}
+
+class C extends B {
+    void set() {
+        x = 5;
+    }
+}
+
+{
+}
+

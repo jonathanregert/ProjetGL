@@ -1,0 +1,16 @@
+// Description:
+//    Test de cast d'une expression void.
+//
+// Resultats:
+//    Ligne 15 : Cast impossible : l'expression source est de type void.
+
+class A {
+    void methodeVoid() {
+    }
+}
+
+{
+    A a = new A();
+    // Appel d'une méthode void comme source d'un cast
+    int x = (int)(a.methodeVoid());
+}

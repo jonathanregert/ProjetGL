@@ -1,0 +1,16 @@
+// Description :
+// retour d'un objet incompatible
+//
+// Resultats :
+// Erreur contextuelle
+// Ligne 7 : type de retour incorrect
+
+class J {}
+
+class K {}
+
+class L {
+    J f() {
+        return new K(); // invalide
+    }
+}

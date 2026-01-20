@@ -18,6 +18,11 @@ public class ClassType extends Type {
     public ClassDefinition getDefinition() {
         return this.definition;
     }
+
+    public void setDefinition(ClassDefinition def) {
+        Validate.notNull(def);
+        this.definition = def;
+    }
             
     @Override
     public ClassType asClassType(String errorMessage, Location l) {
@@ -37,6 +42,7 @@ public class ClassType extends Type {
     /**
      * Standard creation of a type class.
      */
+    @SuppressWarnings("this-escape")
     public ClassType(Symbol className, Location location, ClassDefinition superClass) {
         super(className);
         this.definition = new ClassDefinition(this, location, superClass);
@@ -71,6 +77,16 @@ public class ClassType extends Type {
             currentClass = (superDef == null) ? null : superDef.getType();  // Si null, on s'arrete, sinon on remonte      
         }
         return false;
+    }
+
+    @Override
+    public boolean isSubtype(EnvironmentType env, Type other) {
+    // Si l'autre est aussi une classe
+    if (other.isClass()) {
+        return this.isSubClassOf((ClassType) other);
+    }
+    // sinon, on utilise la règle de Type.null
+    return this.sameType(other);
     }
 
 

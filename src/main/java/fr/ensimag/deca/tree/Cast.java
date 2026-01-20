@@ -2,13 +2,27 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
+import fr.ensimag.deca.context.ClassType;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.Type;
+import fr.ensimag.deca.codegen.ErrorManager.RuntimeError;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.GPRegister;
-import fr.ensimag.ima.pseudocode.instructions.FLOAT;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.NullOperand;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.BEQ;
+import fr.ensimag.ima.pseudocode.instructions.BRA;
+import fr.ensimag.ima.pseudocode.instructions.CMP;
 import fr.ensimag.ima.pseudocode.instructions.INT;
+import fr.ensimag.ima.pseudocode.instructions.LEA;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.POP;
+import fr.ensimag.ima.pseudocode.instructions.PUSH;
+import fr.ensimag.ima.pseudocode.instructions.FLOAT;
+
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
 
@@ -21,6 +35,7 @@ public class Cast extends AbstractExpr {
 
     private final AbstractIdentifier typeIdent;
     private final AbstractExpr expr;
+    private boolean needRuntimeCheck = false;
 
     public Cast(AbstractIdentifier typeIdent, AbstractExpr expr) {
         Validate.notNull(typeIdent);
@@ -43,42 +58,154 @@ public class Cast extends AbstractExpr {
                            ClassDefinition currentClass)
             throws ContextualError {
 
-        // Type de l'expression castée
-        Type exprType = expr.verifyExpr(compiler, localEnv, currentClass);
+        needRuntimeCheck = false;
 
-        // Type cible
-        Type targetType = typeIdent.verifyType(compiler);
+        // t1 casté, t2 cible
+        Type t1 = expr.verifyExpr(compiler, localEnv, currentClass); // Type source
+        Type t2 = typeIdent.verifyType(compiler);
+
+        if (t1.isVoid()) {
+            throw new ContextualError("Cast impossible : l'expression source est de type void.", getLocation());    
+        }
 
         // Cas autorisés en SANS OBJET :
         // Conforme à la sémantique paragramhe 9
         // int <-> float uniquement
-        if (targetType.isFloat() && exprType.isInt()) {
-            setType(targetType);
-            return targetType;
+        if ((t1.isInt() || t1.isFloat()) && (t2.isInt() || t2.isFloat())) {
+            setType(t2);
+            return t2;
         }
 
-        if (targetType.isInt() && exprType.isFloat()) {
-            setType(targetType);
-            return targetType;
+        // Cas avec Objet
+
+       // Verif de cast_compatible(env, T1, T2) = assign_compatible(env, T1, T2) OU assign_compatible(env, T2, T1)
+       boolean assignCompatible1 = false; // assign_compatible(env, T1, T2) => On peut mettre T2 dans T1
+       boolean assignCompatible2 = false; // assign_compatible(env, T2, T1) => On peut mettre T1 dans T2
+
+        if (t1.isFloat() && t2.isInt()) {
+            assignCompatible1 = true; // on peut faire int = (float)
+        }
+        // subtype(env, T2, T1)
+        else {
+            if (t2.sameType(t1)) { // Réflexivité : T est sous-type de T
+                assignCompatible1 = true;
+            } else if (t2.isNull() && t1.isClass()) { // null est sous-type de toute classe
+                assignCompatible1 = true;
+            } else if (t2.isClass() && t1.isClass()) { // Sous-typage classes
+                if (((ClassType) t2).isSubClassOf((ClassType) t1)) {
+                    assignCompatible1 = true;
+                }
+            }
         }
 
-        // Tous les autres casts sont interdits
-        throw new ContextualError(
-            "Cast invalide de " + exprType + " vers " + targetType,
-            getLocation()
-        );
+        // verif de assign compatible(env, T2, T1)
+        if (t2.isFloat() && t1.isInt()) {
+            assignCompatible2 = true; // on peut faire float = (int)
+        } else {
+            if (t1.sameType(t2)) { // Réflexivité
+                assignCompatible2 = true;
+            } else if (t1.isNull() && t2.isClass()) { // null est sous-type de toute classe
+                assignCompatible2 = true;
+            } else if (t1.isClass() && t2.isClass()) { // Sous-typage classes
+                if (((ClassType) t1).isSubClassOf((ClassType) t2)) {
+                    assignCompatible2 = true;
+                }
+            }
+        }
+
+        if (assignCompatible1 || assignCompatible2) {
+
+            if (t1.isClass() && t2.isClass()) {
+            ClassType src = (ClassType) t1;
+            ClassType dst = (ClassType) t2;
+            if (src.isSubClassOf(dst)) {
+                needRuntimeCheck = false;
+            } else if (dst.isSubClassOf(src)) {
+                // Downcast
+                needRuntimeCheck = true;
+            }
+            } else {
+                needRuntimeCheck = false;
+            }
+
+            setType(t2);
+            return t2;
+        }
+
+
+        throw new ContextualError("Cast impossible de " + t1 + " vers " + t2 + ".", getLocation());
+
     }
 
     @Override
     protected void codeGenExpr(DecacCompiler compiler, GPRegister target) {
         expr.codeGenExpr(compiler, target);
 
-        // Conversion selon les types
+        if (getType().isInt() && expr.getType().isFloat()) {
+            compiler.addInstruction(new INT(target, target));
+            return;
+        }
+
         if (getType().isFloat() && expr.getType().isInt()) {
             compiler.addInstruction(new FLOAT(target, target));
+            return;
         }
-        else if (getType().isInt() && expr.getType().isFloat()) {
-            compiler.addInstruction(new INT(target, target));
+
+        if ((getType().isInt() && expr.getType().isInt()) ||
+            (getType().isFloat() && expr.getType().isFloat())) {
+            return;
+        }
+
+        if (getType().isClass() && needRuntimeCheck && !compiler.getNoCheckOption()) {
+
+            int id = compiler.getLabelId();
+            Label ok = new Label("cast_ok_" + id);
+            Label loop = new Label("cast_loop_" + id);
+            Label fail = compiler.getErrorManager().label(RuntimeError.INVALID_CAST);
+
+            compiler.addInstruction(new CMP(new NullOperand(), target));
+            compiler.addInstruction(new BEQ(ok));
+
+            compiler.addInstruction(new LOAD(new RegisterOffset(0, target), Register.R0));
+
+            GPRegister tmp = compiler.getRegAllocator().alloc();
+            boolean tmpFromAllocator = (tmp != null);
+            boolean pushedTarget = false;
+
+            if (tmp == null) {
+                tmp = Register.R1;
+            }
+
+            if (tmp == target) {
+                compiler.addInstruction(new PUSH(target));
+                compiler.getStackManager().useTemp(1);
+                pushedTarget = true;
+            }
+
+            ClassType dst = (ClassType) getType();
+            compiler.addInstruction(new LEA(dst.getDefinition().getAddrTable(), tmp));
+
+            compiler.addLabelToBlock(loop);
+
+            compiler.addInstruction(new CMP(tmp, Register.R0));
+            compiler.addInstruction(new BEQ(ok));
+
+            compiler.addInstruction(new CMP(new NullOperand(), Register.R0));
+            compiler.addInstruction(new BEQ(fail));
+
+            compiler.addInstruction(new LOAD(new RegisterOffset(0, Register.R0), Register.R0));
+            compiler.addInstruction(new BRA(loop));
+
+            compiler.addLabelToBlock(ok);
+
+            if (pushedTarget) {
+                compiler.addInstruction(new POP(target));
+                compiler.getStackManager().releaseTemp(1);
+            }
+
+            if (tmpFromAllocator) {
+                compiler.getRegAllocator().free(tmp);
+            }
         }
     }
 

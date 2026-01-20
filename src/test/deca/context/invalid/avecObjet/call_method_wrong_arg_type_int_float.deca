@@ -1,0 +1,18 @@
+// Description :
+//    Appel de méthode avec un argument de type incorrect (float au lieu de int).
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne <No_de_ligne> : <message d'erreur de votre compilateur>
+
+class A {
+    int f(int x) {
+        return x;
+    }
+}
+
+{
+    A a = new A();
+    a.f(1.2);
+}
+

@@ -1,0 +1,15 @@
+// Description :
+//    Type de retour de méthode int incorrect
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne 14 : Type de retour incompatible avec la méthode de la super-classe
+
+
+class A {
+    int f() asm("RTS");
+}
+
+class B extends A {
+    float f() asm("RTS");
+}

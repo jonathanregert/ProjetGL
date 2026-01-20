@@ -1,7 +1,6 @@
 package fr.ensimag.deca;
 
 import java.io.File;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -52,8 +51,8 @@ public class CompilerOptions {
         return byteOption;
     }
 
-    public int getRegisterCount() { 
-        return registerCount; 
+    public int getRegisterCount() {
+        return registerCount;
     }
 
     private int debug = 0;
@@ -172,7 +171,6 @@ public class CompilerOptions {
         if (sourceFiles.isEmpty() && !printBanner) {
             throw new CLIException("Aucun fichier source fourni");
         }
-        // throw new UnsupportedOperationException("not yet implemented");
     }
     
     protected void displayUsage() {

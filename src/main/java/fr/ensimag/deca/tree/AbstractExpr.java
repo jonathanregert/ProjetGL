@@ -11,6 +11,10 @@ import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.WFLOAT;
 import fr.ensimag.ima.pseudocode.instructions.WINT;
+import fr.ensimag.ima.pseudocode.instructions.WFLOATX;
+
+import static org.mockito.Mockito.*;
+
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
 
@@ -93,10 +97,11 @@ public abstract class AbstractExpr extends AbstractInst {
         conv.verifyExpr(compiler, localEnv, currentClass); // Décore le ConvFloat
         return conv;
         }
-        
-        if (!typeFound.sameType(expectedType)) {
-        throw new ContextualError("Type incompatible : attendu " + expectedType
-            + ", trouvé " + typeFound, getLocation());
+
+        // cas si subType (inclus le cas de sametype)
+        if (!typeFound.isSubtype(compiler.environmentType, expectedType)) {
+            throw new ContextualError("Type incompatible : attendu " + expectedType
+                + ", trouvé " + typeFound, getLocation());
         }
 
         return this;
@@ -140,6 +145,7 @@ public abstract class AbstractExpr extends AbstractInst {
         codeGenExpr(compiler);
         Type t = getType();
         if (t.isInt() || t.isBoolean()) compiler.addInstruction(new WINT());
+        else if (t.isFloat() && compiler.isPrintHex()) compiler.addInstruction(new WFLOATX());
         else if (t.isFloat()) compiler.addInstruction(new WFLOAT());
         else throw new UnsupportedOperationException("print non supporté pour " + t);
     }
@@ -153,7 +159,7 @@ public abstract class AbstractExpr extends AbstractInst {
     
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        codeGenExpr(compiler);
+        codeGenExpr(compiler, Register.R1);
     }
     
 

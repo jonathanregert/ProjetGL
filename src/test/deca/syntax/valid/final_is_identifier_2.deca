@@ -1,0 +1,23 @@
+// Description :
+// Utilisation de final comme identifiant dans un contexte objet
+//
+// Résultat attendu :
+// ok
+
+class final {
+    int x;
+
+    void set() {
+        x = 1;
+    }
+
+    int get() {
+        return x;
+    }
+}
+
+{
+    final a = new final();
+    a.set();
+    println(a.get());
+}

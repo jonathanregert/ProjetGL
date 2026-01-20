@@ -1,0 +1,12 @@
+// Description :
+// test opérations mixtes booléennes et arithmétiques avec ConvFloat implicite
+//
+// Resultats :
+// true ou false affiché
+{
+    int a=1, b=2, c=3, d=4, e=5;
+    float x = a + b;
+    float y = c - d;
+    boolean r = ((x * y > a*c) && !((b+d)==a)) || ((x + y > c) && (a*d <= b+c));
+    println(r);
+}

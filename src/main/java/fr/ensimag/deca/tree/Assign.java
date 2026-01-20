@@ -5,13 +5,13 @@ import fr.ensimag.deca.context.VariableDefinition;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.DAddr;
 import fr.ensimag.ima.pseudocode.GPRegister;
-import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.STORE;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.Definition;
 import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.deca.context.FieldDefinition;
 
 /**
  * Assignment, i.e. lvalue = expr.
@@ -46,13 +46,35 @@ public class Assign extends AbstractBinaryExpr {
 
         Type typeGauche = getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
 
+        // verif partie gauche :
+        if (getLeftOperand() instanceof AbstractIdentifier) {
+            AbstractIdentifier id = (AbstractIdentifier) getLeftOperand();
+
+            if (id.getDefinition().isField()) {
+                FieldDefinition fieldDef = (FieldDefinition) id.getDefinition();
+                if (fieldDef.isFinal()) {
+                throw new ContextualError("Affectation à un champ final '" 
+                    + id.getName() + "' interdite", getLocation());
+            }
+            }
+        if (getLeftOperand() instanceof Selection) {
+            Selection sel = (Selection) getLeftOperand();
+            Definition def = sel.getField().getDefinition();
+            if (def != null && def.isField()) {
+                FieldDefinition fieldDef = (FieldDefinition) def;
+                if (fieldDef.isFinal()) {
+                    throw new ContextualError("Affectation à un champ final '"
+                            + sel.getField().getName() + "' interdite", getLocation());
+                }
+            }
+        }
+    }
         AbstractExpr rhs = getRightOperand().verifyRValue(compiler, localEnv, currentClass, typeGauche);
         setRightOperand(rhs);
 
         this.setType(typeGauche);
         return typeGauche;
     }
-
 
     @Override
     protected String getOperatorName() {
@@ -74,11 +96,13 @@ public class Assign extends AbstractBinaryExpr {
         return true;
     }
 
-
     @Override
     protected void codeGenExpr(DecacCompiler compiler, GPRegister target) {
         getRightOperand().codeGenExpr(compiler, target);
         DAddr addr = getLeftOperand().codeGenAddr(compiler);
+        if (addr == null){
+            throw new IllegalStateException("codeGenExpr a renvoyé null pour " + getLeftOperand());
+        }
         compiler.addInstruction(new STORE(target, addr));
     }
 

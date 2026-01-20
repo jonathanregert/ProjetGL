@@ -1,0 +1,10 @@
+// Description :
+//    Lecture et affichage d'une variable locale non initialisée.
+//
+// Resultats :
+//    Erreur d'exécution : registre utilisé non défini.
+
+{
+    int x;
+    println(x);
+}

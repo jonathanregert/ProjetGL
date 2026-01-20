@@ -6,7 +6,6 @@ import fr.ensimag.ima.pseudocode.Register;
 public class RegAllocator {
     private final int maxReg;
     private final boolean[] used;
-
     private static final int FIRST_ALLOC = 3;
 
     public RegAllocator(int maxReg){
@@ -15,6 +14,10 @@ public class RegAllocator {
         }
         this.maxReg = maxReg;
         this.used = new boolean[maxReg + 1];
+    }
+
+    public int getFirstAlloc() {
+        return FIRST_ALLOC;
     }
 
     /**
@@ -61,7 +64,7 @@ public class RegAllocator {
     }
 
     /**
-     * @return highest allocatable register number (R1..Rmax).
+     * @return highest allocatable register number (R3..Rmax).
      */
     public int getMaxReg(){
         return maxReg;
@@ -73,7 +76,11 @@ public class RegAllocator {
     public boolean isUsed(GPRegister r){
         if (r == null) return false;
         int i = r.getNumber();
-        if (i <= FIRST_ALLOC || i > maxReg) return false;
+        if (i < FIRST_ALLOC || i > maxReg) return false;
         return used[i];
+    }
+
+    public boolean[] getUsedSnaphot(){
+        return used.clone();
     }
 }

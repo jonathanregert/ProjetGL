@@ -1,0 +1,17 @@
+// Description:
+//    Test de cast invalide
+//
+// Resultats:
+//    Ligne 10 : Cast impossible de boolean vers int.
+
+class A {}
+class B {}
+
+{
+    int i = 1;
+    boolean b = true;
+    A a = new A();
+    B unrelated = new B();
+    
+    i = (int)(b);
+}

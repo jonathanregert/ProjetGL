@@ -1,0 +1,15 @@
+// Description :
+//    Test de l'opérateur instanceof entre deux objets
+//
+// Resultats :
+//    Ok
+
+class A {}
+class B extends A {}
+
+{
+    A a = new A();
+    B b = new B();
+    println(b instanceof A);
+    println(a instanceof B);
+}

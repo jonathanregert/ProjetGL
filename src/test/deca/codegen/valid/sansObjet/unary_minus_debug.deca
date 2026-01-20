@@ -1,0 +1,10 @@
+// Description :
+//    Unary Minus de int
+//
+// Resultats :
+//    Ok
+
+{
+    int a = 3;
+    print(-a);
+}

@@ -20,7 +20,7 @@ public abstract class AbstractInitialization extends Tree {
      * @param compiler contains "env_types" attribute
      * @param t corresponds to the "type" attribute
      * @param localEnv corresponds to the "env_exp" attribute
-     * @param currentClass 
+     * @param currentClass
      *          corresponds to the "class" attribute (null in the main bloc).
      */
     protected abstract void verifyInitialization(DecacCompiler compiler,
@@ -28,7 +28,4 @@ public abstract class AbstractInitialization extends Tree {
             throws ContextualError;
 
     protected abstract void codeGenInitialization(DecacCompiler compiler, DAddr target);
-    // protected abstract void codeGenInitializationByte(DecacCompiler compiler, Type type);
-
-
 }

@@ -1,0 +1,11 @@
+// Description :
+//    Modulo zero
+//
+// Resultats :
+//    Ok
+
+{
+    int a = 10;
+    int b = 0;
+    print(a % b);
+}

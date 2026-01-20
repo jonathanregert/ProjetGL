@@ -1,0 +1,16 @@
+// Description :
+//    Plusieurs lignes réelles (pas juste \n)
+//
+// Resultats :
+//    L1
+//    L2
+class A {
+  void t() asm("WSTR \"L1\"
+WNL
+WSTR \"L2\"
+WNL");
+}
+
+{
+  new A().t();
+}

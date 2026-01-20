@@ -6,8 +6,6 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.Label;
-
 /**
  * 
  * @author gl42
@@ -50,5 +48,20 @@ public class ListInst extends TreeList<AbstractInst> {
             i.decompileInst(s);
             s.println();
         }
+    }
+    public boolean containsReturn() {
+    for (AbstractInst inst : getList()) {
+        if (inst instanceof Return) {
+            return true;
+        }
+        if (inst instanceof IfThenElse) {
+            IfThenElse ifInst = (IfThenElse) inst;
+            if (ifInst.getThenBranch().containsReturn() &&
+                (ifInst.getElseBranch() != null && ifInst.getElseBranch().containsReturn())) {
+                return true;
+            }
+        } 
+    }
+    return false;
     }
 }

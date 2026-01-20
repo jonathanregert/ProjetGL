@@ -1,0 +1,10 @@
+// Description :
+//    Cast de boolean vers boolean impossible
+//
+// Resultats :
+//    Ok
+
+{
+    boolean b;
+    b = (boolean)(1 > 0);
+}

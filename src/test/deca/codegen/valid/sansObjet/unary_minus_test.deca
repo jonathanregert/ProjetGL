@@ -1,0 +1,12 @@
+// Description :
+//    Affichage du moins unaire d'un int
+//
+// Resultats :
+//    -4
+
+{
+    int a = 4;
+    int b;
+    b = - a;
+    println(b);
+}

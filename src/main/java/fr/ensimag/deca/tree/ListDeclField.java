@@ -1,16 +1,12 @@
 package fr.ensimag.deca.tree;
-import org.apache.log4j.Logger;
 
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 
 
 public class ListDeclField extends TreeList<AbstractDeclField> {
-    private static final Logger LOG = Logger.getLogger(ListDeclField.class);
-
     @Override
     public void decompile(IndentPrintStream s) {
         for (AbstractDeclField decl : getList()) {
@@ -47,8 +43,14 @@ public class ListDeclField extends TreeList<AbstractDeclField> {
     public void verifyListDeclFieldInitialization(DecacCompiler compiler, 
         ClassDefinition currentClass) throws ContextualError {
     
-    for (AbstractDeclField f : getList()) {
-        f.verifyFieldInitialization(compiler, currentClass);
+        for (AbstractDeclField f : getList()) {
+            f.verifyFieldInitialization(compiler, currentClass);
+        }
     }
-}
+
+    public void codeGenInitFields(DecacCompiler compiler, ClassDefinition currentClass) {
+        for (AbstractDeclField f : getList()){
+            f.codeGenInitField(compiler, currentClass);
+        }
+    }
 }

@@ -16,6 +16,7 @@ import fr.ensimag.deca.tree.AbstractProgram;
 import fr.ensimag.deca.tree.LocationException;
 import fr.ensimag.ima.pseudocode.AbstractLine;
 import fr.ensimag.ima.pseudocode.IMAProgram;
+import fr.ensimag.ima.pseudocode.InlinePortion;
 import fr.ensimag.ima.pseudocode.Instruction;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Line;
@@ -24,6 +25,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.ArrayList;
+
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.apache.log4j.Logger;
@@ -45,16 +48,29 @@ import org.apache.log4j.Logger;
  */
 public class DecacCompiler {
     private static final Logger LOG = Logger.getLogger(DecacCompiler.class);
+    private boolean printHex = false;
+
+    public void setPrintHex(boolean printHex) {
+        this.printHex = printHex;
+    }
+
+    public boolean isPrintHex() {
+        return printHex;
+    }
     
     /**
      * Portable newline character.
      */
     private static final String nl = System.getProperty("line.separator", "\n");
-    private int labelId = 0; // pour generation de code et pouvoir jump au bon label : label_labelId
+    private int labelId = 0;
     private final RegAllocator regAllocator;
     private final StackManager stackManager = new StackManager();
     private final ErrorManager errorManager = new ErrorManager();
     private final ByteManager byteManager = new ByteManager();
+    private ArrayList<Line> blockPrefix = null;
+    private ArrayList<Line> blockBody = null;
+    private Label currentMethodEndLabel;
+    private String currentClassName;
 
     // JVM locals (pour --byte)
     private int nextLocalSlot = 1; // 0 est pour String[] args
@@ -85,7 +101,89 @@ public class DecacCompiler {
     public int getNextLocalSlot() {
         return nextLocalSlot;
     }
-    // 
+
+    public void setCurrentClassName(String n) { currentClassName = n; }
+    public String getCurrentClassName() { return currentClassName; }
+
+
+    public void setCurrentMethodEndLabel(Label l) { currentMethodEndLabel = l; }
+    public Label getCurrentMethodEndLabel() { return currentMethodEndLabel; }
+
+    public void addInline(String asm) {
+        program.add(new InlinePortion(asm));
+    }
+    
+    public void beginBlock() {
+        if (blockBody != null || blockPrefix != null) {
+            throw new IllegalStateException("Bloc déjà ouvert");
+        }
+        blockPrefix = new ArrayList<>();
+        blockBody = new ArrayList<>();
+    }
+
+    public void addToBlock(Line l) {
+        if (blockBody == null) program.add(l);
+        else blockBody.add(l);
+    }
+
+
+    public void addFirstToBlock(Instruction ins) {
+        addLineToPrefix(new Line(ins));
+    }
+
+    public void addFirstToBlock(Instruction ins, String comment) {
+        addLineToPrefix(new Line(null, ins, comment));
+    }
+
+    public void addFirstCommentToBlock(String comment) {
+        addLineToPrefix(new Line(comment));
+    }
+
+
+    public void endBlock() {
+        if (blockBody == null || blockPrefix == null) {
+            throw new IllegalStateException("Aucun bloc ouvert");
+        }
+
+        for (Line l : blockPrefix) {
+            program.add(l);
+        }
+
+        for (Line l : blockBody) {
+            program.add(l);
+        }
+
+        blockPrefix = null;
+        blockBody = null;
+    }
+
+
+    public void addCommentToBlock(String comment) {
+        addLineToBody(new Line(comment));
+    }
+
+
+
+    public void addLabelToBlock(Label lab) {
+        addLineToBody(new Line(lab));
+    }
+
+    //Helpers internes
+    private void addLineToBody(Line l) {
+        if (blockBody != null) {
+            blockBody.add(l);
+        } else {
+            program.add(l);
+        }
+    }
+
+    private void addLineToPrefix(Line l) {
+        if (blockPrefix != null) {
+            blockPrefix.add(l);
+        } else {
+            program.addFirst(l);
+        }
+    }
 
     public DecacCompiler(CompilerOptions compilerOptions, File source) {
         super();
@@ -120,16 +218,8 @@ public class DecacCompiler {
         return errorManager;
     }
 
-    public void addFirst(Instruction i) {
-    program.addFirst(i);
-    }
-
     public void addFirst(Instruction i, String comment) {
         program.addFirst(i, comment);
-    }
-
-    public void addFirst(Label l) {
-        program.addFirst(new Line(l));
     }
 
     public void addFirstComment(String s) {
@@ -185,19 +275,14 @@ public class DecacCompiler {
      * @see
      * fr.ensimag.ima.pseudocode.IMAProgram#addInstruction(fr.ensimag.ima.pseudocode.Instruction)
      */
-    public void addInstruction(Instruction instruction) {
-        program.addInstruction(instruction);
+    public void addInstruction(Instruction ins) {
+        addLineToBody(new Line(ins));
     }
 
-    /**
-     * @see
-     * fr.ensimag.ima.pseudocode.IMAProgram#addInstruction(fr.ensimag.ima.pseudocode.Instruction,
-     * java.lang.String)
-     */
-    public void addInstruction(Instruction instruction, String comment) {
-        program.addInstruction(instruction, comment);
+    public void addInstruction(Instruction ins, String comment) {
+        addLineToBody(new Line(null, ins, comment));
     }
-    
+
     /**
      * @see 
      * fr.ensimag.ima.pseudocode.IMAProgram#display()
@@ -216,19 +301,16 @@ public class DecacCompiler {
 
     /** The global environment for types (and the symbolTable) */
     public final SymbolTable symbolTable = new SymbolTable();
+    @SuppressWarnings("this-escape")
     public final EnvironmentType environmentType = new EnvironmentType(this);
 
     public Symbol createSymbol(String name) {
         return symbolTable.create(name);
     }
 
-    // Avoir les EnvType :
     public EnvironmentType getEnvTypes() {
         return environmentType;
     }
-
-
-
     /**
      * Run the compiler (parse source file, generate code)
      *
@@ -265,7 +347,6 @@ public class DecacCompiler {
             return true;
         }
     }
-
     /**
      * Internal function that does the job of compiling (i.e. calling lexer,
      * verification and code generation).
@@ -359,4 +440,14 @@ public class DecacCompiler {
         return parser.parseProgramAndManageErrors(err);
     }
 
+    public Line addFirstToBlockAndReturnLine(Instruction ins, String comment) {
+        Line l = new Line(null, ins, comment);
+        addLineToPrefix(l);
+        return l;
+    }
+    public Line addFirstToBlockAndReturnLine(Instruction ins) {
+        Line l = new Line(ins);
+        addLineToPrefix(l);
+        return l;
+    }
 }

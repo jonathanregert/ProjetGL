@@ -6,13 +6,11 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.Label;
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
 import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.instructions.BEQ;
 import fr.ensimag.ima.pseudocode.instructions.BRA;
-import fr.ensimag.ima.pseudocode.instructions.CMP;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
 
 
 /**
@@ -34,7 +32,9 @@ public class Return extends AbstractInst {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        expr.codeGenInst(compiler); // résultat dans R1
+        expr.codeGenExpr(compiler);
+        compiler.addInstruction(new LOAD(Register.R1, Register.R0));
+        compiler.addInstruction(new BRA(compiler.getCurrentMethodEndLabel()));
         
     }
 
@@ -42,6 +42,7 @@ public class Return extends AbstractInst {
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass, Type returnType)
             throws ContextualError {
+            
                 if (returnType == null) {
             throw new ContextualError(
                 "Instruction return hors d'une méthode",
@@ -49,15 +50,16 @@ public class Return extends AbstractInst {
             );
         }
         // Vérification de la condition
-        Type exprType = expr.verifyExpr(compiler, localEnv, currentClass);
-        if (!exprType.equals(returnType)) {
-    throw new ContextualError(
-        "Type retourné " + exprType +
-        " incompatible avec le type de retour " + returnType,
-        expr.getLocation()
-    );
-}
-  }
+    //     Type exprType = expr.verifyExpr(compiler, localEnv, currentClass);
+    //     if (!exprType.equals(returnType)) {
+    // throw new ContextualError(
+    //     "Type retourné " + exprType +
+    //     " incompatible avec le type de retour " + returnType,
+    //     expr.getLocation()
+    // );
+    //     }
+        this.expr = this.expr.verifyRValue(compiler, localEnv, currentClass, returnType);
+    }
 
     @Override
     public void decompile(IndentPrintStream s) {

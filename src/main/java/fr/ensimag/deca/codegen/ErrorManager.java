@@ -4,7 +4,6 @@ import java.util.EnumMap;
 import java.util.EnumSet;
 
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.DecacFatalError;
 import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.ImmediateFloat;
 import fr.ensimag.ima.pseudocode.ImmediateInteger;
@@ -17,6 +16,8 @@ import fr.ensimag.ima.pseudocode.instructions.WNL;
 import fr.ensimag.ima.pseudocode.instructions.WSTR;
 
 public class ErrorManager {
+    private final EnumSet<RuntimeError> used = EnumSet.noneOf(RuntimeError.class);
+    private final EnumMap<RuntimeError, Label> labels = new EnumMap<>(RuntimeError.class);
 
     public enum RuntimeError{
         STACK_OVERFLOW,
@@ -30,11 +31,14 @@ public class ErrorManager {
 
         // entrée/sortie
         READ_INT_ERROR,
-        READ_FLOAT_ERROR
-    }
+        READ_FLOAT_ERROR,
 
-    private final EnumSet<RuntimeError> used = EnumSet.noneOf(RuntimeError.class);
-    private final EnumMap<RuntimeError, Label> labels = new EnumMap<>(RuntimeError.class);
+        // déréferencement null
+        NULL_DEREFERENCE,
+
+        // cast
+        INVALID_CAST
+    }
 
     public Label label(RuntimeError error){
         used.add(error);
@@ -55,6 +59,10 @@ public class ErrorManager {
             case READ_INT_ERROR:     return "erreur_lecture_int";
             case READ_FLOAT_ERROR:   return "erreur_lecture_float";
 
+            case NULL_DEREFERENCE: return "dereferencement_null";
+
+            case INVALID_CAST: return "cast_invalide";
+
             default:                 return "runtime_error";
         }
     }
@@ -62,7 +70,7 @@ public class ErrorManager {
     private String message(RuntimeError error){
         switch (error){
             case STACK_OVERFLOW:    return "Erreur : debordement de pile";
-            case HEAP_OVERFLOW:     return "Erreur : debordement de tas";
+            case HEAP_OVERFLOW:     return "Erreur : allocation impossible, tas plein";
 
             case INT_DIV_BY_ZERO:   return "Erreur : divion entiere par zero";
             case INT_MOD_BY_ZERO:   return "Erreur : reste de la division entiere par zero";
@@ -72,6 +80,11 @@ public class ErrorManager {
 
             case READ_INT_ERROR:    return "Erreur : lecture d'un entier invalide";
             case READ_FLOAT_ERROR:  return "Erreur : lecture d'un flottant invalide";
+
+            case NULL_DEREFERENCE: return "Erreur : dereferencement de null";
+
+            case INVALID_CAST:     return "Erreur : cast invalide";
+
             default:                return "runtime_error";
         }
     }
@@ -103,21 +116,21 @@ public class ErrorManager {
         compiler.addInstruction(new CMP(new ImmediateInteger(0), divisor));
         compiler.addInstruction(new BEQ(label(RuntimeError.INT_MOD_BY_ZERO)));
     }
-
-    /** Overflow arithmétique (si vous décidez de le gérer maintenant). */
     public void genCheckOverflow(DecacCompiler compiler) {
         if (compiler.getNoCheckOption()) return;
         compiler.addInstruction(new BOV(label(RuntimeError.ARITH_OVERFLOW)));
     }
-
-    /** Après RINT */
     public void genCheckReadInt(DecacCompiler compiler) {
         compiler.addInstruction(new BOV(label(RuntimeError.READ_INT_ERROR)));
     }
-
-    /** Après RFLOAT */
     public void genCheckReadFloat(DecacCompiler compiler) {
         compiler.addInstruction(new BOV(label(RuntimeError.READ_FLOAT_ERROR)));
+    }
+
+    public void genCheckNullDereference(DecacCompiler compiler, GPRegister objReg) {
+        if (compiler.getNoCheckOption()) return;
+        compiler.addInstruction(new CMP(new ImmediateInteger(0), objReg));
+        compiler.addInstruction(new BEQ(label(RuntimeError.NULL_DEREFERENCE)));
     }
 
     public void emitHandlers(DecacCompiler compiler){

@@ -1,0 +1,17 @@
+// Description:
+//    Test d'utilisation d'un identificateur de méthode comme une variable.
+//
+// Resultats:
+//    Ligne 14 : m n'est pas une variable
+
+class A {
+    void m() {}
+    
+    void test() {
+        int x;
+        x = m + 1; 
+    }
+}
+
+{
+}

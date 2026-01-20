@@ -1,0 +1,13 @@
+// Description :
+//    Test de comparaison int / float avec conversion implicite dans un if.
+//
+// Resultats :
+//    Affiche : 1
+{
+    int a = 1;
+    if ((a + 2) == 0.0){
+        println("ok!");
+    } else {
+        println("1");
+    }
+}

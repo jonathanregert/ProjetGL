@@ -1,0 +1,21 @@
+// Description :
+//    Sélection imbriquée de champ sur deux niveaux d'objets (a.b.y).
+//
+// Resultats :
+//    Affiche : 9
+
+class B {
+    int y;
+}
+
+class A {
+    B b;
+}
+
+{
+    A a = new A();
+    a.b = new B();
+    a.b.y = 9;
+    println(a.b.y);
+}
+

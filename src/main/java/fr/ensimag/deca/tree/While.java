@@ -6,7 +6,6 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.ImmediateInteger;
 import fr.ensimag.ima.pseudocode.Label;
 import java.io.PrintStream;
@@ -15,8 +14,6 @@ import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.BEQ;
 import fr.ensimag.ima.pseudocode.instructions.BRA;
 import fr.ensimag.ima.pseudocode.instructions.CMP;
-
-
 /**
  *
  * @author gl42
@@ -48,7 +45,7 @@ public class While extends AbstractInst {
         Label labelTest = new Label("while_test_" + id);
         Label labelEnd  = new Label("while_end_" + id);
 
-        compiler.addLabel(labelTest);
+        compiler.addLabelToBlock(labelTest);
         condition.codeGenExpr(compiler, Register.R1);
 
         compiler.addInstruction(new CMP(new ImmediateInteger(0), Register.R1));
@@ -56,7 +53,7 @@ public class While extends AbstractInst {
     
         body.codeGenListInst(compiler);
         compiler.addInstruction(new BRA(labelTest));
-        compiler.addLabel(labelEnd);
+        compiler.addLabelToBlock(labelEnd);
     }
 
     @Override

@@ -1,0 +1,11 @@
+// Description :
+// Classe avec plusieurs méthodes indépendantes
+//
+// Resultats :
+//
+
+class C {
+    int f() { return 1; }
+    float g() { return 12.5; }
+    boolean h() { return true; }
+}

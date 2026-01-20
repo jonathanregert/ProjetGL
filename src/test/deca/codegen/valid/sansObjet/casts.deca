@@ -1,0 +1,86 @@
+// Description :
+//    Programme de test des conversions de type (casts) en Deca sans objets.
+//    Vérifie conversions implicites et explicites int/float, casts imbriqués
+//    et leur utilisation dans des expressions arithmétiques et booléennes.
+//
+// Resultats :
+//    Affiche : OK
+
+{
+    int a = 1;
+    int b = 2;
+    int c = 3;
+    int d = 4;
+    int e = 5;
+
+    int i1, i2, i3, i4, i5;
+    float f1, f2, f3, f4, f5;
+
+    boolean ok = true;
+
+    f1 = a;
+    f2 = b + c;
+    f3 = d * e;
+
+    if (f1 != 1.0 || f2 != 5.0 || f3 != 20.0) {
+        ok = false;
+    }
+
+    f4 = (float)(a);
+    f5 = (float)(b + c * d);
+
+    if (f4 != 1.0 || f5 != 14.0) {
+        ok = false;
+    }
+
+    i1 = (int)(3.7);
+    i2 = (int)(-3.7);
+    i3 = (int)(f5);
+
+    if (i1 != 3 || i2 != -3 || i3 != 14) {
+        ok = false;
+    }
+
+    i4 = (int)((float)(a + b + c) * 2.5);
+    f1 = (float)((int)(9.9)) + 0.5;
+
+    if (i4 != 15 || f1 != 9.5) {
+        ok = false;
+    }
+
+    f2 =
+        (float)(a) +
+        (float)(b) * 2.0 +
+        (float)(c) * (float)(d) -
+        (float)(e) / 2.0 +
+        (float)((int)(7.9)) -
+        (float)((int)((float)(3)));
+
+    if (f2 != 18.5) {
+        ok = false;
+    }
+
+    if ((int)(f2) != 18) {
+        ok = false;
+    }
+
+    if (!((float)(i1 + i2) == 0.0)) {
+        ok = false;
+    }
+
+    i5 = i4 = (int)((float)(e) * 3.0);
+
+    if (i4 != 15 || i5 != 15) {
+        ok = false;
+    }
+
+    if (!((float)(i5) / 3.0 == 5.0)) {
+        ok = false;
+    }
+
+    if (ok) {
+        println("OK");
+    } else {
+        println("ERROR");
+    }
+}

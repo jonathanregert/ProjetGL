@@ -12,6 +12,10 @@ import org.apache.commons.lang.Validate;
  */
 public class MethodDefinition extends ExpDefinition {
 
+    private int index;
+    private final Signature signature;
+    private Label label;
+
     @Override
     public boolean isMethod() {
         return true;
@@ -31,17 +35,12 @@ public class MethodDefinition extends ExpDefinition {
         return index;
     }
 
-    private int index;
 
     @Override
     public MethodDefinition asMethodDefinition(String errorMessage, Location l)
             throws ContextualError {
         return this;
     }
-
-    private final Signature signature;
-    private Label label;
-    
     /**
      * 
      * @param type Return type of the method

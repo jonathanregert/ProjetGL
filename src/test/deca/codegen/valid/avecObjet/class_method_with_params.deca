@@ -1,0 +1,15 @@
+// Description :
+//    Méthode avec paramètres int et float.
+//
+// Resultats :
+//
+
+class A {
+    int add(int x, float y) {
+        return x;
+    }
+}
+
+{
+}
+

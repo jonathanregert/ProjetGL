@@ -1,0 +1,26 @@
+// Description :
+//    Test du transtypage explicite et du polymorphisme.
+//    Vérifie la liaison dynamique des méthodes.
+//
+// Resultats :
+//    OK
+//    B
+//    B
+//    ok
+class A {
+    void m() { println("A"); }
+}
+
+class B extends A {
+    void m() { println("B"); }
+}
+
+{
+    A a = new B();
+
+    ((B)(a)).m();
+
+    a.m();
+
+    println("ok");
+}

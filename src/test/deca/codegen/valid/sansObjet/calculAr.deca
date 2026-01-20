@@ -1,0 +1,23 @@
+// Description :
+//    Calculs arithmétiques et boucle while avec affichages.
+//
+// Resultats :
+//    Affiche :
+//    1414
+//    01234
+
+{
+    int a = 3;
+    int b = 4;
+    int c = (a + b) * 2;
+    int i = 0;
+    
+    print(c);
+    println(c);
+
+    
+    while (i < 5) {
+        print(i);
+        i = i + 1;
+    }
+}

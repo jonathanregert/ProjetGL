@@ -1,0 +1,10 @@
+// Description :
+//    overflow_arithmetique                                                 
+//
+// Resultats :
+//    Erreur : overflow_arithmetique
+
+{
+    int max = 2147483647;
+    print(max + 1);
+}

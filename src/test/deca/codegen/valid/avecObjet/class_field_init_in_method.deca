@@ -1,0 +1,16 @@
+// Description :
+//    Initialisation d'un champ de classe dans une méthode.
+//
+// Resultats :
+//
+
+class A {
+    int x;
+    void init() {
+        x = 42;
+    }
+}
+
+{
+}
+

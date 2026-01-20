@@ -1,0 +1,12 @@
+// Description :
+//    Méthode avec déclaration de variable locale et retour de cette variable.
+//
+// Resultats :
+//
+
+class A {
+    int geta(){
+        int a;
+        return a;
+    }
+}

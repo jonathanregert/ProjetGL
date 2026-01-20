@@ -1,0 +1,16 @@
+// Description :
+//    Test de l'opérateur instanceof avec super-classe et sous-classe.
+//
+// Resultats :
+//    Affiche :
+//    1
+//    0
+class A {}
+class B extends A {}
+
+{
+    A a = new A();
+    B b = new B();
+    println(b instanceof A);
+    println(a instanceof B);
+}

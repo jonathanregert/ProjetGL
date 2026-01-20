@@ -1,29 +1,26 @@
 package fr.ensimag.deca.tree;
-import fr.ensimag.deca.tree.AbstractLValue;
 
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.context.ClassType;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.Definition;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.FieldDefinition;
-import fr.ensimag.deca.context.MethodDefinition;
 import fr.ensimag.deca.context.ExpDefinition;
-import fr.ensimag.deca.context.VariableDefinition;
-import fr.ensimag.deca.context.TypeDefinition;
-import fr.ensimag.deca.tools.DecacInternalError;
+import fr.ensimag.deca.codegen.ErrorManager;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
-import org.apache.log4j.Logger;
 import fr.ensimag.ima.pseudocode.DAddr;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.BEQ;
+import fr.ensimag.ima.pseudocode.instructions.CMP;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.GPRegister;
+import fr.ensimag.ima.pseudocode.NullOperand;
 
 
 
@@ -56,7 +53,8 @@ public class Selection extends AbstractLValue{
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-               Type objectType = object.verifyExpr(compiler, localEnv, currentClass);
+
+        Type objectType = object.verifyExpr(compiler, localEnv, currentClass);
 
         if (!objectType.isClass()) {
             throw new ContextualError("Sélection impossible sur un type non-objet", object.getLocation());
@@ -64,40 +62,38 @@ public class Selection extends AbstractLValue{
 
         ClassDefinition classDef = ((ClassType) objectType).getDefinition();
 
-        ExpDefinition memberDef = classDef.getMembers().get(field.getName());
-        if (memberDef == null) {
-            throw new ContextualError("Le membre " + field.getName() + " n'existe pas dans " + objectType, field.getLocation());
+        Symbol fieldSym = field.getName(); 
+        ExpDefinition memberDef = classDef.getMembers().get(fieldSym);
+
+        if (memberDef == null || !memberDef.isField()) {
+            throw new ContextualError("Le membre " + fieldSym + " n'existe pas dans " + objectType, field.getLocation());
         }
 
-        field.setDefinition(memberDef); 
-        setType(memberDef.getType());   
+        // verif de la visibilité
+        FieldDefinition fieldDef = (FieldDefinition) memberDef;
+        if (fieldDef.getVisibility() == Visibility.PROTECTED){
+            // cond 2 : il faut qu'on soit dans une sous-classe de la classe où est défini le champ
+            if (currentClass == null) {
+                throw new ContextualError("Accès à un champ protégé '" + fieldSym + "' interdit dans le Main", field.getLocation());
+            }
+            if (!currentClass.getType().isSubtype(compiler.environmentType, fieldDef.getContainingClass().getType())) {
+                throw new ContextualError("La classe actuelle " + currentClass.getType() + " n'a pas accès au champ protégé de " + fieldDef.getContainingClass().getType(), field.getLocation());
+            }
+            //cond 1 : l'objet doit être sous type de la classe où est défini le champ
+            if (!objectType.isSubtype(compiler.environmentType, currentClass.getType())) {
+                throw new ContextualError("Accès protégé invalide : le type de l'objet (" + objectType + ") n'est pas un sous-type de la classe courante (" + currentClass.getType() + ")", object.getLocation());
+            }
+        }
+        field.setDefinition(memberDef);
+        setType(memberDef.getType());
 
         return getType();
     }
-    /**
-     * Implements non-terminal "type" of [SyntaxeContextuelle] in the 3 passes
-     * @param compiler contains "env_types" attribute
-     */
-   
-    
-
 
     @Override
     protected void iterChildren(TreeFunction f) {
         object.iter(f);
         field.iter(f);
-    }
-
-    @Override
-    protected DAddr codeGenAddr(DecacCompiler compiler) {
-        object.codeGenInst(compiler);
-        FieldDefinition fieldDef = field.getFieldDefinition();
-        return new RegisterOffset(fieldDef.getIndex(), Register.R1);
-    }
-
-    @Override
-    protected void codeGenExpr(DecacCompiler compiler, GPRegister register) {
-        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Override
@@ -118,13 +114,23 @@ public class Selection extends AbstractLValue{
         throw new UnsupportedOperationException("Selection en bytecode non implémentée (objets requis).");
     }
 
+    
+    @Override
+    public DAddr codeGenAddr(DecacCompiler compiler) {
+        getObject().codeGenExpr(compiler, Register.getR(2));
 
-  
+        compiler.addInstruction(new CMP(new NullOperand(), Register.getR(2)));
+        compiler.addInstruction(new BEQ(
+            compiler.getErrorManager().label(ErrorManager.RuntimeError.NULL_DEREFERENCE)
+        ));
 
-    // @Override
-    // protected DAddr codeGenAddr(DecacCompiler compiler) {
-    //     object.codeGenInst(compiler);
-    //     FieldDefinition fieldDef = field.getFieldDefinition();
-    //     return new RegisterOffset(fieldDef.getIndex(), Register.R1);
-    // }
+        FieldDefinition fd = getField().getFieldDefinition();
+        return new RegisterOffset(fd.getIndex(), Register.getR(2));
+    }
+
+    @Override
+    protected void codeGenExpr(DecacCompiler compiler, GPRegister target){
+        DAddr addr = codeGenAddr(compiler);
+        compiler.addInstruction(new LOAD(addr, target));
+    }
 }

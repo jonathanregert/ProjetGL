@@ -1,0 +1,7 @@
+// Description :
+//      Return d’une expression int
+//
+// Resultats :
+//
+
+class A { int f() { return 2 + 3; } }

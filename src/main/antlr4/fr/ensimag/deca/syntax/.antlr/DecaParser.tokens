@@ -50,6 +50,7 @@ INCLUDE=49
 LINE_COMMENT=50
 BLOCK_COMMENT=51
 WS=52
+FINAL=53
 'true'=1
 'false'=2
 'this'=3

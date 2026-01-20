@@ -1,0 +1,14 @@
+// Description :
+//    Classe contenant une méthode void sans paramètre.
+//
+// Resultats :
+//
+
+class A {
+    void f() {
+    }
+}
+
+{
+}
+

@@ -1,0 +1,11 @@
+// Description :
+//    Test du AND logique complet : opérande gauche true, opérande droite évaluée.
+//
+// Resultats :
+//    Affiche : 1
+
+{
+    boolean a = true;
+    boolean b = true;
+    print(a && b);
+}

@@ -1,0 +1,17 @@
+// Description :
+//    Test unitaire : this
+//
+// Resultats :
+//
+
+class A {
+    int x;
+
+    void f() {
+        this.x = 3;
+        println(this.x);
+    }
+}
+ {
+    
+ }

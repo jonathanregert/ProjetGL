@@ -7,7 +7,15 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
-import fr.ensimag.deca.tree.TreeFunction;
+import fr.ensimag.ima.pseudocode.GPRegister;
+import fr.ensimag.ima.pseudocode.ImmediateInteger;
+import fr.ensimag.ima.pseudocode.NullOperand;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.POP;
+import fr.ensimag.ima.pseudocode.instructions.PUSH;
+import fr.ensimag.ima.pseudocode.instructions.STORE;
 import fr.ensimag.deca.context.FieldDefinition;
 
 import java.io.PrintStream;
@@ -24,13 +32,15 @@ public class DeclField extends AbstractDeclField {
     final private AbstractIdentifier type;
     final private AbstractIdentifier fieldName;
     final private AbstractInitialization initialization;
+    final private boolean isFinal;
 
-    public DeclField(Visibility visibility, AbstractIdentifier type, AbstractIdentifier fieldName, AbstractInitialization initialization) {
+    public DeclField(Visibility visibility, AbstractIdentifier type, AbstractIdentifier fieldName, AbstractInitialization initialization, boolean isFinal) {
         Validate.notNull(visibility);
         Validate.notNull(type);
         Validate.notNull(fieldName);
         Validate.notNull(initialization);
         this.visibility = visibility;
+        this.isFinal = isFinal;
         this.type = type;
         this.fieldName = fieldName;
         this.initialization = initialization;
@@ -60,30 +70,18 @@ public class DeclField extends AbstractDeclField {
     }
 
     // fieldDef : type, nom, visibilité, classe courante, index
-    FieldDefinition fieldDef = new FieldDefinition(t, fieldName.getLocation(), 
-                                                   visibility, currentClass, index);
+    FieldDefinition fieldDef = new FieldDefinition(t, fieldName.getLocation(), visibility, currentClass, index, this.isFinal);
 
-
-    // Debug
-    // System.out.println("Test champ: " + name + " dans " + currentClass.getType());
-    // System.out.println("Existe déjà localement ? " + (currentClass.getMembers().get(name) != null));
-    // System.out.println("DEBUG PASSE 2: Déclaration de " + name);
-    // System.out.println("DEBUG PASSE 3: Init de " + name);
     
     // + environnement des membres de la classe
     try {
         currentClass.getMembers().declare(name, fieldDef);
     } catch (EnvironmentExp.DoubleDefException e) {
-        // jamais arrivé ici, mais pour sécuriser
         throw new ContextualError("Double définition du champ " + name, fieldName.getLocation());
     }
-
-    // deco de l'identifier
     this.fieldName.setDefinition(fieldDef);
 
-}
-
-
+    }
     
     @Override
     public void decompile(IndentPrintStream s) {
@@ -94,7 +92,7 @@ public class DeclField extends AbstractDeclField {
         s.print(" ");
         fieldName.decompile(s);
         initialization.decompile(s);
-        s.println(";");    
+        s.println(";");
     }
 
     @Override
@@ -131,4 +129,42 @@ public class DeclField extends AbstractDeclField {
         this.initialization.verifyInitialization(compiler, t, currentClass.getMembers(), currentClass);
             }
 
+    @Override
+    protected void codeGenInitField(DecacCompiler compiler, ClassDefinition currentClass) {
+        FieldDefinition fd = fieldName.getFieldDefinition();
+        int fieldOffset = fd.getIndex();
+        Type t = fd.getType();
+
+        if (initialization instanceof Initialization) {
+            compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB), Register.getR(2)));
+            compiler.addInstruction(new PUSH(Register.getR(2)));
+            compiler.getStackManager().useTemp(1);
+
+            GPRegister r = compiler.getRegAllocator().alloc();
+            if (r == null) {
+                r = Register.getR(1);
+            }
+
+            ((Initialization) initialization).codeGenValue(compiler, r);
+
+            compiler.addInstruction(new POP(Register.getR(2)));
+            compiler.getStackManager().releaseTemp(1);
+
+            compiler.addInstruction(new STORE(r, new RegisterOffset(fieldOffset, Register.getR(2))));
+
+            if (r != Register.getR(1)) {
+                compiler.getRegAllocator().free(r);
+            }
+            return;
+        }
+
+        compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB), Register.getR(2)));
+
+        if (t.isClass()) {
+            compiler.addInstruction(new LOAD(new NullOperand(), Register.R0));
+        } else {
+            compiler.addInstruction(new LOAD(new ImmediateInteger(0), Register.R0));
+        }
+        compiler.addInstruction(new STORE(Register.R0, new RegisterOffset(fieldOffset, Register.getR(2))));
+    }
 }

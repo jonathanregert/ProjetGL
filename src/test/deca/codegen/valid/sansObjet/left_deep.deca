@@ -1,0 +1,35 @@
+// Description :
+// Arbre très déséquilibré à gauche
+// Conversion implicite avec durée de vie longue
+//
+// Resultats :
+// false affiché
+
+{
+    int a = 20;
+    int b = 4;
+    int c = 3;
+    int d = 2;
+    int e = 1;
+
+    float x = a - b;
+
+    boolean r;
+
+    r =
+        (
+            (
+                (
+                    (x - c > d)
+                    &&
+                    ((b + c) < a)
+                )
+                &&
+                !((a % d) == 0)
+            )
+            &&
+            ((c + d + e) > a)
+        );
+
+    println(r);
+}

@@ -1,0 +1,19 @@
+// Description :
+// test conversion implicite int -> float et expressions arithmétiques déséquilibrées
+//
+// Resultats :
+// 5.0 affiché, -1 affiché
+{
+    int a = 2;
+    int b = 3;
+
+    float f = a + b;
+
+    int c = 3;
+    int d = 4;
+    int e = 5;
+    int result = a + (b * (c - d));
+    
+    print(result);
+    print(f);
+}

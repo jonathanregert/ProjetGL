@@ -1,0 +1,23 @@
+// Description :
+//    Chaîne d'appels de méthodes sur deux niveaux.
+//
+// Resultats :
+//    3
+
+class B {
+    int g() {
+        return 3;
+    }
+}
+
+class A {
+    B getB() {
+        return new B();
+    }
+}
+
+{
+    A a = new A();
+    println(a.getB().g());
+}
+

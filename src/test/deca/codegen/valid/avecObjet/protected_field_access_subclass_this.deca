@@ -1,0 +1,19 @@
+// Description :
+//    Accès à un champ protected via this dans une sous-classe.
+//
+// Resultats :
+//    (aucune sortie)
+
+class A {
+    protected int x;
+}
+
+class B extends A {
+    void set() {
+        this.x = 3;
+    }
+}
+
+{
+}
+

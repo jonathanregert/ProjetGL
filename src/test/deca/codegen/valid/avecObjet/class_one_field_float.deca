@@ -1,0 +1,13 @@
+// Description :
+//    Classe contenant un seul champ de type float.
+//
+// Resultats :
+//
+
+class A {
+    float y;
+}
+
+{
+}
+

@@ -1,0 +1,12 @@
+// Description :
+//    Label + branchement
+//
+// Resultats :
+//    OK
+class A {
+  void t() asm("BRA Lend \\n WSTR \"BAD\" \\n WNL \\n Lend: \\n WSTR \"OK\" \\n WNL");
+}
+
+{
+  new A().t();
+}

@@ -1,6 +1,5 @@
 package fr.ensimag.deca.tree;
 
-import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
@@ -26,5 +25,11 @@ public class ListExpr extends TreeList<AbstractExpr> {
             expr.decompile(s);
             first = false;
         }
+    }
+    public void verifyListExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass)
+        throws ContextualError {
+            for (AbstractExpr expr : getList()) {
+                expr.verifyExpr(compiler, localEnv, currentClass);
+            }
     }
 }

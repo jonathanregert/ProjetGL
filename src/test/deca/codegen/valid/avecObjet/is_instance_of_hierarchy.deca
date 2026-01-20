@@ -1,0 +1,13 @@
+// Description :
+//    Test de l'opérateur instanceof entre deux classes sans relation d'héritage.
+//
+// Resultats :
+//    Affiche :
+//    0
+class A {}
+class C {}
+
+{
+    A a = new A();
+    println(a instanceof C);
+}

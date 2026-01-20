@@ -1,0 +1,10 @@
+// Description :
+//    Invalid methode body asm
+//
+// Resultats :
+//    Erreur syntaxique
+//    Ligne 9 : no viable alternative at input 'voidAasm'
+
+class A {
+    void A asm(int x);
+}

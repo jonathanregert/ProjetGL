@@ -1,0 +1,14 @@
+// Description :
+//    Test de l'opérateur instanceof avec une valeur null.
+//
+// Resultats :
+//    Affiche :
+//    0
+//    0
+class A {}
+
+{
+    A a = null;
+    println(a instanceof A);
+    println(null instanceof A);
+}

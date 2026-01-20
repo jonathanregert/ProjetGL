@@ -68,6 +68,19 @@ public abstract class Type {
         return false;
     }
 
+    public boolean isSubtype(EnvironmentType env, Type other) {
+    
+    if (this.sameType(other)) {
+        return true;
+    }
+
+    if (this.isNull() && other.isClass()) {
+        return true;
+    }
+
+    return false;
+    }
+
     /**
      * Returns the same object, as type ClassType, if possible. Throws
      * ContextualError(errorMessage, l) otherwise.

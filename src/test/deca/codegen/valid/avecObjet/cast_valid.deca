@@ -1,0 +1,35 @@
+// Description:
+//    Test de validité des différents casts.
+//
+// Resultats:
+//    ok
+
+class A {}
+class B extends A {}
+class C extends B {}
+
+{
+    A a = new A();
+    B b = new B();
+    C c = new C();
+    A a_c = new C();
+    A null_a = null;
+
+    int i = 5;
+    float f = 5.5;
+    int i2 = (int)(f);
+    float f2 = (float)(i);
+    println(i2);
+    println(f2);
+    
+    a = (A)(b);
+    a = (A)(c);
+    
+    c = (C)(a_c);
+    b = (B)(a_c);
+
+    c = (C)(null_a);
+    if (c == null) {
+        println("Null cast ok");
+    }
+}

@@ -1,0 +1,13 @@
+// Description :
+//    Test de l'affectation chaînée et de l'associativité droite de '='.
+//
+// Resultats :
+//    Affiche :
+//    5
+//    5
+{
+    int a; int b;
+    a = b = 5;
+    println(a);
+    println(b);
+}

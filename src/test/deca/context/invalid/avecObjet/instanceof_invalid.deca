@@ -1,0 +1,13 @@
+// Description:
+//    Test d'instanceof invalide.
+//
+// Resultats:
+//    Ligne 6 : L'opérateur instanceof s'applique à un objet
+
+class A {}
+
+{
+    int i = 5;
+    boolean res;
+    res = i instanceof A;
+}

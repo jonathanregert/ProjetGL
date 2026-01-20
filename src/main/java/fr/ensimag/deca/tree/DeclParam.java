@@ -3,7 +3,6 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.context.ParamDefinition;
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
@@ -27,6 +26,10 @@ public class DeclParam extends AbstractDeclParam {
         this.varName = varName;
     }
 
+    public AbstractIdentifier getVarName(){
+        return varName;
+    }
+
     @Override
     protected void verifyDeclParam(DecacCompiler compiler,
             EnvironmentExp localEnv)
@@ -39,12 +42,10 @@ public class DeclParam extends AbstractDeclParam {
         try {
             localEnv.declare(varName.getName(), paramDef);
         } catch (EnvironmentExp.DoubleDefException e) {
-            throw new ContextualError("Paramètre " + varName.getName().getName() + " deja definie", varName.getLocation());
+            throw new ContextualError("Paramètre '" + varName.getName().getName() + "' déjà défini", varName.getLocation());
         }
 
-        // deco
         varName.setDefinition(paramDef);
-        
     }
 
 
@@ -77,8 +78,5 @@ public class DeclParam extends AbstractDeclParam {
         varName.prettyPrint(s, prefix, false);
     }
 
-    @Override
-    public void codeGenDeclParam(DecacCompiler compiler) {
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
+
 }

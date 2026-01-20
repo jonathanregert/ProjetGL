@@ -1,0 +1,10 @@
+// Description :
+//    Type de methode asm inconnu
+//
+// Resultats :
+//    Erreur contextuelle
+//    Ligne 9 : Type MonType non déclaré
+
+class A {
+    MonType f() asm("RTS");
+}

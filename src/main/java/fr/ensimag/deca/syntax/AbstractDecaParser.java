@@ -77,6 +77,7 @@ public abstract class AbstractDecaParser extends Parser {
      *
      * @param input The stream of tokens that will be pulled from the lexer
      */
+    @SuppressWarnings("this-escape")
     protected AbstractDecaParser(TokenStream input) {
         super(input);
         setErrorHandler(new DefaultErrorStrategy() {

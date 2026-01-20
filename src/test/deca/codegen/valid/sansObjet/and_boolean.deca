@@ -1,0 +1,8 @@
+// Description :
+//    Test du court-circuit logique AND avec une division par zéro non évaluée.
+//
+// Resultats :
+//    Affiche : 0
+{
+    print(false && (1/0 == 0));
+}

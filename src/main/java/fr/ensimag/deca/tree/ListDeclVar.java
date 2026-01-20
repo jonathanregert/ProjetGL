@@ -1,7 +1,5 @@
 package fr.ensimag.deca.tree;
 
-import org.apache.log4j.Logger;
-
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
@@ -15,8 +13,6 @@ import fr.ensimag.deca.tools.IndentPrintStream;
  * @date 01/01/2026
  */
 public class ListDeclVar extends TreeList<AbstractDeclVar> {
-    private static final Logger LOG = Logger.getLogger(ListDeclVar.class);
-
     @Override
     public void decompile(IndentPrintStream s) {
         for (AbstractDeclVar decl : getList()) {
@@ -36,7 +32,7 @@ public class ListDeclVar extends TreeList<AbstractDeclVar> {
      *      the "env_exp_r" attribute
      * @param currentClass 
      *          corresponds to "class" attribute (null in the main bloc).
-     */    
+     */
     void verifyListDeclVariable(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
             for (AbstractDeclVar declVar : this.getList()) {

@@ -1,0 +1,14 @@
+// Description :
+//    Test du transtypage de montée (B -> A) avec héritage.
+//
+// Resultats :
+//    ok
+
+class A { }
+class B extends A { }
+
+{
+    B b = new B();
+    A a = (A)(b);
+    println("ok");
+}

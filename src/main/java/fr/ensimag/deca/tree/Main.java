@@ -8,14 +8,7 @@ import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
-import fr.ensimag.ima.pseudocode.ImmediateInteger;
-import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.RegisterOffset;
-import fr.ensimag.ima.pseudocode.instructions.ADDSP;
-
-
 import fr.ensimag.deca.context.Type;
-import fr.ensimag.deca.context.VariableDefinition;
 /**
  * @author gl42
  * @date 01/01/2026
@@ -80,7 +73,7 @@ public class Main extends AbstractMain {
         declVariables.iter(f);
         insts.iter(f);
     }
- 
+
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
         declVariables.prettyPrint(s, prefix, false);

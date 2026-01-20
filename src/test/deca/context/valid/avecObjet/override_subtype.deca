@@ -1,0 +1,16 @@
+// Description :
+//    Redéfinition de méthode dans une sous classe.
+//
+// Resultats :
+//    Ok
+
+class A {
+    A self() { return this; }
+}
+class B extends A {
+    B self() { return this; }
+}
+{
+    B b = new B();
+    println(b.self() == b);
+}

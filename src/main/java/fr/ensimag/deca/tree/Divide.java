@@ -1,13 +1,9 @@
 package fr.ensimag.deca.tree;
 
-import fr.ensimag.deca.codegen.ErrorManager;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.ima.pseudocode.GPRegister;
-import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.DIV;
 import fr.ensimag.ima.pseudocode.instructions.QUO;
-import fr.ensimag.ima.pseudocode.instructions.REM;
-
 
 /**
  *
