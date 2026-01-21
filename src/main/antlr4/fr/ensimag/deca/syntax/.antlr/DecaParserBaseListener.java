@@ -1,4 +1,4 @@
-// Generated from /Users/jonathanregert/Documents/Ensimag/Semestre8/ProjetGL/git/final/gl42/src/main/antlr4/fr/ensimag/deca/syntax/DecaParser.g4 by ANTLR 4.13.1
+// Generated from /home/hiba/ensimag/GL/gl42/src/main/antlr4/fr/ensimag/deca/syntax/DecaParser.g4 by ANTLR 4.13.1
 
     import fr.ensimag.deca.tree.*;
     import fr.ensimag.deca.DecacCompiler;
