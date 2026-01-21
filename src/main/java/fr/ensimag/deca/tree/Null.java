@@ -46,8 +46,6 @@ public class Null extends AbstractExpr {
 
     @Override
     protected void codeGenByteExpr(DecacCompiler compiler) {
-        throw new UnsupportedOperationException(
-            "Le littéral 'null' n'est pas supporté dans l'extension BYTE (périmètre Sans Objet uniquement)."
-        );
+        compiler.getByteManager().emitAConstNull();
     }
 }

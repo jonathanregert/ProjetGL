@@ -2,11 +2,13 @@ package fr.ensimag.deca.codegen;
 
 import fr.ensimag.deca.context.Type;
 
+import java.util.HashMap;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Manager pour le bytecode.
@@ -18,7 +20,10 @@ public class ByteManager {
     private int currentStack = 0;
     private int maxStack = 0;
 
-    private final List<String> instructions = new ArrayList<>();
+    private final Map<String, List<String>> classInstructions = new HashMap<>();
+    @SuppressWarnings("unused")
+    private String currentClassName = "Main";
+    private List<String> instructions = new ArrayList<>();
 
     private void updateStack(int delta) {
         currentStack += delta;
@@ -27,6 +32,25 @@ public class ByteManager {
 
     public int getMaxStack() {
         return maxStack;
+    }
+
+    public void enterMethod() {
+        currentStack = 0;
+        maxStack = 0;
+    }
+
+    public void startClass(String className, String superInternalName) {
+        currentClassName = className;
+        instructions = classInstructions.computeIfAbsent(className, k -> new ArrayList<>());
+        instructions.clear();
+
+        instructions.add(".class public " + className);
+        instructions.add(".super " + superInternalName);
+        instructions.add("");
+    }
+
+    public List<String> getInstructionsForClass(String className) {
+        return classInstructions.get(className);
     }
 
     // Gestion de la pile
@@ -99,6 +123,18 @@ public class ByteManager {
 
     public void emitICMP_NE() {
         instructions.add("if_icmpne");
+    }
+
+
+    public void emitIfACmpEq(String label) {
+        instructions.add("if_acmpeq " + label);
+        updateStack(-2); // Consomme 2 références
+    }
+
+
+    public void emitIfACmpNe(String label) {
+        instructions.add("if_acmpne " + label);
+        updateStack(-2); // Consomme 2 références
     }
 
     public void emitICMP_LT() {
@@ -220,6 +256,30 @@ public class ByteManager {
             }
         }
     }
+
+    // ecriture finale des inst jasmin
+    public void dumpClassToFile(String className, File file) throws FileNotFoundException {
+        List<String> ins = classInstructions.get(className);
+        if (ins == null) {
+            throw new IllegalArgumentException("No bytecode emitted for class " + className);
+        }
+        try (PrintStream ps = new PrintStream(file)) {
+            for (String line : ins) {
+                ps.println(line);
+            }
+        }
+    }
+    //multi fichier
+    public void dumpAllToDirectory(File dir) throws FileNotFoundException {
+        for (Map.Entry<String, List<String>> e : classInstructions.entrySet()) {
+            File out = new File(dir, e.getKey() + ".j");
+            try (PrintStream ps = new PrintStream(out)) {
+                for (String ins : e.getValue()) {
+                    ps.println(ins);
+                }
+            }
+        }
+    }
     
     public List<String> getInstructions() {
         return instructions;
@@ -322,6 +382,79 @@ public class ByteManager {
     public void emitDUP() {
         instructions.add("dup");
         updateStack(+1);
+    }
+
+    public void emitDUP_X1() {
+        instructions.add("dup_x1");
+        updateStack(+1);
+    }
+
+    // references
+    public void emitALoad(int slot) {
+        instructions.add("aload " + slot);
+        updateStack(+1);
+    }
+
+    public void emitAStore(int slot) {
+        instructions.add("astore " + slot);
+        updateStack(-1);
+    }
+
+    public void emitAConstNull() {
+        instructions.add("aconst_null");
+        updateStack(+1);
+    }
+
+    public void emitAReturn() {
+        instructions.add("areturn");
+        currentStack = 0;
+    }
+
+    public void emitNew(String internalClassName) {
+        instructions.add("new " + internalClassName);
+        updateStack(+1);
+    }
+
+    public void emitInvokeSpecial(String ownerInternal, String name, String desc) {
+        instructions.add("invokespecial " + ownerInternal + "/" + name + desc);
+    }
+
+    public void emitInvokeVirtual(String ownerInternal, String name, String desc) {
+        instructions.add("invokevirtual " + ownerInternal + "/" + name + desc);
+    }
+
+    public void emitGetField(String ownerInternal, String fieldName, String desc) {
+        instructions.add("getfield " + ownerInternal + "/" + fieldName + " " + desc);
+    }
+
+    public void emitPutField(String ownerInternal, String fieldName, String desc) {
+        instructions.add("putfield " + ownerInternal + "/" + fieldName + " " + desc);
+    }
+
+    public static String typeToDescriptor(Type type) {
+        if (type.isInt()) return "I";
+        if (type.isFloat()) return "F";
+        if (type.isBoolean()) return "Z";
+        if (type.isVoid()) return "V";
+        if (type.isString()) return "Ljava/lang/String;";
+        if (type.isClass()) return "L" + toInternalClassName(type.getName().getName()) + ";";
+        throw new UnsupportedOperationException("Type JVM non supporté: " + type);
+    }
+
+
+    public static String toInternalClassName(String name) {
+        if ("Object".equals(name)) {
+            return "java/lang/Object";
+        }
+        return name;
+    }
+
+    public void emitInstanceOf(String className) {
+        instructions.add("instanceof " + className);
+    }
+
+    public void emitCheckCast(String className) {
+        instructions.add("checkcast " + className);
     }
 
 }

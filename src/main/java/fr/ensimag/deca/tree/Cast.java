@@ -243,6 +243,12 @@ public class Cast extends AbstractExpr {
         } else if (getType().isInt() && expr.getType().isFloat()) {
             compiler.getByteManager().emitF2I(); // optionnel
         }
+        else if (getType().isClass()) {
+            String className = getType().getName().getName();
+            String internalName = fr.ensimag.deca.codegen.ByteManager.toInternalClassName(className);
+            
+            compiler.getByteManager().emitCheckCast(internalName);
+        }
     }
 
 }

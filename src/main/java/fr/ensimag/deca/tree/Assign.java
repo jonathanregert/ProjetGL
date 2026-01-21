@@ -11,6 +11,7 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.Definition;
 import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.deca.context.ExpDefinition;
 import fr.ensimag.deca.context.FieldDefinition;
 
 /**
@@ -108,37 +109,125 @@ public class Assign extends AbstractBinaryExpr {
 
     @Override
     protected void codeGenByteExpr(DecacCompiler compiler) {
-        getRightOperand().codeGenByteExpr(compiler);
+        if (getLeftOperand() instanceof Identifier) {
+            Identifier id = (Identifier) getLeftOperand();
+            if (id.getDefinition().isField()) {
+                // Cas : champ = expr (implicite this.champ = expr)
+                FieldDefinition fd = id.getFieldDefinition();
+                String owner = fr.ensimag.deca.codegen.ByteManager.toInternalClassName(
+                    fd.getContainingClass().getType().getName().getName()
+                );
+                String name = id.getName().getName();
+                String desc = fr.ensimag.deca.codegen.ByteManager.typeToDescriptor(fd.getType());
 
-        AbstractLValue lv = getLeftOperand();
-        VariableDefinition def =
-            ((Identifier) lv).getVariableDefinition();
+                compiler.getByteManager().emitALoad(0);         // empiler this
+                getRightOperand().codeGenByteExpr(compiler);    // empiler la valeur (val)
+                
+                compiler.getByteManager().emitDUP_X1();         // -> val, this, val
+                compiler.getByteManager().emitPutField(owner, name, desc); // consomme this, val -> reste val
+            } else {
+                getRightOperand().codeGenByteExpr(compiler);
+                VariableDefinition def = id.getVariableDefinition();
+                int slot = compiler.getLocalSlot(def);
 
-        int slot = compiler.getLocalSlot(def);
+                compiler.getByteManager().emitDUP(); // On garde la valeur pour l'expression
+                
+                if (getType().isInt() || getType().isBoolean()) {
+                    compiler.getByteManager().emitIStore(slot);
+                } else if (getType().isFloat()) {
+                    compiler.getByteManager().emitFStore(slot);
+                } else {
+                    compiler.getByteManager().emitAStore(slot);
+                }
+            }
+            return;
+        }
 
-        // garder la valeur pour l’expression (= est une expression)
-        compiler.getByteManager().emitDUP();
+        if (getLeftOperand() instanceof Selection) {
+            Selection sel = (Selection) getLeftOperand();
+            FieldDefinition fd = sel.getField().getFieldDefinition();
+            String owner = fr.ensimag.deca.codegen.ByteManager.toInternalClassName(
+                fd.getContainingClass().getType().getName().getName()
+            );
+            String fname = sel.getField().getName().getName();
+            String desc = fr.ensimag.deca.codegen.ByteManager.typeToDescriptor(fd.getType());
 
-        if (getType().isInt() || getType().isBoolean()) {
-            compiler.getByteManager().emitIStore(slot);
-        } else if (getType().isFloat()) {
-            compiler.getByteManager().emitFStore(slot);
+            // obj then value
+            sel.getObject().codeGenByteExpr(compiler);   // obj
+            getRightOperand().codeGenByteExpr(compiler); // obj val
+
+            // Duplicate value and reorder to leave value on stack after putfield
+            compiler.getByteManager().emitDUP_X1();      // val obj val
+            compiler.getByteManager().getInstructions().add("swap"); // obj val val
+            compiler.getByteManager().emitPutField(owner, fname, desc); // consumes obj,val, leaves val
+            return;
         }
     }
 
     @Override
     protected void codeGenByte(DecacCompiler compiler) {
-        getRightOperand().codeGenByteExpr(compiler);
+        if (getLeftOperand() instanceof Identifier) {
+            Identifier id = (Identifier) getLeftOperand();
+            if (id.getDefinition().isField()) {
+                // Cas : champ = expr (instruction)
+                FieldDefinition fd = id.getFieldDefinition();
+                String owner = fr.ensimag.deca.codegen.ByteManager.toInternalClassName(
+                    fd.getContainingClass().getType().getName().getName()
+                );
+                String name = id.getName().getName();
+                String desc = fr.ensimag.deca.codegen.ByteManager.typeToDescriptor(fd.getType());
 
-        VariableDefinition def =
-            ((Identifier) getLeftOperand()).getVariableDefinition();
+                compiler.getByteManager().emitALoad(0);         // this
+                getRightOperand().codeGenByteExpr(compiler);    // valeur
+                compiler.getByteManager().emitPutField(owner, name, desc); // affectation
+            } else {
+                // Cas : variable = expr (instruction)
+                getRightOperand().codeGenByteExpr(compiler);
+                ExpDefinition def = id.getExpDefinition(); //param ou variable
+                int slot = compiler.getLocalSlot(def);
 
-        int slot = compiler.getLocalSlot(def);
+                if (getType().isInt() || getType().isBoolean()) {
+                    compiler.getByteManager().emitIStore(slot);
+                } else if (getType().isFloat()) {
+                    compiler.getByteManager().emitFStore(slot);
+                } else {
+                    compiler.getByteManager().emitAStore(slot);
+                }
+            }
+            return;
+        }
 
-        if (getType().isInt() || getType().isBoolean()) {
-            compiler.getByteManager().emitIStore(slot);
-        } else if (getType().isFloat()) {
-            compiler.getByteManager().emitFStore(slot);
+        if (getLeftOperand() instanceof Identifier) {
+            getRightOperand().codeGenByteExpr(compiler);
+
+            VariableDefinition def =
+                ((Identifier) getLeftOperand()).getVariableDefinition();
+
+            int slot = compiler.getLocalSlot(def);
+
+            if (getType().isInt() || getType().isBoolean()) {
+                compiler.getByteManager().emitIStore(slot);
+            } else if (getType().isFloat()) {
+                compiler.getByteManager().emitFStore(slot);
+            } else {
+                compiler.getByteManager().emitAStore(slot);
+            }
+            return;
+        }
+
+        if (getLeftOperand() instanceof Selection) {
+            Selection sel = (Selection) getLeftOperand();
+            FieldDefinition fd = sel.getField().getFieldDefinition();
+            String owner = fr.ensimag.deca.codegen.ByteManager.toInternalClassName(
+                fd.getContainingClass().getType().getName().getName()
+            );
+            String fname = sel.getField().getName().getName();
+            String desc = fr.ensimag.deca.codegen.ByteManager.typeToDescriptor(fd.getType());
+
+            sel.getObject().codeGenByteExpr(compiler);   // obj
+            getRightOperand().codeGenByteExpr(compiler); // obj val
+            compiler.getByteManager().emitPutField(owner, fname, desc); // consumes obj,val
+            return;
         }
     }
 

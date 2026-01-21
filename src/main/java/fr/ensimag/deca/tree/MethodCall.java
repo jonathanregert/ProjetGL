@@ -75,7 +75,7 @@ public  class MethodCall extends AbstractExpr {
         int i = 0;
         for (AbstractExpr arg : arguments.getList()) {
         Type targetType = sig.paramNumber(i);
-        AbstractExpr newArg = arg.verifyRValue(compiler, localEnv, currentClass, targetType);
+        arg.verifyRValue(compiler, localEnv, currentClass, targetType);
         i++;
         }
     
@@ -153,8 +153,26 @@ public  class MethodCall extends AbstractExpr {
 
     @Override
     protected void codeGenByteExpr(DecacCompiler compiler) {
-        throw new UnsupportedOperationException(
-            "L'opérateur 'instanceof' n'est pas supporté dans l'extension BYTE (périmètre Sans Objet uniquement)."
+        object.codeGenByteExpr(compiler);
+        for (AbstractExpr arg : arguments.getList()) {
+            arg.codeGenByteExpr(compiler);
+        }
+
+        MethodDefinition mdef = method.getMethodDefinition();
+
+        Signature sig = mdef.getSignature();
+        StringBuilder desc = new StringBuilder();
+        desc.append("(");
+        for (int i = 0; i < sig.size(); i++) {
+            desc.append(fr.ensimag.deca.codegen.ByteManager.typeToDescriptor(sig.paramNumber(i)));
+        }
+        desc.append(")");
+        desc.append(fr.ensimag.deca.codegen.ByteManager.typeToDescriptor(mdef.getType()));
+
+        String ownerInternal = fr.ensimag.deca.codegen.ByteManager.toInternalClassName(
+            object.getType().getName().getName()
         );
+        String mName = method.getName().getName();
+        compiler.getByteManager().emitInvokeVirtual(ownerInternal, mName, desc.toString());
     }
 }

@@ -23,8 +23,10 @@ import java.io.PrintStream;
 import fr.ensimag.deca.context.Signature;
 import fr.ensimag.deca.context.MethodDefinition;
 import fr.ensimag.deca.context.ParamDefinition;
+import fr.ensimag.deca.codegen.ByteManager;
 
 import org.apache.commons.lang.Validate;
+import java.util.*;
 
 /**
  * @author gl42
@@ -227,5 +229,65 @@ public class DeclMethod extends AbstractDeclMethod {
     public AbstractIdentifier getMethodName()
     {
         return methodName;
+    }
+
+    public void codeGenByteDeclMethod(DecacCompiler compiler, String ownerClassName) {
+        MethodDefinition md = methodName.getMethodDefinition();
+        String mName = methodName.getName().getName();
+
+        Signature sig = md.getSignature();
+        StringBuilder desc = new StringBuilder();
+        desc.append("(");
+        for (int i = 0; i < sig.size(); i++) {
+            desc.append(ByteManager.typeToDescriptor(sig.paramNumber(i)));
+        }
+        desc.append(")");
+        desc.append(ByteManager.typeToDescriptor(md.getType()));
+
+        compiler.getByteManager().getInstructions().add(".method public " + mName + desc);
+        compiler.getByteManager().getInstructions().add(".limit stack 0");
+        compiler.getByteManager().getInstructions().add(".limit locals 0");
+
+        compiler.getByteManager().enterMethod();
+        compiler.resetLocalSlots(1); // 0: this
+
+        // allocate JVM slots for params in order
+        for (AbstractDeclParam p : params.getList()) {
+            DeclParam dp = (DeclParam) p;
+            ParamDefinition pd = (ParamDefinition) dp.getVarName().getDefinition();
+            compiler.allocLocalSlot(pd);
+        }
+
+        // locals
+        body.getVars().codeGenListDeclVarByte(compiler);
+
+        // body
+        body.getInsts().codeGenListInstByte(compiler);
+
+        // implicit return for void if not already returned
+        if (md.getType().isVoid()) {
+            compiler.getByteManager().emitReturnVoid();
+        }
+
+        int stack = compiler.getByteManager().getMaxStack();
+        int locals = compiler.getMaxLocalSlot();
+        compiler.getByteManager().getInstructions().set(
+            compiler.getByteManager().getInstructions().size() - 1 - 1 - 0, // no-op: keep structure stable
+            compiler.getByteManager().getInstructions().get(compiler.getByteManager().getInstructions().size() - 1 - 1 - 0)
+        );
+        int idxMethod = compiler.getByteManager().getInstructions().size();
+
+        int methodLine = -1;
+        List<String> ins = compiler.getByteManager().getInstructions();
+        for (int i = ins.size() - 1; i >= 0; i--) {
+            if (ins.get(i).startsWith(".method ")) { methodLine = i; break; }
+        }
+        if (methodLine >= 0) {
+            ins.set(methodLine + 1, ".limit stack " + stack);
+            ins.set(methodLine + 2, ".limit locals " + locals);
+        }
+
+        compiler.getByteManager().getInstructions().add(".end method");
+        compiler.getByteManager().getInstructions().add("");
     }
 }

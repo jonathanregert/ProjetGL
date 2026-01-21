@@ -110,8 +110,14 @@ public class InstanceOf extends AbstractExpr {
 
     @Override
     protected void codeGenByteExpr(DecacCompiler compiler) {
-        throw new UnsupportedOperationException(
-            "L'opérateur 'instanceof' n'est pas supporté dans l'extension BYTE (périmètre Sans Objet uniquement)."
-        );
+        expr.codeGenByteExpr(compiler);
+
+        // nom de la classe cible
+        ClassDefinition cd = typeName.getClassDefinition();
+        String className = cd.getType().getName().getName();
+        String internalClassName = fr.ensimag.deca.codegen.ByteManager.toInternalClassName(className);
+
+
+        compiler.getByteManager().emitInstanceOf(internalClassName);
     }
 }

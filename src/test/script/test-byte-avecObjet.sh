@@ -3,7 +3,7 @@
 # Chemins vers les outils
 DECAC=./src/main/bin/decac
 JASMIN_JAR=./jasmin/jasmin.jar
-TEST_DIR=src/test/deca/codegen/valid/sansObjet
+TEST_DIR=src/test/deca/codegen/valid/avecObjet
 OUTPUT_DIR=src/test/deca/codegen/BYTE/valid
 
 # Couleurs pour l'affichage
@@ -66,3 +66,13 @@ for file in "$TEST_DIR"/*.deca; do
     # Nettoyage pour le test suivant
     rm -f "$OUTPUT_DIR"/*.class
 done
+
+
+
+
+
+# hiba@hiba:~/ensimag/GL/gl42$ ./src/main/bin/decac --byte ./src/test/deca/codegen/valid/avecObjet/method_returns_in_all_paths_ok.deca 
+# hiba@hiba:~/ensimag/GL/gl42$ java -jar jasmin/jasmin.jar src/test/deca/codegen/valid/avecObjet/method_returns_in_all_paths_ok.j
+# Generated: Main.class
+# hiba@hiba:~/ensimag/GL/gl42$ java -jar jasmin/jasmin.jar src/test/deca/codegen/valid/avecObjet/A.j
+# Generated: A.class

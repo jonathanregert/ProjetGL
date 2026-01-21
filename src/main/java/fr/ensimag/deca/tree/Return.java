@@ -86,6 +86,8 @@ public class Return extends AbstractInst {
             compiler.getByteManager().emitIReturn();
         } else if (expr.getType().isFloat()) {
             compiler.getByteManager().emitFReturn();
+        } else if (expr.getType().isClass() || expr.getType().isString() || expr.getType().isNull()) {
+            compiler.getByteManager().emitAReturn();
         } else {
             compiler.getByteManager().emitReturnVoid();
         }

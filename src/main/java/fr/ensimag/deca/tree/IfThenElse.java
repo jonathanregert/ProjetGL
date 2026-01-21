@@ -89,13 +89,16 @@ public class IfThenElse extends AbstractInst {
         String elseLbl = compiler.getByteManager().newLabel();
         String endLbl  = compiler.getByteManager().newLabel();
 
-        // ✅ CONDITION = BRANCHEMENTS UNIQUEMENT
+        // CONDITION = BRANCHEMENTS UNIQUEMENT
         condition.codeGenByteCond(compiler, thenLbl, elseLbl);
 
         // then
         compiler.getByteManager().emitLabel(thenLbl);
         thenBranch.codeGenListInstByte(compiler);
-        compiler.getByteManager().emitGoto(endLbl);
+
+        if (!thenBranch.containsReturn()) {
+            compiler.getByteManager().emitGoto(endLbl);
+        }
 
         // else
         compiler.getByteManager().emitLabel(elseLbl);

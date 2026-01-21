@@ -17,6 +17,7 @@ import fr.ensimag.ima.pseudocode.instructions.POP;
 import fr.ensimag.ima.pseudocode.instructions.PUSH;
 import fr.ensimag.ima.pseudocode.instructions.STORE;
 import fr.ensimag.deca.context.FieldDefinition;
+import fr.ensimag.deca.codegen.ByteManager;
 
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
@@ -103,6 +104,31 @@ public class DeclField extends AbstractDeclField {
     @Override
     protected AbstractIdentifier getFieldName(){
         return fieldName;
+    }
+
+    public AbstractInitialization getInitialization() {
+        return initialization;
+    }
+
+    public boolean hasExplicitInitialization() {
+        return initialization instanceof Initialization;
+    }
+
+
+    public void codeGenByteInit(DecacCompiler compiler) {
+        if (!(initialization instanceof Initialization)) {
+            Type t = fieldName.getDefinition().getType();
+            if (t.isClass() || t.isString()) {
+                compiler.getByteManager().emitAConstNull(); // null
+            } else if (t.isFloat()) {
+                compiler.getByteManager().emitLDC(0.0f);
+            } else {
+                compiler.getByteManager().emitLDC(0);
+            } // initialisé à 0 sinon
+            return;
+        }
+        AbstractExpr expr = ((Initialization) initialization).getExpression();
+        expr.codeGenByteExpr(compiler);
     }
 
     @Override

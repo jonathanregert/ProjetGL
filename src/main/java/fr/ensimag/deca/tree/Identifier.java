@@ -286,17 +286,32 @@ public class Identifier extends AbstractIdentifier {
 
     @Override
     protected void codeGenByteExpr(DecacCompiler compiler) {
-        VariableDefinition def = getVariableDefinition();
+        if (getDefinition().isField()) {
+            FieldDefinition fd = getFieldDefinition();
+            String owner = fr.ensimag.deca.codegen.ByteManager.toInternalClassName(
+                fd.getContainingClass().getType().getName().getName()
+            );
+            String name = getName().getName();
+            String desc = fr.ensimag.deca.codegen.ByteManager.typeToDescriptor(fd.getType());
+
+            // Génération de this.field
+            compiler.getByteManager().emitALoad(0); 
+            compiler.getByteManager().emitGetField(owner, name, desc);
+        } else {
+        ExpDefinition def = getExpDefinition(); // plus generique
         int slot = compiler.getLocalSlot(def);
 
         if (getType().isInt() || getType().isBoolean()) {
             compiler.getByteManager().emitILoad(slot);
         } else if (getType().isFloat()) {
             compiler.getByteManager().emitFLoad(slot);
+        } else if (getType().isClass() || getType().isString() || getType().isNull()) {
+            compiler.getByteManager().emitALoad(slot);
         } else {
             throw new UnsupportedOperationException(
                 "JVM load non supporté pour " + getType()
             );
+        }
         }
     }
 

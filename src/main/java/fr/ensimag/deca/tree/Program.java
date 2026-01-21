@@ -177,14 +177,8 @@ public class Program extends AbstractProgram {
     @Override
     public void codeGenByte(DecacCompiler compiler) {
 
-        // En-tête du .class
-        compiler.getByteManager().getInstructions().add(
-            ".class public Main"
-        );
-        compiler.getByteManager().getInstructions().add(
-            ".super java/lang/Object"
-        );
-        compiler.getByteManager().getInstructions().add("");
+        // Main class
+        compiler.getByteManager().startClass("Main", "java/lang/Object");
 
         // Méthode main
         compiler.getByteManager().getInstructions().add(
@@ -198,6 +192,9 @@ public class Program extends AbstractProgram {
         compiler.getByteManager().getInstructions().add(
             ".limit locals 0"
         );
+
+        compiler.getByteManager().enterMethod();
+        compiler.resetLocalSlots(1); // 0: args
 
         // Corps du main
         main.codeGenMainByte(compiler);
@@ -215,6 +212,13 @@ public class Program extends AbstractProgram {
         compiler.getByteManager().getInstructions().add(
             ".end method"
         );
+
+        // User classes (one Jasmin class per DeclClass)
+        for (AbstractDeclClass c : classes.getList()) {
+            if (c instanceof DeclClass) {
+                ((DeclClass) c).codeGenByteClass(compiler);
+            }
+        }
     }
 
 

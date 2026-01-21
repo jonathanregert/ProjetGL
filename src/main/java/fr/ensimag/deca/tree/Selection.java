@@ -111,7 +111,17 @@ public class Selection extends AbstractLValue{
 
     @Override
     protected void codeGenByteExpr(DecacCompiler compiler) {
-        throw new UnsupportedOperationException("Selection en bytecode non implémentée (objets requis).");
+        // obj.field -> evaluate obj, puis getfield
+        getObject().codeGenByteExpr(compiler);
+
+        FieldDefinition fd = getField().getFieldDefinition();
+        String owner = fr.ensimag.deca.codegen.ByteManager.toInternalClassName(
+            fd.getContainingClass().getType().getName().getName()
+        );
+        String fname = getField().getName().getName();
+        String desc = fr.ensimag.deca.codegen.ByteManager.typeToDescriptor(fd.getType());
+
+        compiler.getByteManager().emitGetField(owner, fname, desc);
     }
 
     

@@ -39,5 +39,7 @@ public abstract class AbstractDeclMethod extends Tree {
         ClassDefinition currentClass, 
         Type returnType)
             throws ContextualError;
+
+    public abstract void codeGenByteDeclMethod(DecacCompiler compiler, String ownerClassName);
 }
 

@@ -132,7 +132,16 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
             // float,float -> fcmpl ; if<cond> (sur int)
             compiler.getByteManager().emitFCMPL(); // (voir étape 3)
             compiler.getByteManager().emitIfCmpFloatTrue(getOperatorName(), trueLabel);
-        } else {
+        } else if (t.isClass() || t.isNull()) {
+            if (getOperatorName().equals("==")) {
+                compiler.getByteManager().emitIfACmpEq(trueLabel);
+            } else if (getOperatorName().equals("!=")) {
+                compiler.getByteManager().emitIfACmpNe(trueLabel);
+            } else {
+                throw new UnsupportedOperationException("Opérateur " + getOperatorName() + " interdit pour les objets");
+            }
+        }
+        else {
             throw new UnsupportedOperationException("Comparaison JVM non supportée pour " + t);
         }
 

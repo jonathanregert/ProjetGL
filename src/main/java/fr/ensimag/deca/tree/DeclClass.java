@@ -25,6 +25,7 @@ import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.LabelOperand;
 import fr.ensimag.ima.pseudocode.Line;
 import fr.ensimag.ima.pseudocode.NullOperand;
+import fr.ensimag.deca.codegen.ByteManager;
 
 import java.io.PrintStream;
 // import java.lang.instrument.ClassDefinition;
@@ -328,5 +329,67 @@ public class DeclClass extends AbstractDeclClass {
         }
 
         compiler.setCurrentClassName(null);
+    }
+
+
+    public void codeGenByteClass(DecacCompiler compiler) {
+        String className = this.classDefinition.getType().getName().getName();
+
+        String superName = this.classDefinition.getSuperClass() == null
+            ? "java/lang/Object"
+            : this.classDefinition.getSuperClass().getType().getName().getName();
+
+        compiler.getByteManager().startClass(className, ByteManager.toInternalClassName(superName));
+        
+
+        // fields
+        for (AbstractDeclField f : classFields.getList()) {
+            DeclField df = (DeclField) f;
+            String fname = df.getFieldName().getName().getName();
+            String desc = ByteManager.typeToDescriptor(df.getFieldName().getDefinition().getType());
+            String vis = (df.getVisibility() == Visibility.PROTECTED) ? "protected" : "public";
+            compiler.getByteManager().getInstructions().add(".field " + vis + " " + fname + " " + desc);
+        }
+        compiler.getByteManager().getInstructions().add("");
+
+        compiler.getByteManager().getInstructions().add(".method public <init>()V");
+        compiler.getByteManager().getInstructions().add(".limit stack 0");
+        compiler.getByteManager().getInstructions().add(".limit locals 1");
+
+        compiler.getByteManager().enterMethod();
+        compiler.resetLocalSlots(1); // 0 = this
+
+        compiler.getByteManager().emitALoad(0);
+        compiler.getByteManager().emitInvokeSpecial(ByteManager.toInternalClassName(superName), "<init>", "()V");
+
+        for (AbstractDeclField f : classFields.getList()) {
+            DeclField df = (DeclField) f;
+            if (df.hasExplicitInitialization()) {
+                compiler.getByteManager().emitALoad(0);
+                df.codeGenByteInit(compiler);
+                String fname = df.getFieldName().getName().getName();
+                String desc = ByteManager.typeToDescriptor(df.getFieldName().getDefinition().getType());
+                compiler.getByteManager().emitPutField(ByteManager.toInternalClassName(className), fname, desc);
+            }
+        }
+
+        compiler.getByteManager().emitReturnVoid();
+
+        int stack = compiler.getByteManager().getMaxStack();
+        // Patch limits (lines right after the constructor .method)
+        java.util.List<String> ins = compiler.getByteManager().getInstructions();
+        int methodLine = -1;
+        for (int i = ins.size() - 1; i >= 0; i--) {
+            if (ins.get(i).startsWith(".method public <init>()V")) { methodLine = i; break; }
+        }
+        if (methodLine >= 0) {
+            ins.set(methodLine + 1, ".limit stack " + stack);
+            ins.set(methodLine + 2, ".limit locals 1");
+        }
+        compiler.getByteManager().getInstructions().add(".end method");
+        compiler.getByteManager().getInstructions().add("");
+
+        // methods
+        this.classMethods.codeGenListDeclMethodByte(compiler, className);
     }
 }

@@ -1,10 +1,9 @@
 package fr.ensimag.deca;
 
 import fr.ensimag.deca.context.EnvironmentType;
-import fr.ensimag.deca.context.VariableDefinition;
+import fr.ensimag.deca.context.ExpDefinition;
 import fr.ensimag.deca.codegen.RegAllocator;
 import fr.ensimag.deca.codegen.StackManager;
-import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.codegen.ByteManager;
 import fr.ensimag.deca.codegen.ErrorManager;
 import fr.ensimag.deca.syntax.DecaLexer;
@@ -74,12 +73,16 @@ public class DecacCompiler {
 
     // JVM locals (pour --byte)
     private int nextLocalSlot = 1; // 0 est pour String[] args
-    private final java.util.Map<VariableDefinition, Integer> localSlots = new java.util.HashMap<>();
+    private final java.util.Map<ExpDefinition, Integer> localSlots = new java.util.HashMap<>();
     private int maxLocalSlot = 1;
 
+    public void resetLocalSlots(int firstSlot) {
+        localSlots.clear();
+        nextLocalSlot = firstSlot;
+        maxLocalSlot = firstSlot;
+    }
 
-
-    public int allocLocalSlot(VariableDefinition def) {
+    public int allocLocalSlot(ExpDefinition def) {
         int slot = nextLocalSlot++;
         localSlots.put(def, slot);
         maxLocalSlot = Math.max(maxLocalSlot, nextLocalSlot);
@@ -90,7 +93,7 @@ public class DecacCompiler {
         return maxLocalSlot;
     }
 
-    public int getLocalSlot(VariableDefinition def) {
+    public int getLocalSlot(ExpDefinition def) {
         Integer slot = localSlots.get(def);
         if (slot == null) {
             throw new DecacInternalError("No JVM slot for variable " + def);
@@ -384,9 +387,11 @@ public class DecacCompiler {
             prog.codeGenByte(this);
             
             try {
-                byteManager.dumpToFile(
-                    new File(sourceName.replace(".deca", ".j"))
-                );
+                byteManager.dumpClassToFile("Main", new File(sourceName.replace(".deca", ".j")));
+                File parent = new File(sourceName).getParentFile();
+                if (parent != null) {
+                    byteManager.dumpAllToDirectory(parent);
+                }
             } catch (FileNotFoundException e) {
                 throw new DecacFatalError("Failed to open output file: " + e.getLocalizedMessage());
             }

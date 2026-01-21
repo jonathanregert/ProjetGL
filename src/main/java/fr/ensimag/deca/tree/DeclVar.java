@@ -104,6 +104,8 @@ public class DeclVar extends AbstractDeclVar {
                 compiler.getByteManager().emitIStore(slot);
             } else if (def.getType().isFloat()) {
                 compiler.getByteManager().emitFStore(slot);
+            } else if (def.getType().isClass() || def.getType().isString() || def.getType().isNull()) {
+                compiler.getByteManager().emitAStore(slot);
             }
         }
     }

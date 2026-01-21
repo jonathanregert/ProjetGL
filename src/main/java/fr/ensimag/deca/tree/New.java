@@ -80,7 +80,13 @@ public class New extends AbstractExpr {
 
     @Override
     protected void codeGenByteExpr(DecacCompiler compiler) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        // JVM: new A(); -> new A ; dup ; invokespecial A/<init>()V
+        String internal = fr.ensimag.deca.codegen.ByteManager.toInternalClassName(
+            className.getClassDefinition().getType().getName().getName()
+        );
+        compiler.getByteManager().emitNew(internal);
+        compiler.getByteManager().emitDUP();
+        compiler.getByteManager().emitInvokeSpecial(internal, "<init>", "()V");
     }
 
 }

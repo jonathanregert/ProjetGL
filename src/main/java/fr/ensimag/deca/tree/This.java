@@ -61,8 +61,7 @@ public class This extends AbstractExpr {
 
     @Override
     protected void codeGenByteExpr(DecacCompiler compiler) {
-        throw new UnsupportedOperationException(
-            "Le littéral 'this' n'est pas supporté dans l'extension BYTE (périmètre Sans Objet uniquement)."
-        );
+        // local slot 0 = "this"
+        compiler.getByteManager().emitALoad(0);
     }
 }
