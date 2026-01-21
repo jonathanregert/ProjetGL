@@ -228,10 +228,12 @@ public class ByteManager {
 
 
     public void emitReadInt() {
-        instructions.add(
-            "invokestatic java/util/Scanner.nextInt()I"
-        );
-        updateStack(+1);
+        instructions.add("new java/util/Scanner");
+        instructions.add("dup");
+        instructions.add("getstatic java/lang/System/in Ljava/io/InputStream;");
+        instructions.add("invokespecial java/util/Scanner/<init>(Ljava/io/InputStream;)V");
+        instructions.add("invokevirtual java/util/Scanner/nextInt()I");
+        updateStack(1);
     }
 
     // Contrôle
@@ -341,8 +343,12 @@ public class ByteManager {
     // ReadFloat + return typé
 
     public void emitReadFloat() {
-        instructions.add("invokestatic java/util/Scanner.nextFloat()F");
-        updateStack(+1);
+        instructions.add("new java/util/Scanner");
+        instructions.add("dup");
+        instructions.add("getstatic java/lang/System/in Ljava/io/InputStream;");
+        instructions.add("invokespecial java/util/Scanner/<init>(Ljava/io/InputStream;)V");
+        instructions.add("invokevirtual java/util/Scanner/nextFloat()F");
+        updateStack(1);
     }
     public void emitReturnVoid() {
         instructions.add("return");
