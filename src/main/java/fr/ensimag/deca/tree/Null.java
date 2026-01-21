@@ -43,4 +43,11 @@ public class Null extends AbstractExpr {
     protected void prettyPrintChildren(java.io.PrintStream s, String prefix) {
         // Feuille de l'arbre
     }
+
+    @Override
+    protected void codeGenByteExpr(DecacCompiler compiler) {
+        throw new UnsupportedOperationException(
+            "Le littéral 'null' n'est pas supporté dans l'extension BYTE (périmètre Sans Objet uniquement)."
+        );
+    }
 }

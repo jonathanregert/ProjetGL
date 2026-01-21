@@ -107,4 +107,11 @@ public class InstanceOf extends AbstractExpr {
         expr.prettyPrint(s, prefix, false);
         typeName.prettyPrint(s, prefix, true);
     }
+
+    @Override
+    protected void codeGenByteExpr(DecacCompiler compiler) {
+        throw new UnsupportedOperationException(
+            "L'opérateur 'instanceof' n'est pas supporté dans l'extension BYTE (périmètre Sans Objet uniquement)."
+        );
+    }
 }

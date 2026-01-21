@@ -58,4 +58,11 @@ public class This extends AbstractExpr {
             java.io.PrintStream s, String prefix) {
                 
             }
+
+    @Override
+    protected void codeGenByteExpr(DecacCompiler compiler) {
+        throw new UnsupportedOperationException(
+            "Le littéral 'this' n'est pas supporté dans l'extension BYTE (périmètre Sans Objet uniquement)."
+        );
+    }
 }

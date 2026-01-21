@@ -150,4 +150,11 @@ public  class MethodCall extends AbstractExpr {
             compiler.addInstruction(new LOAD(Register.R1, target));
         }
     }
+
+    @Override
+    protected void codeGenByteExpr(DecacCompiler compiler) {
+        throw new UnsupportedOperationException(
+            "L'opérateur 'instanceof' n'est pas supporté dans l'extension BYTE (périmètre Sans Objet uniquement)."
+        );
+    }
 }

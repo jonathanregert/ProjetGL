@@ -3,6 +3,8 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.ima.pseudocode.Instruction;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.instructions.BNE;
+import fr.ensimag.deca.DecacCompiler;
+
 
 /**
  *
@@ -43,6 +45,7 @@ public class Or extends AbstractOpBool {
     protected void emitShortCircuitBranch(DecacCompiler compiler, String label) {
         compiler.getByteManager().emitIfNe(label);
     }
+    
 
     @Override
     protected void codeGenByteCond(

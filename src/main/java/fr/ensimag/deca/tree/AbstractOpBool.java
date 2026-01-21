@@ -13,6 +13,7 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 
+
 /**
  *
  * @author gl42
@@ -60,26 +61,6 @@ public abstract class AbstractOpBool extends AbstractBinaryExpr {
 
     }
 
-    @Override
-    protected void codeGenByteExpr(DecacCompiler compiler) {
-        String labelTrue = compiler.getByteManager().newLabel();
-        String labelFalse = compiler.getByteManager().newLabel();
-        String labelEnd = compiler.getByteManager().newLabel();
-
-        // Ne pousse RIEN
-        codeGenByteCond(compiler, labelTrue, labelFalse);
-
-        // true → 1
-        compiler.getByteManager().emitLabel(labelTrue);
-        compiler.getByteManager().emitLDC(1);
-        compiler.getByteManager().emitGoto(labelEnd);
-
-        // false → 0
-        compiler.getByteManager().emitLabel(labelFalse);
-        compiler.getByteManager().emitLDC(0);
-
-        compiler.getByteManager().emitLabel(labelEnd);
-    }
 
     @Override
     protected void codeGenByteExpr(DecacCompiler compiler) {
