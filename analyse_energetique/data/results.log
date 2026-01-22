@@ -1,0 +1,4103 @@
+
+============================================================
+1) Build compiler: mvn compile
+============================================================
+	Command being timed: "mvn -q compile"
+	User time (seconds): 27.04
+	System time (seconds): 1.67
+	Percent of CPU this job got: 221%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:12.98
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 484108
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 264
+	Minor (reclaiming a frame) page faults: 93451
+	Voluntary context switches: 46547
+	Involuntary context switches: 4019
+	Swaps: 0
+	File system inputs: 152448
+	File system outputs: 1693
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+
+============================================================
+2) Tests: all-tests.sh
+============================================================
+==========================================================
+      LANCEMENT DE LA SUITE DE TESTS COMPLÈTE             
+==========================================================
+[1/4] Nettoyage et préparation de l'agent JaCoCo...
+[[1;34mINFO[m] Scanning for projects...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--------------------------< [0;36mfr.ensimag:Deca[0;1m >---------------------------[m
+[[1;34mINFO[m] [1mBuilding Deca Compiler 0.0.1-SNAPSHOT[m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-clean-plugin/2.5/maven-clean-plugin-2.5.pom
+Progress (1): 3.9 kB                    Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-clean-plugin/2.5/maven-clean-plugin-2.5.pom (3.9 kB at 5.5 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-plugins/22/maven-plugins-22.pom
+Progress (1): 4.1 kBProgress (1): 8.2 kBProgress (1): 12 kB Progress (1): 13 kB                   Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-plugins/22/maven-plugins-22.pom (13 kB at 150 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-clean-plugin/2.5/maven-clean-plugin-2.5.jar
+Progress (1): 2.3/25 kBProgress (1): 5.0/25 kBProgress (1): 7.7/25 kBProgress (1): 10/25 kB Progress (1): 13/25 kBProgress (1): 16/25 kBProgress (1): 18/25 kBProgress (1): 21/25 kBProgress (1): 24/25 kBProgress (1): 25 kB                      Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-clean-plugin/2.5/maven-clean-plugin-2.5.jar (25 kB at 249 kB/s)
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-clean-plugin:2.5:clean[m [1m(default-clean)[m @ [36mDeca[0;1m ---[m
+Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-utils/3.0/plexus-utils-3.0.pom
+Progress (1): 4.1 kB                    Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-utils/3.0/plexus-utils-3.0.pom (4.1 kB at 45 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/sonatype/spice/spice-parent/16/spice-parent-16.pom
+Progress (1): 4.1 kBProgress (1): 8.2 kBProgress (1): 8.4 kB                    Downloaded from central: https://repo.maven.apache.org/maven2/org/sonatype/spice/spice-parent/16/spice-parent-16.pom (8.4 kB at 54 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-utils/3.0/plexus-utils-3.0.jar
+Progress (1): 2.3/226 kBProgress (1): 5.0/226 kBProgress (1): 9.1/226 kBProgress (1): 12/226 kB Progress (1): 16/226 kBProgress (1): 20/226 kBProgress (1): 24/226 kBProgress (1): 28/226 kBProgress (1): 32/226 kBProgress (1): 36/226 kBProgress (1): 40/226 kBProgress (1): 44/226 kBProgress (1): 48/226 kBProgress (1): 53/226 kBProgress (1): 57/226 kBProgress (1): 61/226 kBProgress (1): 65/226 kBProgress (1): 69/226 kBProgress (1): 73/226 kBProgress (1): 77/226 kBProgress (1): 79/226 kBProgress (1): 83/226 kBProgress (1): 87/226 kBProgress (1): 92/226 kBProgress (1): 96/226 kBProgress (1): 100/226 kBProgress (1): 104/226 kBProgress (1): 108/226 kBProgress (1): 112/226 kBProgress (1): 116/226 kBProgress (1): 120/226 kBProgress (1): 124/226 kBProgress (1): 128/226 kBProgress (1): 130/226 kBProgress (1): 135/226 kBProgress (1): 139/226 kBProgress (1): 143/226 kBProgress (1): 147/226 kBProgress (1): 151/226 kBProgress (1): 155/226 kBProgress (1): 159/226 kBProgress (1): 163/226 kBProgress (1): 167/226 kBProgress (1): 171/226 kBProgress (1): 176/226 kBProgress (1): 180/226 kBProgress (1): 184/226 kBProgress (1): 188/226 kBProgress (1): 192/226 kBProgress (1): 196/226 kBProgress (1): 200/226 kBProgress (1): 204/226 kBProgress (1): 208/226 kBProgress (1): 212/226 kBProgress (1): 217/226 kBProgress (1): 221/226 kBProgress (1): 225/226 kBProgress (1): 226 kB                        Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-utils/3.0/plexus-utils-3.0.jar (226 kB at 709 kB/s)
+[[1;34mINFO[m] Deleting /home/gl/projet_gl/target
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.6.2:enforce[m [1m(enforce-maven)[m @ [36mDeca[0;1m ---[m
+[[1;34mINFO[m] Rule 0: org.apache.maven.enforcer.rules.version.RequireMavenVersion passed
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-dependency-plugin:3.9.0:build-classpath[m [1m(build-classpath)[m @ [36mDeca[0;1m ---[m
+[[1;34mINFO[m] Wrote classpath file '/home/gl/projet_gl/target/generated-sources/classpath.txt'.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mantlr4-maven-plugin:4.13.2:antlr4[m [1m(default)[m @ [36mDeca[0;1m ---[m
+[[1;34mINFO[m] ANTLR 4: Processing source directory /home/gl/projet_gl/src/main/antlr4
+[[1;34mINFO[m] Processing grammar: fr/ensimag/deca/syntax/DecaLexer.g4
+[[1;34mINFO[m] Processing grammar: fr/ensimag/deca/syntax/DecaParser.g4
+[[1;33mWARNING[m] warning(125): fr/ensimag/deca/syntax/DecaParser.g4:580:6: implicit definition of token FINAL in parser
+[[1;33mWARNING[m] /home/gl/projet_gl/fr/ensimag/deca/syntax/DecaParser.g4 [580:6]: implicit definition of token FINAL in parser
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.6:resources[m [1m(default-resources)[m @ [36mDeca[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.14.1:compile[m [1m(default-compile)[m @ [36mDeca[0;1m ---[m
+[[1;34mINFO[m] Recompiling the module because of [1mchanged source code[m.
+[[1;34mINFO[m] Compiling 214 source files with javac [debug release 21] to target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mjacoco-maven-plugin:0.8.13:instrument[m [1m(default-instrument)[m @ [36mDeca[0;1m ---[m
+Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-utils/3.0.24/plexus-utils-3.0.24.pom
+Progress (1): 4.1 kBProgress (1): 4.1 kB                    Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-utils/3.0.24/plexus-utils-3.0.24.pom (4.1 kB at 34 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus/4.0/plexus-4.0.pom
+Progress (1): 4.1 kBProgress (1): 8.2 kBProgress (1): 12 kB Progress (1): 16 kBProgress (1): 20 kBProgress (1): 22 kB                   Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus/4.0/plexus-4.0.pom (22 kB at 256 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/sonatype/forge/forge-parent/10/forge-parent-10.pom
+Progress (1): 4.1 kBProgress (1): 8.2 kBProgress (1): 12 kB Progress (1): 14 kB                   Downloaded from central: https://repo.maven.apache.org/maven2/org/sonatype/forge/forge-parent/10/forge-parent-10.pom (14 kB at 149 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/shared/file-management/3.1.0/file-management-3.1.0.pom
+Progress (1): 4.1 kBProgress (1): 4.5 kB                    Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/shared/file-management/3.1.0/file-management-3.1.0.pom (4.5 kB at 54 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/shared/maven-shared-components/36/maven-shared-components-36.pom
+Progress (1): 4.1 kBProgress (1): 4.9 kB                    Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/shared/maven-shared-components/36/maven-shared-components-36.pom (4.9 kB at 27 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/maven-parent/36/maven-parent-36.pom
+Progress (1): 4.1 kBProgress (1): 8.2 kBProgress (1): 12 kB Progress (1): 16 kBProgress (1): 20 kBProgress (1): 25 kBProgress (1): 29 kBProgress (1): 33 kBProgress (1): 37 kBProgress (1): 41 kBProgress (1): 45 kBProgress (1): 45 kB                   Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/maven-parent/36/maven-parent-36.pom (45 kB at 441 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/apache/26/apache-26.pom
+Progress (1): 4.1 kBProgress (1): 8.2 kBProgress (1): 12 kB Progress (1): 16 kBProgress (1): 20 kBProgress (1): 21 kB                   Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/apache/26/apache-26.pom (21 kB at 236 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/reporting/maven-reporting-api/3.0/maven-reporting-api-3.0.pom
+Progress (1): 2.4 kB                    Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/reporting/maven-reporting-api/3.0/maven-reporting-api-3.0.pom (2.4 kB at 28 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/shared/maven-shared-components/15/maven-shared-components-15.pom
+Progress (1): 4.1 kBProgress (1): 8.2 kBProgress (1): 9.3 kB                    Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/shared/maven-shared-components/15/maven-shared-components-15.pom (9.3 kB at 110 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/maven-parent/16/maven-parent-16.pom
+Progress (1): 4.1 kBProgress (1): 8.2 kBProgress (1): 12 kB Progress (1): 16 kBProgress (1): 20 kBProgress (1): 23 kB                   Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/maven-parent/16/maven-parent-16.pom (23 kB at 284 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/doxia/doxia-sink-api/1.0/doxia-sink-api-1.0.pom
+Progress (1): 1.4 kB                    Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/doxia/doxia-sink-api/1.0/doxia-sink-api-1.0.pom (1.4 kB at 17 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/doxia/doxia/1.0/doxia-1.0.pom
+Progress (1): 4.1 kBProgress (1): 8.2 kBProgress (1): 9.6 kB                    Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/doxia/doxia/1.0/doxia-1.0.pom (9.6 kB at 116 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/maven-parent/10/maven-parent-10.pom
+Progress (1): 4.1 kBProgress (1): 8.2 kBProgress (1): 12 kB Progress (1): 16 kBProgress (1): 20 kBProgress (1): 25 kBProgress (1): 29 kBProgress (1): 32 kB                   Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/maven-parent/10/maven-parent-10.pom (32 kB at 320 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/jacoco/org.jacoco.core/0.8.13/org.jacoco.core-0.8.13.pom
+Progress (1): 2.1 kB                    Downloaded from central: https://repo.maven.apache.org/maven2/org/jacoco/org.jacoco.core/0.8.13/org.jacoco.core-0.8.13.pom (2.1 kB at 24 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/ow2/asm/asm-commons/9.8/asm-commons-9.8.pom
+Progress (1): 2.8 kB                    Downloaded from central: https://repo.maven.apache.org/maven2/org/ow2/asm/asm-commons/9.8/asm-commons-9.8.pom (2.8 kB at 34 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/ow2/asm/asm-tree/9.8/asm-tree-9.8.pom
+Progress (1): 2.6 kB                    Downloaded from central: https://repo.maven.apache.org/maven2/org/ow2/asm/asm-tree/9.8/asm-tree-9.8.pom (2.6 kB at 30 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/jacoco/org.jacoco.report/0.8.13/org.jacoco.report-0.8.13.pom
+Progress (1): 1.9 kB                    Downloaded from central: https://repo.maven.apache.org/maven2/org/jacoco/org.jacoco.report/0.8.13/org.jacoco.report-0.8.13.pom (1.9 kB at 9.6 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-utils/3.0.24/plexus-utils-3.0.24.jar
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/shared/file-management/3.1.0/file-management-3.1.0.jar
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/reporting/maven-reporting-api/3.0/maven-reporting-api-3.0.jar
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/doxia/doxia-sink-api/1.0/doxia-sink-api-1.0.jar
+Downloading from central: https://repo.maven.apache.org/maven2/org/jacoco/org.jacoco.core/0.8.13/org.jacoco.core-0.8.13.jar
+Progress (1): 4.1/223 kBProgress (1): 7.7/223 kBProgress (1): 12/223 kB Progress (1): 16/223 kBProgress (1): 20/223 kBProgress (1): 24/223 kBProgress (1): 28/223 kBProgress (1): 32/223 kBProgress (1): 36/223 kBProgress (1): 40/223 kBProgress (1): 45/223 kBProgress (1): 49/223 kBProgress (1): 53/223 kBProgress (1): 57/223 kBProgress (1): 61/223 kBProgress (1): 65/223 kBProgress (1): 69/223 kBProgress (1): 73/223 kBProgress (1): 77/223 kBProgress (1): 81/223 kBProgress (1): 86/223 kBProgress (1): 90/223 kBProgress (1): 94/223 kBProgress (1): 98/223 kBProgress (1): 102/223 kBProgress (1): 106/223 kBProgress (1): 110/223 kBProgress (1): 114/223 kBProgress (2): 114/223 kB | 2.3/10 kBProgress (2): 114/223 kB | 5.0/10 kBProgress (2): 114/223 kB | 7.5/10 kBProgress (2): 114/223 kB | 10 kB    Progress (2): 118/223 kB | 10 kBProgress (2): 122/223 kB | 10 kBProgress (2): 127/223 kB | 10 kBProgress (2): 131/223 kB | 10 kBProgress (2): 135/223 kB | 10 kBProgress (2): 139/223 kB | 10 kBProgress (2): 143/223 kB | 10 kBProgress (2): 147/223 kB | 10 kBProgress (3): 147/223 kB | 10 kB | 2.3/247 kBProgress (3): 147/223 kB | 10 kB | 5.0/247 kBProgress (3): 147/223 kB | 10 kB | 7.7/247 kBProgress (3): 147/223 kB | 10 kB | 10/247 kB Progress (3): 147/223 kB | 10 kB | 13/247 kBProgress (3): 147/223 kB | 10 kB | 16/247 kBProgress (3): 147/223 kB | 10 kB | 18/247 kBProgress (3): 147/223 kB | 10 kB | 21/247 kBProgress (3): 147/223 kB | 10 kB | 24/247 kB                                            Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/doxia/doxia-sink-api/1.0/doxia-sink-api-1.0.jar (10 kB at 36 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/ow2/asm/asm-commons/9.8/asm-commons-9.8.jar
+Progress (3): 147/223 kB | 24/247 kB | 2.3/11 kBProgress (3): 147/223 kB | 24/247 kB | 4.7/11 kBProgress (3): 147/223 kB | 24/247 kB | 7.5/11 kBProgress (3): 147/223 kB | 24/247 kB | 10/11 kB Progress (3): 147/223 kB | 24/247 kB | 11 kB   Progress (4): 147/223 kB | 24/247 kB | 11 kB | 2.3/36 kBProgress (4): 147/223 kB | 24/247 kB | 11 kB | 5.0/36 kBProgress (4): 147/223 kB | 24/247 kB | 11 kB | 7.7/36 kBProgress (4): 147/223 kB | 24/247 kB | 11 kB | 10/36 kB Progress (4): 147/223 kB | 24/247 kB | 11 kB | 13/36 kBProgress (4): 147/223 kB | 24/247 kB | 11 kB | 16/36 kBProgress (4): 147/223 kB | 24/247 kB | 11 kB | 19/36 kBProgress (4): 147/223 kB | 24/247 kB | 11 kB | 21/36 kBProgress (4): 147/223 kB | 24/247 kB | 11 kB | 24/36 kBProgress (4): 147/223 kB | 24/247 kB | 11 kB | 27/36 kBProgress (4): 147/223 kB | 24/247 kB | 11 kB | 30/36 kBProgress (4): 147/223 kB | 24/247 kB | 11 kB | 32/36 kBProgress (4): 147/223 kB | 24/247 kB | 11 kB | 35/36 kBProgress (4): 147/223 kB | 24/247 kB | 11 kB | 36 kB   Progress (4): 147/223 kB | 27/247 kB | 11 kB | 36 kBProgress (4): 147/223 kB | 29/247 kB | 11 kB | 36 kBProgress (4): 147/223 kB | 32/247 kB | 11 kB | 36 kBProgress (4): 147/223 kB | 35/247 kB | 11 kB | 36 kBProgress (4): 147/223 kB | 38/247 kB | 11 kB | 36 kBProgress (4): 147/223 kB | 40/247 kB | 11 kB | 36 kBProgress (4): 147/223 kB | 43/247 kB | 11 kB | 36 kBProgress (4): 147/223 kB | 46/247 kB | 11 kB | 36 kBProgress (4): 147/223 kB | 49/247 kB | 11 kB | 36 kBProgress (4): 147/223 kB | 51/247 kB | 11 kB | 36 kBProgress (4): 147/223 kB | 54/247 kB | 11 kB | 36 kBProgress (4): 151/223 kB | 54/247 kB | 11 kB | 36 kBProgress (4): 155/223 kB | 54/247 kB | 11 kB | 36 kBProgress (4): 159/223 kB | 54/247 kB | 11 kB | 36 kBProgress (4): 163/223 kB | 54/247 kB | 11 kB | 36 kBProgress (5): 163/223 kB | 54/247 kB | 11 kB | 36 kB | 2.3/73 kBProgress (5): 163/223 kB | 54/247 kB | 11 kB | 36 kB | 5.0/73 kBProgress (5): 163/223 kB | 54/247 kB | 11 kB | 36 kB | 7.7/73 kBProgress (5): 163/223 kB | 54/247 kB | 11 kB | 36 kB | 10/73 kB Progress (5): 163/223 kB | 54/247 kB | 11 kB | 36 kB | 13/73 kBProgress (5): 163/223 kB | 54/247 kB | 11 kB | 36 kB | 16/73 kBProgress (5): 163/223 kB | 54/247 kB | 11 kB | 36 kB | 19/73 kBProgress (5): 163/223 kB | 54/247 kB | 11 kB | 36 kB | 21/73 kBProgress (5): 163/223 kB | 54/247 kB | 11 kB | 36 kB | 24/73 kBProgress (5): 163/223 kB | 54/247 kB | 11 kB | 36 kB | 27/73 kBProgress (5): 163/223 kB | 54/247 kB | 11 kB | 36 kB | 30/73 kBProgress (5): 163/223 kB | 54/247 kB | 11 kB | 36 kB | 32/73 kBProgress (5): 163/223 kB | 54/247 kB | 11 kB | 36 kB | 35/73 kBProgress (5): 163/223 kB | 54/247 kB | 11 kB | 36 kB | 38/73 kBProgress (5): 163/223 kB | 54/247 kB | 11 kB | 36 kB | 41/73 kBProgress (5): 163/223 kB | 54/247 kB | 11 kB | 36 kB | 45/73 kB                                                               Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/reporting/maven-reporting-api/3.0/maven-reporting-api-3.0.jar (11 kB at 21 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/ow2/asm/asm-tree/9.8/asm-tree-9.8.jar
+Progress (4): 167/223 kB | 54/247 kB | 36 kB | 45/73 kBProgress (4): 172/223 kB | 54/247 kB | 36 kB | 45/73 kBProgress (4): 176/223 kB | 54/247 kB | 36 kB | 45/73 kBProgress (4): 180/223 kB | 54/247 kB | 36 kB | 45/73 kBProgress (4): 180/223 kB | 58/247 kB | 36 kB | 45/73 kBProgress (4): 180/223 kB | 62/247 kB | 36 kB | 45/73 kBProgress (4): 180/223 kB | 66/247 kB | 36 kB | 45/73 kBProgress (4): 180/223 kB | 70/247 kB | 36 kB | 45/73 kBProgress (4): 180/223 kB | 74/247 kB | 36 kB | 45/73 kBProgress (4): 184/223 kB | 74/247 kB | 36 kB | 45/73 kBProgress (4): 188/223 kB | 74/247 kB | 36 kB | 45/73 kBProgress (4): 192/223 kB | 74/247 kB | 36 kB | 45/73 kBProgress (4): 196/223 kB | 74/247 kB | 36 kB | 45/73 kBProgress (4): 200/223 kB | 74/247 kB | 36 kB | 45/73 kBProgress (4): 204/223 kB | 74/247 kB | 36 kB | 45/73 kBProgress (4): 208/223 kB | 74/247 kB | 36 kB | 45/73 kBProgress (4): 213/223 kB | 74/247 kB | 36 kB | 45/73 kBProgress (4): 217/223 kB | 74/247 kB | 36 kB | 45/73 kBProgress (4): 221/223 kB | 74/247 kB | 36 kB | 45/73 kBProgress (4): 223 kB | 74/247 kB | 36 kB | 45/73 kB                                                       Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/shared/file-management/3.1.0/file-management-3.1.0.jar (36 kB at 69 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/jacoco/org.jacoco.report/0.8.13/org.jacoco.report-0.8.13.jar
+Progress (3): 223 kB | 79/247 kB | 45/73 kBProgress (3): 223 kB | 81/247 kB | 45/73 kBProgress (3): 223 kB | 81/247 kB | 49/73 kBProgress (3): 223 kB | 81/247 kB | 53/73 kBProgress (3): 223 kB | 81/247 kB | 57/73 kBProgress (3): 223 kB | 81/247 kB | 61/73 kBProgress (3): 223 kB | 85/247 kB | 61/73 kBProgress (3): 223 kB | 89/247 kB | 61/73 kBProgress (3): 223 kB | 93/247 kB | 61/73 kBProgress (3): 223 kB | 97/247 kB | 61/73 kBProgress (3): 223 kB | 101/247 kB | 61/73 kBProgress (3): 223 kB | 105/247 kB | 61/73 kBProgress (3): 223 kB | 109/247 kB | 61/73 kBProgress (3): 223 kB | 114/247 kB | 61/73 kBProgress (4): 223 kB | 114/247 kB | 61/73 kB | 2.3/52 kBProgress (4): 223 kB | 114/247 kB | 61/73 kB | 5.0/52 kBProgress (4): 223 kB | 114/247 kB | 61/73 kB | 7.7/52 kBProgress (4): 223 kB | 114/247 kB | 61/73 kB | 10/52 kB Progress (4): 223 kB | 114/247 kB | 61/73 kB | 13/52 kBProgress (4): 223 kB | 114/247 kB | 61/73 kB | 16/52 kBProgress (4): 223 kB | 114/247 kB | 61/73 kB | 19/52 kBProgress (4): 223 kB | 114/247 kB | 61/73 kB | 21/52 kBProgress (4): 223 kB | 114/247 kB | 61/73 kB | 24/52 kBProgress (4): 223 kB | 114/247 kB | 61/73 kB | 27/52 kBProgress (4): 223 kB | 114/247 kB | 61/73 kB | 30/52 kBProgress (4): 223 kB | 114/247 kB | 61/73 kB | 33/52 kBProgress (4): 223 kB | 114/247 kB | 61/73 kB | 36/52 kBProgress (4): 223 kB | 114/247 kB | 61/73 kB | 38/52 kBProgress (4): 223 kB | 114/247 kB | 61/73 kB | 41/52 kBProgress (4): 223 kB | 114/247 kB | 61/73 kB | 45/52 kBProgress (4): 223 kB | 114/247 kB | 61/73 kB | 49/52 kBProgress (4): 223 kB | 114/247 kB | 61/73 kB | 52 kB                                                       Downloaded from central: https://repo.maven.apache.org/maven2/org/jacoco/org.jacoco.core/0.8.13/org.jacoco.core-0.8.13.jar (223 kB at 305 kB/s)
+Progress (3): 118/247 kB | 61/73 kB | 52 kBProgress (3): 122/247 kB | 61/73 kB | 52 kBProgress (3): 126/247 kB | 61/73 kB | 52 kBProgress (3): 130/247 kB | 61/73 kB | 52 kBProgress (3): 134/247 kB | 61/73 kB | 52 kBProgress (3): 138/247 kB | 61/73 kB | 52 kBProgress (3): 142/247 kB | 61/73 kB | 52 kBProgress (3): 146/247 kB | 61/73 kB | 52 kBProgress (3): 150/247 kB | 61/73 kB | 52 kBProgress (3): 154/247 kB | 61/73 kB | 52 kBProgress (3): 159/247 kB | 61/73 kB | 52 kBProgress (3): 163/247 kB | 61/73 kB | 52 kBProgress (3): 167/247 kB | 61/73 kB | 52 kBProgress (3): 171/247 kB | 61/73 kB | 52 kBProgress (3): 175/247 kB | 61/73 kB | 52 kBProgress (3): 179/247 kB | 61/73 kB | 52 kBProgress (3): 183/247 kB | 61/73 kB | 52 kBProgress (3): 187/247 kB | 61/73 kB | 52 kBProgress (3): 191/247 kB | 61/73 kB | 52 kBProgress (3): 195/247 kB | 61/73 kB | 52 kBProgress (3): 198/247 kB | 61/73 kB | 52 kBProgress (3): 202/247 kB | 61/73 kB | 52 kBProgress (3): 206/247 kB | 61/73 kB | 52 kBProgress (3): 210/247 kB | 61/73 kB | 52 kBProgress (3): 214/247 kB | 61/73 kB | 52 kBProgress (3): 218/247 kB | 61/73 kB | 52 kBProgress (3): 222/247 kB | 61/73 kB | 52 kBProgress (3): 226/247 kB | 61/73 kB | 52 kBProgress (3): 230/247 kB | 61/73 kB | 52 kBProgress (3): 234/247 kB | 61/73 kB | 52 kBProgress (3): 239/247 kB | 61/73 kB | 52 kBProgress (3): 243/247 kB | 61/73 kB | 52 kBProgress (3): 247/247 kB | 61/73 kB | 52 kBProgress (3): 247 kB | 61/73 kB | 52 kB    Progress (3): 247 kB | 65/73 kB | 52 kBProgress (3): 247 kB | 67/73 kB | 52 kB                                       Downloaded from central: https://repo.maven.apache.org/maven2/org/ow2/asm/asm-tree/9.8/asm-tree-9.8.jar (52 kB at 66 kB/s)
+Progress (3): 247 kB | 67/73 kB | 4.1/131 kBProgress (3): 247 kB | 67/73 kB | 7.7/131 kBProgress (3): 247 kB | 67/73 kB | 12/131 kB Progress (3): 247 kB | 67/73 kB | 16/131 kBProgress (3): 247 kB | 67/73 kB | 20/131 kBProgress (3): 247 kB | 67/73 kB | 24/131 kBProgress (3): 247 kB | 67/73 kB | 28/131 kBProgress (3): 247 kB | 67/73 kB | 32/131 kBProgress (3): 247 kB | 67/73 kB | 36/131 kBProgress (3): 247 kB | 67/73 kB | 40/131 kBProgress (3): 247 kB | 67/73 kB | 45/131 kBProgress (3): 247 kB | 67/73 kB | 49/131 kBProgress (3): 247 kB | 67/73 kB | 53/131 kBProgress (3): 247 kB | 67/73 kB | 57/131 kBProgress (3): 247 kB | 67/73 kB | 61/131 kBProgress (3): 247 kB | 67/73 kB | 65/131 kBProgress (3): 247 kB | 67/73 kB | 69/131 kBProgress (3): 247 kB | 67/73 kB | 73/131 kBProgress (3): 247 kB | 67/73 kB | 77/131 kBProgress (3): 247 kB | 67/73 kB | 81/131 kB                                           Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-utils/3.0.24/plexus-utils-3.0.24.jar (247 kB at 298 kB/s)
+Progress (2): 67/73 kB | 86/131 kBProgress (2): 67/73 kB | 90/131 kBProgress (2): 67/73 kB | 94/131 kBProgress (2): 67/73 kB | 98/131 kBProgress (2): 71/73 kB | 98/131 kBProgress (2): 73 kB | 98/131 kB   Progress (2): 73 kB | 102/131 kBProgress (2): 73 kB | 106/131 kBProgress (2): 73 kB | 110/131 kBProgress (2): 73 kB | 114/131 kBProgress (2): 73 kB | 118/131 kBProgress (2): 73 kB | 122/131 kBProgress (2): 73 kB | 127/131 kBProgress (2): 73 kB | 131/131 kBProgress (2): 73 kB | 131 kB                                Downloaded from central: https://repo.maven.apache.org/maven2/org/ow2/asm/asm-commons/9.8/asm-commons-9.8.jar (73 kB at 83 kB/s)
+Downloaded from central: https://repo.maven.apache.org/maven2/org/jacoco/org.jacoco.report/0.8.13/org.jacoco.report-0.8.13.jar (131 kB at 144 kB/s)
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.6:testResources[m [1m(default-testResources)[m @ [36mDeca[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /home/gl/projet_gl/src/test/resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.14.1:testCompile[m [1m(default-testCompile)[m @ [36mDeca[0;1m ---[m
+[[1;34mINFO[m] Recompiling the module because of [1mchanged dependency[m.
+[[1;34mINFO[m] Compiling 14 source files with javac [debug release 21] to target/test-classes
+[[1;34mINFO[m] -------------------------------------------------------------
+[[1;33mWARNING[m] COMPILATION WARNING : 
+[[1;34mINFO[m] -------------------------------------------------------------
+[[1;33mWARNING[m] /home/gl/projet_gl/src/test/java/fr/ensimag/deca/context/TestPlusAdvanced.java:[38,27] initMocks(java.lang.Object) in org.mockito.MockitoAnnotations has been deprecated
+[[1;34mINFO[m] 1 warning
+[[1;34mINFO[m] -------------------------------------------------------------
+[[1;34mINFO[m] -------------------------------------------------------------
+[[1;31mERROR[m] COMPILATION ERROR : 
+[[1;34mINFO[m] -------------------------------------------------------------
+[[1;31mERROR[m] /home/gl/projet_gl/src/test/java/fr/ensimag/deca/context/TestPlusWithoutMock.java:[33,12] fr.ensimag.deca.context.TestPlusWithoutMock.DummyIntExpression is not abstract and does not override abstract method codeGenByteExpr(fr.ensimag.deca.DecacCompiler) in fr.ensimag.deca.tree.AbstractExpr
+[[1;34mINFO[m] 1 error
+[[1;34mINFO[m] -------------------------------------------------------------
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;31mBUILD FAILURE[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time:  18.746 s
+[[1;34mINFO[m] Finished at: 2026-01-22T21:58:43+01:00
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;31mERROR[m] Failed to execute goal [32morg.apache.maven.plugins:maven-compiler-plugin:3.14.1:testCompile[m [1m(default-testCompile)[m on project [36mDeca[m: [1;31mCompilation failure[m
+[[1;31mERROR[m] [1;31m/home/gl/projet_gl/src/test/java/fr/ensimag/deca/context/TestPlusWithoutMock.java:[33,12] fr.ensimag.deca.context.TestPlusWithoutMock.DummyIntExpression is not abstract and does not override abstract method codeGenByteExpr(fr.ensimag.deca.DecacCompiler) in fr.ensimag.deca.tree.AbstractExpr[m
+[[1;31mERROR[m] [1;31m[m
+[[1;31mERROR[m] -> [1m[Help 1][m
+[[1;31mERROR[m] 
+[[1;31mERROR[m] To see the full stack trace of the errors, re-run Maven with the [1m-e[m switch.
+[[1;31mERROR[m] Re-run Maven using the [1m-X[m switch to enable full debug logging.
+[[1;31mERROR[m] 
+[[1;31mERROR[m] For more information about the errors and possible solutions, please read the following articles:
+[[1;31mERROR[m] [1m[Help 1][m http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+[2/4] Exécution des tests de SYNTAXE...
+Tests syntaxiques
+Tests INVALIDES
+Test invalide attendu : src/test/deca/syntax/invalid/avecObjet/asm_meth_no_string_body.deca
+Echec attendu
+Test invalide attendu : src/test/deca/syntax/invalid/bas_var_list.deca
+Echec attendu
+Test invalide attendu : src/test/deca/syntax/invalid/cast_missing_parenthesis.deca
+Echec attendu
+Test invalide attendu : src/test/deca/syntax/invalid/chaine_incomplete.deca
+Echec attendu
+Test invalide attendu : src/test/deca/syntax/invalid/incomplete_if.deca
+Echec attendu
+Test invalide attendu : src/test/deca/syntax/invalid/int_too_large_compilation_error.deca
+Echec attendu
+Test invalide attendu : src/test/deca/syntax/invalid/invalid_assign.deca
+Echec attendu
+Test invalide attendu : src/test/deca/syntax/invalid/invalid_char.deca
+Echec attendu
+Test invalide attendu : src/test/deca/syntax/invalid/invalid_class_syntax_but_parse_ok.deca
+Echec attendu
+Test invalide attendu : src/test/deca/syntax/invalid/invalid_identifier.deca
+Echec attendu
+Test invalide attendu : src/test/deca/syntax/invalid/invalid_while.deca
+Echec attendu
+Test invalide attendu : src/test/deca/syntax/invalid/lValue.deca
+Echec attendu
+Test invalide attendu : src/test/deca/syntax/invalid/missing_parenthesis.deca
+Echec attendu
+Test invalide attendu : src/test/deca/syntax/invalid/missing_semicolon.deca
+Echec attendu
+Test invalide attendu : src/test/deca/syntax/invalid/simple_lex.deca
+Echec attendu
+Test invalide attendu : src/test/deca/syntax/invalid/unknown_type.deca
+Echec attendu
+Test invalide attendu : src/test/deca/syntax/invalid/unterminated_comment.deca
+Echec attendu
+Test invalide attendu : src/test/deca/syntax/invalid/untermined_string.deca
+Echec attendu
+Tests VALIDES
+Test valide attendu : src/test/deca/syntax/valid/cast_bool_2.deca
+Succes attendu
+Test valide attendu : src/test/deca/syntax/valid/cast_bool.deca
+Succes attendu
+Test valide attendu : src/test/deca/syntax/valid/cast_float.deca
+Succes attendu
+Test valide attendu : src/test/deca/syntax/valid/cast_int.deca
+Succes attendu
+Test valide attendu : src/test/deca/syntax/valid/decompilation.deca
+Succes attendu
+Test valide attendu : src/test/deca/syntax/valid/empty_main.deca
+Succes attendu
+Test valide attendu : src/test/deca/syntax/valid/empty_program.deca
+Succes attendu
+Test valide attendu : src/test/deca/syntax/valid/expressions_ok.deca
+Succes attendu
+Test valide attendu : src/test/deca/syntax/valid/final_is_identifier_2.deca
+Succes attendu
+Test valide attendu : src/test/deca/syntax/valid/final_is_identifier.deca
+Succes attendu
+Test valide attendu : src/test/deca/syntax/valid/hello.deca
+Succes attendu
+Test valide attendu : src/test/deca/syntax/valid/instructions_ok.deca
+Succes attendu
+Test valide attendu : src/test/deca/syntax/valid/test_printx_decomp.deca
+Succes attendu
+Tous les tests syntaxiques sont passes
+[3/4] Exécution des tests de CONTEXTE...
+Tests contextuels
+Tests INVALIDES
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/access_private_field_outside_custom.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/assign_to_final_field.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/assign_to_protected_field_custom.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/assign_to_protected_field_from_foreign_class.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/call_method_arg_type_custom.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/call_method_on_boolean.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/call_method_on_float.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/call_method_on_int.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/call_method_on_string.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/call_method_wrong_arg_count_0.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/call_method_wrong_arg_count_1.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/call_method_wrong_arg_type_bool_int.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/call_method_wrong_arg_type_int_float.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/call_method_wrong_arg_type_string_int.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/call_unknown_method_custom.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/call_unknown_method.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/cast_incompatible.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/cast_invalid_class.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/cast_invalid.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/cast_type_incompatible.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/cast_void.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/class_cycle_direct_custom.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/class_cycle_direct.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/class_cycle_indirect_3.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/class_extends_nonclass_type.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/class_extends_unknown.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/class_name_conflict_builtin.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/class_name_conflicts_with_builtin.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/class_with_void_field.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/double_method_asm.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/duplicate_class_name_custom.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/duplicate_class_name.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/duplicate_field_same_class.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/duplicate_method_same_sig.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/duplicate_param_name.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/extends_void.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/field_assign_wrong_object_type_custom.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/field_inherited_then_redeclared_illegal.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/field_redeclaration_conflict_with_method.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/field_shadow_illegal_custom.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/field_visibility_mismatch_in_subclass.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/heritage_not_field_asm.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/illegal_this_in_main_assignment.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/illegal_this_in_main_field_access.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/instanceof_invalid.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/instanceof_invalid_type.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/is_instance_of_inconnu.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/is_instance_of_lvalue.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/is_instance_of_rvalue.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/local_var_conflicts_param.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/method_call_in_static_context_custom.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/method_call_on_wrong_class_custom.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/method_call_with_non_rvalue_arg.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/method_overload_not_allowed_same_name.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/method_param_type_class_mismatch_custom.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/method_redeclaration_conflict_with_field.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/method_return_object_mismatch_custom.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/method_return_type_void_in_expr.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/non_existant_type_asm.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/override_asm.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/param_decl_void.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/protected_field_access_outside.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/protected_field_access_wrong_object_type.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/retour_method_asm.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/return_in_void_method_value.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/return_main.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/return_missing_in_non_void.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/return_missing_non_void_custom.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/return_type_mismatch_bool_int.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/return_type_mismatch_custom.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/return_type_mismatch_int_float.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/selection_on_boolean.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/selection_on_float.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/selection_on_int.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/selection_unknown_field.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/variable_method.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/write_to_unknown_field.deca
+Échec attendu
+./src/test/script/all-context-tests-avecObjet.sh: 31: Tests: not found
+Tests VALIDES
+Test valide attendu : src/test/deca/context/valid/avecObjet/asm_field_access.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/asm_hello_world.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/asm_logic.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/asm_param_sum.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/asm_return_int.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/call_method_no_params.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/call_method_one_param_float.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/call_method_one_param_int.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/call_method_return_float_used.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/call_method_return_int_used.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/call_method_two_params.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/class_empty.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/class_extends.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/class_field_init_and_method.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/class_field_init_in_method.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/class_method_uses_field.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/class_method_with_params.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/class_multiple_methods.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/class_one_field_float.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/class_one_field_int.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/class_one_method_int_return.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/class_one_method_void.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/class_selection_this.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/class_selection_unitaire.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/class_two_fields.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/class_with_main_new.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/class_with_string_field.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/eq_on_objects.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/field_assign_from_method_return.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/field_default_init_read_ok.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/field_shadow_local_var_ok.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/field_shadow_param_ok.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/field_write_then_read_ok.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/is_instance_of.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/is_instance_of_hierarchy.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/local_var_conflicts_field_illegal.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/method_body_with_control_ok.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/method_call_chain_2.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/method_call_chain_3.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/method_call_on_new_object.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/method_call_on_var_object.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/method_call_with_expr_args.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/method_call_with_expression_args.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/method_local_vars_ok.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/method_param_shadow_field_ok.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/method_return_complex_expr.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/method_returns_in_all_paths_ok.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/method_selection.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/method_with_var_instr.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/mutual_calls_ok.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/nested_method_calls.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/nested_method_calls_ok.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/override_call_child_impl.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/override_call_via_base_ref.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/override_subtype.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/protected_field_access_chain_ok.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/protected_field_access_from_subclass.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/protected_field_access_subclass_object_of_subclass.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/protected_field_access_subclass_this.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/public_field_access_other_object.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/public_field_access_same_class.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/recursion_simple_allowed.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/return_conv_float.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/return_int_expr_ok.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/selection_nested_three_levels.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/selection_nested_two_levels.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/selection_on_new_object.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/selection_on_var_object.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/test_fields_initialise.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/test_fields_non_initialise.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/test_poly.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/this_field_assign_float_from_int_conv.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/this_field_assign_int.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/two_classes_independent.deca
+Succès attendu
+Tous les tests contextuels sont passés
+Tests contextuels
+Tests INVALIDES
+Test invalide attendu : src/test/deca/context/invalid/sansObjet/affect-incompatible.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/sansObjet/cast_bool_2.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/sansObjet/cast_invalid_type.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/sansObjet/convBoolFloat.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/sansObjet/convFloatInt.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/sansObjet/declVarVoid.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/sansObjet/doubleDefinition.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/sansObjet/incompatible.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/sansObjet/inegaliteBool.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/sansObjet/initialisation.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/sansObjet/moduloFloat.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/sansObjet/nonBoolIf.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/sansObjet/nonBoolWhile.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/sansObjet/nonDecl.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/sansObjet/opArType.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/sansObjet/opBoolType.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/sansObjet/typeComp.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/sansObjet/typeNonDecl.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/sansObjet/unaryMinus.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/sansObjet/utilisationAvantDecl.deca
+Échec attendu
+./src/test/script/all-context-tests-sansObjet.sh: 31: Tests: not found
+Tests VALIDES
+Test valide attendu : src/test/deca/context/valid/sansObjet/add.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/sansObjet/asignAndif.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/sansObjet/AssignAndWhile.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/sansObjet/assign.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/sansObjet/calculAr.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/sansObjet/cast_bool_1.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/sansObjet/cast.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/sansObjet/castDirect.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/sansObjet/cast_implicite.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/sansObjet/comparaison.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/sansObjet/conFloatExp.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/sansObjet/declVar.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/sansObjet/declVarNoInit-1.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/sansObjet/declVarNoInit.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/sansObjet/float_div_zero.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/sansObjet/hello-world.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/sansObjet/instructionVide.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/sansObjet/mod_zero.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/sansObjet/non_initialise.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/sansObjet/opArFloat.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/sansObjet/opBool.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/sansObjet/operation.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/sansObjet/overflow.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/sansObjet/sansObjet.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/sansObjet/unaire.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/sansObjet/while.deca
+Succès attendu
+Tous les tests contextuels sont passés
+[4/4] Exécution des tests de CODEGEN (Génération de code)...
+./src/test/script/all-tests.sh: line 24: ./src/test/script/all-codegen-tests-avecObjet.sh: No such file or directory
+./src/test/script/all-tests.sh: line 25: ./src/test/script/all-codegen-tests-sansObjet.sh: No such file or directory
+[4/4] Exécution des tests
+---------------------------------------------
+    EXÉCUTION DES TESTS DECA
+---------------------------------------------
+Fichier : asm_acces_champ.deca
+Sortie  : 7
+---------------------------------------------
+Fichier : asm_chaine.deca
+Sortie  : space
+---------------------------------------------
+Fichier : asm_commentaires_absents.deca
+Sortie  : Hello
+done
+---------------------------------------------
+Fichier : asm_field_access.deca
+Sortie  : Val: 99
+---------------------------------------------
+Fichier : asm_hello_world.deca
+Sortie  : Hello from ASM!
+---------------------------------------------
+Fichier : asm_label_branchement.deca
+Sortie  : OK
+---------------------------------------------
+Fichier : asm_lignes_reelles.deca
+Sortie  : L1
+L2
+---------------------------------------------
+Fichier : asm_logic.deca
+Sortie  : Max is 20
+---------------------------------------------
+Fichier : asm_param_sum.deca
+Sortie  : 15
+---------------------------------------------
+Fichier : asm_registres.deca
+Sortie  : 42
+---------------------------------------------
+Fichier : asm_return_int.deca
+Sortie  : 42
+---------------------------------------------
+Fichier : asm_rts_espaces.deca
+Sortie  : before
+---------------------------------------------
+Fichier : call_method_no_params.deca
+Sortie  : ok
+---------------------------------------------
+Fichier : call_method_one_param_float.deca
+Sortie  : 1.50000e+00
+---------------------------------------------
+Fichier : call_method_one_param_int.deca
+Sortie  : 1
+---------------------------------------------
+Fichier : call_method_return_float_used.deca
+Sortie  : 4.50000e+00
+---------------------------------------------
+Fichier : call_method_return_int_used.deca
+Sortie  : 3
+---------------------------------------------
+Fichier : call_method_two_params.deca
+Sortie  : 1
+2.50000e+00
+---------------------------------------------
+Fichier : cast_instance_of.deca
+Sortie  : B
+C'est un B
+null cast ok
+---------------------------------------------
+Fichier : cast_valid.deca
+Sortie  : 5
+5.00000e+00
+Null cast ok
+---------------------------------------------
+Fichier : class_empty.deca
+Sortie  : 
+---------------------------------------------
+Fichier : class_extends.deca
+Sortie  : 
+---------------------------------------------
+Fichier : class_field_init_and_method.deca
+Sortie  : 
+---------------------------------------------
+Fichier : class_field_init_in_method.deca
+Sortie  : 
+---------------------------------------------
+Fichier : class_method_uses_field.deca
+Sortie  : 
+---------------------------------------------
+Fichier : class_method_with_params.deca
+Sortie  : 
+---------------------------------------------
+Fichier : class_multiple_methods.deca
+Sortie  : 
+---------------------------------------------
+Fichier : class_one_field_float.deca
+Sortie  : 
+---------------------------------------------
+Fichier : class_one_field_int.deca
+Sortie  : 
+---------------------------------------------
+Fichier : class_one_method_int_return.deca
+Sortie  : 
+---------------------------------------------
+Fichier : class_one_method_void.deca
+Sortie  : 
+---------------------------------------------
+Fichier : class_selection_this.deca
+Sortie  : 
+---------------------------------------------
+Fichier : class_selection_unitaire.deca
+Sortie  : a.x = 42
+---------------------------------------------
+Fichier : class_two_fields.deca
+Sortie  : 
+---------------------------------------------
+Fichier : class_with_main_new.deca
+Sortie  : 
+---------------------------------------------
+Fichier : class_with_string_field.deca
+Sortie  : 
+---------------------------------------------
+Fichier : down_cast.deca
+Sortie  : ok
+---------------------------------------------
+Fichier : fact.deca
+Sortie  : 120
+---------------------------------------------
+Fichier : field_assign_from_method_return.deca
+Sortie  : 
+---------------------------------------------
+Fichier : field_default_init_read_ok.deca
+Sortie  : 0
+---------------------------------------------
+Fichier : field_shadow_local_var_ok.deca
+Sortie  : 
+---------------------------------------------
+Fichier : field_shadow_param_ok.deca
+Sortie  : 
+---------------------------------------------
+Fichier : field_write_then_read_ok.deca
+Sortie  : 11
+---------------------------------------------
+Fichier : instanceof_valid.deca
+Sortie  : A is A
+B is A
+A(B) is B
+A is not B
+null is not A
+---------------------------------------------
+Fichier : is_instance_of.deca
+Sortie  : 1
+0
+---------------------------------------------
+Fichier : is_instance_of_hierarchy.deca
+Sortie  : 0
+---------------------------------------------
+Fichier : is_instance_of_null.deca
+Sortie  : 0
+0
+---------------------------------------------
+Fichier : local_var_conflicts_field_illegal.deca
+Sortie  : 
+---------------------------------------------
+Fichier : local_var.deca
+Sortie  : 
+---------------------------------------------
+Fichier : method_body_with_control_ok.deca
+Sortie  : 2
+---------------------------------------------
+Fichier : method_call_chain_2.deca
+Sortie  : 3
+---------------------------------------------
+Fichier : method_call_chain_3.deca
+Sortie  : 4
+---------------------------------------------
+Fichier : method_call_on_new_object.deca
+Sortie  : 1
+---------------------------------------------
+Fichier : method_call_on_var_object.deca
+Sortie  : 2
+---------------------------------------------
+Fichier : method_call_with_expr_args.deca
+Sortie  : 10
+---------------------------------------------
+Fichier : method_call_with_expression_args.deca
+Sortie  : 
+---------------------------------------------
+Fichier : method_local_vars_ok.deca
+Sortie  : 1
+2.00000e+00
+---------------------------------------------
+Fichier : method_param_shadow_field_ok.deca
+Sortie  : 3
+---------------------------------------------
+Fichier : method_return_complex_expr.deca
+Sortie  : 
+---------------------------------------------
+Fichier : method_returns_in_all_paths_ok.deca
+Sortie  : 1
+---------------------------------------------
+Fichier : method_selection.deca
+Sortie  : 
+---------------------------------------------
+Fichier : method_with_var_instr.deca
+Sortie  : 
+---------------------------------------------
+Fichier : mutual_calls_ok.deca
+Sortie  : 0
+---------------------------------------------
+Fichier : nested_method_calls.deca
+Sortie  : 2
+---------------------------------------------
+Fichier : nested_method_calls_ok.deca
+Sortie  : 
+---------------------------------------------
+Fichier : override_call_child_impl.deca
+Sortie  : 2
+---------------------------------------------
+Fichier : override_call_via_base_ref.deca
+Sortie  : 2
+---------------------------------------------
+Fichier : polym_meth.deca
+Sortie  : Je suis un Animal
+Je suis un Chien
+Je suis un Chien
+---------------------------------------------
+Fichier : protected_field_access_chain_ok.deca
+Sortie  : 
+---------------------------------------------
+Fichier : protected_field_access_from_subclass.deca
+Sortie  : 
+---------------------------------------------
+Fichier : protected_field_access_subclass_object_of_subclass.deca
+Sortie  : 
+---------------------------------------------
+Fichier : protected_field_access_subclass_this.deca
+Sortie  : 
+---------------------------------------------
+Fichier : public_field_access_other_object.deca
+Sortie  : 2
+---------------------------------------------
+Fichier : public_field_access_same_class.deca
+Sortie  : 
+---------------------------------------------
+Fichier : recursion_simple_allowed.deca
+Sortie  : 0
+---------------------------------------------
+Fichier : return_int_expr_ok.deca
+Sortie  : 
+---------------------------------------------
+Fichier : selection_nested_three_levels.deca
+Sortie  : 10
+---------------------------------------------
+Fichier : selection_nested_two_levels.deca
+Sortie  : 9
+---------------------------------------------
+Fichier : selection_on_new_object.deca
+Sortie  : 0
+---------------------------------------------
+Fichier : selection_on_var_object.deca
+Sortie  : 8
+---------------------------------------------
+Fichier : test_cast_1.deca
+Sortie  : 3
+-3
+---------------------------------------------
+Fichier : test_cast_4.deca
+Sortie  : ok
+---------------------------------------------
+Fichier : test_cast_objet.deca
+Sortie  : B
+B
+ok
+---------------------------------------------
+Fichier : test_fields_initialise.deca
+Sortie  : 
+---------------------------------------------
+Fichier : test_fields_non_initialise.deca
+Sortie  : 
+---------------------------------------------
+Fichier : test_poly.deca
+Sortie  : a.getX() = 1
+---------------------------------------------
+Fichier : this_field_assign_float_from_int_conv.deca
+Sortie  : 
+---------------------------------------------
+Fichier : this_field_assign_int.deca
+Sortie  : 
+---------------------------------------------
+Fichier : two_classes_independent.deca
+Sortie  : 
+---------------------------------------------
+---------------------------------------------
+    EXÉCUTION DES TESTS DECA
+---------------------------------------------
+Fichier : add-avance.deca
+Sortie  : 15
+---------------------------------------------
+Fichier : add.deca
+Sortie  : 12
+---------------------------------------------
+Fichier : addition.deca
+Sortie  : 36
+---------------------------------------------
+Fichier : add-print.deca
+Sortie  : 5
+---------------------------------------------
+Fichier : addSimple.deca
+Sortie  : 12
+---------------------------------------------
+Fichier : affectation_chainee.deca
+Sortie  : 5
+5
+---------------------------------------------
+Fichier : and_boolean.deca
+Sortie  : 0
+---------------------------------------------
+Fichier : and-pas-simple.deca
+Sortie  : 0
+---------------------------------------------
+Fichier : and_right.deca
+Sortie  : 1
+---------------------------------------------
+Fichier : And_short_circuit.deca
+Sortie  : 0
+---------------------------------------------
+Fichier : and-simple.deca
+Sortie  : 1000
+---------------------------------------------
+Fichier : arith_int.deca
+Sortie  : 155502
+---------------------------------------------
+Fichier : asignAndif.deca
+Sortie  : 12
+---------------------------------------------
+Fichier : AssignAndWhile.deca
+Sortie  : 01234
+---------------------------------------------
+Fichier : assign.deca
+Sortie  : 
+---------------------------------------------
+Fichier : balanced.deca
+Sortie  : 1
+---------------------------------------------
+Fichier : boolean_from_arith.deca
+Sortie  : 1
+---------------------------------------------
+Fichier : boolean_not_nested.deca
+Sortie  : 0
+---------------------------------------------
+Fichier : boolean_or_short_circuit.deca
+Sortie  : 1
+---------------------------------------------
+Fichier : boolean_variable_reuse.deca
+Sortie  : 1
+---------------------------------------------
+Fichier : calculAr.deca
+Sortie  : 1414
+01234
+---------------------------------------------
+Fichier : casts.deca
+Sortie  : OK
+---------------------------------------------
+Fichier : cmp.deca
+Sortie  : 1
+---------------------------------------------
+Fichier : comparaison.deca
+Sortie  : 0
+1
+C'est deux
+3
+4
+---------------------------------------------
+Fichier : complet_sansObjet.deca
+Sortie  : c = 31
+g = 5.10000e+01
+h = -3.10000e+01
+k = 51
+j = -27
+k (nested cast) = 15
+cond = 1
+g > h
+acc = 9
+a = 7
+b = 7
+j = 7
+values: 51, 7.00000e+00, 15
+acc (hex) = 9
+ok = 1
+---------------------------------------------
+Fichier : cond0.deca
+Sortie  : ok
+---------------------------------------------
+Fichier : conFloatExp.deca
+Sortie  : 
+---------------------------------------------
+Fichier : Control.deca
+Sortie  : z=15
+go=1
+---------------------------------------------
+Fichier : convfloat_and.deca
+Sortie  : -15.00000e+00
+---------------------------------------------
+Fichier : convfloat_lifetime.deca
+Sortie  : 2.00000e+00
+---------------------------------------------
+Fichier : critique.deca
+Sortie  : 6
+---------------------------------------------
+Fichier : debug.deca
+Sortie  : 0
+---------------------------------------------
+Fichier : declVarfloat.deca
+Sortie  : 
+---------------------------------------------
+Fichier : declVarInt.deca
+Sortie  : 
+---------------------------------------------
+Fichier : declVarNoInit.deca
+Sortie  : 
+---------------------------------------------
+Fichier : entier1.deca
+Sortie  : 1
+2
+---------------------------------------------
+Fichier : exclam_bool_debug.deca
+Sortie  : 0
+---------------------------------------------
+Fichier : hello-world.deca
+Sortie  : Hello, world!
+---------------------------------------------
+Fichier : instructionVide.deca
+Sortie  : 
+---------------------------------------------
+Fichier : late_assign_dependency.deca
+Sortie  : 4
+---------------------------------------------
+Fichier : late_assignment.deca
+Sortie  : 5
+---------------------------------------------
+Fichier : left_deep.deca
+Sortie  : 0
+---------------------------------------------
+Fichier : ListStress.deca
+Sortie  : sum=15
+r1=1
+r2=15
+r3=11
+t=1
+---------------------------------------------
+Fichier : longExpAr.deca
+Sortie  : 186
+---------------------------------------------
+Fichier : minimal_codegen_stress.deca
+Sortie  : 0
+---------------------------------------------
+Fichier : minus-1.deca
+Sortie  : 3
+---------------------------------------------
+Fichier : mix.deca
+Sortie  : c=31
+g=3.60000e+01
+branch:T
+acc=75
+---------------------------------------------
+Fichier : modulo_negative.deca
+Sortie  : -3
+---------------------------------------------
+Fichier : multAdd3.deca
+Sortie  : 186
+---------------------------------------------
+Fichier : multAdd.deca
+Sortie  : 21
+---------------------------------------------
+Fichier : opArFloat.deca
+Sortie  : 
+---------------------------------------------
+Fichier : opArithInt.deca
+Sortie  : 
+---------------------------------------------
+Fichier : opBoolAr.deca
+Sortie  : 0
+---------------------------------------------
+Fichier : opBool.deca
+Sortie  : La logique est correcte.
+---------------------------------------------
+Fichier : operation.deca
+Sortie  : 2.35000e+01
+---------------------------------------------
+Fichier : operator_precedence.deca
+Sortie  : 5
+---------------------------------------------
+Fichier : or_right.deca
+Sortie  : 1
+---------------------------------------------
+Fichier : or_short_circuit.deca
+Sortie  : 1
+---------------------------------------------
+Fichier : print_println.deca
+Sortie  : ok
+ok
+---------------------------------------------
+Fichier : printx.deca
+Sortie  : Normal: 3.50000e+00
+Hex: 0x1.cp+1
+Retour au normal: 1.20000e+00
+---------------------------------------------
+Fichier : right_deep.deca
+Sortie  : 1
+---------------------------------------------
+Fichier : test_decva_init_noinit.deca
+Sortie  : 1
+---------------------------------------------
+Fichier : testMultiRegistre.deca
+Sortie  : 
+---------------------------------------------
+Fichier : test-push.deca
+Sortie  : 186
+---------------------------------------------
+Fichier : test-TSTO.deca
+Sortie  : 
+---------------------------------------------
+Fichier : testUltime-1.deca
+Sortie  : 
+---------------------------------------------
+Fichier : testUltime2.deca
+Sortie  : 
+---------------------------------------------
+Fichier : unaire.deca
+Sortie  : -3.76800e+01
+---------------------------------------------
+Fichier : unary_minus_2_debug.deca
+Sortie  : 3
+---------------------------------------------
+Fichier : unary_minus_debug.deca
+Sortie  : -3
+---------------------------------------------
+Fichier : unaryminus.deca
+Sortie  : 
+---------------------------------------------
+Fichier : unary_minus_modulo.deca
+Sortie  : -31
+---------------------------------------------
+Fichier : unary_minus_test.deca
+Sortie  : -4
+---------------------------------------------
+Fichier : whileCondFalse.deca
+Sortie  : 1
+---------------------------------------------
+Fichier : while.deca
+Sortie  : 
+---------------------------------------------
+Fichier : while_never_entered.deca
+Sortie  : 1
+---------------------------------------------
+Fichier : while_zero_interation.deca
+Sortie  : 10
+---------------------------------------------
+Fichier : zigzag.deca
+Sortie  : 7.00000e+00
+---------------------------------------------
+----------------------------------------------------------
+Génération du rapport de couverture global...
+[[1;34mINFO[m] Scanning for projects...
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-surefire-plugin/3.5.4/maven-surefire-plugin-3.5.4.pom
+Progress (1): 4.1 kBProgress (1): 4.9 kB                    Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-surefire-plugin/3.5.4/maven-surefire-plugin-3.5.4.pom (4.9 kB at 7.6 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/surefire/surefire/3.5.4/surefire-3.5.4.pom
+Progress (1): 4.1 kBProgress (1): 8.2 kBProgress (1): 12 kB Progress (1): 16 kBProgress (1): 19 kB                   Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/surefire/surefire/3.5.4/surefire-3.5.4.pom (19 kB at 208 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-surefire-plugin/3.5.4/maven-surefire-plugin-3.5.4.jar
+Progress (1): 2.3/46 kBProgress (1): 4.7/46 kBProgress (1): 7.5/46 kBProgress (1): 10/46 kB Progress (1): 13/46 kBProgress (1): 16/46 kBProgress (1): 18/46 kBProgress (1): 21/46 kBProgress (1): 24/46 kBProgress (1): 27/46 kBProgress (1): 29/46 kBProgress (1): 32/46 kBProgress (1): 35/46 kBProgress (1): 38/46 kBProgress (1): 42/46 kBProgress (1): 46/46 kBProgress (1): 46 kB                      Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-surefire-plugin/3.5.4/maven-surefire-plugin-3.5.4.jar (46 kB at 390 kB/s)
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--------------------------< [0;36mfr.ensimag:Deca[0;1m >---------------------------[m
+[[1;34mINFO[m] [1mBuilding Deca Compiler 0.0.1-SNAPSHOT[m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mjacoco-maven-plugin:0.8.13:restore-instrumented-classes[m [1m(default-cli)[m @ [36mDeca[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mjacoco-maven-plugin:0.8.13:report[m [1m(default-cli)[m @ [36mDeca[0;1m ---[m
+[[1;34mINFO[m] Loading execution data file /home/gl/projet_gl/target/jacoco.exec
+[[1;34mINFO[m] Analyzed bundle 'Deca Compiler' with 252 classes
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;32mBUILD SUCCESS[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time:  3.539 s
+[[1;34mINFO[m] Finished at: 2026-01-22T22:06:03+01:00
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+==========================================================
+TESTS TERMINÉS !
+Rapport global : target/site/jacoco/index.html
+==========================================================
+./src/test/script/all-tests.sh: line 44: google-chrome: command not found
+Command exited with non-zero status 127
+	Command being timed: "sh -c ./src/test/script/all-tests.sh"
+	User time (seconds): 510.92
+	System time (seconds): 86.06
+	Percent of CPU this job got: 129%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 7:41.17
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 518756
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 220
+	Minor (reclaiming a frame) page faults: 6340224
+	Voluntary context switches: 4826047
+	Involuntary context switches: 104504
+	Swaps: 0
+	File system inputs: 104472
+	File system outputs: 45138
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 127
+
+============================================================
+3) Tests: all-syntax-tests.sh
+============================================================
+Tests syntaxiques
+Tests INVALIDES
+Test invalide attendu : src/test/deca/syntax/invalid/avecObjet/asm_meth_no_string_body.deca
+Echec attendu
+Test invalide attendu : src/test/deca/syntax/invalid/bas_var_list.deca
+Echec attendu
+Test invalide attendu : src/test/deca/syntax/invalid/cast_missing_parenthesis.deca
+Echec attendu
+Test invalide attendu : src/test/deca/syntax/invalid/chaine_incomplete.deca
+Echec attendu
+Test invalide attendu : src/test/deca/syntax/invalid/incomplete_if.deca
+Echec attendu
+Test invalide attendu : src/test/deca/syntax/invalid/int_too_large_compilation_error.deca
+Echec attendu
+Test invalide attendu : src/test/deca/syntax/invalid/invalid_assign.deca
+Echec attendu
+Test invalide attendu : src/test/deca/syntax/invalid/invalid_char.deca
+Echec attendu
+Test invalide attendu : src/test/deca/syntax/invalid/invalid_class_syntax_but_parse_ok.deca
+Echec attendu
+Test invalide attendu : src/test/deca/syntax/invalid/invalid_identifier.deca
+Echec attendu
+Test invalide attendu : src/test/deca/syntax/invalid/invalid_while.deca
+Echec attendu
+Test invalide attendu : src/test/deca/syntax/invalid/lValue.deca
+Echec attendu
+Test invalide attendu : src/test/deca/syntax/invalid/missing_parenthesis.deca
+Echec attendu
+Test invalide attendu : src/test/deca/syntax/invalid/missing_semicolon.deca
+Echec attendu
+Test invalide attendu : src/test/deca/syntax/invalid/simple_lex.deca
+Echec attendu
+Test invalide attendu : src/test/deca/syntax/invalid/unknown_type.deca
+Echec attendu
+Test invalide attendu : src/test/deca/syntax/invalid/unterminated_comment.deca
+Echec attendu
+Test invalide attendu : src/test/deca/syntax/invalid/untermined_string.deca
+Echec attendu
+Tests VALIDES
+Test valide attendu : src/test/deca/syntax/valid/cast_bool_2.deca
+Succes attendu
+Test valide attendu : src/test/deca/syntax/valid/cast_bool.deca
+Succes attendu
+Test valide attendu : src/test/deca/syntax/valid/cast_float.deca
+Succes attendu
+Test valide attendu : src/test/deca/syntax/valid/cast_int.deca
+Succes attendu
+Test valide attendu : src/test/deca/syntax/valid/decompilation.deca
+Succes attendu
+Test valide attendu : src/test/deca/syntax/valid/empty_main.deca
+Succes attendu
+Test valide attendu : src/test/deca/syntax/valid/empty_program.deca
+Succes attendu
+Test valide attendu : src/test/deca/syntax/valid/expressions_ok.deca
+Succes attendu
+Test valide attendu : src/test/deca/syntax/valid/final_is_identifier_2.deca
+Succes attendu
+Test valide attendu : src/test/deca/syntax/valid/final_is_identifier.deca
+Succes attendu
+Test valide attendu : src/test/deca/syntax/valid/hello.deca
+Succes attendu
+Test valide attendu : src/test/deca/syntax/valid/instructions_ok.deca
+Succes attendu
+Test valide attendu : src/test/deca/syntax/valid/test_printx_decomp.deca
+Succes attendu
+Tous les tests syntaxiques sont passes
+	Command being timed: "sh -c ./src/test/script/all-syntax-tests.sh"
+	User time (seconds): 29.93
+	System time (seconds): 5.77
+	Percent of CPU this job got: 133%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:26.82
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 113176
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 430698
+	Voluntary context switches: 274498
+	Involuntary context switches: 6282
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 2080
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+
+============================================================
+4) Tests: all-context-tests-sansObjet.sh
+============================================================
+Tests contextuels
+Tests INVALIDES
+Test invalide attendu : src/test/deca/context/invalid/sansObjet/affect-incompatible.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/sansObjet/cast_bool_2.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/sansObjet/cast_invalid_type.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/sansObjet/convBoolFloat.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/sansObjet/convFloatInt.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/sansObjet/declVarVoid.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/sansObjet/doubleDefinition.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/sansObjet/incompatible.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/sansObjet/inegaliteBool.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/sansObjet/initialisation.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/sansObjet/moduloFloat.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/sansObjet/nonBoolIf.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/sansObjet/nonBoolWhile.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/sansObjet/nonDecl.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/sansObjet/opArType.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/sansObjet/opBoolType.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/sansObjet/typeComp.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/sansObjet/typeNonDecl.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/sansObjet/unaryMinus.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/sansObjet/utilisationAvantDecl.deca
+Échec attendu
+./src/test/script/all-context-tests-sansObjet.sh: 31: Tests: not found
+Tests VALIDES
+Test valide attendu : src/test/deca/context/valid/sansObjet/add.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/sansObjet/asignAndif.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/sansObjet/AssignAndWhile.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/sansObjet/assign.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/sansObjet/calculAr.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/sansObjet/cast_bool_1.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/sansObjet/cast.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/sansObjet/castDirect.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/sansObjet/cast_implicite.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/sansObjet/comparaison.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/sansObjet/conFloatExp.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/sansObjet/declVar.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/sansObjet/declVarNoInit-1.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/sansObjet/declVarNoInit.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/sansObjet/float_div_zero.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/sansObjet/hello-world.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/sansObjet/instructionVide.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/sansObjet/mod_zero.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/sansObjet/non_initialise.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/sansObjet/opArFloat.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/sansObjet/opBool.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/sansObjet/operation.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/sansObjet/overflow.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/sansObjet/sansObjet.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/sansObjet/unaire.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/sansObjet/while.deca
+Succès attendu
+Tous les tests contextuels sont passés
+	Command being timed: "sh -c ./src/test/script/all-context-tests-sansObjet.sh"
+	User time (seconds): 48.61
+	System time (seconds): 9.25
+	Percent of CPU this job got: 133%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:43.26
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 107624
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 637602
+	Voluntary context switches: 438993
+	Involuntary context switches: 9639
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 3008
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+
+============================================================
+5) Tests: all-context-tests-avecObjet.sh
+============================================================
+Tests contextuels
+Tests INVALIDES
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/access_private_field_outside_custom.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/assign_to_final_field.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/assign_to_protected_field_custom.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/assign_to_protected_field_from_foreign_class.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/call_method_arg_type_custom.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/call_method_on_boolean.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/call_method_on_float.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/call_method_on_int.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/call_method_on_string.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/call_method_wrong_arg_count_0.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/call_method_wrong_arg_count_1.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/call_method_wrong_arg_type_bool_int.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/call_method_wrong_arg_type_int_float.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/call_method_wrong_arg_type_string_int.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/call_unknown_method_custom.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/call_unknown_method.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/cast_incompatible.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/cast_invalid_class.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/cast_invalid.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/cast_type_incompatible.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/cast_void.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/class_cycle_direct_custom.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/class_cycle_direct.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/class_cycle_indirect_3.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/class_extends_nonclass_type.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/class_extends_unknown.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/class_name_conflict_builtin.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/class_name_conflicts_with_builtin.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/class_with_void_field.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/double_method_asm.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/duplicate_class_name_custom.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/duplicate_class_name.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/duplicate_field_same_class.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/duplicate_method_same_sig.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/duplicate_param_name.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/extends_void.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/field_assign_wrong_object_type_custom.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/field_inherited_then_redeclared_illegal.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/field_redeclaration_conflict_with_method.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/field_shadow_illegal_custom.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/field_visibility_mismatch_in_subclass.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/heritage_not_field_asm.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/illegal_this_in_main_assignment.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/illegal_this_in_main_field_access.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/instanceof_invalid.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/instanceof_invalid_type.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/is_instance_of_inconnu.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/is_instance_of_lvalue.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/is_instance_of_rvalue.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/local_var_conflicts_param.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/method_call_in_static_context_custom.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/method_call_on_wrong_class_custom.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/method_call_with_non_rvalue_arg.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/method_overload_not_allowed_same_name.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/method_param_type_class_mismatch_custom.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/method_redeclaration_conflict_with_field.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/method_return_object_mismatch_custom.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/method_return_type_void_in_expr.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/non_existant_type_asm.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/override_asm.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/param_decl_void.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/protected_field_access_outside.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/protected_field_access_wrong_object_type.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/retour_method_asm.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/return_in_void_method_value.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/return_main.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/return_missing_in_non_void.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/return_missing_non_void_custom.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/return_type_mismatch_bool_int.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/return_type_mismatch_custom.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/return_type_mismatch_int_float.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/selection_on_boolean.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/selection_on_float.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/selection_on_int.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/selection_unknown_field.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/variable_method.deca
+Échec attendu
+Test invalide attendu : src/test/deca/context/invalid/avecObjet/write_to_unknown_field.deca
+Échec attendu
+./src/test/script/all-context-tests-avecObjet.sh: 31: Tests: not found
+Tests VALIDES
+Test valide attendu : src/test/deca/context/valid/avecObjet/asm_field_access.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/asm_hello_world.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/asm_logic.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/asm_param_sum.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/asm_return_int.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/call_method_no_params.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/call_method_one_param_float.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/call_method_one_param_int.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/call_method_return_float_used.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/call_method_return_int_used.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/call_method_two_params.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/class_empty.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/class_extends.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/class_field_init_and_method.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/class_field_init_in_method.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/class_method_uses_field.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/class_method_with_params.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/class_multiple_methods.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/class_one_field_float.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/class_one_field_int.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/class_one_method_int_return.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/class_one_method_void.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/class_selection_this.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/class_selection_unitaire.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/class_two_fields.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/class_with_main_new.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/class_with_string_field.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/eq_on_objects.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/field_assign_from_method_return.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/field_default_init_read_ok.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/field_shadow_local_var_ok.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/field_shadow_param_ok.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/field_write_then_read_ok.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/is_instance_of.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/is_instance_of_hierarchy.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/local_var_conflicts_field_illegal.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/method_body_with_control_ok.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/method_call_chain_2.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/method_call_chain_3.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/method_call_on_new_object.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/method_call_on_var_object.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/method_call_with_expr_args.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/method_call_with_expression_args.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/method_local_vars_ok.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/method_param_shadow_field_ok.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/method_return_complex_expr.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/method_returns_in_all_paths_ok.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/method_selection.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/method_with_var_instr.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/mutual_calls_ok.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/nested_method_calls.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/nested_method_calls_ok.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/override_call_child_impl.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/override_call_via_base_ref.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/override_subtype.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/protected_field_access_chain_ok.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/protected_field_access_from_subclass.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/protected_field_access_subclass_object_of_subclass.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/protected_field_access_subclass_this.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/public_field_access_other_object.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/public_field_access_same_class.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/recursion_simple_allowed.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/return_conv_float.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/return_int_expr_ok.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/selection_nested_three_levels.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/selection_nested_two_levels.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/selection_on_new_object.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/selection_on_var_object.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/test_fields_initialise.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/test_fields_non_initialise.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/test_poly.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/this_field_assign_float_from_int_conv.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/this_field_assign_int.deca
+Succès attendu
+Test valide attendu : src/test/deca/context/valid/avecObjet/two_classes_independent.deca
+Succès attendu
+Tous les tests contextuels sont passés
+	Command being timed: "sh -c ./src/test/script/all-context-tests-avecObjet.sh"
+	User time (seconds): 171.71
+	System time (seconds): 32.73
+	Percent of CPU this job got: 133%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 2:32.99
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 108152
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 2091731
+	Voluntary context switches: 1454259
+	Involuntary context switches: 33022
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 9880
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+
+============================================================
+6) Tests: all-codegen-tests-sansObjet.sh
+============================================================
+Tests codegen
+./src/test/script/all-codegen-tests.sh: 15: Tests: not found
+Tests INVALIDES
+Test invalide attendu : src/test/deca/codegen/invalid/avecObjet/cast_runtime_error.deca
+Echec attendu a l'execution
+Test invalide attendu : src/test/deca/codegen/invalid/avecObjet/heap_overflow.deca
+Echec attendu a l'execution
+Test invalide attendu : src/test/deca/codegen/invalid/avecObjet/invalid_cast.deca
+Echec attendu a l'execution
+Test invalide attendu : src/test/deca/codegen/invalid/avecObjet/null_ref.deca
+Echec attendu a l'execution
+Test invalide attendu : src/test/deca/codegen/invalid/avecObjet/stack_overflow.deca
+Echec attendu a l'execution
+Test invalide attendu : src/test/deca/codegen/invalid/avecObjet/test_cast_3.deca
+Echec attendu a l'execution
+./src/test/script/all-codegen-tests.sh: 35: Tests: not found
+Tests VALIDES
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/asm_acces_champ.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/asm_chaine.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/asm_commentaires_absents.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/asm_field_access.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/asm_hello_world.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/asm_label_branchement.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/asm_lignes_reelles.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/asm_logic.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/asm_param_sum.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/asm_registres.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/asm_return_int.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/asm_rts_espaces.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/call_method_no_params.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/call_method_one_param_float.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/call_method_one_param_int.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/call_method_return_float_used.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/call_method_return_int_used.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/call_method_two_params.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/cast_instance_of.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/cast_valid.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/class_empty.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/class_extends.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/class_field_init_and_method.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/class_field_init_in_method.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/class_method_uses_field.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/class_method_with_params.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/class_multiple_methods.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/class_one_field_float.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/class_one_field_int.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/class_one_method_int_return.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/class_one_method_void.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/class_selection_this.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/class_selection_unitaire.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/class_two_fields.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/class_with_main_new.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/class_with_string_field.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/down_cast.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/fact.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/field_assign_from_method_return.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/field_default_init_read_ok.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/field_shadow_local_var_ok.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/field_shadow_param_ok.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/field_write_then_read_ok.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/instanceof_valid.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/is_instance_of.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/is_instance_of_hierarchy.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/is_instance_of_null.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/local_var_conflicts_field_illegal.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/local_var.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/method_body_with_control_ok.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/method_call_chain_2.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/method_call_chain_3.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/method_call_on_new_object.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/method_call_on_var_object.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/method_call_with_expr_args.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/method_call_with_expression_args.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/method_local_vars_ok.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/method_param_shadow_field_ok.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/method_return_complex_expr.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/method_returns_in_all_paths_ok.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/method_selection.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/method_with_var_instr.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/mutual_calls_ok.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/nested_method_calls.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/nested_method_calls_ok.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/override_call_child_impl.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/override_call_via_base_ref.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/polym_meth.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/protected_field_access_chain_ok.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/protected_field_access_from_subclass.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/protected_field_access_subclass_object_of_subclass.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/protected_field_access_subclass_this.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/public_field_access_other_object.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/public_field_access_same_class.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/recursion_simple_allowed.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/return_int_expr_ok.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/selection_nested_three_levels.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/selection_nested_two_levels.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/selection_on_new_object.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/selection_on_var_object.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/test_cast_1.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/test_cast_4.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/test_cast_objet.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/test_fields_initialise.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/test_fields_non_initialise.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/test_poly.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/this_field_assign_float_from_int_conv.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/this_field_assign_int.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/two_classes_independent.deca
+Succes attendu
+Tous les tests codegen sont passes
+	Command being timed: "sh -c ./src/test/script/all-codegen-tests.sh"
+	User time (seconds): 109.55
+	System time (seconds): 20.28
+	Percent of CPU this job got: 130%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:39.84
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 111536
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 1539699
+	Voluntary context switches: 922096
+	Involuntary context switches: 26335
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 6487
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+
+============================================================
+7) Tests: all-codegen-tests-avecObjet.sh
+============================================================
+Tests codegen
+./src/test/script/all-codegen-tests.sh: 15: Tests: not found
+Tests INVALIDES
+Test invalide attendu : src/test/deca/codegen/invalid/avecObjet/cast_runtime_error.deca
+Echec attendu a l'execution
+Test invalide attendu : src/test/deca/codegen/invalid/avecObjet/heap_overflow.deca
+Echec attendu a l'execution
+Test invalide attendu : src/test/deca/codegen/invalid/avecObjet/invalid_cast.deca
+Echec attendu a l'execution
+Test invalide attendu : src/test/deca/codegen/invalid/avecObjet/null_ref.deca
+Echec attendu a l'execution
+Test invalide attendu : src/test/deca/codegen/invalid/avecObjet/stack_overflow.deca
+Echec attendu a l'execution
+Test invalide attendu : src/test/deca/codegen/invalid/avecObjet/test_cast_3.deca
+Echec attendu a l'execution
+./src/test/script/all-codegen-tests.sh: 35: Tests: not found
+Tests VALIDES
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/asm_acces_champ.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/asm_chaine.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/asm_commentaires_absents.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/asm_field_access.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/asm_hello_world.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/asm_label_branchement.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/asm_lignes_reelles.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/asm_logic.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/asm_param_sum.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/asm_registres.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/asm_return_int.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/asm_rts_espaces.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/call_method_no_params.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/call_method_one_param_float.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/call_method_one_param_int.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/call_method_return_float_used.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/call_method_return_int_used.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/call_method_two_params.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/cast_instance_of.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/cast_valid.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/class_empty.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/class_extends.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/class_field_init_and_method.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/class_field_init_in_method.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/class_method_uses_field.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/class_method_with_params.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/class_multiple_methods.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/class_one_field_float.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/class_one_field_int.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/class_one_method_int_return.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/class_one_method_void.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/class_selection_this.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/class_selection_unitaire.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/class_two_fields.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/class_with_main_new.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/class_with_string_field.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/down_cast.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/fact.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/field_assign_from_method_return.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/field_default_init_read_ok.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/field_shadow_local_var_ok.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/field_shadow_param_ok.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/field_write_then_read_ok.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/instanceof_valid.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/is_instance_of.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/is_instance_of_hierarchy.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/is_instance_of_null.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/local_var_conflicts_field_illegal.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/local_var.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/method_body_with_control_ok.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/method_call_chain_2.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/method_call_chain_3.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/method_call_on_new_object.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/method_call_on_var_object.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/method_call_with_expr_args.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/method_call_with_expression_args.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/method_local_vars_ok.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/method_param_shadow_field_ok.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/method_return_complex_expr.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/method_returns_in_all_paths_ok.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/method_selection.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/method_with_var_instr.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/mutual_calls_ok.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/nested_method_calls.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/nested_method_calls_ok.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/override_call_child_impl.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/override_call_via_base_ref.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/polym_meth.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/protected_field_access_chain_ok.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/protected_field_access_from_subclass.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/protected_field_access_subclass_object_of_subclass.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/protected_field_access_subclass_this.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/public_field_access_other_object.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/public_field_access_same_class.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/recursion_simple_allowed.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/return_int_expr_ok.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/selection_nested_three_levels.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/selection_nested_two_levels.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/selection_on_new_object.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/selection_on_var_object.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/test_cast_1.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/test_cast_4.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/test_cast_objet.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/test_fields_initialise.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/test_fields_non_initialise.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/test_poly.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/this_field_assign_float_from_int_conv.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/this_field_assign_int.deca
+Succes attendu
+Test valide attendu : src/test/deca/codegen/valid/avecObjet/two_classes_independent.deca
+Succes attendu
+Tous les tests codegen sont passes
+	Command being timed: "sh -c ./src/test/script/all-codegen-tests.sh"
+	User time (seconds): 109.52
+	System time (seconds): 20.66
+	Percent of CPU this job got: 130%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:39.95
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 111620
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 1539516
+	Voluntary context switches: 921326
+	Involuntary context switches: 26422
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 6583
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+
+============================================================
+8) Tests: execute_test_valid_sansObjet.sh
+============================================================
+---------------------------------------------
+    EXÉCUTION DES TESTS DECA
+---------------------------------------------
+Fichier : add-avance.deca
+Sortie  : 15
+---------------------------------------------
+Fichier : add.deca
+Sortie  : 12
+---------------------------------------------
+Fichier : addition.deca
+Sortie  : 36
+---------------------------------------------
+Fichier : add-print.deca
+Sortie  : 5
+---------------------------------------------
+Fichier : addSimple.deca
+Sortie  : 12
+---------------------------------------------
+Fichier : affectation_chainee.deca
+Sortie  : 5
+5
+---------------------------------------------
+Fichier : and_boolean.deca
+Sortie  : 0
+---------------------------------------------
+Fichier : and-pas-simple.deca
+Sortie  : 0
+---------------------------------------------
+Fichier : and_right.deca
+Sortie  : 1
+---------------------------------------------
+Fichier : And_short_circuit.deca
+Sortie  : 0
+---------------------------------------------
+Fichier : and-simple.deca
+Sortie  : 1000
+---------------------------------------------
+Fichier : arith_int.deca
+Sortie  : 155502
+---------------------------------------------
+Fichier : asignAndif.deca
+Sortie  : 12
+---------------------------------------------
+Fichier : AssignAndWhile.deca
+Sortie  : 01234
+---------------------------------------------
+Fichier : assign.deca
+Sortie  : 
+---------------------------------------------
+Fichier : balanced.deca
+Sortie  : 1
+---------------------------------------------
+Fichier : boolean_from_arith.deca
+Sortie  : 1
+---------------------------------------------
+Fichier : boolean_not_nested.deca
+Sortie  : 0
+---------------------------------------------
+Fichier : boolean_or_short_circuit.deca
+Sortie  : 1
+---------------------------------------------
+Fichier : boolean_variable_reuse.deca
+Sortie  : 1
+---------------------------------------------
+Fichier : calculAr.deca
+Sortie  : 1414
+01234
+---------------------------------------------
+Fichier : casts.deca
+Sortie  : OK
+---------------------------------------------
+Fichier : cmp.deca
+Sortie  : 1
+---------------------------------------------
+Fichier : comparaison.deca
+Sortie  : 0
+1
+C'est deux
+3
+4
+---------------------------------------------
+Fichier : complet_sansObjet.deca
+Sortie  : c = 31
+g = 5.10000e+01
+h = -3.10000e+01
+k = 51
+j = -27
+k (nested cast) = 15
+cond = 1
+g > h
+acc = 9
+a = 7
+b = 7
+j = 7
+values: 51, 7.00000e+00, 15
+acc (hex) = 9
+ok = 1
+---------------------------------------------
+Fichier : cond0.deca
+Sortie  : ok
+---------------------------------------------
+Fichier : conFloatExp.deca
+Sortie  : 
+---------------------------------------------
+Fichier : Control.deca
+Sortie  : z=15
+go=1
+---------------------------------------------
+Fichier : convfloat_and.deca
+Sortie  : -15.00000e+00
+---------------------------------------------
+Fichier : convfloat_lifetime.deca
+Sortie  : 2.00000e+00
+---------------------------------------------
+Fichier : critique.deca
+Sortie  : 6
+---------------------------------------------
+Fichier : debug.deca
+Sortie  : 0
+---------------------------------------------
+Fichier : declVarfloat.deca
+Sortie  : 
+---------------------------------------------
+Fichier : declVarInt.deca
+Sortie  : 
+---------------------------------------------
+Fichier : declVarNoInit.deca
+Sortie  : 
+---------------------------------------------
+Fichier : entier1.deca
+Sortie  : 1
+2
+---------------------------------------------
+Fichier : exclam_bool_debug.deca
+Sortie  : 0
+---------------------------------------------
+Fichier : hello-world.deca
+Sortie  : Hello, world!
+---------------------------------------------
+Fichier : instructionVide.deca
+Sortie  : 
+---------------------------------------------
+Fichier : late_assign_dependency.deca
+Sortie  : 4
+---------------------------------------------
+Fichier : late_assignment.deca
+Sortie  : 5
+---------------------------------------------
+Fichier : left_deep.deca
+Sortie  : 0
+---------------------------------------------
+Fichier : ListStress.deca
+Sortie  : sum=15
+r1=1
+r2=15
+r3=11
+t=1
+---------------------------------------------
+Fichier : longExpAr.deca
+Sortie  : 186
+---------------------------------------------
+Fichier : minimal_codegen_stress.deca
+Sortie  : 0
+---------------------------------------------
+Fichier : minus-1.deca
+Sortie  : 3
+---------------------------------------------
+Fichier : mix.deca
+Sortie  : c=31
+g=3.60000e+01
+branch:T
+acc=75
+---------------------------------------------
+Fichier : modulo_negative.deca
+Sortie  : -3
+---------------------------------------------
+Fichier : multAdd3.deca
+Sortie  : 186
+---------------------------------------------
+Fichier : multAdd.deca
+Sortie  : 21
+---------------------------------------------
+Fichier : opArFloat.deca
+Sortie  : 
+---------------------------------------------
+Fichier : opArithInt.deca
+Sortie  : 
+---------------------------------------------
+Fichier : opBoolAr.deca
+Sortie  : 0
+---------------------------------------------
+Fichier : opBool.deca
+Sortie  : La logique est correcte.
+---------------------------------------------
+Fichier : operation.deca
+Sortie  : 2.35000e+01
+---------------------------------------------
+Fichier : operator_precedence.deca
+Sortie  : 5
+---------------------------------------------
+Fichier : or_right.deca
+Sortie  : 1
+---------------------------------------------
+Fichier : or_short_circuit.deca
+Sortie  : 1
+---------------------------------------------
+Fichier : print_println.deca
+Sortie  : ok
+ok
+---------------------------------------------
+Fichier : printx.deca
+Sortie  : Normal: 3.50000e+00
+Hex: 0x1.cp+1
+Retour au normal: 1.20000e+00
+---------------------------------------------
+Fichier : right_deep.deca
+Sortie  : 1
+---------------------------------------------
+Fichier : test_decva_init_noinit.deca
+Sortie  : 1
+---------------------------------------------
+Fichier : testMultiRegistre.deca
+Sortie  : 
+---------------------------------------------
+Fichier : test-push.deca
+Sortie  : 186
+---------------------------------------------
+Fichier : test-TSTO.deca
+Sortie  : 
+---------------------------------------------
+Fichier : testUltime-1.deca
+Sortie  : 
+---------------------------------------------
+Fichier : testUltime2.deca
+Sortie  : 
+---------------------------------------------
+Fichier : unaire.deca
+Sortie  : -3.76800e+01
+---------------------------------------------
+Fichier : unary_minus_2_debug.deca
+Sortie  : 3
+---------------------------------------------
+Fichier : unary_minus_debug.deca
+Sortie  : -3
+---------------------------------------------
+Fichier : unaryminus.deca
+Sortie  : 
+---------------------------------------------
+Fichier : unary_minus_modulo.deca
+Sortie  : -31
+---------------------------------------------
+Fichier : unary_minus_test.deca
+Sortie  : -4
+---------------------------------------------
+Fichier : whileCondFalse.deca
+Sortie  : 1
+---------------------------------------------
+Fichier : while.deca
+Sortie  : 
+---------------------------------------------
+Fichier : while_never_entered.deca
+Sortie  : 1
+---------------------------------------------
+Fichier : while_zero_interation.deca
+Sortie  : 10
+---------------------------------------------
+Fichier : zigzag.deca
+Sortie  : 7.00000e+00
+---------------------------------------------
+	Command being timed: "sh -c ./src/test/script/execute_test_valid_sansObjet.sh"
+	User time (seconds): 88.45
+	System time (seconds): 16.56
+	Percent of CPU this job got: 129%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:21.19
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 111692
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 1358047
+	Voluntary context switches: 750245
+	Involuntary context switches: 20841
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 5306
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+
+============================================================
+9) Tests: execute_test_valid_avecObjet.sh
+============================================================
+---------------------------------------------
+    EXÉCUTION DES TESTS DECA
+---------------------------------------------
+Fichier : asm_acces_champ.deca
+Sortie  : 7
+---------------------------------------------
+Fichier : asm_chaine.deca
+Sortie  : space
+---------------------------------------------
+Fichier : asm_commentaires_absents.deca
+Sortie  : Hello
+done
+---------------------------------------------
+Fichier : asm_field_access.deca
+Sortie  : Val: 99
+---------------------------------------------
+Fichier : asm_hello_world.deca
+Sortie  : Hello from ASM!
+---------------------------------------------
+Fichier : asm_label_branchement.deca
+Sortie  : OK
+---------------------------------------------
+Fichier : asm_lignes_reelles.deca
+Sortie  : L1
+L2
+---------------------------------------------
+Fichier : asm_logic.deca
+Sortie  : Max is 20
+---------------------------------------------
+Fichier : asm_param_sum.deca
+Sortie  : 15
+---------------------------------------------
+Fichier : asm_registres.deca
+Sortie  : 42
+---------------------------------------------
+Fichier : asm_return_int.deca
+Sortie  : 42
+---------------------------------------------
+Fichier : asm_rts_espaces.deca
+Sortie  : before
+---------------------------------------------
+Fichier : call_method_no_params.deca
+Sortie  : ok
+---------------------------------------------
+Fichier : call_method_one_param_float.deca
+Sortie  : 1.50000e+00
+---------------------------------------------
+Fichier : call_method_one_param_int.deca
+Sortie  : 1
+---------------------------------------------
+Fichier : call_method_return_float_used.deca
+Sortie  : 4.50000e+00
+---------------------------------------------
+Fichier : call_method_return_int_used.deca
+Sortie  : 3
+---------------------------------------------
+Fichier : call_method_two_params.deca
+Sortie  : 1
+2.50000e+00
+---------------------------------------------
+Fichier : cast_instance_of.deca
+Sortie  : B
+C'est un B
+null cast ok
+---------------------------------------------
+Fichier : cast_valid.deca
+Sortie  : 5
+5.00000e+00
+Null cast ok
+---------------------------------------------
+Fichier : class_empty.deca
+Sortie  : 
+---------------------------------------------
+Fichier : class_extends.deca
+Sortie  : 
+---------------------------------------------
+Fichier : class_field_init_and_method.deca
+Sortie  : 
+---------------------------------------------
+Fichier : class_field_init_in_method.deca
+Sortie  : 
+---------------------------------------------
+Fichier : class_method_uses_field.deca
+Sortie  : 
+---------------------------------------------
+Fichier : class_method_with_params.deca
+Sortie  : 
+---------------------------------------------
+Fichier : class_multiple_methods.deca
+Sortie  : 
+---------------------------------------------
+Fichier : class_one_field_float.deca
+Sortie  : 
+---------------------------------------------
+Fichier : class_one_field_int.deca
+Sortie  : 
+---------------------------------------------
+Fichier : class_one_method_int_return.deca
+Sortie  : 
+---------------------------------------------
+Fichier : class_one_method_void.deca
+Sortie  : 
+---------------------------------------------
+Fichier : class_selection_this.deca
+Sortie  : 
+---------------------------------------------
+Fichier : class_selection_unitaire.deca
+Sortie  : a.x = 42
+---------------------------------------------
+Fichier : class_two_fields.deca
+Sortie  : 
+---------------------------------------------
+Fichier : class_with_main_new.deca
+Sortie  : 
+---------------------------------------------
+Fichier : class_with_string_field.deca
+Sortie  : 
+---------------------------------------------
+Fichier : down_cast.deca
+Sortie  : ok
+---------------------------------------------
+Fichier : fact.deca
+Sortie  : 120
+---------------------------------------------
+Fichier : field_assign_from_method_return.deca
+Sortie  : 
+---------------------------------------------
+Fichier : field_default_init_read_ok.deca
+Sortie  : 0
+---------------------------------------------
+Fichier : field_shadow_local_var_ok.deca
+Sortie  : 
+---------------------------------------------
+Fichier : field_shadow_param_ok.deca
+Sortie  : 
+---------------------------------------------
+Fichier : field_write_then_read_ok.deca
+Sortie  : 11
+---------------------------------------------
+Fichier : instanceof_valid.deca
+Sortie  : A is A
+B is A
+A(B) is B
+A is not B
+null is not A
+---------------------------------------------
+Fichier : is_instance_of.deca
+Sortie  : 1
+0
+---------------------------------------------
+Fichier : is_instance_of_hierarchy.deca
+Sortie  : 0
+---------------------------------------------
+Fichier : is_instance_of_null.deca
+Sortie  : 0
+0
+---------------------------------------------
+Fichier : local_var_conflicts_field_illegal.deca
+Sortie  : 
+---------------------------------------------
+Fichier : local_var.deca
+Sortie  : 
+---------------------------------------------
+Fichier : method_body_with_control_ok.deca
+Sortie  : 2
+---------------------------------------------
+Fichier : method_call_chain_2.deca
+Sortie  : 3
+---------------------------------------------
+Fichier : method_call_chain_3.deca
+Sortie  : 4
+---------------------------------------------
+Fichier : method_call_on_new_object.deca
+Sortie  : 1
+---------------------------------------------
+Fichier : method_call_on_var_object.deca
+Sortie  : 2
+---------------------------------------------
+Fichier : method_call_with_expr_args.deca
+Sortie  : 10
+---------------------------------------------
+Fichier : method_call_with_expression_args.deca
+Sortie  : 
+---------------------------------------------
+Fichier : method_local_vars_ok.deca
+Sortie  : 1
+2.00000e+00
+---------------------------------------------
+Fichier : method_param_shadow_field_ok.deca
+Sortie  : 3
+---------------------------------------------
+Fichier : method_return_complex_expr.deca
+Sortie  : 
+---------------------------------------------
+Fichier : method_returns_in_all_paths_ok.deca
+Sortie  : 1
+---------------------------------------------
+Fichier : method_selection.deca
+Sortie  : 
+---------------------------------------------
+Fichier : method_with_var_instr.deca
+Sortie  : 
+---------------------------------------------
+Fichier : mutual_calls_ok.deca
+Sortie  : 0
+---------------------------------------------
+Fichier : nested_method_calls.deca
+Sortie  : 2
+---------------------------------------------
+Fichier : nested_method_calls_ok.deca
+Sortie  : 
+---------------------------------------------
+Fichier : override_call_child_impl.deca
+Sortie  : 2
+---------------------------------------------
+Fichier : override_call_via_base_ref.deca
+Sortie  : 2
+---------------------------------------------
+Fichier : polym_meth.deca
+Sortie  : Je suis un Animal
+Je suis un Chien
+Je suis un Chien
+---------------------------------------------
+Fichier : protected_field_access_chain_ok.deca
+Sortie  : 
+---------------------------------------------
+Fichier : protected_field_access_from_subclass.deca
+Sortie  : 
+---------------------------------------------
+Fichier : protected_field_access_subclass_object_of_subclass.deca
+Sortie  : 
+---------------------------------------------
+Fichier : protected_field_access_subclass_this.deca
+Sortie  : 
+---------------------------------------------
+Fichier : public_field_access_other_object.deca
+Sortie  : 2
+---------------------------------------------
+Fichier : public_field_access_same_class.deca
+Sortie  : 
+---------------------------------------------
+Fichier : recursion_simple_allowed.deca
+Sortie  : 0
+---------------------------------------------
+Fichier : return_int_expr_ok.deca
+Sortie  : 
+---------------------------------------------
+Fichier : selection_nested_three_levels.deca
+Sortie  : 10
+---------------------------------------------
+Fichier : selection_nested_two_levels.deca
+Sortie  : 9
+---------------------------------------------
+Fichier : selection_on_new_object.deca
+Sortie  : 0
+---------------------------------------------
+Fichier : selection_on_var_object.deca
+Sortie  : 8
+---------------------------------------------
+Fichier : test_cast_1.deca
+Sortie  : 3
+-3
+---------------------------------------------
+Fichier : test_cast_4.deca
+Sortie  : ok
+---------------------------------------------
+Fichier : test_cast_objet.deca
+Sortie  : B
+B
+ok
+---------------------------------------------
+Fichier : test_fields_initialise.deca
+Sortie  : 
+---------------------------------------------
+Fichier : test_fields_non_initialise.deca
+Sortie  : 
+---------------------------------------------
+Fichier : test_poly.deca
+Sortie  : a.getX() = 1
+---------------------------------------------
+Fichier : this_field_assign_float_from_int_conv.deca
+Sortie  : 
+---------------------------------------------
+Fichier : this_field_assign_int.deca
+Sortie  : 
+---------------------------------------------
+Fichier : two_classes_independent.deca
+Sortie  : 
+---------------------------------------------
+	Command being timed: "sh -c ./src/test/script/execute_test_valid_avecObjet.sh"
+	User time (seconds): 104.20
+	System time (seconds): 19.57
+	Percent of CPU this job got: 129%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:35.66
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 111520
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 1558440
+	Voluntary context switches: 868243
+	Involuntary context switches: 25847
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 6151
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+
+============================================================
+10) Tests: test-byte-sansObjet.sh
+============================================================
+--------------------------------------------------
+Lancement des tests BYTE (Sans Objet)
+--------------------------------------------------
+Test add-avance : [0;32m[OK][0m
+Sortie : 15
+Test add : [0;32m[OK][0m
+Sortie : 12
+Test addition : [0;32m[OK][0m
+Sortie : 36
+Test add-print : [0;32m[OK][0m
+Sortie : 5
+Test addSimple : [0;32m[OK][0m
+Sortie : 12
+Test affectation_chainee : [0;32m[OK][0m
+Sortie : 5
+5
+Test and_boolean : [0;32m[OK][0m
+Sortie : 0
+Test and-pas-simple : [0;32m[OK][0m
+Sortie : 0
+Test and_right : [0;32m[OK][0m
+Sortie : 1
+Test And_short_circuit : [0;32m[OK][0m
+Sortie : 0
+Test and-simple : [0;32m[OK][0m
+Sortie : 1000
+Test arith_int : [0;32m[OK][0m
+Sortie : 155502
+Test asignAndif : [0;32m[OK][0m
+Sortie : 12
+Test AssignAndWhile : [0;32m[OK][0m
+Sortie : 01234
+Test assign : [0;32m[OK][0m
+Sortie : 
+Test balanced : [0;32m[OK][0m
+Sortie : 1
+Test boolean_from_arith : [0;32m[OK][0m
+Sortie : 1
+Test boolean_not_nested : [0;32m[OK][0m
+Sortie : 0
+Test boolean_or_short_circuit : [0;32m[OK][0m
+Sortie : 1
+Test boolean_variable_reuse : [0;32m[OK][0m
+Sortie : 1
+Test calculAr : [0;32m[OK][0m
+Sortie : 1414
+01234
+Test casts : [0;32m[OK][0m
+Sortie : OK
+Test cmp : [0;32m[OK][0m
+Sortie : 1
+Test comparaison : [0;32m[OK][0m
+Sortie : 0
+1
+C'est deux
+3
+4
+Test complet_sansObjet : [0;32m[OK][0m
+Sortie : c = 31
+g = 51.0
+h = -31.0
+k = 51
+j = -27
+k (nested cast) = 15
+cond = 1
+g > h
+acc = 9
+a = 7
+b = 7
+j = 7
+values: 51, 7.0, 15acc (hex) = 9
+ok = 1
+Test cond0 : [0;32m[OK][0m
+Sortie : ok
+Test conFloatExp : [0;32m[OK][0m
+Sortie : 
+Test Control : [0;32m[OK][0m
+Sortie : z=15
+go=1
+Test convfloat_and : [0;32m[OK][0m
+Sortie : -15.0
+Test convfloat_lifetime : [0;32m[OK][0m
+Sortie : 2.0
+Test critique : [0;32m[OK][0m
+Sortie : 6
+Test debug : [0;32m[OK][0m
+Sortie : 0
+Test declVarfloat : [0;32m[OK][0m
+Sortie : 
+Test declVarInt : [0;32m[OK][0m
+Sortie : 
+Test declVarNoInit : [0;32m[OK][0m
+Sortie : 
+Test entier1 : [0;32m[OK][0m
+Sortie : 1
+2
+Test exclam_bool_debug : [0;32m[OK][0m
+Sortie : 0
+Test hello-world : [0;32m[OK][0m
+Sortie : Hello, world!
+Test instructionVide : [0;32m[OK][0m
+Sortie : 
+Test late_assign_dependency : [0;32m[OK][0m
+Sortie : 4
+Test late_assignment : [0;32m[OK][0m
+Sortie : 5
+Test left_deep : [0;32m[OK][0m
+Sortie : 0
+Test ListStress : [0;32m[OK][0m
+Sortie : sum=15
+r1=1
+r2=15
+r3=11
+t=1
+Test longExpAr : [0;32m[OK][0m
+Sortie : 186
+Test minimal_codegen_stress : [0;32m[OK][0m
+Sortie : 0
+Test minus-1 : [0;32m[OK][0m
+Sortie : 3
+Test mix : [0;32m[OK][0m
+Sortie : c=31
+g=36.0
+branch:T
+acc=75
+Test modulo_negative : [0;32m[OK][0m
+Sortie : -3
+Test multAdd3 : [0;32m[OK][0m
+Sortie : 186
+Test multAdd : [0;32m[OK][0m
+Sortie : 21
+Test opArFloat : [0;32m[OK][0m
+Sortie : 
+Test opArithInt : [0;32m[OK][0m
+Sortie : 
+Test opBoolAr : [0;32m[OK][0m
+Sortie : 0
+Test opBool : [0;32m[OK][0m
+Sortie : La logique est correcte.
+Test operation : [0;32m[OK][0m
+Sortie : 23.5
+Test operator_precedence : [0;32m[OK][0m
+Sortie : 5
+Test or_right : [0;32m[OK][0m
+Sortie : 1
+Test or_short_circuit : [0;32m[OK][0m
+Sortie : 1
+Test print_println : [0;32m[OK][0m
+Sortie : ok
+ok
+Test printx : [0;32m[OK][0m
+Sortie : Normal: 3.5Hex: 3.5Retour au normal: 
+1.2
+Test right_deep : [0;32m[OK][0m
+Sortie : 1
+Test test_decva_init_noinit : [0;32m[OK][0m
+Sortie : 1
+Test testMultiRegistre : [0;32m[OK][0m
+Sortie : 
+Test test-push : [0;32m[OK][0m
+Sortie : 186
+Test test-TSTO : [0;32m[OK][0m
+Sortie : 
+Test testUltime-1 : [0;32m[OK][0m
+Sortie : 
+Test testUltime2 : [0;32m[OK][0m
+Sortie : 
+Test unaire : [0;32m[OK][0m
+Sortie : -37.68
+Test unary_minus_2_debug : [0;32m[OK][0m
+Sortie : 3
+Test unary_minus_debug : [0;32m[OK][0m
+Sortie : -3
+Test unaryminus : [0;32m[OK][0m
+Sortie : 
+Test unary_minus_modulo : [0;32m[OK][0m
+Sortie : -31
+Test unary_minus_test : [0;32m[OK][0m
+Sortie : -4
+Test whileCondFalse : [0;32m[OK][0m
+Sortie : 1
+Test while : [0;32m[OK][0m
+Sortie : 
+Test while_never_entered : [0;32m[OK][0m
+Sortie : 1
+Test while_zero_interation : [0;32m[OK][0m
+Sortie : 10
+Test zigzag : [0;32m[OK][0m
+Sortie : 7.0
+	Command being timed: "sh -c ./src/test/script/test-byte-sansObjet.sh"
+	User time (seconds): 165.56
+	System time (seconds): 30.14
+	Percent of CPU this job got: 115%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 2:49.09
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 109076
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 2
+	Minor (reclaiming a frame) page faults: 3119916
+	Voluntary context switches: 1827989
+	Involuntary context switches: 26308
+	Swaps: 0
+	File system inputs: 368
+	File system outputs: 20446
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+
+============================================================
+11) Tests: test-byte-avecObjet.sh
+============================================================
+--------------------------------------------------
+Lancement des tests BYTE (Sans Objet)
+--------------------------------------------------
+Test asm_acces_champ : [0;31m[ERREUR COMPILATION DECAC][0m
+Test asm_chaine : [0;31m[ERREUR COMPILATION DECAC][0m
+Test asm_commentaires_absents : [0;31m[ERREUR COMPILATION DECAC][0m
+Test asm_field_access : [0;31m[ERREUR COMPILATION DECAC][0m
+Test asm_hello_world : [0;31m[ERREUR COMPILATION DECAC][0m
+Test asm_label_branchement : [0;31m[ERREUR COMPILATION DECAC][0m
+Test asm_lignes_reelles : [0;31m[ERREUR COMPILATION DECAC][0m
+Test asm_logic : [0;31m[ERREUR COMPILATION DECAC][0m
+Test asm_param_sum : [0;31m[ERREUR COMPILATION DECAC][0m
+Test asm_registres : [0;31m[ERREUR COMPILATION DECAC][0m
+Test asm_return_int : [0;31m[ERREUR COMPILATION DECAC][0m
+Test asm_rts_espaces : [0;31m[ERREUR COMPILATION DECAC][0m
+Test call_method_no_params : [0;32m[OK][0m
+Sortie : ok
+Test call_method_one_param_float : [0;32m[OK][0m
+Sortie : 1.5
+Test call_method_one_param_int : [0;32m[OK][0m
+Sortie : 1
+Test call_method_return_float_used : [0;32m[OK][0m
+Sortie : 4.5
+Test call_method_return_int_used : [0;32m[OK][0m
+Sortie : 3
+Test call_method_two_params : [0;32m[OK][0m
+Sortie : 1
+2.5
+Test cast_instance_of : [0;32m[OK][0m
+Sortie : B
+C'est un B
+null cast ok
+Test cast_valid : [0;32m[OK][0m
+Sortie : 5
+5.0
+Null cast ok
+Test class_empty : [0;32m[OK][0m
+Sortie : 
+Test class_extends : [0;32m[OK][0m
+Sortie : 
+Test class_field_init_and_method : [0;32m[OK][0m
+Sortie : 
+Test class_field_init_in_method : [0;32m[OK][0m
+Sortie : 
+Test class_method_uses_field : [0;32m[OK][0m
+Sortie : 
+Test class_method_with_params : [0;32m[OK][0m
+Sortie : 
+Test class_multiple_methods : [0;32m[OK][0m
+Sortie : 
+Test class_one_field_float : [0;32m[OK][0m
+Sortie : 
+Test class_one_field_int : [0;32m[OK][0m
+Sortie : 
+Test class_one_method_int_return : [0;32m[OK][0m
+Sortie : 
+Test class_one_method_void : [0;32m[OK][0m
+Sortie : 
+Test class_selection_this : [0;32m[OK][0m
+Sortie : 
+Test class_selection_unitaire : [0;32m[OK][0m
+Sortie : a.x = 
+42
+Test class_two_fields : [0;32m[OK][0m
+Sortie : 
+Test class_with_main_new : [0;32m[OK][0m
+Sortie : 
+Test class_with_string_field : [0;32m[OK][0m
+Sortie : 
+Test down_cast : [0;32m[OK][0m
+Sortie : ok
+Test fact : [0;32m[OK][0m
+Sortie : 120
+Test field_assign_from_method_return : [0;32m[OK][0m
+Sortie : 
+Test field_default_init_read_ok : [0;32m[OK][0m
+Sortie : 0
+Test field_shadow_local_var_ok : [0;32m[OK][0m
+Sortie : 
+Test field_shadow_param_ok : [0;32m[OK][0m
+Sortie : 
+Test field_write_then_read_ok : [0;32m[OK][0m
+Sortie : 11
+Test instanceof_valid : [0;32m[OK][0m
+Sortie : A is A
+B is A
+A(B) is B
+A is not B
+null is not A
+Test is_instance_of : [0;32m[OK][0m
+Sortie : 1
+0
+Test is_instance_of_hierarchy : [0;32m[OK][0m
+Sortie : 0
+Test is_instance_of_null : [0;32m[OK][0m
+Sortie : 0
+0
+Test local_var_conflicts_field_illegal : [0;32m[OK][0m
+Sortie : 
+Test local_var : [0;32m[OK][0m
+Sortie : 
+Test method_body_with_control_ok : [0;32m[OK][0m
+Sortie : 2
+Test method_call_chain_2 : [0;32m[OK][0m
+Sortie : 3
+Test method_call_chain_3 : [0;32m[OK][0m
+Sortie : 4
+Test method_call_on_new_object : [0;32m[OK][0m
+Sortie : 1
+Test method_call_on_var_object : [0;32m[OK][0m
+Sortie : 2
+Test method_call_with_expr_args : [0;32m[OK][0m
+Sortie : 10
+Test method_call_with_expression_args : [0;32m[OK][0m
+Sortie : 
+Test method_local_vars_ok : [0;32m[OK][0m
+Sortie : 1
+2.0
+Test method_param_shadow_field_ok : [0;32m[OK][0m
+Sortie : 3
+Test method_return_complex_expr : [0;32m[OK][0m
+Sortie : 
+Test method_returns_in_all_paths_ok : [0;32m[OK][0m
+Sortie : 1
+Test method_selection : [0;32m[OK][0m
+Sortie : 
+Test method_with_var_instr : [0;32m[OK][0m
+Sortie : 
+Test mutual_calls_ok : [0;32m[OK][0m
+Sortie : 0
+Test nested_method_calls : [0;32m[OK][0m
+Sortie : 2
+Test nested_method_calls_ok : [0;32m[OK][0m
+Sortie : 
+Test override_call_child_impl : [0;32m[OK][0m
+Sortie : 2
+Test override_call_via_base_ref : [0;32m[OK][0m
+Sortie : 2
+Test polym_meth : [0;32m[OK][0m
+Sortie : Je suis un Animal
+Je suis un Chien
+Je suis un Chien
+Test protected_field_access_chain_ok : [0;32m[OK][0m
+Sortie : 
+Test protected_field_access_from_subclass : [0;32m[OK][0m
+Sortie : 
+Test protected_field_access_subclass_object_of_subclass : [0;32m[OK][0m
+Sortie : 
+Test protected_field_access_subclass_this : [0;32m[OK][0m
+Sortie : 
+Test public_field_access_other_object : [0;32m[OK][0m
+Sortie : 2
+Test public_field_access_same_class : [0;32m[OK][0m
+Sortie : 
+Test recursion_simple_allowed : [0;32m[OK][0m
+Sortie : 0
+Test return_int_expr_ok : [0;32m[OK][0m
+Sortie : 
+Test selection_nested_three_levels : [0;32m[OK][0m
+Sortie : 10
+Test selection_nested_two_levels : [0;32m[OK][0m
+Sortie : 9
+Test selection_on_new_object : [0;32m[OK][0m
+Sortie : 0
+Test selection_on_var_object : [0;32m[OK][0m
+Sortie : 8
+Test test_cast_1 : [0;32m[OK][0m
+Sortie : 3
+-3
+Test test_cast_4 : [0;32m[OK][0m
+Sortie : ok
+Test test_cast_objet : [0;32m[OK][0m
+Sortie : B
+B
+ok
+Test test_fields_initialise : [0;32m[OK][0m
+Sortie : 
+Test test_fields_non_initialise : [0;32m[OK][0m
+Sortie : 
+Test test_poly : [0;32m[OK][0m
+Sortie : a.getX() = 
+1
+Test this_field_assign_float_from_int_conv : [0;32m[OK][0m
+Sortie : 
+Test this_field_assign_int : [0;32m[OK][0m
+Sortie : 
+Test two_classes_independent : [0;32m[OK][0m
+Sortie : 
+	Command being timed: "sh -c ./src/test/script/test-byte-avecObjet.sh"
+	User time (seconds): 219.42
+	System time (seconds): 39.75
+	Percent of CPU this job got: 114%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 3:46.47
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 109464
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 4101798
+	Voluntary context switches: 2450346
+	Involuntary context switches: 36148
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 27425
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+
+============================================================
+12) Tests: all-byte-tests.sh
+============================================================
+====================================
+ Tests BYTECODE JVM (Jasmin)
+====================================
+
+Tests VALIDES
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/add-avance.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/add.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/add-print.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/addSimple.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/and_boolean.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/and-pas-simple.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/and_right.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/And_short_circuit.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/and-simple.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/andsimple.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/arith_int.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/asignAndif.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/AssignAndWhile.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/assign.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/balanced.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/boolean_from_arith.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/boolean_not_nested.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/boolean_or_short_circuit.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/boolean_variable_reuse.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/calculAr.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/casts.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/comparaison.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/complet_sansObjet.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/cond0.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/conFloatExp.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/Control.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/convfloat_and.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/convfloat_lifetime.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/critique.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/declVarfloat.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/declVarInt.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/declVarNoInit.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/entier1.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/hello-world.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/instructionVide.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/late_assign_dependency.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/late_assignment.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/left_deep.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/ListStress.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/longExpAr.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/minimal_codegen_stress.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/minus-1.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/mix.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/modulo_negative.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/multAdd3.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/multAdd.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/opArFloat.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/opArithInt.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/opBoolAr.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/opBool.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/operation.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/operator_precedence.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/or_right.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/or_short_circuit.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/print_println.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/right_deep.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/test_decva_init_noinit.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/testMultiRegistre.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/test-push.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/test-TSTO.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/testUltime-1.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/testUltime2.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/unaire.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/unaryminus.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/unary_minus_modulo.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/whileCondFalse.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/while.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/while_never_entered.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/while_zero_interation.deca
+Succès attendu
+
+Test valide attendu : src/test/deca/codegen/BYTE/valid/zigzag.deca
+Succès attendu
+
+Tests INVALIDES
+
+Test invalide attendu : src/test/deca/codegen/BYTE/invalid/div_zero.deca
+Échec attendu à l'exécution JVM
+
+Test invalide attendu : src/test/deca/codegen/BYTE/invalid/float_div_zero.deca
+Échec attendu à l'exécution JVM
+
+Test invalide attendu : src/test/deca/codegen/BYTE/invalid/mod_zero.deca
+Échec attendu à l'exécution JVM
+
+Test invalide attendu : src/test/deca/codegen/BYTE/invalid/non_initialise.deca
+Échec attendu à l'exécution JVM
+
+Test invalide attendu : src/test/deca/codegen/BYTE/invalid/overflow.deca
+Échec attendu à l'exécution JVM
+
+====================================
+ Tous les tests BYTE sont passés
+====================================
+	Command being timed: "sh -c ./src/test/script/all-byte-tests.sh"
+	User time (seconds): 127.13
+	System time (seconds): 23.71
+	Percent of CPU this job got: 118%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 2:07.30
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 110852
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 2105309
+	Voluntary context switches: 1335379
+	Involuntary context switches: 20492
+	Swaps: 0
+	File system inputs: 240
+	File system outputs: 14802
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+
+============================================================
+IMA: compile + run (-s) for src/test/deca/context/valid/sansObjet/hello-world.deca (checks)
+============================================================
+	Command being timed: "./src/main/bin/decac src/test/deca/context/valid/sansObjet/hello-world.deca"
+	User time (seconds): 1.03
+	System time (seconds): 0.20
+	Percent of CPU this job got: 130%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.95
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 105680
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 13229
+	Voluntary context switches: 9063
+	Involuntary context switches: 337
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 65
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+Hello, world!
+Nombre d'instructions :       20  Temps d'execution :  95
+	Command being timed: "ima -s src/test/deca/context/valid/sansObjet/hello-world.ass"
+	User time (seconds): 0.08
+	System time (seconds): 0.00
+	Percent of CPU this job got: 114%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.07
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 6276
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 2624
+	Voluntary context switches: 60
+	Involuntary context switches: 8
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+
+============================================================
+IMA: compile + run (-s) for src/test/deca/context/valid/sansObjet/hello-world.deca (nocheck: -n)
+============================================================
+	Command being timed: "./src/main/bin/decac -n src/test/deca/context/valid/sansObjet/hello-world.deca"
+	User time (seconds): 1.06
+	System time (seconds): 0.21
+	Percent of CPU this job got: 136%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.93
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 105428
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 13270
+	Voluntary context switches: 8685
+	Involuntary context switches: 217
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 65
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+Hello, world!
+Nombre d'instructions :       16  Temps d'execution :  89
+	Command being timed: "ima -s src/test/deca/context/valid/sansObjet/hello-world.ass"
+	User time (seconds): 0.08
+	System time (seconds): 0.00
+	Percent of CPU this job got: 113%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.07
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 6276
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 2626
+	Voluntary context switches: 60
+	Involuntary context switches: 5
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+
+============================================================
+IMA: compile + run (-s) for src/test/deca/context/valid/sansObjet/while.deca (checks)
+============================================================
+	Command being timed: "./src/main/bin/decac src/test/deca/context/valid/sansObjet/while.deca"
+	User time (seconds): 1.05
+	System time (seconds): 0.20
+	Percent of CPU this job got: 132%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.94
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 108144
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 13374
+	Voluntary context switches: 9386
+	Involuntary context switches: 218
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 66
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+Nombre d'instructions :       38  Temps d'execution :  778
+	Command being timed: "ima -s src/test/deca/context/valid/sansObjet/while.ass"
+	User time (seconds): 0.08
+	System time (seconds): 0.00
+	Percent of CPU this job got: 114%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.08
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 6276
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 2628
+	Voluntary context switches: 60
+	Involuntary context switches: 9
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+
+============================================================
+IMA: compile + run (-s) for src/test/deca/context/valid/sansObjet/while.deca (nocheck: -n)
+============================================================
+	Command being timed: "./src/main/bin/decac -n src/test/deca/context/valid/sansObjet/while.deca"
+	User time (seconds): 1.15
+	System time (seconds): 0.20
+	Percent of CPU this job got: 133%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.01
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 107528
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 13325
+	Voluntary context switches: 9224
+	Involuntary context switches: 217
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 65
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+Nombre d'instructions :       30  Temps d'execution :  706
+	Command being timed: "ima -s src/test/deca/context/valid/sansObjet/while.ass"
+	User time (seconds): 0.08
+	System time (seconds): 0.00
+	Percent of CPU this job got: 111%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.08
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 6276
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 2624
+	Voluntary context switches: 59
+	Involuntary context switches: 5
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+
+============================================================
+IMA: compile + run (-s) for src/test/deca/context/valid/avecObjet/method_body_with_control_ok.deca (checks)
+============================================================
+	Command being timed: "./src/main/bin/decac src/test/deca/context/valid/avecObjet/method_body_with_control_ok.deca"
+	User time (seconds): 1.11
+	System time (seconds): 0.22
+	Percent of CPU this job got: 132%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.01
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 108168
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 13497
+	Voluntary context switches: 9053
+	Involuntary context switches: 225
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 67
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+Nombre d'instructions :       74  Temps d'execution :  136
+	Command being timed: "ima -s src/test/deca/context/valid/avecObjet/method_body_with_control_ok.ass"
+	User time (seconds): 0.08
+	System time (seconds): 0.00
+	Percent of CPU this job got: 114%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.07
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 6404
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 2630
+	Voluntary context switches: 60
+	Involuntary context switches: 2
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+
+============================================================
+IMA: compile + run (-s) for src/test/deca/context/valid/avecObjet/method_body_with_control_ok.deca (nocheck: -n)
+============================================================
+	Command being timed: "./src/main/bin/decac -n src/test/deca/context/valid/avecObjet/method_body_with_control_ok.deca"
+	User time (seconds): 1.15
+	System time (seconds): 0.20
+	Percent of CPU this job got: 131%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.04
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 108068
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 13444
+	Voluntary context switches: 9525
+	Involuntary context switches: 245
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 67
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+Nombre d'instructions :       65  Temps d'execution :  124
+	Command being timed: "ima -s src/test/deca/context/valid/avecObjet/method_body_with_control_ok.ass"
+	User time (seconds): 0.08
+	System time (seconds): 0.01
+	Percent of CPU this job got: 118%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.08
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 6404
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 2629
+	Voluntary context switches: 60
+	Involuntary context switches: 7
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+
+============================================================
+BYTE: decac --byte + jasmin + java for src/test/deca/codegen/BYTE/valid/add.deca
+============================================================
+-- Step A: decac --byte
+	Command being timed: "./src/main/bin/decac --byte /tmp/tmp.rUkm5Tvv9z/add.deca"
+	User time (seconds): 0.98
+	System time (seconds): 0.20
+	Percent of CPU this job got: 132%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.89
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 105376
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 13218
+	Voluntary context switches: 8863
+	Involuntary context switches: 221
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 80
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+-- Step B: jasmin assemble (*.j -> .class)
+Generated: /tmp/tmp.rUkm5Tvv9z/out/Main.class
+Generated: /tmp/tmp.rUkm5Tvv9z/out/Main.class
+	Command being timed: "sh -c java -jar "./jasmin/jasmin.jar" -d "/tmp/tmp.rUkm5Tvv9z/out" "/tmp/tmp.rUkm5Tvv9z"/*.j"
+	User time (seconds): 0.40
+	System time (seconds): 0.06
+	Percent of CPU this job got: 109%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.43
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 67156
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 8292
+	Voluntary context switches: 5187
+	Involuntary context switches: 9
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 112
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+-- Step C: java run Main
+12	Command being timed: "java -cp /tmp/tmp.rUkm5Tvv9z/out Main"
+	User time (seconds): 0.23
+	System time (seconds): 0.03
+	Percent of CPU this job got: 95%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.29
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 59368
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 6455
+	Voluntary context switches: 3092
+	Involuntary context switches: 0
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 64
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+
+============================================================
+BYTE: decac --byte + jasmin + java for src/test/deca/codegen/BYTE/valid/AssignAndWhile.deca
+============================================================
+-- Step A: decac --byte
+	Command being timed: "./src/main/bin/decac --byte /tmp/tmp.U0i9KNGVKy/AssignAndWhile.deca"
+	User time (seconds): 0.99
+	System time (seconds): 0.17
+	Percent of CPU this job got: 131%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.89
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 105880
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 13245
+	Voluntary context switches: 9001
+	Involuntary context switches: 206
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 88
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+-- Step B: jasmin assemble (*.j -> .class)
+Generated: /tmp/tmp.U0i9KNGVKy/out/Main.class
+Generated: /tmp/tmp.U0i9KNGVKy/out/Main.class
+	Command being timed: "sh -c java -jar "./jasmin/jasmin.jar" -d "/tmp/tmp.U0i9KNGVKy/out" "/tmp/tmp.U0i9KNGVKy"/*.j"
+	User time (seconds): 0.41
+	System time (seconds): 0.07
+	Percent of CPU this job got: 112%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.43
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 67076
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 8284
+	Voluntary context switches: 5116
+	Involuntary context switches: 3
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 80
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+-- Step C: java run Main
+01234	Command being timed: "java -cp /tmp/tmp.U0i9KNGVKy/out Main"
+	User time (seconds): 0.26
+	System time (seconds): 0.03
+	Percent of CPU this job got: 95%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.30
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 58968
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 6462
+	Voluntary context switches: 3161
+	Involuntary context switches: 4
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 64
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+
+============================================================
+BYTE: decac --byte + jasmin + java for src/test/deca/codegen/BYTE/valid/Control.deca
+============================================================
+-- Step A: decac --byte
+	Command being timed: "./src/main/bin/decac --byte /tmp/tmp.cDq2QHPt10/Control.deca"
+	User time (seconds): 1.07
+	System time (seconds): 0.19
+	Percent of CPU this job got: 133%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.94
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 108728
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 13385
+	Voluntary context switches: 9261
+	Involuntary context switches: 211
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 80
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+-- Step B: jasmin assemble (*.j -> .class)
+Generated: /tmp/tmp.cDq2QHPt10/out/Main.class
+Generated: /tmp/tmp.cDq2QHPt10/out/Main.class
+	Command being timed: "sh -c java -jar "./jasmin/jasmin.jar" -d "/tmp/tmp.cDq2QHPt10/out" "/tmp/tmp.cDq2QHPt10"/*.j"
+	User time (seconds): 0.46
+	System time (seconds): 0.08
+	Percent of CPU this job got: 113%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.48
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 83640
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 11364
+	Voluntary context switches: 5794
+	Involuntary context switches: 7
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 80
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+-- Step C: java run Main
+z=15
+go=1
+	Command being timed: "java -cp /tmp/tmp.cDq2QHPt10/out Main"
+	User time (seconds): 0.24
+	System time (seconds): 0.02
+	Percent of CPU this job got: 93%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.29
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 58944
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 6454
+	Voluntary context switches: 3147
+	Involuntary context switches: 0
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 64
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+
+============================================================
+Done
+============================================================
