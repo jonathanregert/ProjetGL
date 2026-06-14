@@ -1,45 +1,133 @@
-# Compilateur DECAC - Équipe GL42 (Ensimag)
+# DECAC - Compilateur Deca
 
-## Présentation du projet
-Ce projet consiste en la réalisation d'un compilateur complet pour le langage **Deca**, un langage objet simplifié inspiré de Java. Le compilateur, nommé `decac`, traduit le code source Deca en langage assembleur pour la machine abstraite **IMA** (Interactive Machine Architecture)
+Compilateur pour **Deca**, un langage objet simplifie inspire de Java, realise dans le cadre du Projet Genie Logiciel de l'Ensimag. Le compilateur `decac` analyse un programme Deca, verifie sa coherence contextuelle, puis genere du code assembleur pour la machine abstraite **IMA**. Une extension permet aussi de produire du bytecode JVM via Jasmin.
 
-L'outil gère les concepts fondamentaux de la programmation orientée objet : encapsulation, héritage simple et polymorphisme via une table des méthodes virtuelles (VTable).
+## Fonctionnalites
 
-## Architecture du compilateur
-Le processus de compilation est divisé en quatre phases principales
+- Analyse lexicale et syntaxique avec ANTLR.
+- Construction et manipulation d'un arbre syntaxique abstrait.
+- Verification contextuelle : types, portees, declarations, heritage, appels de methodes.
+- Generation de code IMA avec gestion des registres, de la pile et des erreurs d'execution.
+- Support des objets : classes, champs, methodes, heritage simple, polymorphisme.
+- Extension bytecode JVM avec l'option `--byte`.
+- Scripts de tests syntaxiques, contextuels, codegen, bytecode et analyse energetique.
 
-1. **Analyse Lexicale (Lexer)** : Découpage du texte source en lexèmes avec la bibliothèque ANTLR
-2. **Analyse Syntaxique (Parser)** : Vérification de la structure grammaticale et construction de l'Arbre Syntaxique Abstrait (AST)
-3. **Analyse Contextuelle (Verify)** : Vérification des types, gestion des portées et décoration de l'arbre.
-4. **Génération de Code (CodeGen)** : Gestion de la mémoire (pile et tas) et traduction en instructions assembleur IMA.
+## Technologies
 
-## Installation et Configuration
+- Java 21
+- Maven 3.6.3+
+- ANTLR 4.13.2
+- JUnit, Mockito et JaCoCo
+- IMA pour l'execution du code assembleur genere
+- Jasmin pour l'assemblage du bytecode JVM
 
-### Pré-requis
-* **Java** : JDK version 17 ou supérieure (testé sous JDK 23).
-* **Maven** : Version 3.6 ou supérieure pour la gestion des dépendances.
-* **IMA** : L'interpréteur de la machine abstraite doit être installé et accessible dans le `PATH`.
+## Structure
 
-### Compilation
-Pour générer l'exécutable, lancez la commande suivante à la racine du projet
-
-```bash
-mvn clean install
+```text
+src/main/antlr4/      Grammaires Deca
+src/main/java/        Code du compilateur
+src/main/bin/         Script executable decac
+src/test/             Tests Java, Deca et scripts de validation
+docs/                 Documentation utilisateur et bilan
+docker/               Environnement de developpement
+jasmin/               Support pour l'extension bytecode
+analyse_energetique/  Scripts et donnees d'analyse energetique
 ```
 
-### Guide d'Utilisation
-La syntaxe générale est : decac [options] <fichier_source.deca>.
+## Installation
 
-#### Options principales
+Cloner le depot puis compiler le projet :
 
--b : Affiche la bannière de l'équipe.
+```bash
+mvn clean package
+```
 
--p : Arrête le compilateur après l'analyse syntaxique et affiche la décompilation.
+Le script `decac` s'appuie sur les classes et le classpath generes par Maven.
 
--v : Arrête le compilateur après l'analyse contextuelle (vérification des types).
+```bash
+./src/main/bin/decac -b
+```
 
--n : Désactive les tests de débordement à l'exécution pour un code plus rapide.
+Pour les tests de generation et l'execution des fichiers `.ass`, l'interpreteur `ima` doit etre disponible dans le `PATH`.
 
--r X : Limite le nombre de registres banalisés utilisables entre 4 et 16. 
+## Utilisation
 
--P : Active la compilation parallèle pour traiter plusieurs fichiers simultanément.
+Compiler un fichier Deca vers IMA :
+
+```bash
+./src/main/bin/decac chemin/vers/programme.deca
+```
+
+Le compilateur produit un fichier `.ass` a cote du fichier source. Exemple avec un test fourni :
+
+```bash
+./src/main/bin/decac src/test/deca/context/valid/sansObjet/hello-world.deca
+ima src/test/deca/context/valid/sansObjet/hello-world.ass
+```
+
+Options principales :
+
+| Option | Description |
+| --- | --- |
+| `-b` | Affiche la banniere de l'equipe. |
+| `-p` | S'arrete apres l'analyse syntaxique et affiche la decompilation. |
+| `-v` | S'arrete apres la verification contextuelle. |
+| `-n` | Desactive certains controles d'execution. |
+| `-r X` | Limite les registres banalisables, avec `4 <= X <= 16`. |
+| `-d` | Active les traces de debug, cumulable jusqu'au niveau trace. |
+| `-P` | Compile plusieurs fichiers en parallele. |
+| `--byte` | Genere du bytecode JVM au format Jasmin. |
+
+## Extension Bytecode JVM
+
+L'option `--byte` genere un fichier `.j` Jasmin :
+
+```bash
+./src/main/bin/decac --byte src/test/deca/codegen/BYTE/valid/add.deca
+java -jar jasmin/jasmin.jar src/test/deca/codegen/BYTE/valid/add.j
+```
+
+Les scripts de tests bytecode se trouvent dans `src/test/script/`, notamment :
+
+```bash
+./src/test/script/all-byte-tests.sh
+```
+
+## Tests
+
+Quelques suites utiles :
+
+```bash
+./src/test/script/all-syntax-tests.sh
+./src/test/script/all-context-tests-sansObjet.sh
+./src/test/script/all-context-tests-avecObjet.sh
+./src/test/script/all-codegen-tests.sh
+./src/test/script/all-byte-tests.sh
+```
+
+Une suite rapide est egalement disponible :
+
+```bash
+./src/test/script/fast-all-tests.sh
+```
+
+Les tests de codegen et certains tests bytecode supposent que `ima`, `java` et les dependances associees sont accessibles depuis l'environnement courant.
+
+## Analyse energetique
+
+Le dossier `analyse_energetique/` contient des scripts pour mesurer le processus de fabrication et estimer le cout d'execution de programmes IMA :
+
+```bash
+sh analyse_energetique/scripts/run_energy_commands.sh
+python3 analyse_energetique/scripts/ima_estimate_cycles.py fichier.ass
+```
+
+## Documentation
+
+- `docs/Manuel-Utilisateur.pdf` : manuel utilisateur.
+- `docs/Bilan_Equipe.pdf` : bilan du projet.
+- `planning/` : planning previsionnel et realisation.
+
+## Auteurs
+
+Projet realise par l'equipe **GL42** dans le cadre du Projet Genie Logiciel de l'Ensimag.
